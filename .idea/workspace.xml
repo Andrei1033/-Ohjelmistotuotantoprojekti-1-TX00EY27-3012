@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/example/HelloWorldApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/example/Main.java" afterDir="false" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="Java fx now work.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +64,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "onboarding.tips.debug.path": "C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -92,8 +93,17 @@
       <updated>1787118696699</updated>
       <workItem from="1787118697756" duration="161000" />
       <workItem from="1787220651549" duration="15000" />
-      <workItem from="1787220695805" duration="1055000" />
+      <workItem from="1787220695805" duration="2190000" />
     </task>
+    <task id="LOCAL-00001" summary="Java fx now work.">
+      <option name="closed" value="true" />
+      <created>1787221881772</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1787221881772</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,6 +119,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Java fx now work." />
+    <option name="LAST_COMMIT_MESSAGE" value="Java fx now work." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
