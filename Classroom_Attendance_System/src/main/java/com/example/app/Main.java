@@ -1,4 +1,6 @@
 package com.example.app;
 
-public class Main {
+public class
+
+Main {
 }

@@ -1,4 +1,5 @@
 package com.example.app;
 
-public class MainTest {
+public class MainTest
+{
 }
