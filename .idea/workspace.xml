@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="Project Folder Structure (Maven + JaCoCo)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/MainTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/public.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/public.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +89,19 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\src\main\java" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Classroom_Attendance_System" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Classroom_Attendance_System" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

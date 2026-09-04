@@ -75,6 +75,18 @@ Tärkeimmät Trello-listat ovat:
 
 Product Backlog sisältää projektin User Storyt, joita priorisoidaan ja tarkennetaan projektin edetessä.
 
+## CRUD Testing
+
+CREATE -> PASS
+READ   -> PASS
+UPDATE -> PASS
+DELETE -> PASS
+
+Foreign Keys -> PASS
+Unique constraints -> PASS
+Check constraints -> PASS
+
+
 ## Dokumentaatio
 
 Projektin dokumentaatio löytyy GitHub-repositorion `Documents`-kansiosta.
