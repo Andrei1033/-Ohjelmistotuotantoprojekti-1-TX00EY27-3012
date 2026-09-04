@@ -75,7 +75,14 @@ Tärkeimmät Trello-listat ovat:
 
 Product Backlog sisältää projektin User Storyt, joita priorisoidaan ja tarkennetaan projektin edetessä.
 
+## Esimerkkidata
+
+Tietokantaan lisättiin esimerkkidataa käyttäjistä, kursseista, oppitunneista ja läsnäolomerkinnöistä testausta varten.
+
 ## CRUD Testing
+
+CRUD-toiminnot testattiin SQL-kyselyillä. INSERT-komennolla testattiin uusien tietueiden luomista, SELECT-komennolla tietojen hakemista, UPDATE-komennolla tietojen muokkaamista ja DELETE-komennolla tietueiden poistamista.
+
 
 CREATE -> PASS
 READ   -> PASS
