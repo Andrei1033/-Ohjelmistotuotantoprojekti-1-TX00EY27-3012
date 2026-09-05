@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="Project Folder Structure (Maven + JaCoCo)">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="refactor">
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Admin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaAalkusivu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaKurssi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaLasnaola.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpiskelijAalkusivu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpiskelijaLäsnäoloSeuranta.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +20,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="8" />
+    <option name="cachedIndexableFilesCount" value="3" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -35,12 +41,8 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git&quot;,
-    &quot;accountId&quot;: &quot;1bdc759c-447f-4c33-b8b9-4c4d82b6b324&quot;
+    &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;
   }
-}</component>
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
 }</component>
   <component name="McpProjectServerCommands">
     <commands />
@@ -63,7 +65,6 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
@@ -80,7 +81,7 @@
     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -89,16 +90,21 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\src\main\java" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012" />
+      <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\Kaaviot" />
+      <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\Documents" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
-      <module name="Classroom_Attendance_System" />
+      <module name="-Ohjelmistotuotantoprojekti-1-TX00EY27-3012" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Classroom_Attendance_System" />
+      <module name="-Ohjelmistotuotantoprojekti-1-TX00EY27-3012" />
       <option name="filePath" />
       <method v="2" />
     </configuration>
@@ -106,8 +112,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.33813.55" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.33813.55" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
       </set>
     </attachedChunks>
   </component>
@@ -120,13 +126,11 @@
       <updated>1787118696699</updated>
       <workItem from="1787118697756" duration="161000" />
       <workItem from="1787220651549" duration="15000" />
-      <workItem from="1787220695805" duration="2190000" />
-      <workItem from="1787551901744" duration="312000" />
-      <workItem from="1787552224528" duration="501000" />
-      <workItem from="1787558190343" duration="4870000" />
-      <workItem from="1787741907701" duration="1746000" />
-      <workItem from="1788331395918" duration="2502000" />
-      <workItem from="1788338171612" duration="1440000" />
+      <workItem from="1787220695805" duration="2304000" />
+      <workItem from="1787223066079" duration="40000" />
+      <workItem from="1787400881700" duration="42000" />
+      <workItem from="1787401313953" duration="39000" />
+      <workItem from="1788172789270" duration="1630000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -136,15 +140,39 @@
       <option name="project" value="LOCAL" />
       <updated>1787221881772</updated>
     </task>
-    <task id="LOCAL-00002" summary="Project Folder Structure (Maven + JaCoCo)">
+    <task id="LOCAL-00002" summary="...">
       <option name="closed" value="true" />
-      <created>1788339166457</created>
+      <created>1787222960357</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1788339166457</updated>
+      <updated>1787222960357</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Documents">
+      <option name="closed" value="true" />
+      <created>1788173169922</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1788173169922</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Kaaviot">
+      <option name="closed" value="true" />
+      <created>1788173410503</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1788173410503</updated>
+    </task>
+    <task id="LOCAL-00005" summary="refactor">
+      <option name="closed" value="true" />
+      <created>1788174444629</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1788174444629</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,8 +191,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Java fx now work." />
-    <MESSAGE value="Project Folder Structure (Maven + JaCoCo)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project Folder Structure (Maven + JaCoCo)" />
+    <MESSAGE value="..." />
+    <MESSAGE value="Documents" />
+    <MESSAGE value="Kaaviot" />
+    <MESSAGE value="refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
