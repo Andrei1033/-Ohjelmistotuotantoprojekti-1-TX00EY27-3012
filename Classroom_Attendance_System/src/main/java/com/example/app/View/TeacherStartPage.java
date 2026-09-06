@@ -1,4 +1,4 @@
 package com.example.app.View;
 
-public class OpetajaKurssi {
+public class TeacherStartPage {
 }
