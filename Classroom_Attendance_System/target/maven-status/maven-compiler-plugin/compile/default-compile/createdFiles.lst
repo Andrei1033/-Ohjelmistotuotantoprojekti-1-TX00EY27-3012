@@ -1,0 +1,7 @@
+com\example\app\Controller\StudentController.class
+com\example\app\Model\Presence.class
+com\example\app\Model\Student.class
+com\example\app\Model\Course.class
+com\example\app\Model\Lesson.class
+com\example\app\Controller\TeacherController.class
+com\example\app\Model\Teacher.class
