@@ -1,0 +1,113 @@
+.root {
+    -fx-background-color: #f4f5f3;
+}
+
+
+.sidebar {
+    -fx-background-color: #17243a;
+}
+
+.logo {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #17243a;
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+    -fx-background-radius: 50%;
+}
+
+.app-name {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.sidebar-button {
+    -fx-background-color: #354768;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.user-info {
+    -fx-text-fill: white;
+}
+
+.user-info .label {
+    -fx-text-fill: white;
+}
+
+.user-info .label:last-child {
+    -fx-font-size: 10px;
+}
+
+
+
+.content {
+    -fx-background-color: #f4f5f3;
+}
+
+
+
+.filter-button,
+.filter-button-active {
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 20px;
+    -fx-font-weight: bold;
+}
+
+.filter-button {
+    -fx-background-color: white;
+}
+
+.filter-button-active {
+    -fx-background-color: #293b5b;
+    -fx-text-fill: white;
+}
+
+
+
+.text-field {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 9px 15px;
+}
+
+
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+}
+
+
+
+.add-user-button {
+    -fx-background-color: #293b5b;
+    -fx-text-fill: white;
+    -fx-background-radius: 4px;
+    -fx-font-weight: bold;
+}
+
+
+
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: white;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: white;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #eeeeee;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f7f7f7;
+}
