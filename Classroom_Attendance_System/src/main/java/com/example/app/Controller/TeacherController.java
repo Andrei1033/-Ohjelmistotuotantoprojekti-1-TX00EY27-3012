@@ -1,4 +1,4 @@
 package com.example.app.Controller;
 
-public class OpettajaController {
+public class TeacherController {
 }

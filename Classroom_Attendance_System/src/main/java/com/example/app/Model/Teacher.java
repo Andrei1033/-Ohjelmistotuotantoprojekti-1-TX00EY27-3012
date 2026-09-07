@@ -1,4 +1,4 @@
 package com.example.app.Model;
 
-public class Lasnaolo {
+public class Teacher {
 }
