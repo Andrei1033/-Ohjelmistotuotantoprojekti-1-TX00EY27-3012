@@ -1,0 +1,17 @@
+<changelist name="Uncommitted_changes_before_Update_at_11_09_2026_23_11_[Changes]" date="1789157516602" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_09_2026_23_11_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 11/09/2026 23.11 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="Classroom_Attendance_System/target/classes/com/example/app/View/PageShow$App.class" />
+    <option name="AFTER_PATH" value="Classroom_Attendance_System/target/classes/com/example/app/View/PageShow$App.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_09_2026_23_11_[Changes]/PageShow$App.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Classroom_Attendance_System/target/classes/com/example/app/View/TeacherAttendanceTracking.class" />
+    <option name="AFTER_PATH" value="Classroom_Attendance_System/target/classes/com/example/app/View/TeacherAttendanceTracking.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_09_2026_23_11_[Changes]/TeacherAttendanceTracking.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Classroom_Attendance_System/target/classes/Java_fx_Testi/Main.class" />
+  </binary>
+</changelist>

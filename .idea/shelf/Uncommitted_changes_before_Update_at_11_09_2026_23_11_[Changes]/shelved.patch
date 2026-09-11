@@ -1,0 +1,1259 @@
+Index: Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/* Temporary file for testing purposes. This file will be deleted in the future. */\r\n/* only for ui debug*/\r\npackage com.example.app.View;\r\n\r\nimport javafx.application.Application;\r\nimport javafx.scene.Scene;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.util.Scanner;\r\n\r\npublic class PageShow {\r\n\r\n    public static void main(String[] args) {\r\n\r\n        Scanner scanner = new Scanner(System.in);\r\n\r\n        System.out.println(\"=================================\");\r\n        System.out.println(\"      Läsänolojärjestelmä\");\r\n        System.out.println(\"=================================\");\r\n        System.out.println();\r\n        System.out.println(\"Valitse avattava sivu:\");\r\n        System.out.println();\r\n        System.out.println(\"1 - Login\");\r\n        System.out.println(\"2 - StudentStartPage\");\r\n        System.out.println(\"3 - StudentAttendanceTracking\");\r\n        System.out.println(\"4 - TeacherStartPage\");\r\n        System.out.println(\"5 - TeacherCoursePage\");\r\n        System.out.println(\"6 - TeacherAttendanceTracking\");\r\n        System.out.println(\"7 - Admin\");\r\n        System.out.println(\"0 - Lopeta\");\r\n        System.out.println();\r\n\r\n        System.out.print(\"Valinta: \");\r\n\r\n        int page;\r\n\r\n        try {\r\n            page = Integer.parseInt(scanner.nextLine());\r\n        } catch (NumberFormatException e) {\r\n            System.out.println(\"Virheellinen valinta.\");\r\n            scanner.close();\r\n            return;\r\n        }\r\n\r\n        if (page == 0) {\r\n            System.out.println(\"Ohjelma lopetetaan.\");\r\n            scanner.close();\r\n            return;\r\n        }\r\n\r\n        // Tallennetaan valittu sivu JavaFX:lle\r\n        SelectedPage.page = page;\r\n\r\n        scanner.close();\r\n\r\n        // Käynnistetään JavaFX\r\n        Application.launch(App.class, args);\r\n    }\r\n\r\n\r\n    // Säilyttää Mainissa tehdyn sivuvalinnan\r\n    public static class SelectedPage {\r\n        public static int page;\r\n    }\r\n\r\n\r\n    public static class App extends Application {\r\n\r\n        private Stage stage;\r\n\r\n        @Override\r\n        public void start(Stage stage) {\r\n\r\n            this.stage = stage;\r\n\r\n            stage.setTitle(\"Läsnäolo\");\r\n            stage.setResizable(false);\r\n\r\n            openSelectedPage();\r\n\r\n            stage.show();\r\n        }\r\n\r\n\r\n        private void openSelectedPage() {\r\n\r\n            switch (SelectedPage.page) {\r\n\r\n                case 1:\r\n                    openLogin();\r\n                    break;\r\n\r\n                case 2:\r\n                    openStudentStartPage();\r\n                    break;\r\n\r\n                case 3:\r\n                    openStudentAttendanceTracking();\r\n                    break;\r\n\r\n                case 4:\r\n                    openTeacherStartPage();\r\n                    break;\r\n\r\n                case 5:\r\n                    openTeacherCoursePage();\r\n                    break;\r\n\r\n                case 6:\r\n                    openTeacherAttendanceTracking();\r\n                    break;\r\n\r\n                case 7:\r\n                    openAdminPage();\r\n                    break;\r\n\r\n                default:\r\n                    System.out.println(\r\n                            \"Tätä sivua ei ole vielä tehty: \"\r\n                                    + SelectedPage.page\r\n                    );\r\n\r\n                    // Debuggausta varten avataan kirjautumissivu\r\n                    openLogin();\r\n                    break;\r\n            }\r\n        }\r\n\r\n\r\n        private void openLogin() {\r\n\r\n            Login view = new Login(\r\n                    this::openLogin\r\n            );\r\n\r\n            stage.setScene(\r\n                    new Scene(view, 1024, 399)\r\n            );\r\n        }\r\n\r\n\r\n        private void openStudentStartPage() {\r\n\r\n            StudentStartPage view = new StudentStartPage(\r\n                    this::openLogin\r\n            );\r\n\r\n            stage.setScene(\r\n                    new Scene(view, 1024, 399)\r\n            );\r\n        }\r\n\r\n\r\n        private void openStudentAttendanceTracking() {\r\n\r\n            // TODO:\r\n            // Tehdään myöhemmin oikea kurssisivu.\r\n\r\n            System.out.println(\"openStudentAttendanceTracking puututuu vielä.\");\r\n\r\n            openStudentAttendanceTracking();\r\n        }\r\n\r\n\r\n        private void openTeacherStartPage() {\r\n\r\n            // TODO:\r\n            // Tehdään myöhemmin opiskelijan tietosivu.\r\n\r\n            System.out.println(\"openTeacherStartPage puututuu vielä.\");\r\n\r\n            openStudentStartPage();\r\n        }\r\n\r\n        private void openTeacherCoursePage() {\r\n\r\n            // TODO:\r\n            // Tehdään myöhemmin opiskelijan tietosivu.\r\n\r\n            System.out.println(\"openTeacherCoursePage puututuu vielä.\");\r\n\r\n            openStudentStartPage();\r\n        }\r\n\r\n        private void openTeacherAttendanceTracking() {\r\n\r\n            // TODO:\r\n            // Tehdään myöhemmin opiskelijan tietosivu.\r\n\r\n            System.out.println(\"openTeacherAttendanceTracking puututuu vielä.\");\r\n\r\n            openStudentStartPage();\r\n        }\r\n\r\n        private void openAdminPage() {\r\n            // TODO:\r\n            // Tehdään myöhemmin opiskelijan tietosivu.\r\n\r\n            System.out.println(\"openAdminPage puututuu vielä.\");\r\n\r\n            openStudentStartPage();\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java b/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java
+--- a/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java	(revision fee6a277c676a531782f80fc83bd5eeed4698adc)
++++ b/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java	(date 1788766699966)
+@@ -184,12 +184,14 @@
+ 
+         private void openTeacherAttendanceTracking() {
+ 
+-            // TODO:
+-            // Tehdään myöhemmin opiskelijan tietosivu.
++            TeacherAttendanceTracking view =
++                    new TeacherAttendanceTracking(
++                            this::openTeacherStartPage
++                    );
+ 
+-            System.out.println("openTeacherAttendanceTracking puututuu vielä.");
+-
+-            openStudentStartPage();
++            stage.setScene(
++                    new Scene(view, 1024, 399)
++            );
+         }
+ 
+         private void openAdminPage() {
+Index: Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.app.View;\r\n\r\npublic class TeacherAttendanceTracking {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java b/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java
+--- a/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java	(revision fee6a277c676a531782f80fc83bd5eeed4698adc)
++++ b/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java	(date 1788775257555)
+@@ -1,4 +1,1106 @@
+ package com.example.app.View;
+ 
+-public class TeacherAttendanceTracking {
+-}
++import javafx.geometry.Insets;
++import javafx.geometry.Pos;
++import javafx.scene.control.Button;
++import javafx.scene.control.Label;
++import javafx.scene.layout.*;
++import javafx.scene.paint.Color;
++import javafx.scene.shape.Circle;
++import javafx.scene.shape.Rectangle;
++import javafx.scene.text.Font;
++import javafx.scene.text.FontWeight;
++
++import java.util.ArrayList;
++import java.util.List;
++
++public class TeacherAttendanceTracking extends BorderPane {
++
++    // ============================================================
++    // VÄRIT
++    // ============================================================
++
++    private static final String NAVY = "#202F49";
++    private static final String BLUE = "#344A70";
++    private static final String LOGO_BLUE = "#536FA4";
++
++    private static final String GREEN = "#409566";
++    private static final String ORANGE = "#D38A20";
++    private static final String RED = "#BD4E3B";
++
++    private static final String BORDER = "#D8D8D8";
++    private static final String MUTED = "#858585";
++    private static final String LIGHT_BLUE = "#EAF0F8";
++
++    // ============================================================
++    // OPISKELIJOIDEN TILAT
++    // ============================================================
++
++    private static final int PRESENT = 1;
++    private static final int LATE = 2;
++    private static final int ABSENT = 3;
++
++    private final List<StudentRow> studentRows = new ArrayList<>();
++
++    private Label presentCount;
++    private Label lateCount;
++    private Label absentCount;
++
++    // ============================================================
++    // CONSTRUCTOR
++    // ============================================================
++
++    public TeacherAttendanceTracking(Runnable onFinish) {
++
++        setStyle(
++                "-fx-background-color: white;"
++        );
++
++        // --------------------------------------------------------
++        // VASEN SIDEBAR
++        // --------------------------------------------------------
++
++        VBox sidebar = createSidebar();
++
++        setLeft(sidebar);
++
++        // --------------------------------------------------------
++        // PÄÄSISÄLTÖ
++        // --------------------------------------------------------
++
++        VBox content = createMainContent(onFinish);
++
++        setCenter(content);
++    }
++
++    // ============================================================
++    // SIDEBAR
++    // ============================================================
++
++    private VBox createSidebar() {
++
++        VBox sidebar = new VBox();
++
++        sidebar.setPrefWidth(159);
++        sidebar.setMinWidth(159);
++        sidebar.setMaxWidth(159);
++
++        sidebar.setStyle(
++                "-fx-background-color: " + NAVY + ";"
++        );
++
++        // --------------------------------------------------------
++        // LOGO
++        // --------------------------------------------------------
++
++        Rectangle logoRectangle = new Rectangle(
++                20,
++                20
++        );
++
++        logoRectangle.setArcWidth(6);
++        logoRectangle.setArcHeight(6);
++
++        logoRectangle.setFill(
++                Color.web(LOGO_BLUE)
++        );
++
++        Label logoText = new Label("LO");
++
++        logoText.setTextFill(Color.WHITE);
++
++        logoText.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        9
++                )
++        );
++
++        StackPane logoBox = new StackPane(
++                logoRectangle,
++                logoText
++        );
++
++        logoBox.setPrefSize(20, 20);
++        logoBox.setMaxSize(20, 20);
++
++        logoBox.setAlignment(
++                Pos.CENTER
++        );
++
++        // --------------------------------------------------------
++        // LÄSNÄOLO
++        // --------------------------------------------------------
++
++        Label applicationName = new Label(
++                "Läsnäolo"
++        );
++
++        applicationName.setTextFill(
++                Color.WHITE
++        );
++
++        applicationName.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        11
++                )
++        );
++
++        HBox logoRow = new HBox(
++                10,
++                logoBox,
++                applicationName
++        );
++
++        logoRow.setAlignment(
++                Pos.CENTER_LEFT
++        );
++
++        logoRow.setPadding(
++                new Insets(
++                        14,
++                        10,
++                        14,
++                        20
++                )
++        );
++
++        // --------------------------------------------------------
++        // SIDEBAR SEPARATOR
++        // --------------------------------------------------------
++
++        Region separator = new Region();
++
++        separator.setPrefHeight(1);
++        separator.setMaxHeight(1);
++
++        separator.setStyle(
++                "-fx-background-color: #2B3A54;"
++        );
++
++        // --------------------------------------------------------
++        // KURSSINI
++        // --------------------------------------------------------
++
++        Circle courseDot = new Circle(
++                2.5,
++                Color.web("#6681B1")
++        );
++
++        Label courseLabel = new Label(
++                "Kurssini"
++        );
++
++        courseLabel.setTextFill(
++                Color.WHITE
++        );
++
++        courseLabel.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        10
++                )
++        );
++
++        HBox courseContent = new HBox(
++                10,
++                courseDot,
++                courseLabel
++        );
++
++        courseContent.setAlignment(
++                Pos.CENTER_LEFT
++        );
++
++        Button courseButton = new Button();
++
++        courseButton.setGraphic(
++                courseContent
++        );
++
++        courseButton.setPrefHeight(22);
++        courseButton.setMinHeight(22);
++        courseButton.setMaxHeight(22);
++
++        courseButton.setMaxWidth(
++                Double.MAX_VALUE
++        );
++
++        courseButton.setAlignment(
++                Pos.CENTER_LEFT
++        );
++
++        courseButton.setStyle(
++                "-fx-background-color: " + BLUE + ";" +
++                        "-fx-background-radius: 4;" +
++                        "-fx-padding: 0 10;"
++        );
++
++        VBox courseContainer = new VBox(
++                courseButton
++        );
++
++        courseContainer.setPadding(
++                new Insets(
++                        16,
++                        14,
++                        0,
++                        14
++                )
++        );
++
++        // --------------------------------------------------------
++        // SIDEBARIN ALAOSA
++        // --------------------------------------------------------
++
++        Region sidebarSpacer = new Region();
++
++        VBox.setVgrow(
++                sidebarSpacer,
++                Priority.ALWAYS
++        );
++
++        Circle userCircle = new Circle(
++                10,
++                Color.web(LOGO_BLUE)
++        );
++
++        Label userInitials = new Label(
++                "MA"
++        );
++
++        userInitials.setTextFill(
++                Color.WHITE
++        );
++
++        userInitials.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        8
++                )
++        );
++
++        StackPane userIcon = new StackPane(
++                userCircle,
++                userInitials
++        );
++
++        userIcon.setPrefSize(20, 20);
++        userIcon.setMaxSize(20, 20);
++
++        Label userName = new Label(
++                "Etunimi Sukunimi"
++        );
++
++        userName.setTextFill(
++                Color.WHITE
++        );
++
++        userName.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        9
++                )
++        );
++
++        Label userRole = new Label(
++                "Opettaja"
++        );
++
++        userRole.setTextFill(
++                Color.web("#9BA8BB")
++        );
++
++        userRole.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.NORMAL,
++                        7
++                )
++        );
++
++        VBox userText = new VBox(
++                0,
++                userName,
++                userRole
++        );
++
++        HBox userBox = new HBox(
++                8,
++                userIcon,
++                userText
++        );
++
++        userBox.setAlignment(
++                Pos.CENTER_LEFT
++        );
++
++        VBox sidebarBottom = new VBox(
++                userBox
++        );
++
++        sidebarBottom.setPadding(
++                new Insets(
++                        0,
++                        10,
++                        12,
++                        14
++                )
++        );
++
++        // --------------------------------------------------------
++        // SIDEBAR KOKONAISUUDESSAAN
++        // --------------------------------------------------------
++
++        sidebar.getChildren().addAll(
++                logoRow,
++                separator,
++                courseContainer,
++                sidebarSpacer,
++                sidebarBottom
++        );
++
++        return sidebar;
++    }
++
++    // ============================================================
++    // MAIN CONTENT
++    // ============================================================
++
++    private VBox createMainContent(
++            Runnable onFinish
++    ) {
++
++        VBox content = new VBox();
++
++        content.setPadding(
++                new Insets(
++                        31,
++                        25,
++                        25,
++                        25
++                )
++        );
++
++        content.setStyle(
++                "-fx-background-color: white;"
++        );
++
++        // --------------------------------------------------------
++        // OTSIKKO
++        // --------------------------------------------------------
++
++        Label title = new Label(
++                "Oppitunti — 16.9.2026"
++        );
++
++        title.setTextFill(
++                Color.web("#171717")
++        );
++
++        title.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        15
++                )
++        );
++
++        // --------------------------------------------------------
++        // TALLENNA JA LOPETA
++        // --------------------------------------------------------
++
++        Button saveButton = new Button(
++                "Tallenna ja lopeta"
++        );
++
++        saveButton.setPrefWidth(102);
++        saveButton.setPrefHeight(24);
++
++        saveButton.setMinWidth(102);
++        saveButton.setMinHeight(24);
++
++        saveButton.setMaxWidth(102);
++        saveButton.setMaxHeight(24);
++
++        saveButton.setTextFill(
++                Color.WHITE
++        );
++
++        saveButton.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        9
++                )
++        );
++
++        saveButton.setStyle(
++                "-fx-background-color: " + NAVY + ";" +
++                        "-fx-background-radius: 3;"
++        );
++
++        saveButton.setOnAction(event -> {
++
++            /*
++             * Tähän voidaan myöhemmin lisätä tietokantaan
++             * tallentaminen.
++             */
++
++            if (onFinish != null) {
++                onFinish.run();
++            }
++        });
++
++        Region titleSpacer = new Region();
++
++        HBox.setHgrow(
++                titleSpacer,
++                Priority.ALWAYS
++        );
++
++        HBox titleRow = new HBox(
++                title,
++                titleSpacer,
++                saveButton
++        );
++
++        titleRow.setAlignment(
++                Pos.CENTER_LEFT
++        );
++
++        // --------------------------------------------------------
++        // TYHJÄ TILA
++        // --------------------------------------------------------
++
++        Region topSpace = new Region();
++
++        topSpace.setPrefHeight(34);
++        topSpace.setMinHeight(34);
++
++        // --------------------------------------------------------
++        // OPISKELIJOIDEN KORTTI
++        // --------------------------------------------------------
++
++        VBox attendanceCard =
++                createAttendanceCard();
++
++        HBox cardWrapper = new HBox(
++                attendanceCard
++        );
++
++        cardWrapper.setMaxWidth(
++                Double.MAX_VALUE
++        );
++
++        VBox.setVgrow(
++                cardWrapper,
++                Priority.NEVER
++        );
++
++        // --------------------------------------------------------
++        // MAIN CONTENT
++        // --------------------------------------------------------
++
++        content.getChildren().addAll(
++                titleRow,
++                topSpace,
++                cardWrapper
++        );
++
++        return content;
++    }
++
++    // ============================================================
++    // ATTENDANCE CARD
++    // ============================================================
++
++    private VBox createAttendanceCard() {
++
++        VBox card = new VBox();
++
++        card.setPrefWidth(647);
++        card.setMaxWidth(
++                Double.MAX_VALUE
++        );
++
++        card.setStyle(
++                "-fx-background-color: white;" +
++                        "-fx-border-color: " + BORDER + ";" +
++                        "-fx-border-radius: 14;" +
++                        "-fx-background-radius: 14;"
++        );
++
++        // --------------------------------------------------------
++        // HEADER
++        // --------------------------------------------------------
++
++        Label studentHeader = new Label(
++                "Opiskelijat (7)"
++        );
++
++        studentHeader.setTextFill(
++                Color.web("#333333")
++        );
++
++        studentHeader.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        9
++                )
++        );
++
++        presentCount = createCountLabel();
++        lateCount = createCountLabel();
++        absentCount = createCountLabel();
++
++        HBox counts = new HBox(
++                26,
++                presentCount,
++                lateCount,
++                absentCount
++        );
++
++        counts.setAlignment(
++                Pos.CENTER_RIGHT
++        );
++
++        Region headerSpacer = new Region();
++
++        HBox.setHgrow(
++                headerSpacer,
++                Priority.ALWAYS
++        );
++
++        HBox header = new HBox(
++                studentHeader,
++                headerSpacer,
++                counts
++        );
++
++        header.setAlignment(
++                Pos.CENTER_LEFT
++        );
++
++        header.setPadding(
++                new Insets(
++                        0,
++                        15,
++                        0,
++                        23
++                )
++        );
++
++        header.setPrefHeight(30);
++        header.setMinHeight(30);
++        header.setMaxHeight(30);
++
++        // --------------------------------------------------------
++        // HEADER LINE
++        // --------------------------------------------------------
++
++        Region headerLine = new Region();
++
++        headerLine.setPrefHeight(1);
++        headerLine.setMaxHeight(1);
++
++        headerLine.setStyle(
++                "-fx-background-color: " + BORDER + ";"
++        );
++
++        card.getChildren().addAll(
++                header,
++                headerLine
++        );
++
++        // --------------------------------------------------------
++        // OPISKELIJAT
++        // --------------------------------------------------------
++
++        String[] names = {
++                "Etunimi Sukunimi",
++                "Etunimi Sukunimi",
++                "Etunimi Sukunimi",
++                "Etunimi Sukunimi",
++                "Etunimi Sukunimi",
++                "Etunimi Sukunimi",
++                "Etunimi Sukunimi"
++        };
++
++        /*
++         * Kuvan mukainen lähtötilanne:
++         *
++         * 1. Paikalla
++         * 2. Paikalla
++         * 3. Myöhässä
++         * 4. Poissa
++         * 5. Paikalla
++         * 6. Paikalla
++         * 7. Paikalla
++         */
++
++        int[] states = {
++                PRESENT,
++                PRESENT,
++                LATE,
++                ABSENT,
++                PRESENT,
++                PRESENT,
++                PRESENT
++        };
++
++        for (int i = 0; i < names.length; i++) {
++
++            StudentRow row = new StudentRow(
++                    names[i],
++                    states[i]
++            );
++
++            studentRows.add(row);
++
++            card.getChildren().add(
++                    row.getRow()
++            );
++        }
++
++        updateCounters();
++
++        return card;
++    }
++
++    // ============================================================
++    // COUNT LABEL
++    // ============================================================
++
++    private Label createCountLabel() {
++
++        Label label = new Label();
++
++        label.setTextFill(
++                Color.web("#666666")
++        );
++
++        label.setFont(
++                Font.font(
++                        "System",
++                        FontWeight.BOLD,
++                        9
++                )
++        );
++
++        return label;
++    }
++
++    // ============================================================
++    // PÄIVITÄ LUKUMÄÄRÄT
++    // ============================================================
++
++    private void updateCounters() {
++
++        int present = 0;
++        int late = 0;
++        int absent = 0;
++
++        for (StudentRow row : studentRows) {
++
++            if (row.getState() == PRESENT) {
++                present++;
++            }
++
++            else if (row.getState() == LATE) {
++                late++;
++            }
++
++            else if (row.getState() == ABSENT) {
++                absent++;
++            }
++        }
++
++        presentCount.setText(
++                present + " Paikalla"
++        );
++
++        lateCount.setText(
++                late + " Myöhässä"
++        );
++
++        absentCount.setText(
++                absent + " Poissa"
++        );
++    }
++
++    // ============================================================
++    // STUDENT ROW
++    // ============================================================
++
++    private class StudentRow {
++
++        private final String name;
++
++        private int state;
++
++        private final HBox row;
++
++        private final Button presentButton;
++        private final Button lateButton;
++        private final Button absentButton;
++
++        // --------------------------------------------------------
++        // CONSTRUCTOR
++        // --------------------------------------------------------
++
++        StudentRow(
++                String name,
++                int initialState
++        ) {
++
++            this.name = name;
++            this.state = initialState;
++
++            // ----------------------------------------------------
++            // AVATAR
++            // ----------------------------------------------------
++
++            Circle avatarCircle = new Circle(
++                    10,
++                    Color.web(LIGHT_BLUE)
++            );
++
++            Label initials = new Label(
++                    "MA"
++            );
++
++            initials.setTextFill(
++                    Color.web("#4C6D9D")
++            );
++
++            initials.setFont(
++                    Font.font(
++                            "System",
++                            FontWeight.BOLD,
++                            8
++                    )
++            );
++
++            StackPane avatar = new StackPane(
++                    avatarCircle,
++                    initials
++            );
++
++            avatar.setPrefSize(20, 20);
++            avatar.setMinSize(20, 20);
++            avatar.setMaxSize(20, 20);
++
++            // ----------------------------------------------------
++            // OPISKELIJAN NIMI
++            // ----------------------------------------------------
++
++            Label nameLabel = new Label(
++                    name
++            );
++
++            nameLabel.setTextFill(
++                    Color.web("#333333")
++            );
++
++            nameLabel.setFont(
++                    Font.font(
++                            "System",
++                            FontWeight.BOLD,
++                            9
++                    )
++            );
++
++            Label roleLabel = new Label(
++                    "Opiskelija"
++            );
++
++            roleLabel.setTextFill(
++                    Color.web("#888888")
++            );
++
++            roleLabel.setFont(
++                    Font.font(
++                            "System",
++                            FontWeight.NORMAL,
++                            7
++                    )
++            );
++
++            VBox studentInfo = new VBox(
++                    0,
++                    nameLabel,
++                    roleLabel
++            );
++
++            studentInfo.setAlignment(
++                    Pos.CENTER_LEFT
++            );
++
++            // ----------------------------------------------------
++            // STUDENT INFO
++            // ----------------------------------------------------
++
++            HBox student = new HBox(
++                    10,
++                    avatar,
++                    studentInfo
++            );
++
++            student.setAlignment(
++                    Pos.CENTER_LEFT
++            );
++
++            // ----------------------------------------------------
++            // NAPIT
++            // ----------------------------------------------------
++
++            presentButton =
++                    createStatusButton(
++                            "Paikalla"
++                    );
++
++            lateButton =
++                    createStatusButton(
++                            "Myöhässä"
++                    );
++
++            absentButton =
++                    createStatusButton(
++                            "Poissa"
++                    );
++
++            // ----------------------------------------------------
++            // BUTTON ACTIONS
++            // ----------------------------------------------------
++
++            presentButton.setOnAction(
++                    event -> setState(PRESENT)
++            );
++
++            lateButton.setOnAction(
++                    event -> setState(LATE)
++            );
++
++            absentButton.setOnAction(
++                    event -> setState(ABSENT)
++            );
++
++            // ----------------------------------------------------
++            // BUTTON CONTAINER
++            // ----------------------------------------------------
++
++            HBox buttons = new HBox(
++                    5,
++                    presentButton,
++                    lateButton,
++                    absentButton
++            );
++
++            buttons.setAlignment(
++                    Pos.CENTER_RIGHT
++            );
++
++            // ----------------------------------------------------
++            // SPACER
++            // ----------------------------------------------------
++
++            Region spacer = new Region();
++
++            HBox.setHgrow(
++                    spacer,
++                    Priority.ALWAYS
++            );
++
++            // ----------------------------------------------------
++            // ROW
++            // ----------------------------------------------------
++
++            row = new HBox(
++                    student,
++                    spacer,
++                    buttons
++            );
++
++            row.setAlignment(
++                    Pos.CENTER_LEFT
++            );
++
++            row.setPadding(
++                    new Insets(
++                            0,
++                            15,
++                            0,
++                            13
++                    )
++            );
++
++            row.setPrefHeight(38);
++            row.setMinHeight(38);
++            row.setMaxHeight(38);
++
++            row.setStyle(
++                    "-fx-border-color: transparent transparent "
++                            + BORDER + " transparent;"
++            );
++
++            updateButtonStyles();
++        }
++
++        // --------------------------------------------------------
++        // STATUS BUTTON
++        // --------------------------------------------------------
++
++        private Button createStatusButton(
++                String text
++        ) {
++
++            Button button = new Button(
++                    text
++            );
++
++            button.setPrefWidth(68);
++            button.setPrefHeight(17);
++
++            button.setMinWidth(68);
++            button.setMinHeight(17);
++
++            button.setMaxWidth(68);
++            button.setMaxHeight(17);
++
++            button.setFont(
++                    Font.font(
++                            "System",
++                            FontWeight.NORMAL,
++                            8
++                    )
++            );
++
++            return button;
++        }
++
++        // --------------------------------------------------------
++        // SET STATE
++        // --------------------------------------------------------
++
++        private void setState(
++                int newState
++        ) {
++
++            state = newState;
++
++            updateButtonStyles();
++
++            updateCounters();
++        }
++
++        // --------------------------------------------------------
++        // GET STATE
++        // --------------------------------------------------------
++
++        private int getState() {
++
++            return state;
++        }
++
++
++        // GET ROW
++
++
++        private HBox getRow() {
++
++            return row;
++        }
++
++
++        // BUTTON STYLES
++
++
++        private void updateButtonStyles() {
++
++            // PAikalla //
++
++
++            if (state == PRESENT) {
++
++                presentButton.setStyle(
++                        "-fx-background-color: " + GREEN + ";" +
++                                "-fx-text-fill: white;" +
++                                "-fx-background-radius: 10;" +
++                                "-fx-border-radius: 10;" +
++                                "-fx-font-weight: bold;"
++                );
++
++            } else {
++
++                presentButton.setStyle(
++                        "-fx-background-color: white;" +
++                                "-fx-text-fill: #777777;" +
++                                "-fx-border-color: #D8D8D8;" +
++                                "-fx-border-width: 1;" +
++                                "-fx-background-radius: 10;" +
++                                "-fx-border-radius: 10;"
++                );
++            }
++
++
++            // MYÖHÄSSÄ //
++
++
++            if (state == LATE) {
++
++                lateButton.setStyle(
++                        "-fx-background-color: " + ORANGE + ";" +
++                                "-fx-text-fill: white;" +
++                                "-fx-background-radius: 10;" +
++                                "-fx-border-radius: 10;" +
++                                "-fx-font-weight: bold;"
++                );
++
++            } else {
++
++                lateButton.setStyle(
++                        "-fx-background-color: white;" +
++                                "-fx-text-fill: #777777;" +
++                                "-fx-border-color: #D8D8D8;" +
++                                "-fx-border-width: 1;" +
++                                "-fx-background-radius: 10;" +
++                                "-fx-border-radius: 10;"
++                );
++            }
++
++
++            // POISSA //
++
++
++            if (state == ABSENT) {
++
++                absentButton.setStyle(
++                        "-fx-background-color: " + RED + ";" +
++                                "-fx-text-fill: white;" +
++                                "-fx-background-radius: 10;" +
++                                "-fx-border-radius: 10;" +
++                                "-fx-font-weight: bold;"
++                );
++
++            } else {
++
++                absentButton.setStyle(
++                        "-fx-background-color: white;" +
++                                "-fx-text-fill: #777777;" +
++                                "-fx-border-color: #D8D8D8;" +
++                                "-fx-border-width: 1;" +
++                                "-fx-background-radius: 10;" +
++                                "-fx-border-radius: 10;"
++                );
++            }
++        }
++    }
++}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4\" name=\"Changes\" comment=\"view, controller, model kansio lisäty 2\">\r\n      <change afterPath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaAalkusivu.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaKurssi.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaLasnaolaMerkinta.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpiskelijAalkusivu.java\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpiskelijaLäsnäoloSeuranta.java\" beforeDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"EmbeddingIndexingInfo\">\r\n    <option name=\"cachedIndexableFilesCount\" value=\"15\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n        <option value=\"FxmlFile\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Andrei1033&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git&quot;,\r\n    &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;\r\n  }\r\n}</component>\r\n  <component name=\"McpProjectServerCommands\">\r\n    <commands />\r\n    <urls />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"3I7bkS2QKVzIEsDJmlsutnlLVIh\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;Application.HelloWorldApplication.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.PageShow.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.main.executor&quot;: &quot;Run&quot;,\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,\r\n    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\andre\\Documents\\metropolia_tehtavat\\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\\Classroom_Attendance_System\\src\\main\\java\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\andre\\Documents\\metropolia_tehtavat\\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\" />\r\n      <recent name=\"C:\\Users\\andre\\Documents\\metropolia_tehtavat\\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\\Classroom_Attendance_System\\Kaaviot\" />\r\n      <recent name=\"C:\\Users\\andre\\Documents\\metropolia_tehtavat\\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\\Classroom_Attendance_System\\Documents\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\r\n      <module name=\"-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\r\n      <module name=\"-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\" />\r\n      <option name=\"filePath\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4\" name=\"Changes\" comment=\"\" />\r\n      <created>1787118696699</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1787118696699</updated>\r\n      <workItem from=\"1787118697756\" duration=\"161000\" />\r\n      <workItem from=\"1787220651549\" duration=\"15000\" />\r\n      <workItem from=\"1787220695805\" duration=\"2304000\" />\r\n      <workItem from=\"1787223066079\" duration=\"40000\" />\r\n      <workItem from=\"1787400881700\" duration=\"42000\" />\r\n      <workItem from=\"1787401313953\" duration=\"39000\" />\r\n      <workItem from=\"1788172789270\" duration=\"1630000\" />\r\n      <workItem from=\"1788609144410\" duration=\"1447000\" />\r\n      <workItem from=\"1788610693123\" duration=\"1753000\" />\r\n      <workItem from=\"1788612955069\" duration=\"3721000\" />\r\n      <workItem from=\"1788713575855\" duration=\"1090000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Java fx now work.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1787221881772</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1787221881772</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"...\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1787222960357</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1787222960357</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Documents\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1788173169922</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1788173169922</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Kaaviot\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1788173410503</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1788173410503</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"refactor\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1788174444629</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1788174444629</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"view, controller, model kansio lisäty\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1788607567674</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1788607567674</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"view, controller, model kansio lisäty 2\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1788608943948</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1788608943948</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"8\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Java fx now work.\" />\r\n    <MESSAGE value=\"...\" />\r\n    <MESSAGE value=\"Documents\" />\r\n    <MESSAGE value=\"Kaaviot\" />\r\n    <MESSAGE value=\"refactor\" />\r\n    <MESSAGE value=\"view, controller, model kansio lisäty\" />\r\n    <MESSAGE value=\"view, controller, model kansio lisäty 2\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"view, controller, model kansio lisäty 2\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/org/example/Main.java</url>\r\n          <line>13</line>\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision fee6a277c676a531782f80fc83bd5eeed4698adc)
++++ b/.idea/workspace.xml	(date 1788937691010)
+@@ -5,16 +5,13 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="view, controller, model kansio lisäty 2">
+-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaAalkusivu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaKurssi.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpetajaLasnaolaMerkinta.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpiskelijAalkusivu.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/OpiskelijaLäsnäoloSeuranta.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/Java_fx_Testi/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/Java_fx_Testi/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/Java_fx_Testi/Main.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/PageShow$App.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/PageShow$App.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherAttendanceTracking.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherAttendanceTracking.class" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -44,7 +41,7 @@
+   <component name="GithubPullRequestsUISettings">{
+   &quot;selectedUrlAndAccountId&quot;: {
+     &quot;url&quot;: &quot;https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git&quot;,
+-    &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;
++    &quot;accountId&quot;: &quot;1bdc759c-447f-4c33-b8b9-4c4d82b6b324&quot;
+   }
+ }</component>
+   <component name="McpProjectServerCommands">
+@@ -63,6 +60,7 @@
+   &quot;keyToString&quot;: {
+     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+     &quot;Application.HelloWorldApplication.executor&quot;: &quot;Run&quot;,
++    &quot;Application.Lasnaolo.executor&quot;: &quot;Run&quot;,
+     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+     &quot;Application.PageShow.executor&quot;: &quot;Run&quot;,
+     &quot;Application.main.executor&quot;: &quot;Run&quot;,
+@@ -86,6 +84,7 @@
+     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;Runtime.Targets.Configurable&quot;,
+     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+@@ -99,6 +98,9 @@
+       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\Kaaviot" />
+       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\Documents" />
+     </key>
++    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
++      <recent name="com.example.app" />
++    </key>
+   </component>
+   <component name="RunManager">
+     <configuration default="true" type="JetRunConfigurationType">
+@@ -116,8 +118,8 @@
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
++        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.33813.55" />
++        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.33813.55" />
+       </set>
+     </attachedChunks>
+   </component>
+@@ -139,6 +141,8 @@
+       <workItem from="1788610693123" duration="1753000" />
+       <workItem from="1788612955069" duration="3721000" />
+       <workItem from="1788713575855" duration="1090000" />
++      <workItem from="1788774693358" duration="6499000" />
++      <workItem from="1788937683706" duration="8000" />
+     </task>
+     <task id="LOCAL-00001" summary="Java fx now work.">
+       <option name="closed" value="true" />
+Index: Classroom_Attendance_System/src/main/java/Java_fx_Testi/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Java_fx_Testi;\r\n\r\n\r\npublic class Main {\r\n    public static void main(String[] args) {\r\n        System.out.printf(\"Hello and welcome!\");\r\n        HelloWorldApplication.launch(HelloWorldApplication.class);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Classroom_Attendance_System/src/main/java/Java_fx_Testi/Main.java b/Classroom_Attendance_System/src/main/java/Java_fx_Testi/Main.java
+--- a/Classroom_Attendance_System/src/main/java/Java_fx_Testi/Main.java	(revision fee6a277c676a531782f80fc83bd5eeed4698adc)
++++ b/Classroom_Attendance_System/src/main/java/Java_fx_Testi/Main.java	(date 1788726921710)
+@@ -1,9 +1,0 @@
+-package Java_fx_Testi;
+-
+-
+-public class Main {
+-    public static void main(String[] args) {
+-        System.out.printf("Hello and welcome!");
+-        HelloWorldApplication.launch(HelloWorldApplication.class);
+-    }
+-}
+\ No newline at end of file
