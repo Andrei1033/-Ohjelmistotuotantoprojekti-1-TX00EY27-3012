@@ -150,7 +150,6 @@ public class PageShow {
             );
         }
 
-
         private void openStudentAttendanceTracking() {
 
             // TODO:
@@ -184,12 +183,14 @@ public class PageShow {
 
         private void openTeacherAttendanceTracking() {
 
-            // TODO:
-            // Tehdään myöhemmin opiskelijan tietosivu.
+            TeacherAttendanceTracking view =
+                    new TeacherAttendanceTracking(
+                            this::openTeacherStartPage
+                    );
 
-            System.out.println("openTeacherAttendanceTracking puututuu vielä.");
-
-            openStudentStartPage();
+            stage.setScene(
+                    new Scene(view, 1024, 399)
+            );
         }
 
         private void openAdminPage() {
