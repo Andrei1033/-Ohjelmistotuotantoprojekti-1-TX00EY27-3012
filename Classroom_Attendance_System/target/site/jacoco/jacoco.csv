@@ -1,0 +1,25 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Classroom_Attendance_System,com.example.app.Model,Course,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Model,Lesson,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Model,Student,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Model,Presence,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Model,Admin,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Model,Teacher,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.View,PageShow,81,0,2,0,32,0,3,0,2,0
+Classroom_Attendance_System,com.example.app.View,StudentAttendanceTracking,591,0,0,0,111,0,4,0,4,0
+Classroom_Attendance_System,com.example.app.View,StudentStartPage,422,0,0,0,67,0,4,0,4,0
+Classroom_Attendance_System,com.example.app.View,PageShow.SelectedPage,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.View,TeacherCoursePage,551,0,2,0,88,0,8,0,7,0
+Classroom_Attendance_System,com.example.app.View,PageShow.App,183,0,8,0,54,0,17,0,10,0
+Classroom_Attendance_System,com.example.app.View,Login,315,0,0,0,55,0,4,0,4,0
+Classroom_Attendance_System,com.example.app.View,TeacherAttendanceTracking,70,0,0,0,22,0,3,0,3,0
+Classroom_Attendance_System,com.example.app.View,Admin,0,379,0,0,0,67,0,2,0,2
+Classroom_Attendance_System,com.example.app.View,TeacherStartPage,422,0,0,0,67,0,4,0,4,0
+Classroom_Attendance_System,com.example.app,Main,27,0,0,0,9,0,3,0,3,0
+Classroom_Attendance_System,Java_fx_Testi,Main,14,0,0,0,4,0,2,0,2,0
+Classroom_Attendance_System,Java_fx_Testi,HelloWorldApplication,76,0,0,0,17,0,3,0,3,0
+Classroom_Attendance_System,Java_fx_Testi,HelloWorldApplication.new EventHandler() {...},16,0,0,0,3,0,2,0,2,0
+Classroom_Attendance_System,com.example.app.Controller,LoginController,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Controller,AdminController,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Controller,TeacherController,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Controller,StudentController,3,0,0,0,1,0,1,0,1,0
