@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PageShow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Classroom_Attendance_System</a> &gt; <a href="index.source.html" class="el_package">com.example.app.View</a> &gt; <span class="el_source">PageShow.java</span></div><h1>PageShow.java</h1><pre class="source lang-java linenums">/* Temporary file for testing purposes. This file will be deleted in the future. */
+/* only for ui debug*/
+
+package com.example.app.View;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.util.Scanner;
+
+<span class="nc" id="L12">public class PageShow {</span>
+
+    public static void main(String[] args) {
+
+<span class="nc" id="L16">        Scanner scanner = new Scanner(System.in);</span>
+
+<span class="nc" id="L18">        System.out.println(&quot;=================================&quot;);</span>
+<span class="nc" id="L19">        System.out.println(&quot;      Läsänolojärjestelmä&quot;);</span>
+<span class="nc" id="L20">        System.out.println(&quot;=================================&quot;);</span>
+<span class="nc" id="L21">        System.out.println();</span>
+<span class="nc" id="L22">        System.out.println(&quot;Valitse avattava sivu:&quot;);</span>
+<span class="nc" id="L23">        System.out.println();</span>
+<span class="nc" id="L24">        System.out.println(&quot;1 - Login&quot;);</span>
+<span class="nc" id="L25">        System.out.println(&quot;2 - StudentStartPage&quot;);</span>
+<span class="nc" id="L26">        System.out.println(&quot;3 - StudentAttendanceTracking&quot;);</span>
+<span class="nc" id="L27">        System.out.println(&quot;4 - TeacherStartPage&quot;);</span>
+<span class="nc" id="L28">        System.out.println(&quot;5 - TeacherCoursePage&quot;);</span>
+<span class="nc" id="L29">        System.out.println(&quot;6 - TeacherAttendanceTracking&quot;);</span>
+<span class="nc" id="L30">        System.out.println(&quot;7 - Admin&quot;);</span>
+<span class="nc" id="L31">        System.out.println(&quot;0 - Lopeta&quot;);</span>
+<span class="nc" id="L32">        System.out.println();</span>
+
+<span class="nc" id="L34">        System.out.print(&quot;Valinta: &quot;);</span>
+
+        int page;
+
+        try {
+<span class="nc" id="L39">            page = Integer.parseInt(scanner.nextLine());</span>
+<span class="nc" id="L40">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L41">            System.out.println(&quot;Virheellinen valinta.&quot;);</span>
+<span class="nc" id="L42">            scanner.close();</span>
+<span class="nc" id="L43">            return;</span>
+<span class="nc" id="L44">        }</span>
+
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (page == 0) {</span>
+<span class="nc" id="L47">            System.out.println(&quot;Ohjelma lopetetaan.&quot;);</span>
+<span class="nc" id="L48">            scanner.close();</span>
+<span class="nc" id="L49">            return;</span>
+        }
+
+        // Tallennetaan valittu sivu JavaFX:lle
+<span class="nc" id="L53">        SelectedPage.page = page;</span>
+
+<span class="nc" id="L55">        scanner.close();</span>
+
+        // Käynnistetään JavaFX
+<span class="nc" id="L58">        Application.launch(App.class, args);</span>
+<span class="nc" id="L59">    }</span>
+
+
+    // Säilyttää Mainissa tehdyn sivuvalinnan
+<span class="nc" id="L63">    public static class SelectedPage {</span>
+        public static int page;
+    }
+
+
+<span class="nc" id="L68">    public static class App extends Application {</span>
+
+        private Stage stage;
+
+        @Override
+        public void start(Stage stage) {
+
+<span class="nc" id="L75">            this.stage = stage;</span>
+
+<span class="nc" id="L77">            stage.setTitle(&quot;Läsnäolo&quot;);</span>
+<span class="nc" id="L78">            stage.setResizable(false);</span>
+
+<span class="nc" id="L80">            openSelectedPage();</span>
+
+<span class="nc" id="L82">            stage.show();</span>
+<span class="nc" id="L83">        }</span>
+
+
+        private void openSelectedPage() {
+
+<span class="nc bnc" id="L88" title="All 8 branches missed.">            switch (SelectedPage.page) {</span>
+
+                case 1:
+<span class="nc" id="L91">                    openLogin();</span>
+<span class="nc" id="L92">                    break;</span>
+
+                case 2:
+<span class="nc" id="L95">                    openStudentStartPage();</span>
+<span class="nc" id="L96">                    break;</span>
+
+                case 3:
+<span class="nc" id="L99">                    openStudentAttendanceTracking();</span>
+<span class="nc" id="L100">                    break;</span>
+
+                case 4:
+<span class="nc" id="L103">                    openTeacherStartPage();</span>
+<span class="nc" id="L104">                    break;</span>
+
+                case 5:
+<span class="nc" id="L107">                    openTeacherCoursePage();</span>
+<span class="nc" id="L108">                    break;</span>
+
+                case 6:
+<span class="nc" id="L111">                    openTeacherAttendanceTracking();</span>
+<span class="nc" id="L112">                    break;</span>
+
+                case 7:
+<span class="nc" id="L115">                    openAdminPage();</span>
+<span class="nc" id="L116">                    break;</span>
+
+                default:
+<span class="nc" id="L119">                    System.out.println(</span>
+                            &quot;Tätä sivua ei ole vielä tehty: &quot;
+                                    + SelectedPage.page
+                    );
+
+                    // Debuggausta varten avataan kirjautumissivu
+<span class="nc" id="L125">                    openLogin();</span>
+                    break;
+            }
+<span class="nc" id="L128">        }</span>
+
+
+        private void openLogin() {
+
+<span class="nc" id="L133">            Login view = new Login(</span>
+                    this::openLogin
+            );
+
+<span class="nc" id="L137">            stage.setScene(</span>
+                    new Scene(view, 1024, 399)
+            );
+<span class="nc" id="L140">        }</span>
+
+
+        private void openStudentStartPage() {
+
+<span class="nc" id="L145">            StudentStartPage view = new StudentStartPage(</span>
+                    this::openStudentStartPage
+            );
+
+<span class="nc" id="L149">            stage.setScene(</span>
+                    new Scene(view, 1024, 399)
+            );
+<span class="nc" id="L152">        }</span>
+
+
+        private void openStudentAttendanceTracking() {
+
+<span class="nc" id="L157">            StudentAttendanceTracking view = new StudentAttendanceTracking(</span>
+                    this::openStudentStartPage
+            );
+
+<span class="nc" id="L161">            stage.setScene(</span>
+                    new Scene(view, 1024, 399)
+            );
+<span class="nc" id="L164">        }</span>
+
+
+        private void openTeacherStartPage() {
+
+<span class="nc" id="L169">            TeacherStartPage view = new TeacherStartPage(</span>
+                    this::openTeacherStartPage
+            );
+
+<span class="nc" id="L173">            stage.setScene(</span>
+                    new Scene(view, 1024, 399)
+            );
+<span class="nc" id="L176">        }</span>
+
+        private void openTeacherCoursePage() {
+
+<span class="nc" id="L180">            TeacherCoursePage view = new TeacherCoursePage(</span>
+                    this::openTeacherStartPage
+            );
+
+<span class="nc" id="L184">            stage.setScene(</span>
+                    new Scene(view, 1024, 399)
+            );
+<span class="nc" id="L187">        }</span>
+
+        private void openTeacherAttendanceTracking() {
+
+<span class="nc" id="L191">            TeacherAttendanceTracking view =</span>
+                    new TeacherAttendanceTracking(
+                            this::openTeacherStartPage
+                    );
+
+<span class="nc" id="L196">            Scene scene = new Scene(view, 1400, 900);</span>
+
+<span class="nc" id="L198">            stage.setScene(scene);</span>
+
+            // Vähimmäiskoko, johon asti sisältö skaalautuu pienemmäksi.
+            // Alle tämän ikkunaa ei voi pienentää.
+<span class="nc" id="L202">            stage.setMinWidth(875);</span>
+<span class="nc" id="L203">            stage.setMinHeight(560);</span>
+
+            // Oletuskoko
+<span class="nc" id="L206">            stage.setWidth(1400);</span>
+<span class="nc" id="L207">            stage.setHeight(900);</span>
+
+<span class="nc" id="L209">            stage.centerOnScreen();</span>
+
+            // Ikkunan koon muuttaminen on sallittu — kaikki elementit
+            // skaalautuvat automaattisesti bindingien ansiosta.
+<span class="nc" id="L213">            stage.setResizable(true);</span>
+<span class="nc" id="L214">        }</span>
+
+        private void openAdminPage() {
+
+<span class="nc" id="L218">            Admin view = new Admin(</span>
+            );
+
+<span class="nc" id="L221">            stage.setScene(</span>
+<span class="nc" id="L222">                    new Scene(view.getView(), 1024, 399)</span>
+            );
+<span class="nc" id="L224">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

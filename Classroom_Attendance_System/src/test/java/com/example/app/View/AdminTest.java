@@ -1,5 +1,6 @@
-package view;
+package com.example.app.View;
 
+import com.example.app.View.Admin;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;

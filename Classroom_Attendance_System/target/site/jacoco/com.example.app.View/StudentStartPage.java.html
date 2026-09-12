@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StudentStartPage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Classroom_Attendance_System</a> &gt; <a href="index.source.html" class="el_package">com.example.app.View</a> &gt; <span class="el_source">StudentStartPage.java</span></div><h1>StudentStartPage.java</h1><pre class="source lang-java linenums">package com.example.app.View;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
+public class StudentStartPage extends BorderPane {
+
+    private static final String NAVY = &quot;#202F49&quot;;
+    private static final String BLUE = &quot;#344A70&quot;;
+
+<span class="nc" id="L18">    public StudentStartPage(Runnable onLogout) {</span>
+<span class="nc" id="L19">        setStyle(&quot;-fx-background-color: white;&quot;);</span>
+
+<span class="nc" id="L21">        VBox sidebar = new VBox();</span>
+<span class="nc" id="L22">        sidebar.setPrefWidth(158);</span>
+<span class="nc" id="L23">        sidebar.setPadding(new Insets(12, 14, 10, 10));</span>
+<span class="nc" id="L24">        sidebar.setStyle(&quot;-fx-background-color: &quot; + NAVY + &quot;;&quot;);</span>
+
+<span class="nc" id="L26">        HBox brand = new HBox(9);</span>
+<span class="nc" id="L27">        brand.setAlignment(Pos.CENTER_LEFT);</span>
+
+<span class="nc" id="L29">        Circle logo = new Circle(10, Color.web(&quot;#536FA4&quot;));</span>
+<span class="nc" id="L30">        Label lo = new Label(&quot;LO&quot;);</span>
+<span class="nc" id="L31">        lo.setTextFill(Color.WHITE);</span>
+<span class="nc" id="L32">        lo.setFont(Font.font(&quot;System&quot;, FontWeight.BOLD, 9));</span>
+<span class="nc" id="L33">        StackPane logoBox = new StackPane(logo, lo);</span>
+<span class="nc" id="L34">        logoBox.setPrefSize(20, 20);</span>
+
+<span class="nc" id="L36">        Label brandText = text(&quot;Läsnäolo&quot;, 11, FontWeight.BOLD, &quot;#FFFFFF&quot;);</span>
+<span class="nc" id="L37">        brand.getChildren().addAll(logoBox, brandText);</span>
+
+<span class="nc" id="L39">        Button courses = new Button(&quot;•   Omat kurssit&quot;);</span>
+<span class="nc" id="L40">        courses.setPrefHeight(22);</span>
+<span class="nc" id="L41">        courses.setMaxWidth(Double.MAX_VALUE);</span>
+<span class="nc" id="L42">        courses.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="nc" id="L43">        courses.setStyle(&quot;-fx-background-color: #344A70; -fx-text-fill: white; &quot;</span>
+                + &quot;-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4;&quot;);
+<span class="nc" id="L45">        courses.setFocusTraversable(false);</span>
+
+<span class="nc" id="L47">        Region sideSpacer = new Region();</span>
+<span class="nc" id="L48">        VBox.setVgrow(sideSpacer, Priority.ALWAYS);</span>
+
+<span class="nc" id="L50">        HBox user = new HBox(7);</span>
+<span class="nc" id="L51">        user.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="nc" id="L52">        Circle avatar = new Circle(10, Color.web(&quot;#536FA4&quot;));</span>
+<span class="nc" id="L53">        Label initials = text(&quot;MA&quot;, 8, FontWeight.BOLD, &quot;#FFFFFF&quot;);</span>
+<span class="nc" id="L54">        StackPane avatarBox = new StackPane(avatar, initials);</span>
+<span class="nc" id="L55">        avatarBox.setPrefSize(20, 20);</span>
+
+<span class="nc" id="L57">        VBox userInfo = new VBox(0,</span>
+<span class="nc" id="L58">                text(&quot;Etunimi Sukunimi&quot;, 8, FontWeight.BOLD, &quot;#FFFFFF&quot;),</span>
+<span class="nc" id="L59">                text(&quot;Opiskelija&quot;, 6, FontWeight.NORMAL, &quot;#A9B0BD&quot;)</span>
+        );
+<span class="nc" id="L61">        user.getChildren().addAll(avatarBox, userInfo);</span>
+
+<span class="nc" id="L63">        sidebar.getChildren().addAll(brand, new Region(), courses, sideSpacer, user);</span>
+
+<span class="nc" id="L65">        VBox content = new VBox(0);</span>
+<span class="nc" id="L66">        content.setPadding(new Insets(41, 30, 20, 31));</span>
+
+<span class="nc" id="L68">        Label heading = text(&quot;Omat kurssit&quot;, 15, FontWeight.BOLD, &quot;#171717&quot;);</span>
+<span class="nc" id="L69">        Label intro = text(&quot;Sinulla on 3 kurssia tällä lukukaudella.&quot;, 8, FontWeight.BOLD, &quot;#171717&quot;);</span>
+
+<span class="nc" id="L71">        VBox headingBox = new VBox(2, heading, intro);</span>
+<span class="nc" id="L72">        headingBox.setPadding(new Insets(0, 0, 18, 0));</span>
+
+<span class="nc" id="L74">        HBox cards = new HBox(22);</span>
+<span class="nc" id="L75">        cards.getChildren().addAll(</span>
+<span class="nc" id="L76">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;),</span>
+<span class="nc" id="L77">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;),</span>
+<span class="nc" id="L78">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;)</span>
+        );
+
+<span class="nc" id="L81">        content.getChildren().addAll(headingBox, cards);</span>
+
+        // UI-only logout navigation for previewing both screens.
+<span class="nc" id="L84">        Button logout = new Button(&quot;Kirjaudu ulos&quot;);</span>
+<span class="nc" id="L85">        logout.setVisible(false);</span>
+<span class="nc" id="L86">        logout.setOnAction(e -&gt; onLogout.run());</span>
+
+<span class="nc" id="L88">        setLeft(sidebar);</span>
+<span class="nc" id="L89">        setCenter(content);</span>
+<span class="nc" id="L90">    }</span>
+
+    private VBox courseCard(String code, String name, String hours) {
+<span class="nc" id="L93">        VBox card = new VBox(6);</span>
+<span class="nc" id="L94">        card.setPrefSize(190, 75);</span>
+<span class="nc" id="L95">        card.setPadding(new Insets(11, 13, 8, 13));</span>
+<span class="nc" id="L96">        card.setStyle(&quot;-fx-background-color: white; -fx-border-color: #D7D7D7; &quot;</span>
+                + &quot;-fx-border-radius: 5; -fx-background-radius: 5;&quot;);
+
+<span class="nc" id="L99">        Label codeLabel = text(code, 7, FontWeight.BOLD, &quot;#4B83A0&quot;);</span>
+<span class="nc" id="L100">        codeLabel.setStyle(&quot;-fx-background-color: #D9F0FA; -fx-background-radius: 3; -fx-padding: 3 6;&quot;);</span>
+
+<span class="nc" id="L102">        Label nameLabel = text(name, 10, FontWeight.BOLD, &quot;#171717&quot;);</span>
+<span class="nc" id="L103">        Label hoursLabel = text(hours, 8, FontWeight.NORMAL, &quot;#858585&quot;);</span>
+
+<span class="nc" id="L105">        card.getChildren().addAll(codeLabel, nameLabel, hoursLabel);</span>
+<span class="nc" id="L106">        return card;</span>
+    }
+
+    private static Label text(String value, double size, FontWeight weight, String color) {
+<span class="nc" id="L110">        Label l = new Label(value);</span>
+<span class="nc" id="L111">        l.setFont(Font.font(&quot;System&quot;, weight, size));</span>
+<span class="nc" id="L112">        l.setTextFill(Color.web(color));</span>
+<span class="nc" id="L113">        return l;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

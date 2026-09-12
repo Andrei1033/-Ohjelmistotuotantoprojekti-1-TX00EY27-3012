@@ -4,14 +4,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="view, controller, model kansio lisäty 2" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="view, controller, model kansio lisäty 2">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_09_2026_14_19_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_09_2026_14_19__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_09_2026_14_32_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_09_2026_14_32__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/AdminTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/AdminTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Controller/OpettajaController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Controller/OpiskelijaController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Model/Kurssi.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Model/Lasnaolo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Model/Opettaja.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Model/Opiskelija.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Model/Oppitunti.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/TeacherPage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/PageShow$App.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/PageShow$App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/StudentAttendanceTracking.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/StudentAttendanceTracking.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherAttendanceTracking.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherAttendanceTracking.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherCoursePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherCoursePage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherStartPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherStartPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/main/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/view/Admin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/test-classes/com/example/app/MainTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/test-classes/view/AdminTest.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="15" />
+    <option name="cachedIndexableFilesCount" value="26" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -55,6 +85,7 @@
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.PageShow.executor&quot;: &quot;Run&quot;,
     &quot;Application.main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AdminTest.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -128,6 +159,7 @@
       <workItem from="1788610693123" duration="1753000" />
       <workItem from="1788612955069" duration="3721000" />
       <workItem from="1788713575855" duration="1090000" />
+      <workItem from="1789216032446" duration="270000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />

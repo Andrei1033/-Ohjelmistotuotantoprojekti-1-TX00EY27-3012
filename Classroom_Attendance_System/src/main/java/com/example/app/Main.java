@@ -1,9 +1,9 @@
 package com.example.app;
 
+import com.example.app.View.Admin;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import view.Admin;
 
 public class Main extends Application {
 

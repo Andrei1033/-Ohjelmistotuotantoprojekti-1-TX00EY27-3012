@@ -1,5 +1,6 @@
 /* Temporary file for testing purposes. This file will be deleted in the future. */
 /* only for ui debug*/
+
 package com.example.app.View;
 
 import javafx.application.Application;
@@ -142,7 +143,7 @@ public class PageShow {
         private void openStudentStartPage() {
 
             StudentStartPage view = new StudentStartPage(
-                    this::openLogin
+                    this::openStudentStartPage
             );
 
             stage.setScene(
@@ -150,35 +151,39 @@ public class PageShow {
             );
         }
 
+
         private void openStudentAttendanceTracking() {
 
-            // TODO:
-            // Tehdään myöhemmin oikea kurssisivu.
+            StudentAttendanceTracking view = new StudentAttendanceTracking(
+                    this::openStudentStartPage
+            );
 
-            System.out.println("openStudentAttendanceTracking puututuu vielä.");
-
-            openStudentAttendanceTracking();
+            stage.setScene(
+                    new Scene(view, 1024, 399)
+            );
         }
 
 
         private void openTeacherStartPage() {
 
-            // TODO:
-            // Tehdään myöhemmin opiskelijan tietosivu.
+            TeacherStartPage view = new TeacherStartPage(
+                    this::openTeacherStartPage
+            );
 
-            System.out.println("openTeacherStartPage puututuu vielä.");
-
-            openStudentStartPage();
+            stage.setScene(
+                    new Scene(view, 1024, 399)
+            );
         }
 
         private void openTeacherCoursePage() {
 
-            // TODO:
-            // Tehdään myöhemmin opiskelijan tietosivu.
+            TeacherCoursePage view = new TeacherCoursePage(
+                    this::openTeacherStartPage
+            );
 
-            System.out.println("openTeacherCoursePage puututuu vielä.");
-
-            openStudentStartPage();
+            stage.setScene(
+                    new Scene(view, 1024, 399)
+            );
         }
 
         private void openTeacherAttendanceTracking() {
@@ -188,18 +193,34 @@ public class PageShow {
                             this::openTeacherStartPage
                     );
 
-            stage.setScene(
-                    new Scene(view, 1024, 399)
-            );
+            Scene scene = new Scene(view, 1400, 900);
+
+            stage.setScene(scene);
+
+            // Vähimmäiskoko, johon asti sisältö skaalautuu pienemmäksi.
+            // Alle tämän ikkunaa ei voi pienentää.
+            stage.setMinWidth(875);
+            stage.setMinHeight(560);
+
+            // Oletuskoko
+            stage.setWidth(1400);
+            stage.setHeight(900);
+
+            stage.centerOnScreen();
+
+            // Ikkunan koon muuttaminen on sallittu — kaikki elementit
+            // skaalautuvat automaattisesti bindingien ansiosta.
+            stage.setResizable(true);
         }
 
         private void openAdminPage() {
-            // TODO:
-            // Tehdään myöhemmin opiskelijan tietosivu.
 
-            System.out.println("openAdminPage puututuu vielä.");
+            Admin view = new Admin(
+            );
 
-            openStudentStartPage();
+            stage.setScene(
+                    new Scene(view.getView(), 1024, 399)
+            );
         }
     }
 }

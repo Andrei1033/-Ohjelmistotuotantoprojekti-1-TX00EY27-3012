@@ -96,6 +96,10 @@ public class TeacherCoursePage extends BorderPane {
 
 
     }
+
+    public TeacherCoursePage(Runnable openTeacherStartPage) {
+    }
+
     private HBox createLessonCard(String date, String day, String topic, String statusText, boolean isDone) {
         HBox lessonCard = new HBox();
         lessonCard.setAlignment(Pos.CENTER_LEFT);
