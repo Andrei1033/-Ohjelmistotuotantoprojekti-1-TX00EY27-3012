@@ -9,19 +9,43 @@ package com.example.app.View;
 
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeacherAttendanceTracking extends BorderPane {
 
     // Colors
-    private  static final String NAVY = "#202F49";
+    private static final String NAVY = "#202F49";
+    private static final String BULE = "#344A70";
+    private static final String LOGO_BLUE = "#536FA4";
+
+    private static final String GREEN = "#409566";
+    private static final String ORANGE = "#D38A2D";
+    private static final String RED = "#D32F2F";
+
+    private static final String BORDER = "#D8D8D8";
+    private static final String MUTED = "#858585";
+    private static final String LIGHT_BULE = "#F5F5F5";
 
     // Sidebar creation
     private static final int PRESENT = 1;
     private static final int ABSENT = 2;
     private static final int LATE = 3;
 
+    //private final List<StudentRow> studentRows = new ArrayList<>();
+
+    /*
+    private Label persentLabel;
+    private Label absentLabel;
+    private Label lateLabel;
+*/
 
 
     // Constructor
@@ -50,8 +74,39 @@ public class TeacherAttendanceTracking extends BorderPane {
         content.setStyle(
                 "-fx-background-color: white;"
         );
+
+
+        // OTSIKKO
+
+
+        Label title = new Label(
+                "Oppitunti — 16.9.2026"
+        );
+
+        title.setTextFill(
+                Color.web("#171717")
+        );
+
+        title.setFont(
+                Font.font(
+                        "System",
+                        FontWeight.BOLD,
+                        22
+                )
+
+
+        );
+
+
+
+
+
+
         return content;
     }
+
+
+
 
 
     private VBox createSidebar() {
@@ -66,5 +121,8 @@ public class TeacherAttendanceTracking extends BorderPane {
         );
         return sidebar;
     }
+
+
+
 
 }
