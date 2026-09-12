@@ -1,5 +1,6 @@
 /* Temporary file for testing purposes. This file will be deleted in the future. */
 /* only for ui debug*/
+
 package com.example.app.View;
 
 import javafx.application.Application;
@@ -188,9 +189,24 @@ public class PageShow {
                             this::openTeacherStartPage
                     );
 
-            stage.setScene(
-                    new Scene(view, 1024, 399)
-            );
+            Scene scene = new Scene(view, 1400, 900);
+
+            stage.setScene(scene);
+
+            // Vähimmäiskoko, johon asti sisältö skaalautuu pienemmäksi.
+            // Alle tämän ikkunaa ei voi pienentää.
+            stage.setMinWidth(875);
+            stage.setMinHeight(560);
+
+            // Oletuskoko
+            stage.setWidth(1400);
+            stage.setHeight(900);
+
+            stage.centerOnScreen();
+
+            // Ikkunan koon muuttaminen on sallittu — kaikki elementit
+            // skaalautuvat automaattisesti bindingien ansiosta.
+            stage.setResizable(true);
         }
 
         private void openAdminPage() {
