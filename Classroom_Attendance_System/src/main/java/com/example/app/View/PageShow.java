@@ -143,7 +143,7 @@ public class PageShow {
         private void openStudentStartPage() {
 
             StudentStartPage view = new StudentStartPage(
-                    this::openLogin
+                    this::openStudentStartPage
             );
 
             stage.setScene(
@@ -151,35 +151,39 @@ public class PageShow {
             );
         }
 
+
         private void openStudentAttendanceTracking() {
 
-            // TODO:
-            // Tehdään myöhemmin oikea kurssisivu.
+            StudentAttendanceTracking view = new StudentAttendanceTracking(
+                    this::openStudentStartPage
+            );
 
-            System.out.println("openStudentAttendanceTracking puututuu vielä.");
-
-            openStudentAttendanceTracking();
+            stage.setScene(
+                    new Scene(view, 1024, 399)
+            );
         }
 
 
         private void openTeacherStartPage() {
 
-            // TODO:
-            // Tehdään myöhemmin opiskelijan tietosivu.
+            TeacherStartPage view = new TeacherStartPage(
+                    this::openTeacherStartPage
+            );
 
-            System.out.println("openTeacherStartPage puututuu vielä.");
-
-            openStudentStartPage();
+            stage.setScene(
+                    new Scene(view, 1024, 399)
+            );
         }
 
         private void openTeacherCoursePage() {
 
-            // TODO:
-            // Tehdään myöhemmin opiskelijan tietosivu.
+            TeacherCoursePage view = new TeacherCoursePage(
+                    this::openTeacherStartPage
+            );
 
-            System.out.println("openTeacherCoursePage puututuu vielä.");
-
-            openStudentStartPage();
+            stage.setScene(
+                    new Scene(view, 1024, 399)
+            );
         }
 
         private void openTeacherAttendanceTracking() {
@@ -210,12 +214,13 @@ public class PageShow {
         }
 
         private void openAdminPage() {
-            // TODO:
-            // Tehdään myöhemmin opiskelijan tietosivu.
 
-            System.out.println("openAdminPage puututuu vielä.");
+            Admin view = new Admin(
+            );
 
-            openStudentStartPage();
+            stage.setScene(
+                    new Scene(view.getView(), 1024, 399)
+            );
         }
     }
 }
