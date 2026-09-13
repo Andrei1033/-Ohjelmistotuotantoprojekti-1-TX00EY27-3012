@@ -1,2 +1,5 @@
-com\example\app\MainTest.class
 com\example\app\View\AdminTest.class
+com\example\app\View\LoginTest.class
+com\example\app\MainTest.class
+com\example\app\View\StudentAttendanceTrackingTest.class
+com\example\app\View\StudentStartPageTest.class

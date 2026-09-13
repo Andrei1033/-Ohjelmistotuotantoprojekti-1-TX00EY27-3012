@@ -15,102 +15,111 @@ public class StudentStartPage extends BorderPane {
     private static final String NAVY = &quot;#202F49&quot;;
     private static final String BLUE = &quot;#344A70&quot;;
 
-<span class="nc" id="L18">    public StudentStartPage(Runnable onLogout) {</span>
-<span class="nc" id="L19">        setStyle(&quot;-fx-background-color: white;&quot;);</span>
+<span class="fc" id="L18">    public StudentStartPage(Runnable onLogout) {</span>
+<span class="fc" id="L19">        setStyle(&quot;-fx-background-color: white;&quot;);</span>
 
-<span class="nc" id="L21">        VBox sidebar = new VBox();</span>
-<span class="nc" id="L22">        sidebar.setPrefWidth(158);</span>
-<span class="nc" id="L23">        sidebar.setPadding(new Insets(12, 14, 10, 10));</span>
-<span class="nc" id="L24">        sidebar.setStyle(&quot;-fx-background-color: &quot; + NAVY + &quot;;&quot;);</span>
+        // =========================
+        // SIDEBAR
+        // =========================
 
-<span class="nc" id="L26">        HBox brand = new HBox(9);</span>
-<span class="nc" id="L27">        brand.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="fc" id="L25">        VBox sidebar = new VBox();</span>
+<span class="fc" id="L26">        sidebar.setPrefWidth(158);</span>
+<span class="fc" id="L27">        sidebar.setPadding(new Insets(12, 14, 10, 10));</span>
+<span class="fc" id="L28">        sidebar.setStyle(&quot;-fx-background-color: &quot; + NAVY + &quot;;&quot;);</span>
 
-<span class="nc" id="L29">        Circle logo = new Circle(10, Color.web(&quot;#536FA4&quot;));</span>
-<span class="nc" id="L30">        Label lo = new Label(&quot;LO&quot;);</span>
-<span class="nc" id="L31">        lo.setTextFill(Color.WHITE);</span>
-<span class="nc" id="L32">        lo.setFont(Font.font(&quot;System&quot;, FontWeight.BOLD, 9));</span>
-<span class="nc" id="L33">        StackPane logoBox = new StackPane(logo, lo);</span>
-<span class="nc" id="L34">        logoBox.setPrefSize(20, 20);</span>
+<span class="fc" id="L30">        HBox brand = new HBox(9);</span>
+<span class="fc" id="L31">        brand.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="fc" id="L32">        brand.setPadding(new Insets(0, 0, 20, 0));</span>
 
-<span class="nc" id="L36">        Label brandText = text(&quot;Läsnäolo&quot;, 11, FontWeight.BOLD, &quot;#FFFFFF&quot;);</span>
-<span class="nc" id="L37">        brand.getChildren().addAll(logoBox, brandText);</span>
+<span class="fc" id="L34">        Circle logo = new Circle(10, Color.web(&quot;#536FA4&quot;));</span>
+<span class="fc" id="L35">        Label lo = new Label(&quot;LO&quot;);</span>
+<span class="fc" id="L36">        lo.setTextFill(Color.WHITE);</span>
+<span class="fc" id="L37">        lo.setFont(Font.font(&quot;System&quot;, FontWeight.BOLD, 9));</span>
+<span class="fc" id="L38">        StackPane logoBox = new StackPane(logo, lo);</span>
+<span class="fc" id="L39">        logoBox.setPrefSize(20, 20);</span>
 
-<span class="nc" id="L39">        Button courses = new Button(&quot;•   Omat kurssit&quot;);</span>
-<span class="nc" id="L40">        courses.setPrefHeight(22);</span>
-<span class="nc" id="L41">        courses.setMaxWidth(Double.MAX_VALUE);</span>
-<span class="nc" id="L42">        courses.setAlignment(Pos.CENTER_LEFT);</span>
-<span class="nc" id="L43">        courses.setStyle(&quot;-fx-background-color: #344A70; -fx-text-fill: white; &quot;</span>
+<span class="fc" id="L41">        Label brandText = text(&quot;Läsnäolo&quot;, 11, FontWeight.BOLD, &quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L42">        brand.getChildren().addAll(logoBox, brandText);</span>
+
+<span class="fc" id="L44">        Button courses = new Button(&quot;•   Omat kurssit&quot;);</span>
+<span class="fc" id="L45">        courses.setPrefHeight(22);</span>
+<span class="fc" id="L46">        courses.setMaxWidth(Double.MAX_VALUE);</span>
+<span class="fc" id="L47">        courses.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="fc" id="L48">        courses.setStyle(&quot;-fx-background-color: #344A70; -fx-text-fill: white; &quot;</span>
                 + &quot;-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4;&quot;);
-<span class="nc" id="L45">        courses.setFocusTraversable(false);</span>
+<span class="fc" id="L50">        courses.setFocusTraversable(false);</span>
 
-<span class="nc" id="L47">        Region sideSpacer = new Region();</span>
-<span class="nc" id="L48">        VBox.setVgrow(sideSpacer, Priority.ALWAYS);</span>
+<span class="fc" id="L52">        Region sideSpacer = new Region();</span>
+<span class="fc" id="L53">        VBox.setVgrow(sideSpacer, Priority.ALWAYS);</span>
 
-<span class="nc" id="L50">        HBox user = new HBox(7);</span>
-<span class="nc" id="L51">        user.setAlignment(Pos.CENTER_LEFT);</span>
-<span class="nc" id="L52">        Circle avatar = new Circle(10, Color.web(&quot;#536FA4&quot;));</span>
-<span class="nc" id="L53">        Label initials = text(&quot;MA&quot;, 8, FontWeight.BOLD, &quot;#FFFFFF&quot;);</span>
-<span class="nc" id="L54">        StackPane avatarBox = new StackPane(avatar, initials);</span>
-<span class="nc" id="L55">        avatarBox.setPrefSize(20, 20);</span>
+<span class="fc" id="L55">        HBox user = new HBox(7);</span>
+<span class="fc" id="L56">        user.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="fc" id="L57">        Circle avatar = new Circle(10, Color.web(&quot;#536FA4&quot;));</span>
+<span class="fc" id="L58">        Label initials = text(&quot;MA&quot;, 8, FontWeight.BOLD, &quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L59">        StackPane avatarBox = new StackPane(avatar, initials);</span>
+<span class="fc" id="L60">        avatarBox.setPrefSize(20, 20);</span>
 
-<span class="nc" id="L57">        VBox userInfo = new VBox(0,</span>
-<span class="nc" id="L58">                text(&quot;Etunimi Sukunimi&quot;, 8, FontWeight.BOLD, &quot;#FFFFFF&quot;),</span>
-<span class="nc" id="L59">                text(&quot;Opiskelija&quot;, 6, FontWeight.NORMAL, &quot;#A9B0BD&quot;)</span>
+<span class="fc" id="L62">        VBox userInfo = new VBox(0,</span>
+<span class="fc" id="L63">                text(&quot;Etunimi Sukunimi&quot;, 8, FontWeight.BOLD, &quot;#FFFFFF&quot;),</span>
+<span class="fc" id="L64">                text(&quot;Opiskelija&quot;, 6, FontWeight.NORMAL, &quot;#A9B0BD&quot;)</span>
         );
-<span class="nc" id="L61">        user.getChildren().addAll(avatarBox, userInfo);</span>
+<span class="fc" id="L66">        user.getChildren().addAll(avatarBox, userInfo);</span>
 
-<span class="nc" id="L63">        sidebar.getChildren().addAll(brand, new Region(), courses, sideSpacer, user);</span>
+<span class="fc" id="L68">        sidebar.getChildren().addAll(brand, new Region(), courses, sideSpacer, user);</span>
 
-<span class="nc" id="L65">        VBox content = new VBox(0);</span>
-<span class="nc" id="L66">        content.setPadding(new Insets(41, 30, 20, 31));</span>
+        // =========================
+        // MAIN CONTENT
+        // =========================
 
-<span class="nc" id="L68">        Label heading = text(&quot;Omat kurssit&quot;, 15, FontWeight.BOLD, &quot;#171717&quot;);</span>
-<span class="nc" id="L69">        Label intro = text(&quot;Sinulla on 3 kurssia tällä lukukaudella.&quot;, 8, FontWeight.BOLD, &quot;#171717&quot;);</span>
+<span class="fc" id="L74">        VBox content = new VBox(0);</span>
+<span class="fc" id="L75">        content.setPadding(new Insets(41, 30, 20, 31));</span>
 
-<span class="nc" id="L71">        VBox headingBox = new VBox(2, heading, intro);</span>
-<span class="nc" id="L72">        headingBox.setPadding(new Insets(0, 0, 18, 0));</span>
+<span class="fc" id="L77">        Label heading = text(&quot;Omat kurssit&quot;, 15, FontWeight.BOLD, &quot;#171717&quot;);</span>
+<span class="fc" id="L78">        Label intro = text(&quot;Sinulla on 3 kurssia tällä lukukaudella.&quot;, 8, FontWeight.BOLD, &quot;#171717&quot;);</span>
 
-<span class="nc" id="L74">        HBox cards = new HBox(22);</span>
-<span class="nc" id="L75">        cards.getChildren().addAll(</span>
-<span class="nc" id="L76">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;),</span>
-<span class="nc" id="L77">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;),</span>
-<span class="nc" id="L78">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;)</span>
+<span class="fc" id="L80">        VBox headingBox = new VBox(2, heading, intro);</span>
+<span class="fc" id="L81">        headingBox.setPadding(new Insets(0, 0, 18, 0));</span>
+
+<span class="fc" id="L83">        HBox cards = new HBox(22);</span>
+<span class="fc" id="L84">        cards.getChildren().addAll(</span>
+<span class="fc" id="L85">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;),</span>
+<span class="fc" id="L86">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;),</span>
+<span class="fc" id="L87">                courseCard(&quot;TX00CV45&quot;, &quot;Ohjelmoinnin perusteet&quot;, &quot;5 oppituntia&quot;)</span>
         );
 
-<span class="nc" id="L81">        content.getChildren().addAll(headingBox, cards);</span>
+<span class="fc" id="L90">        content.getChildren().addAll(headingBox, cards);</span>
 
         // UI-only logout navigation for previewing both screens.
-<span class="nc" id="L84">        Button logout = new Button(&quot;Kirjaudu ulos&quot;);</span>
-<span class="nc" id="L85">        logout.setVisible(false);</span>
-<span class="nc" id="L86">        logout.setOnAction(e -&gt; onLogout.run());</span>
+<span class="fc" id="L93">        Button logout = new Button(&quot;Kirjaudu ulos&quot;);</span>
+<span class="fc" id="L94">        logout.setVisible(false);</span>
+<span class="pc" id="L95">        logout.setOnAction(e -&gt; onLogout.run());</span>
 
-<span class="nc" id="L88">        setLeft(sidebar);</span>
-<span class="nc" id="L89">        setCenter(content);</span>
-<span class="nc" id="L90">    }</span>
+<span class="fc" id="L97">        setLeft(sidebar);</span>
+<span class="fc" id="L98">        setCenter(content);</span>
+<span class="fc" id="L99">    }</span>
 
     private VBox courseCard(String code, String name, String hours) {
-<span class="nc" id="L93">        VBox card = new VBox(6);</span>
-<span class="nc" id="L94">        card.setPrefSize(190, 75);</span>
-<span class="nc" id="L95">        card.setPadding(new Insets(11, 13, 8, 13));</span>
-<span class="nc" id="L96">        card.setStyle(&quot;-fx-background-color: white; -fx-border-color: #D7D7D7; &quot;</span>
+<span class="fc" id="L102">        VBox card = new VBox(6);</span>
+<span class="fc" id="L103">        card.setPrefSize(190, 75);</span>
+<span class="fc" id="L104">        card.setPadding(new Insets(11, 13, 8, 13));</span>
+<span class="fc" id="L105">        card.setStyle(&quot;-fx-background-color: white; -fx-border-color: #D7D7D7; &quot;</span>
                 + &quot;-fx-border-radius: 5; -fx-background-radius: 5;&quot;);
 
-<span class="nc" id="L99">        Label codeLabel = text(code, 7, FontWeight.BOLD, &quot;#4B83A0&quot;);</span>
-<span class="nc" id="L100">        codeLabel.setStyle(&quot;-fx-background-color: #D9F0FA; -fx-background-radius: 3; -fx-padding: 3 6;&quot;);</span>
+<span class="fc" id="L108">        Label codeLabel = text(code, 7, FontWeight.BOLD, &quot;#4B83A0&quot;);</span>
+<span class="fc" id="L109">        codeLabel.setStyle(&quot;-fx-background-color: #D9F0FA; -fx-background-radius: 3; -fx-padding: 3 6;&quot;);</span>
 
-<span class="nc" id="L102">        Label nameLabel = text(name, 10, FontWeight.BOLD, &quot;#171717&quot;);</span>
-<span class="nc" id="L103">        Label hoursLabel = text(hours, 8, FontWeight.NORMAL, &quot;#858585&quot;);</span>
+<span class="fc" id="L111">        Label nameLabel = text(name, 10, FontWeight.BOLD, &quot;#171717&quot;);</span>
+<span class="fc" id="L112">        Label hoursLabel = text(hours, 8, FontWeight.NORMAL, &quot;#858585&quot;);</span>
 
-<span class="nc" id="L105">        card.getChildren().addAll(codeLabel, nameLabel, hoursLabel);</span>
-<span class="nc" id="L106">        return card;</span>
+<span class="fc" id="L114">        card.getChildren().addAll(codeLabel, nameLabel, hoursLabel);</span>
+<span class="fc" id="L115">        return card;</span>
     }
 
     private static Label text(String value, double size, FontWeight weight, String color) {
-<span class="nc" id="L110">        Label l = new Label(value);</span>
-<span class="nc" id="L111">        l.setFont(Font.font(&quot;System&quot;, weight, size));</span>
-<span class="nc" id="L112">        l.setTextFill(Color.web(color));</span>
-<span class="nc" id="L113">        return l;</span>
+<span class="fc" id="L119">        Label l = new Label(value);</span>
+<span class="fc" id="L120">        l.setFont(Font.font(&quot;System&quot;, weight, size));</span>
+<span class="fc" id="L121">        l.setTextFill(Color.web(color));</span>
+<span class="fc" id="L122">        return l;</span>
     }
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.example.app.View.AdminTest" time="0.733" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.example.app.View.StudentStartPageTest" time="6.501" tests="16" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="javafx.runtime.version" value="25+29"/>
@@ -61,15 +61,20 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="viewShouldHaveSidebar" classname="com.example.app.View.AdminTest" time="0.208">
-    <system-err><![CDATA[сент. 13, 2026 5:24:03 PM com.sun.javafx.application.PlatformImpl startup
-WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @25b485ba'
-]]></system-err>
-  </testcase>
-  <testcase name="tableShouldHaveFiveColumns" classname="com.example.app.View.AdminTest" time="0.005"/>
-  <testcase name="viewShouldHaveCorrectStyleClass" classname="com.example.app.View.AdminTest" time="0.004"/>
-  <testcase name="tableShouldShowCorrectPlaceholder" classname="com.example.app.View.AdminTest" time="0.004"/>
-  <testcase name="getViewShouldReturnBorderPane" classname="com.example.app.View.AdminTest" time="0.003"/>
-  <testcase name="viewShouldHaveContent" classname="com.example.app.View.AdminTest" time="0.002"/>
-  <testcase name="sidebarShouldHaveCorrectWidth" classname="com.example.app.View.AdminTest" time="0.003"/>
+  <testcase name="testNoPrematureLogout" classname="com.example.app.View.StudentStartPageTest" time="0.464"/>
+  <testcase name="testCourseCardSize" classname="com.example.app.View.StudentStartPageTest" time="0.385"/>
+  <testcase name="testLogoText" classname="com.example.app.View.StudentStartPageTest" time="0.389"/>
+  <testcase name="testCoursesNavButton" classname="com.example.app.View.StudentStartPageTest" time="0.392"/>
+  <testcase name="testIntro" classname="com.example.app.View.StudentStartPageTest" time="0.394"/>
+  <testcase name="testCardsAreUniform" classname="com.example.app.View.StudentStartPageTest" time="0.388"/>
+  <testcase name="testLayoutStructure" classname="com.example.app.View.StudentStartPageTest" time="0.509"/>
+  <testcase name="testCourseCodeBadgeStyle" classname="com.example.app.View.StudentStartPageTest" time="0.436"/>
+  <testcase name="testLogoAndAvatarCircles" classname="com.example.app.View.StudentStartPageTest" time="0.388"/>
+  <testcase name="testCourseCardContent" classname="com.example.app.View.StudentStartPageTest" time="0.387"/>
+  <testcase name="testHeading" classname="com.example.app.View.StudentStartPageTest" time="0.388"/>
+  <testcase name="testUserInfo" classname="com.example.app.View.StudentStartPageTest" time="0.387"/>
+  <testcase name="testCourseCardsContainer" classname="com.example.app.View.StudentStartPageTest" time="0.392"/>
+  <testcase name="testBrandLabel" classname="com.example.app.View.StudentStartPageTest" time="0.392"/>
+  <testcase name="testSidebarWidth" classname="com.example.app.View.StudentStartPageTest" time="0.405"/>
+  <testcase name="testAvatarInitials" classname="com.example.app.View.StudentStartPageTest" time="0.388"/>
 </testsuite>

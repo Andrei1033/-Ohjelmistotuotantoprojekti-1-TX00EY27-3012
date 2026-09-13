@@ -1,0 +1,726 @@
+MariaDB [(none)]> USE `classroomattendance_app`;
+Database changed
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- SETUP: enable safe updates off, wrap in a transaction if desired
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SET SQL_SAFE_UPDATES = 0;
+Query OK, 0 rows affected (0.008 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '========== STARTING CRUD TESTS ==========' AS test_phase;
++-------------------------------------------+
+| test_phase                                |
++-------------------------------------------+
+| ========== STARTING CRUD TESTS ========== |
++-------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 1. USERS — CREATE
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 1: CREATE user (teacher) ---' AS test_case;
++---------------------------------------+
+| test_case                             |
++---------------------------------------+
+| --- TEST 1: CREATE user (teacher) --- |
++---------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> INSERT INTO users (email, first_name, last_name, password, role)
+    -> VALUES ('crud.teacher@school.edu', 'Test', 'Teacher', 'hashed_pw', 'teacher');
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SET @new_teacher_id = LAST_INSERT_ID();
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [classroomattendance_app]> SELECT @new_teacher_id AS new_teacher_id;
++----------------+
+| new_teacher_id |
++----------------+
+|             17 |
++----------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 2. USERS — READ
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 2: READ the new user ---' AS test_case;
++-----------------------------------+
+| test_case                         |
++-----------------------------------+
+| --- TEST 2: READ the new user --- |
++-----------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT user_id, email, first_name, last_name, role
+    -> FROM users
+    -> WHERE user_id = @new_teacher_id;
++---------+-------------------------+------------+-----------+---------+
+| user_id | email                   | first_name | last_name | role    |
++---------+-------------------------+------------+-----------+---------+
+|      17 | crud.teacher@school.edu | Test       | Teacher   | teacher |
++---------+-------------------------+------------+-----------+---------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 3. USERS — UPDATE
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 3: UPDATE the user''s last name ---' AS test_case;
++---------------------------------------------+
+| test_case                                   |
++---------------------------------------------+
+| --- TEST 3: UPDATE the user's last name --- |
++---------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> UPDATE users
+    -> SET last_name = 'TeacherUpdated'
+    -> WHERE user_id = @new_teacher_id;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT user_id, first_name, last_name
+    -> FROM users
+    -> WHERE user_id = @new_teacher_id;
++---------+------------+----------------+
+| user_id | first_name | last_name      |
++---------+------------+----------------+
+|      17 | Test       | TeacherUpdated |
++---------+------------+----------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 4. COURSES — CREATE (FK to users)
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 4: CREATE course linked to new teacher ---' AS test_case;
++-----------------------------------------------------+
+| test_case                                           |
++-----------------------------------------------------+
+| --- TEST 4: CREATE course linked to new teacher --- |
++-----------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> INSERT INTO courses (name, teacher_id)
+    -> VALUES ('CRUD Test Course', @new_teacher_id);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SET @new_course_id = LAST_INSERT_ID();
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [classroomattendance_app]> SELECT @new_course_id AS new_course_id;
++---------------+
+| new_course_id |
++---------------+
+|             6 |
++---------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 5. COURSES — READ with JOIN
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 5: READ course with teacher info ---' AS test_case;
++-----------------------------------------------+
+| test_case                                     |
++-----------------------------------------------+
+| --- TEST 5: READ course with teacher info --- |
++-----------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT c.course_id, c.name AS course_name,
+    ->        u.first_name, u.last_name
+    -> FROM courses c
+    -> JOIN users u ON u.user_id = c.teacher_id
+    -> WHERE c.course_id = @new_course_id;
++-----------+------------------+------------+----------------+
+| course_id | course_name      | first_name | last_name      |
++-----------+------------------+------------+----------------+
+|         6 | CRUD Test Course | Test       | TeacherUpdated |
++-----------+------------------+------------+----------------+
+1 row in set (0.001 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 6. COURSES — UPDATE
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 6: UPDATE course name ---' AS test_case;
++------------------------------------+
+| test_case                          |
++------------------------------------+
+| --- TEST 6: UPDATE course name --- |
++------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> UPDATE courses
+    -> SET name = 'CRUD Test Course (Renamed)'
+    -> WHERE course_id = @new_course_id;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT course_id, name FROM courses WHERE course_id = @new_course_id;
++-----------+----------------------------+
+| course_id | name                       |
++-----------+----------------------------+
+|         6 | CRUD Test Course (Renamed) |
++-----------+----------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 7. COURSE_STUDENTS — CREATE (enroll a student)
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 7: Enroll student (id=7) into new course ---' AS test_case;
++-------------------------------------------------------+
+| test_case                                             |
++-------------------------------------------------------+
+| --- TEST 7: Enroll student (id=7) into new course --- |
++-------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> INSERT INTO course_students (course_id, student_id)
+    -> VALUES (@new_course_id, 7);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT * FROM course_students WHERE course_id = @new_course_id;
++-----------+------------+
+| course_id | student_id |
++-----------+------------+
+|         6 |          7 |
++-----------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 8. LESSONS — CREATE (FK to courses)
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 8: CREATE lesson for new course ---' AS test_case;
++----------------------------------------------+
+| test_case                                    |
++----------------------------------------------+
+| --- TEST 8: CREATE lesson for new course --- |
++----------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> INSERT INTO lessons (start_time, end_time, course_id)
+    -> VALUES ('2025-10-01 09:00:00', '2025-10-01 10:30:00', @new_course_id);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SET @new_lesson_id = LAST_INSERT_ID();
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [classroomattendance_app]> SELECT @new_lesson_id AS new_lesson_id;
++---------------+
+| new_lesson_id |
++---------------+
+|            21 |
++---------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 9. LESSONS — UPDATE
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 9: UPDATE lesson end time ---' AS test_case;
++----------------------------------------+
+| test_case                              |
++----------------------------------------+
+| --- TEST 9: UPDATE lesson end time --- |
++----------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> UPDATE lessons
+    -> SET end_time = '2025-10-01 11:00:00'
+    -> WHERE lesson_id = @new_lesson_id;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT lesson_id, start_time, end_time FROM lessons WHERE lesson_id = @new_lesson_id;
++-----------+---------------------+---------------------+
+| lesson_id | start_time          | end_time            |
++-----------+---------------------+---------------------+
+|        21 | 2025-10-01 09:00:00 | 2025-10-01 11:00:00 |
++-----------+---------------------+---------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 10. ATTENDANCE — CREATE
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 10: CREATE attendance record ---' AS test_case;
++-------------------------------------------+
+| test_case                                 |
++-------------------------------------------+
+| --- TEST 10: CREATE attendance record --- |
++-------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> INSERT INTO attendance (status, student_id, lesson_id)
+    -> VALUES ('present', 7, @new_lesson_id);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SET @new_attendance_id = LAST_INSERT_ID();
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [classroomattendance_app]> SELECT @new_attendance_id AS new_attendance_id;
++-------------------+
+| new_attendance_id |
++-------------------+
+|                81 |
++-------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 11. ATTENDANCE — READ with JOIN
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 11: READ attendance with student name ---' AS test_case;
++----------------------------------------------------+
+| test_case                                          |
++----------------------------------------------------+
+| --- TEST 11: READ attendance with student name --- |
++----------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT a.attendance_id, u.first_name, u.last_name, a.status
+    -> FROM attendance a
+    -> JOIN users u ON u.user_id = a.student_id
+    -> WHERE a.attendance_id = @new_attendance_id;
++---------------+------------+-----------+---------+
+| attendance_id | first_name | last_name | status  |
++---------------+------------+-----------+---------+
+|            81 | Liam       | Anderson  | present |
++---------------+------------+-----------+---------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 12. ATTENDANCE — UPDATE
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 12: UPDATE attendance status ---' AS test_case;
++-------------------------------------------+
+| test_case                                 |
++-------------------------------------------+
+| --- TEST 12: UPDATE attendance status --- |
++-------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> UPDATE attendance
+    -> SET status = 'late'
+    -> WHERE attendance_id = @new_attendance_id;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT attendance_id, status FROM attendance WHERE attendance_id = @new_attendance_id;
++---------------+--------+
+| attendance_id | status |
++---------------+--------+
+|            81 | late   |
++---------------+--------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 13. NEGATIVE TESTS — Constraint violations (should FAIL)
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 13a: Duplicate email should FAIL ---' AS test_case;
++-----------------------------------------------+
+| test_case                                     |
++-----------------------------------------------+
+| --- TEST 13a: Duplicate email should FAIL --- |
++-----------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> -- Expected error: Duplicate entry
+MariaDB [classroomattendance_app]> INSERT INTO users (email, first_name, last_name, password, role)
+    -> VALUES ('crud.teacher@school.edu', 'Dup', 'Email', 'x', 'teacher');
+ERROR 1062 (23000): Duplicate entry 'crud.teacher@school.edu' for key 'email'
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '--- TEST 13b: Invalid role should FAIL ---' AS test_case;
++--------------------------------------------+
+| test_case                                  |
++--------------------------------------------+
+| --- TEST 13b: Invalid role should FAIL --- |
++--------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> -- Expected error: Check constraint 'users_chk_1' is violated
+MariaDB [classroomattendance_app]> INSERT INTO users (email, first_name, last_name, password, role)
+    -> VALUES ('badrole@school.edu', 'Bad', 'Role', 'x', 'principal');
+ERROR 4025 (23000): CONSTRAINT `users.role` failed for `classroomattendance_app`.`users`
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '--- TEST 13c: Invalid attendance status should FAIL ---' AS test_case;
++---------------------------------------------------------+
+| test_case                                               |
++---------------------------------------------------------+
+| --- TEST 13c: Invalid attendance status should FAIL --- |
++---------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> -- Expected error: Check constraint violated
+MariaDB [classroomattendance_app]> INSERT INTO attendance (status, student_id, lesson_id)
+    -> VALUES ('sleeping', 7, @new_lesson_id);
+ERROR 4025 (23000): CONSTRAINT `attendance.status` failed for `classroomattendance_app`.`attendance`
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '--- TEST 13d: Invalid lesson time (end <= start) should FAIL ---' AS test_case;
++------------------------------------------------------------------+
+| test_case                                                        |
++------------------------------------------------------------------+
+| --- TEST 13d: Invalid lesson time (end <= start) should FAIL --- |
++------------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> -- Expected error: Check constraint 'chk_lesson_times' violated
+MariaDB [classroomattendance_app]> INSERT INTO lessons (start_time, end_time, course_id)
+    -> VALUES ('2025-10-02 10:00:00', '2025-10-02 09:00:00', @new_course_id);
+ERROR 4025 (23000): CONSTRAINT `chk_lesson_times` failed for `classroomattendance_app`.`lessons`
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '--- TEST 13e: Duplicate attendance (same student+lesson) should FAIL ---' AS test_case;
++--------------------------------------------------------------------------+
+| test_case                                                                |
++--------------------------------------------------------------------------+
+| --- TEST 13e: Duplicate attendance (same student+lesson) should FAIL --- |
++--------------------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> -- Expected error: Duplicate entry for key 'uq_student_lesson'
+MariaDB [classroomattendance_app]> INSERT INTO attendance (status, student_id, lesson_id)
+    -> VALUES ('absent', 7, @new_lesson_id);
+ERROR 1062 (23000): Duplicate entry '7-21' for key 'uq_student_lesson'
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '--- TEST 13f: Course with nonexistent teacher should FAIL ---' AS test_case;
++---------------------------------------------------------------+
+| test_case                                                     |
++---------------------------------------------------------------+
+| --- TEST 13f: Course with nonexistent teacher should FAIL --- |
++---------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> -- Expected error: FK constraint fails
+MariaDB [classroomattendance_app]> INSERT INTO courses (name, teacher_id) VALUES ('Ghost Course', 99999);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`classroomattendance_app`.`courses`, CONSTRAINT `fk_course_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `users` (`user_id`))
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 14. CASCADE DELETE TESTS
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 14a: BEFORE delete — row counts ---' AS test_case;
++------------------------------------------------+
+| test_case                                      |
++------------------------------------------------+
+| --- TEST 14a: BEFORE delete — row counts ---   |
++------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> SELECT
+    ->   (SELECT COUNT(*) FROM courses WHERE course_id = @new_course_id) AS courses,
+    ->   (SELECT COUNT(*) FROM lessons WHERE course_id = @new_course_id) AS lessons,
+    ->   (SELECT COUNT(*) FROM course_students WHERE course_id = @new_course_id) AS enrollments,
+    ->   (SELECT COUNT(*) FROM attendance WHERE lesson_id = @new_lesson_id) AS attendance_rows;
++---------+---------+-------------+-----------------+
+| courses | lessons | enrollments | attendance_rows |
++---------+---------+-------------+-----------------+
+|       1 |       1 |           1 |               1 |
++---------+---------+-------------+-----------------+
+1 row in set (0.002 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '--- TEST 14b: DELETE course (should cascade to lessons, enrollments, attendance) ---' AS test_case;
++--------------------------------------------------------------------------------------+
+| test_case                                                                            |
++--------------------------------------------------------------------------------------+
+| --- TEST 14b: DELETE course (should cascade to lessons, enrollments, attendance) --- |
++--------------------------------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> DELETE FROM courses WHERE course_id = @new_course_id;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '--- TEST 14c: AFTER delete — row counts should all be 0 ---' AS test_case;
++---------------------------------------------------------------+
+| test_case                                                     |
++---------------------------------------------------------------+
+| --- TEST 14c: AFTER delete — row counts should all be 0 ---   |
++---------------------------------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> SELECT
+    ->   (SELECT COUNT(*) FROM courses WHERE course_id = @new_course_id) AS courses,
+    ->   (SELECT COUNT(*) FROM lessons WHERE lesson_id = @new_lesson_id) AS lessons,
+    ->   (SELECT COUNT(*) FROM course_students WHERE course_id = @new_course_id) AS enrollments,
+    ->   (SELECT COUNT(*) FROM attendance WHERE attendance_id = @new_attendance_id) AS attendance_rows;
++---------+---------+-------------+-----------------+
+| courses | lessons | enrollments | attendance_rows |
++---------+---------+-------------+-----------------+
+|       0 |       0 |           0 |               0 |
++---------+---------+-------------+-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> -- 15. CLEANUP — DELETE the test teacher
+MariaDB [classroomattendance_app]> -- ============================================================
+MariaDB [classroomattendance_app]> SELECT '--- TEST 15: DELETE test teacher ---' AS test_case;
++--------------------------------------+
+| test_case                            |
++--------------------------------------+
+| --- TEST 15: DELETE test teacher --- |
++--------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]> DELETE FROM users WHERE user_id = @new_teacher_id;
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT COUNT(*) AS remaining_test_teacher
+    -> FROM users WHERE user_id = @new_teacher_id;
++------------------------+
+| remaining_test_teacher |
++------------------------+
+|                      0 |
++------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [classroomattendance_app]>
+MariaDB [classroomattendance_app]> SELECT '========== ALL CRUD TESTS COMPLETE ==========' AS test_phase;
++-----------------------------------------------+
+| test_phase                                    |
++-----------------------------------------------+
+| ========== ALL CRUD TESTS COMPLETE ========== |
++-----------------------------------------------+
+1 row in set (0.000 sec)
+
+
+
+
+------------crud test sql script--------------->
+
+
+
+
+USE `classroomattendance_app`;
+
+-- ============================================================
+-- SETUP: enable safe updates off, wrap in a transaction if desired
+-- ============================================================
+SET SQL_SAFE_UPDATES = 0;
+
+SELECT '========== STARTING CRUD TESTS ==========' AS test_phase;
+
+-- ============================================================
+-- 1. USERS — CREATE
+-- ============================================================
+SELECT '--- TEST 1: CREATE user (teacher) ---' AS test_case;
+
+INSERT INTO users (email, first_name, last_name, password, role)
+VALUES ('crud.teacher@school.edu', 'Test', 'Teacher', 'hashed_pw', 'teacher');
+
+SET @new_teacher_id = LAST_INSERT_ID();
+SELECT @new_teacher_id AS new_teacher_id;
+
+-- ============================================================
+-- 2. USERS — READ
+-- ============================================================
+SELECT '--- TEST 2: READ the new user ---' AS test_case;
+
+SELECT user_id, email, first_name, last_name, role
+FROM users
+WHERE user_id = @new_teacher_id;
+
+-- ============================================================
+-- 3. USERS — UPDATE
+-- ============================================================
+SELECT '--- TEST 3: UPDATE the user''s last name ---' AS test_case;
+
+UPDATE users
+SET last_name = 'TeacherUpdated'
+WHERE user_id = @new_teacher_id;
+
+SELECT user_id, first_name, last_name
+FROM users
+WHERE user_id = @new_teacher_id;
+
+-- ============================================================
+-- 4. COURSES — CREATE (FK to users)
+-- ============================================================
+SELECT '--- TEST 4: CREATE course linked to new teacher ---' AS test_case;
+
+INSERT INTO courses (name, teacher_id)
+VALUES ('CRUD Test Course', @new_teacher_id);
+
+SET @new_course_id = LAST_INSERT_ID();
+SELECT @new_course_id AS new_course_id;
+
+-- ============================================================
+-- 5. COURSES — READ with JOIN
+-- ============================================================
+SELECT '--- TEST 5: READ course with teacher info ---' AS test_case;
+
+SELECT c.course_id, c.name AS course_name,
+       u.first_name, u.last_name
+FROM courses c
+JOIN users u ON u.user_id = c.teacher_id
+WHERE c.course_id = @new_course_id;
+
+-- ============================================================
+-- 6. COURSES — UPDATE
+-- ============================================================
+SELECT '--- TEST 6: UPDATE course name ---' AS test_case;
+
+UPDATE courses
+SET name = 'CRUD Test Course (Renamed)'
+WHERE course_id = @new_course_id;
+
+SELECT course_id, name FROM courses WHERE course_id = @new_course_id;
+
+-- ============================================================
+-- 7. COURSE_STUDENTS — CREATE (enroll a student)
+-- ============================================================
+SELECT '--- TEST 7: Enroll student (id=7) into new course ---' AS test_case;
+
+INSERT INTO course_students (course_id, student_id)
+VALUES (@new_course_id, 7);
+
+SELECT * FROM course_students WHERE course_id = @new_course_id;
+
+-- ============================================================
+-- 8. LESSONS — CREATE (FK to courses)
+-- ============================================================
+SELECT '--- TEST 8: CREATE lesson for new course ---' AS test_case;
+
+INSERT INTO lessons (start_time, end_time, course_id)
+VALUES ('2025-10-01 09:00:00', '2025-10-01 10:30:00', @new_course_id);
+
+SET @new_lesson_id = LAST_INSERT_ID();
+SELECT @new_lesson_id AS new_lesson_id;
+
+-- ============================================================
+-- 9. LESSONS — UPDATE
+-- ============================================================
+SELECT '--- TEST 9: UPDATE lesson end time ---' AS test_case;
+
+UPDATE lessons
+SET end_time = '2025-10-01 11:00:00'
+WHERE lesson_id = @new_lesson_id;
+
+SELECT lesson_id, start_time, end_time FROM lessons WHERE lesson_id = @new_lesson_id;
+
+-- ============================================================
+-- 10. ATTENDANCE — CREATE
+-- ============================================================
+SELECT '--- TEST 10: CREATE attendance record ---' AS test_case;
+
+INSERT INTO attendance (status, student_id, lesson_id)
+VALUES ('present', 7, @new_lesson_id);
+
+SET @new_attendance_id = LAST_INSERT_ID();
+SELECT @new_attendance_id AS new_attendance_id;
+
+-- ============================================================
+-- 11. ATTENDANCE — READ with JOIN
+-- ============================================================
+SELECT '--- TEST 11: READ attendance with student name ---' AS test_case;
+
+SELECT a.attendance_id, u.first_name, u.last_name, a.status
+FROM attendance a
+JOIN users u ON u.user_id = a.student_id
+WHERE a.attendance_id = @new_attendance_id;
+
+-- ============================================================
+-- 12. ATTENDANCE — UPDATE
+-- ============================================================
+SELECT '--- TEST 12: UPDATE attendance status ---' AS test_case;
+
+UPDATE attendance
+SET status = 'late'
+WHERE attendance_id = @new_attendance_id;
+
+SELECT attendance_id, status FROM attendance WHERE attendance_id = @new_attendance_id;
+
+-- ============================================================
+-- 13. NEGATIVE TESTS — Constraint violations (should FAIL)
+-- ============================================================
+SELECT '--- TEST 13a: Duplicate email should FAIL ---' AS test_case;
+-- Expected error: Duplicate entry
+INSERT INTO users (email, first_name, last_name, password, role)
+VALUES ('crud.teacher@school.edu', 'Dup', 'Email', 'x', 'teacher');
+
+SELECT '--- TEST 13b: Invalid role should FAIL ---' AS test_case;
+-- Expected error: Check constraint 'users_chk_1' is violated
+INSERT INTO users (email, first_name, last_name, password, role)
+VALUES ('badrole@school.edu', 'Bad', 'Role', 'x', 'principal');
+
+SELECT '--- TEST 13c: Invalid attendance status should FAIL ---' AS test_case;
+-- Expected error: Check constraint violated
+INSERT INTO attendance (status, student_id, lesson_id)
+VALUES ('sleeping', 7, @new_lesson_id);
+
+SELECT '--- TEST 13d: Invalid lesson time (end <= start) should FAIL ---' AS test_case;
+-- Expected error: Check constraint 'chk_lesson_times' violated
+INSERT INTO lessons (start_time, end_time, course_id)
+VALUES ('2025-10-02 10:00:00', '2025-10-02 09:00:00', @new_course_id);
+
+SELECT '--- TEST 13e: Duplicate attendance (same student+lesson) should FAIL ---' AS test_case;
+-- Expected error: Duplicate entry for key 'uq_student_lesson'
+INSERT INTO attendance (status, student_id, lesson_id)
+VALUES ('absent', 7, @new_lesson_id);
+
+SELECT '--- TEST 13f: Course with nonexistent teacher should FAIL ---' AS test_case;
+-- Expected error: FK constraint fails
+INSERT INTO courses (name, teacher_id) VALUES ('Ghost Course', 99999);
+
+-- ============================================================
+-- 14. CASCADE DELETE TESTS
+-- ============================================================
+SELECT '--- TEST 14a: BEFORE delete — row counts ---' AS test_case;
+SELECT
+  (SELECT COUNT(*) FROM courses WHERE course_id = @new_course_id) AS courses,
+  (SELECT COUNT(*) FROM lessons WHERE course_id = @new_course_id) AS lessons,
+  (SELECT COUNT(*) FROM course_students WHERE course_id = @new_course_id) AS enrollments,
+  (SELECT COUNT(*) FROM attendance WHERE lesson_id = @new_lesson_id) AS attendance_rows;
+
+SELECT '--- TEST 14b: DELETE course (should cascade to lessons, enrollments, attendance) ---' AS test_case;
+DELETE FROM courses WHERE course_id = @new_course_id;
+
+SELECT '--- TEST 14c: AFTER delete — row counts should all be 0 ---' AS test_case;
+SELECT
+  (SELECT COUNT(*) FROM courses WHERE course_id = @new_course_id) AS courses,
+  (SELECT COUNT(*) FROM lessons WHERE lesson_id = @new_lesson_id) AS lessons,
+  (SELECT COUNT(*) FROM course_students WHERE course_id = @new_course_id) AS enrollments,
+  (SELECT COUNT(*) FROM attendance WHERE attendance_id = @new_attendance_id) AS attendance_rows;
+
+-- ============================================================
+-- 15. CLEANUP — DELETE the test teacher
+-- ============================================================
+SELECT '--- TEST 15: DELETE test teacher ---' AS test_case;
+DELETE FROM users WHERE user_id = @new_teacher_id;
+
+SELECT COUNT(*) AS remaining_test_teacher
+FROM users WHERE user_id = @new_teacher_id;
+
+SELECT '========== ALL CRUD TESTS COMPLETE ==========' AS test_phase;

@@ -18,6 +18,10 @@ public class StudentStartPage extends BorderPane {
     public StudentStartPage(Runnable onLogout) {
         setStyle("-fx-background-color: white;");
 
+        // =========================
+        // SIDEBAR
+        // =========================
+
         VBox sidebar = new VBox();
         sidebar.setPrefWidth(158);
         sidebar.setPadding(new Insets(12, 14, 10, 10));
@@ -25,6 +29,7 @@ public class StudentStartPage extends BorderPane {
 
         HBox brand = new HBox(9);
         brand.setAlignment(Pos.CENTER_LEFT);
+        brand.setPadding(new Insets(0, 0, 20, 0));
 
         Circle logo = new Circle(10, Color.web("#536FA4"));
         Label lo = new Label("LO");
@@ -61,6 +66,10 @@ public class StudentStartPage extends BorderPane {
         user.getChildren().addAll(avatarBox, userInfo);
 
         sidebar.getChildren().addAll(brand, new Region(), courses, sideSpacer, user);
+
+        // =========================
+        // MAIN CONTENT
+        // =========================
 
         VBox content = new VBox(0);
         content.setPadding(new Insets(41, 30, 20, 31));

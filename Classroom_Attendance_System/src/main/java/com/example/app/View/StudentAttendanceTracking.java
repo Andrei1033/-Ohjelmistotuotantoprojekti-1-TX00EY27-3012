@@ -2,6 +2,7 @@ package com.example.app.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -23,159 +24,49 @@ public class StudentAttendanceTracking extends BorderPane {
         // =========================
 
         VBox sidebar = new VBox();
-
         sidebar.setPrefWidth(158);
         sidebar.setPadding(new Insets(12, 14, 10, 10));
+        sidebar.setStyle("-fx-background-color: " + NAVY + ";");
 
-        sidebar.setStyle(
-                "-fx-background-color: " + NAVY + ";"
-        );
-
-        // Logo + Läsnäolo
         HBox brand = new HBox(9);
         brand.setAlignment(Pos.CENTER_LEFT);
+        brand.setPadding(new Insets(0, 0, 20, 0));
 
-        Circle logoCircle = new Circle(
-                10,
-                Color.web("#536FA4")
-        );
+        Circle logo = new Circle(10, Color.web("#536FA4"));
+        Label lo = new Label("LO");
+        lo.setTextFill(Color.WHITE);
+        lo.setFont(Font.font("System", FontWeight.BOLD, 9));
+        StackPane logoBox = new StackPane(logo, lo);
+        logoBox.setPrefSize(20, 20);
 
-        Label logoText = new Label("LO");
-        logoText.setTextFill(Color.WHITE);
-        logoText.setFont(
-                Font.font(
-                        "System",
-                        FontWeight.BOLD,
-                        9
-                )
-        );
+        Label brandText = text("Läsnäolo", 11, FontWeight.BOLD, "#FFFFFF");
+        brand.getChildren().addAll(logoBox, brandText);
 
-        StackPane logo = new StackPane(
-                logoCircle,
-                logoText
-        );
+        Button courses = new Button("•   Omat kurssit");
+        courses.setPrefHeight(22);
+        courses.setMaxWidth(Double.MAX_VALUE);
+        courses.setAlignment(Pos.CENTER_LEFT);
+        courses.setStyle("-fx-background-color: #344A70; -fx-text-fill: white; "
+                + "-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4;");
+        courses.setFocusTraversable(false);
 
-        logo.setPrefSize(20, 20);
-
-        Label brandName = text(
-                "Läsnäolo",
-                11,
-                FontWeight.BOLD,
-                "#FFFFFF"
-        );
-
-        brand.getChildren().addAll(
-                logo,
-                brandName
-        );
-
-        // Kurssini-painike
-        ButtonStyle courseButton = new ButtonStyle();
-
-        sidebar.getChildren().add(brand);
-
-        Region topSpace = new Region();
-        topSpace.setPrefHeight(15);
-
-        sidebar.getChildren().add(topSpace);
-
-        javafx.scene.control.Button courseButtonNode =
-                new javafx.scene.control.Button(
-                        "•   Kurssini"
-                );
-
-        courseButtonNode.setPrefHeight(22);
-        courseButtonNode.setMaxWidth(
-                Double.MAX_VALUE
-        );
-
-        courseButtonNode.setAlignment(
-                Pos.CENTER_LEFT
-        );
-
-        courseButtonNode.setStyle(
-                "-fx-background-color: #344A70;" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-size: 10px;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-background-radius: 4;"
-        );
-
-        courseButtonNode.setFocusTraversable(false);
-
-        // Tällä voidaan myöhemmin palata kurssilistaan
-        courseButtonNode.setOnAction(
-                e -> onBack.run()
-        );
-
-        sidebar.getChildren().add(courseButtonNode);
-
-        // Tyhjä tila ennen käyttäjää
-        Region spacer = new Region();
-
-        VBox.setVgrow(
-                spacer,
-                Priority.ALWAYS
-        );
-
-        sidebar.getChildren().add(spacer);
-
-        // =========================
-        // USER
-        // =========================
+        Region sideSpacer = new Region();
+        VBox.setVgrow(sideSpacer, Priority.ALWAYS);
 
         HBox user = new HBox(7);
+        user.setAlignment(Pos.CENTER_LEFT);
+        Circle avatar = new Circle(10, Color.web("#536FA4"));
+        Label initials = text("MA", 8, FontWeight.BOLD, "#FFFFFF");
+        StackPane avatarBox = new StackPane(avatar, initials);
+        avatarBox.setPrefSize(20, 20);
 
-        user.setAlignment(
-                Pos.CENTER_LEFT
+        VBox userInfo = new VBox(0,
+                text("Etunimi Sukunimi", 8, FontWeight.BOLD, "#FFFFFF"),
+                text("Opiskelija", 6, FontWeight.NORMAL, "#A9B0BD")
         );
+        user.getChildren().addAll(avatarBox, userInfo);
 
-        Circle avatarCircle = new Circle(
-                10,
-                Color.web("#536FA4")
-        );
-
-        Label avatarText = new Label("MA");
-
-        avatarText.setTextFill(Color.WHITE);
-
-        avatarText.setFont(
-                Font.font(
-                        "System",
-                        FontWeight.BOLD,
-                        8
-                )
-        );
-
-        StackPane avatar = new StackPane(
-                avatarCircle,
-                avatarText
-        );
-
-        avatar.setPrefSize(20, 20);
-
-        VBox userInfo = new VBox(
-                0,
-                text(
-                        "Etunimi Sukunimi",
-                        8,
-                        FontWeight.BOLD,
-                        "#FFFFFF"
-                ),
-                text(
-                        "Opiskelija",
-                        6,
-                        FontWeight.NORMAL,
-                        "#A9B0BD"
-                )
-        );
-
-        user.getChildren().addAll(
-                avatar,
-                userInfo
-        );
-
-        sidebar.getChildren().add(user);
+        sidebar.getChildren().addAll(brand, new Region(), courses, sideSpacer, user);
 
         // =========================
         // MAIN CONTENT
@@ -215,53 +106,24 @@ public class StudentAttendanceTracking extends BorderPane {
 
         // Yhteenveto oikealle
         HBox summary = new HBox(20);
+        summary.setAlignment(Pos.CENTER_RIGHT);
 
-        summary.setAlignment(
-                Pos.CENTER_RIGHT
-        );
+        Label presentCount = text("1 paikalla", 8, FontWeight.BOLD, "#171717");
+        Label lateCount = text("1 myöhässä", 8, FontWeight.BOLD, "#171717");
+        Label absentCount = text("1 Poissa", 8, FontWeight.BOLD, "#171717");
 
-        Label presentCount = text(
-                "1 paikalla",
-                8,
-                FontWeight.BOLD,
-                "#171717"
-        );
-
-        Label lateCount = text(
-                "1 myöhässä",
-                8,
-                FontWeight.BOLD,
-                "#171717"
-        );
-
-        Label absentCount = text(
-                "1 Poissa",
-                8,
-                FontWeight.BOLD,
-                "#171717"
-        );
-
-        summary.getChildren().addAll(
-                presentCount,
-                lateCount,
-                absentCount
-        );
+        summary.getChildren().addAll(presentCount, lateCount, absentCount);
 
         HBox header = new HBox();
+        header.setAlignment(Pos.BOTTOM_LEFT);
 
-        header.setAlignment(
-                Pos.BOTTOM_LEFT
-        );
+        HBox.setHgrow(titleBox, Priority.ALWAYS);
 
-        HBox.setHgrow(
-                titleBox,
-                Priority.ALWAYS
-        );
+// Tämä työntää summaryn oikealle
+        Region pushRight = new Region();
+        HBox.setHgrow(pushRight, Priority.ALWAYS);
 
-        header.getChildren().addAll(
-                titleBox,
-                summary
-        );
+        header.getChildren().addAll(titleBox, pushRight, summary);
 
         content.getChildren().add(header);
 
@@ -409,10 +271,8 @@ public class StudentAttendanceTracking extends BorderPane {
                 "#666666"
         );
 
-        HBox.setHgrow(
-                lessonLabel,
-                Priority.ALWAYS
-        );
+        Region pushRight = new Region();
+        HBox.setHgrow(pushRight, Priority.ALWAYS);
 
         // -------------------------
         // STATUS
@@ -468,6 +328,7 @@ public class StudentAttendanceTracking extends BorderPane {
         row.getChildren().addAll(
                 dateBox,
                 lessonLabel,
+                pushRight,
                 statusBox
         );
 

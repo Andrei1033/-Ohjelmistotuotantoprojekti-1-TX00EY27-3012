@@ -42,12 +42,13 @@ public class Login extends BorderPane {
         logoBox.setAlignment(Pos.CENTER);
 
         Label title = label("Kirjaudu sisään", 15, FontWeight.BOLD, "#171717");
-        Label subtitle = label("Läsnäolojärjestelmä - Metropolia AMK", 9, FontWeight.BOLD, MUTED);
+        Label subtitle = label("Läsnäolojärjestelmä", 9, FontWeight.BOLD, MUTED);
 
         VBox header = new VBox(2, title, subtitle);
         header.setPadding(new Insets(0, 8, 18, 8));
 
-        TextField email = new TextField("Andreits@metropolia.fi");
+        TextField email = new TextField();
+        email.setPromptText("example@example.edu");
         email.setPrefHeight(38);
         email.setStyle(fieldStyle());
 

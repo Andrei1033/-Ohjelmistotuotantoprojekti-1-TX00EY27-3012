@@ -2,6 +2,7 @@
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -14,176 +15,66 @@ public class StudentAttendanceTracking extends BorderPane {
     private static final String NAVY = &quot;#202F49&quot;;
     private static final String BLUE = &quot;#344A70&quot;;
 
-<span class="nc" id="L17">    public StudentAttendanceTracking(Runnable onBack) {</span>
+<span class="fc" id="L18">    public StudentAttendanceTracking(Runnable onBack) {</span>
 
-<span class="nc" id="L19">        setStyle(&quot;-fx-background-color: white;&quot;);</span>
+<span class="fc" id="L20">        setStyle(&quot;-fx-background-color: white;&quot;);</span>
 
         // =========================
         // SIDEBAR
         // =========================
 
-<span class="nc" id="L25">        VBox sidebar = new VBox();</span>
+<span class="fc" id="L26">        VBox sidebar = new VBox();</span>
+<span class="fc" id="L27">        sidebar.setPrefWidth(158);</span>
+<span class="fc" id="L28">        sidebar.setPadding(new Insets(12, 14, 10, 10));</span>
+<span class="fc" id="L29">        sidebar.setStyle(&quot;-fx-background-color: &quot; + NAVY + &quot;;&quot;);</span>
 
-<span class="nc" id="L27">        sidebar.setPrefWidth(158);</span>
-<span class="nc" id="L28">        sidebar.setPadding(new Insets(12, 14, 10, 10));</span>
+<span class="fc" id="L31">        HBox brand = new HBox(9);</span>
+<span class="fc" id="L32">        brand.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="fc" id="L33">        brand.setPadding(new Insets(0, 0, 20, 0));</span>
 
-<span class="nc" id="L30">        sidebar.setStyle(</span>
-                &quot;-fx-background-color: &quot; + NAVY + &quot;;&quot;
+<span class="fc" id="L35">        Circle logo = new Circle(10, Color.web(&quot;#536FA4&quot;));</span>
+<span class="fc" id="L36">        Label lo = new Label(&quot;LO&quot;);</span>
+<span class="fc" id="L37">        lo.setTextFill(Color.WHITE);</span>
+<span class="fc" id="L38">        lo.setFont(Font.font(&quot;System&quot;, FontWeight.BOLD, 9));</span>
+<span class="fc" id="L39">        StackPane logoBox = new StackPane(logo, lo);</span>
+<span class="fc" id="L40">        logoBox.setPrefSize(20, 20);</span>
+
+<span class="fc" id="L42">        Label brandText = text(&quot;Läsnäolo&quot;, 11, FontWeight.BOLD, &quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L43">        brand.getChildren().addAll(logoBox, brandText);</span>
+
+<span class="fc" id="L45">        Button courses = new Button(&quot;•   Omat kurssit&quot;);</span>
+<span class="fc" id="L46">        courses.setPrefHeight(22);</span>
+<span class="fc" id="L47">        courses.setMaxWidth(Double.MAX_VALUE);</span>
+<span class="fc" id="L48">        courses.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="fc" id="L49">        courses.setStyle(&quot;-fx-background-color: #344A70; -fx-text-fill: white; &quot;</span>
+                + &quot;-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4;&quot;);
+<span class="fc" id="L51">        courses.setFocusTraversable(false);</span>
+
+<span class="fc" id="L53">        Region sideSpacer = new Region();</span>
+<span class="fc" id="L54">        VBox.setVgrow(sideSpacer, Priority.ALWAYS);</span>
+
+<span class="fc" id="L56">        HBox user = new HBox(7);</span>
+<span class="fc" id="L57">        user.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="fc" id="L58">        Circle avatar = new Circle(10, Color.web(&quot;#536FA4&quot;));</span>
+<span class="fc" id="L59">        Label initials = text(&quot;MA&quot;, 8, FontWeight.BOLD, &quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L60">        StackPane avatarBox = new StackPane(avatar, initials);</span>
+<span class="fc" id="L61">        avatarBox.setPrefSize(20, 20);</span>
+
+<span class="fc" id="L63">        VBox userInfo = new VBox(0,</span>
+<span class="fc" id="L64">                text(&quot;Etunimi Sukunimi&quot;, 8, FontWeight.BOLD, &quot;#FFFFFF&quot;),</span>
+<span class="fc" id="L65">                text(&quot;Opiskelija&quot;, 6, FontWeight.NORMAL, &quot;#A9B0BD&quot;)</span>
         );
+<span class="fc" id="L67">        user.getChildren().addAll(avatarBox, userInfo);</span>
 
-        // Logo + Läsnäolo
-<span class="nc" id="L35">        HBox brand = new HBox(9);</span>
-<span class="nc" id="L36">        brand.setAlignment(Pos.CENTER_LEFT);</span>
-
-<span class="nc" id="L38">        Circle logoCircle = new Circle(</span>
-                10,
-<span class="nc" id="L40">                Color.web(&quot;#536FA4&quot;)</span>
-        );
-
-<span class="nc" id="L43">        Label logoText = new Label(&quot;LO&quot;);</span>
-<span class="nc" id="L44">        logoText.setTextFill(Color.WHITE);</span>
-<span class="nc" id="L45">        logoText.setFont(</span>
-<span class="nc" id="L46">                Font.font(</span>
-                        &quot;System&quot;,
-                        FontWeight.BOLD,
-                        9
-                )
-        );
-
-<span class="nc" id="L53">        StackPane logo = new StackPane(</span>
-                logoCircle,
-                logoText
-        );
-
-<span class="nc" id="L58">        logo.setPrefSize(20, 20);</span>
-
-<span class="nc" id="L60">        Label brandName = text(</span>
-                &quot;Läsnäolo&quot;,
-                11,
-                FontWeight.BOLD,
-                &quot;#FFFFFF&quot;
-        );
-
-<span class="nc" id="L67">        brand.getChildren().addAll(</span>
-                logo,
-                brandName
-        );
-
-        // Kurssini-painike
-<span class="nc" id="L73">        ButtonStyle courseButton = new ButtonStyle();</span>
-
-<span class="nc" id="L75">        sidebar.getChildren().add(brand);</span>
-
-<span class="nc" id="L77">        Region topSpace = new Region();</span>
-<span class="nc" id="L78">        topSpace.setPrefHeight(15);</span>
-
-<span class="nc" id="L80">        sidebar.getChildren().add(topSpace);</span>
-
-<span class="nc" id="L82">        javafx.scene.control.Button courseButtonNode =</span>
-                new javafx.scene.control.Button(
-                        &quot;•   Kurssini&quot;
-                );
-
-<span class="nc" id="L87">        courseButtonNode.setPrefHeight(22);</span>
-<span class="nc" id="L88">        courseButtonNode.setMaxWidth(</span>
-                Double.MAX_VALUE
-        );
-
-<span class="nc" id="L92">        courseButtonNode.setAlignment(</span>
-                Pos.CENTER_LEFT
-        );
-
-<span class="nc" id="L96">        courseButtonNode.setStyle(</span>
-                &quot;-fx-background-color: #344A70;&quot; +
-                        &quot;-fx-text-fill: white;&quot; +
-                        &quot;-fx-font-size: 10px;&quot; +
-                        &quot;-fx-font-weight: bold;&quot; +
-                        &quot;-fx-background-radius: 4;&quot;
-        );
-
-<span class="nc" id="L104">        courseButtonNode.setFocusTraversable(false);</span>
-
-        // Tällä voidaan myöhemmin palata kurssilistaan
-<span class="nc" id="L107">        courseButtonNode.setOnAction(</span>
-<span class="nc" id="L108">                e -&gt; onBack.run()</span>
-        );
-
-<span class="nc" id="L111">        sidebar.getChildren().add(courseButtonNode);</span>
-
-        // Tyhjä tila ennen käyttäjää
-<span class="nc" id="L114">        Region spacer = new Region();</span>
-
-<span class="nc" id="L116">        VBox.setVgrow(</span>
-                spacer,
-                Priority.ALWAYS
-        );
-
-<span class="nc" id="L121">        sidebar.getChildren().add(spacer);</span>
-
-        // =========================
-        // USER
-        // =========================
-
-<span class="nc" id="L127">        HBox user = new HBox(7);</span>
-
-<span class="nc" id="L129">        user.setAlignment(</span>
-                Pos.CENTER_LEFT
-        );
-
-<span class="nc" id="L133">        Circle avatarCircle = new Circle(</span>
-                10,
-<span class="nc" id="L135">                Color.web(&quot;#536FA4&quot;)</span>
-        );
-
-<span class="nc" id="L138">        Label avatarText = new Label(&quot;MA&quot;);</span>
-
-<span class="nc" id="L140">        avatarText.setTextFill(Color.WHITE);</span>
-
-<span class="nc" id="L142">        avatarText.setFont(</span>
-<span class="nc" id="L143">                Font.font(</span>
-                        &quot;System&quot;,
-                        FontWeight.BOLD,
-                        8
-                )
-        );
-
-<span class="nc" id="L150">        StackPane avatar = new StackPane(</span>
-                avatarCircle,
-                avatarText
-        );
-
-<span class="nc" id="L155">        avatar.setPrefSize(20, 20);</span>
-
-<span class="nc" id="L157">        VBox userInfo = new VBox(</span>
-                0,
-<span class="nc" id="L159">                text(</span>
-                        &quot;Etunimi Sukunimi&quot;,
-                        8,
-                        FontWeight.BOLD,
-                        &quot;#FFFFFF&quot;
-                ),
-<span class="nc" id="L165">                text(</span>
-                        &quot;Opiskelija&quot;,
-                        6,
-                        FontWeight.NORMAL,
-                        &quot;#A9B0BD&quot;
-                )
-        );
-
-<span class="nc" id="L173">        user.getChildren().addAll(</span>
-                avatar,
-                userInfo
-        );
-
-<span class="nc" id="L178">        sidebar.getChildren().add(user);</span>
+<span class="fc" id="L69">        sidebar.getChildren().addAll(brand, new Region(), courses, sideSpacer, user);</span>
 
         // =========================
         // MAIN CONTENT
         // =========================
 
-<span class="nc" id="L184">        VBox content = new VBox();</span>
+<span class="fc" id="L75">        VBox content = new VBox();</span>
 
-<span class="nc" id="L186">        content.setPadding(</span>
+<span class="fc" id="L77">        content.setPadding(</span>
                 new Insets(
                         41,
                         24,
@@ -193,95 +84,66 @@ public class StudentAttendanceTracking extends BorderPane {
         );
 
         // Otsikko
-<span class="nc" id="L196">        Label title = text(</span>
+<span class="fc" id="L87">        Label title = text(</span>
                 &quot;Ohjelmoinnin perusteet&quot;,
                 15,
                 FontWeight.BOLD,
                 &quot;#171717&quot;
         );
 
-<span class="nc" id="L203">        Label subtitle = text(</span>
+<span class="fc" id="L94">        Label subtitle = text(</span>
                 &quot;TX00CV70 - omat läsnäolomerkinnät&quot;,
                 8,
                 FontWeight.BOLD,
                 &quot;#171717&quot;
         );
 
-<span class="nc" id="L210">        VBox titleBox = new VBox(</span>
+<span class="fc" id="L101">        VBox titleBox = new VBox(</span>
                 2,
                 title,
                 subtitle
         );
 
         // Yhteenveto oikealle
-<span class="nc" id="L217">        HBox summary = new HBox(20);</span>
+<span class="fc" id="L108">        HBox summary = new HBox(20);</span>
+<span class="fc" id="L109">        summary.setAlignment(Pos.CENTER_RIGHT);</span>
 
-<span class="nc" id="L219">        summary.setAlignment(</span>
-                Pos.CENTER_RIGHT
-        );
+<span class="fc" id="L111">        Label presentCount = text(&quot;1 paikalla&quot;, 8, FontWeight.BOLD, &quot;#171717&quot;);</span>
+<span class="fc" id="L112">        Label lateCount = text(&quot;1 myöhässä&quot;, 8, FontWeight.BOLD, &quot;#171717&quot;);</span>
+<span class="fc" id="L113">        Label absentCount = text(&quot;1 Poissa&quot;, 8, FontWeight.BOLD, &quot;#171717&quot;);</span>
 
-<span class="nc" id="L223">        Label presentCount = text(</span>
-                &quot;1 paikalla&quot;,
-                8,
-                FontWeight.BOLD,
-                &quot;#171717&quot;
-        );
+<span class="fc" id="L115">        summary.getChildren().addAll(presentCount, lateCount, absentCount);</span>
 
-<span class="nc" id="L230">        Label lateCount = text(</span>
-                &quot;1 myöhässä&quot;,
-                8,
-                FontWeight.BOLD,
-                &quot;#171717&quot;
-        );
+<span class="fc" id="L117">        HBox header = new HBox();</span>
+<span class="fc" id="L118">        header.setAlignment(Pos.BOTTOM_LEFT);</span>
 
-<span class="nc" id="L237">        Label absentCount = text(</span>
-                &quot;1 Poissa&quot;,
-                8,
-                FontWeight.BOLD,
-                &quot;#171717&quot;
-        );
+<span class="fc" id="L120">        HBox.setHgrow(titleBox, Priority.ALWAYS);</span>
 
-<span class="nc" id="L244">        summary.getChildren().addAll(</span>
-                presentCount,
-                lateCount,
-                absentCount
-        );
+// Tämä työntää summaryn oikealle
+<span class="fc" id="L123">        Region pushRight = new Region();</span>
+<span class="fc" id="L124">        HBox.setHgrow(pushRight, Priority.ALWAYS);</span>
 
-<span class="nc" id="L250">        HBox header = new HBox();</span>
+<span class="fc" id="L126">        header.getChildren().addAll(titleBox, pushRight, summary);</span>
 
-<span class="nc" id="L252">        header.setAlignment(</span>
-                Pos.BOTTOM_LEFT
-        );
-
-<span class="nc" id="L256">        HBox.setHgrow(</span>
-                titleBox,
-                Priority.ALWAYS
-        );
-
-<span class="nc" id="L261">        header.getChildren().addAll(</span>
-                titleBox,
-                summary
-        );
-
-<span class="nc" id="L266">        content.getChildren().add(header);</span>
+<span class="fc" id="L128">        content.getChildren().add(header);</span>
 
         // =========================
         // ATTENDANCE ROWS
         // =========================
 
-<span class="nc" id="L272">        Region line = new Region();</span>
+<span class="fc" id="L134">        Region line = new Region();</span>
 
-<span class="nc" id="L274">        line.setPrefHeight(1);</span>
+<span class="fc" id="L136">        line.setPrefHeight(1);</span>
 
-<span class="nc" id="L276">        line.setStyle(</span>
+<span class="fc" id="L138">        line.setStyle(</span>
                 &quot;-fx-background-color: #EEEEEE;&quot;
         );
 
-<span class="nc" id="L280">        VBox attendanceList = new VBox(</span>
+<span class="fc" id="L142">        VBox attendanceList = new VBox(</span>
                 14
         );
 
-<span class="nc" id="L284">        attendanceList.setPadding(</span>
+<span class="fc" id="L146">        attendanceList.setPadding(</span>
                 new Insets(
                         16,
                         0,
@@ -291,8 +153,8 @@ public class StudentAttendanceTracking extends BorderPane {
         );
 
         // Paikalla
-<span class="nc" id="L294">        attendanceList.getChildren().add(</span>
-<span class="nc" id="L295">                attendanceRow(</span>
+<span class="fc" id="L156">        attendanceList.getChildren().add(</span>
+<span class="fc" id="L157">                attendanceRow(</span>
                         &quot;2.9.2026&quot;,
                         &quot;Ke&quot;,
                         &quot;Muuttujat ja tietotyypit&quot;,
@@ -303,8 +165,8 @@ public class StudentAttendanceTracking extends BorderPane {
         );
 
         // Myöhässä
-<span class="nc" id="L306">        attendanceList.getChildren().add(</span>
-<span class="nc" id="L307">                attendanceRow(</span>
+<span class="fc" id="L168">        attendanceList.getChildren().add(</span>
+<span class="fc" id="L169">                attendanceRow(</span>
                         &quot;2.9.2026&quot;,
                         &quot;Ke&quot;,
                         &quot;Muuttujat ja tietotyypit&quot;,
@@ -315,8 +177,8 @@ public class StudentAttendanceTracking extends BorderPane {
         );
 
         // Poissa
-<span class="nc" id="L318">        attendanceList.getChildren().add(</span>
-<span class="nc" id="L319">                attendanceRow(</span>
+<span class="fc" id="L180">        attendanceList.getChildren().add(</span>
+<span class="fc" id="L181">                attendanceRow(</span>
                         &quot;2.9.2026&quot;,
                         &quot;Ke&quot;,
                         &quot;Muuttujat ja tietotyypit&quot;,
@@ -326,14 +188,14 @@ public class StudentAttendanceTracking extends BorderPane {
                 )
         );
 
-<span class="nc" id="L329">        content.getChildren().addAll(</span>
+<span class="fc" id="L191">        content.getChildren().addAll(</span>
                 line,
                 attendanceList
         );
 
-<span class="nc" id="L334">        setLeft(sidebar);</span>
-<span class="nc" id="L335">        setCenter(content);</span>
-<span class="nc" id="L336">    }</span>
+<span class="fc" id="L196">        setLeft(sidebar);</span>
+<span class="fc" id="L197">        setCenter(content);</span>
+<span class="fc" id="L198">    }</span>
 
     // =====================================================
     // ATTENDANCE ROW
@@ -348,19 +210,19 @@ public class StudentAttendanceTracking extends BorderPane {
             String statusBackground
     ) {
 
-<span class="nc" id="L351">        HBox row = new HBox();</span>
+<span class="fc" id="L213">        HBox row = new HBox();</span>
 
-<span class="nc" id="L353">        row.setPrefHeight(58);</span>
+<span class="fc" id="L215">        row.setPrefHeight(58);</span>
 
-<span class="nc" id="L355">        row.setMaxWidth(</span>
+<span class="fc" id="L217">        row.setMaxWidth(</span>
                 Double.MAX_VALUE
         );
 
-<span class="nc" id="L359">        row.setAlignment(</span>
+<span class="fc" id="L221">        row.setAlignment(</span>
                 Pos.CENTER_LEFT
         );
 
-<span class="nc" id="L363">        row.setPadding(</span>
+<span class="fc" id="L225">        row.setPadding(</span>
                 new Insets(
                         8,
                         9,
@@ -369,7 +231,7 @@ public class StudentAttendanceTracking extends BorderPane {
                 )
         );
 
-<span class="nc" id="L372">        row.setStyle(</span>
+<span class="fc" id="L234">        row.setStyle(</span>
                 &quot;-fx-background-color: white;&quot; +
                         &quot;-fx-border-color: #D7D7D7;&quot; +
                         &quot;-fx-border-radius: 12;&quot; +
@@ -380,15 +242,15 @@ public class StudentAttendanceTracking extends BorderPane {
         // DATE
         // -------------------------
 
-<span class="nc" id="L383">        VBox dateBox = new VBox(</span>
+<span class="fc" id="L245">        VBox dateBox = new VBox(</span>
                 0,
-<span class="nc" id="L385">                text(</span>
+<span class="fc" id="L247">                text(</span>
                         date,
                         10,
                         FontWeight.BOLD,
                         &quot;#171717&quot;
                 ),
-<span class="nc" id="L391">                text(</span>
+<span class="fc" id="L253">                text(</span>
                         day,
                         7,
                         FontWeight.BOLD,
@@ -396,39 +258,37 @@ public class StudentAttendanceTracking extends BorderPane {
                 )
         );
 
-<span class="nc" id="L399">        dateBox.setPrefWidth(95);</span>
+<span class="fc" id="L261">        dateBox.setPrefWidth(95);</span>
 
         // -------------------------
         // LESSON
         // -------------------------
 
-<span class="nc" id="L405">        Label lessonLabel = text(</span>
+<span class="fc" id="L267">        Label lessonLabel = text(</span>
                 lesson,
                 10,
                 FontWeight.BOLD,
                 &quot;#666666&quot;
         );
 
-<span class="nc" id="L412">        HBox.setHgrow(</span>
-                lessonLabel,
-                Priority.ALWAYS
-        );
+<span class="fc" id="L274">        Region pushRight = new Region();</span>
+<span class="fc" id="L275">        HBox.setHgrow(pushRight, Priority.ALWAYS);</span>
 
         // -------------------------
         // STATUS
         // -------------------------
 
-<span class="nc" id="L421">        HBox statusBox = new HBox(10);</span>
+<span class="fc" id="L281">        HBox statusBox = new HBox(10);</span>
 
-<span class="nc" id="L423">        statusBox.setPrefWidth(120);</span>
+<span class="fc" id="L283">        statusBox.setPrefWidth(120);</span>
 
-<span class="nc" id="L425">        statusBox.setPrefHeight(28);</span>
+<span class="fc" id="L285">        statusBox.setPrefHeight(28);</span>
 
-<span class="nc" id="L427">        statusBox.setAlignment(</span>
+<span class="fc" id="L287">        statusBox.setAlignment(</span>
                 Pos.CENTER_LEFT
         );
 
-<span class="nc" id="L431">        statusBox.setPadding(</span>
+<span class="fc" id="L291">        statusBox.setPadding(</span>
                 new Insets(
                         0,
                         12,
@@ -437,7 +297,7 @@ public class StudentAttendanceTracking extends BorderPane {
                 )
         );
 
-<span class="nc" id="L440">        statusBox.setStyle(</span>
+<span class="fc" id="L300">        statusBox.setStyle(</span>
                 &quot;-fx-background-color: &quot; +
                         statusBackground +
                         &quot;;&quot; +
@@ -448,30 +308,31 @@ public class StudentAttendanceTracking extends BorderPane {
                         &quot;-fx-background-radius: 20;&quot;
         );
 
-<span class="nc" id="L451">        Circle statusCircle = new Circle(</span>
+<span class="fc" id="L311">        Circle statusCircle = new Circle(</span>
                 4,
-<span class="nc" id="L453">                Color.web(statusColor)</span>
+<span class="fc" id="L313">                Color.web(statusColor)</span>
         );
 
-<span class="nc" id="L456">        Label statusLabel = text(</span>
+<span class="fc" id="L316">        Label statusLabel = text(</span>
                 status,
                 10,
                 FontWeight.BOLD,
                 statusColor
         );
 
-<span class="nc" id="L463">        statusBox.getChildren().addAll(</span>
+<span class="fc" id="L323">        statusBox.getChildren().addAll(</span>
                 statusCircle,
                 statusLabel
         );
 
-<span class="nc" id="L468">        row.getChildren().addAll(</span>
+<span class="fc" id="L328">        row.getChildren().addAll(</span>
                 dateBox,
                 lessonLabel,
+                pushRight,
                 statusBox
         );
 
-<span class="nc" id="L474">        return row;</span>
+<span class="fc" id="L335">        return row;</span>
     }
 
     // =====================================================
@@ -485,21 +346,21 @@ public class StudentAttendanceTracking extends BorderPane {
             String color
     ) {
 
-<span class="nc" id="L488">        Label label = new Label(value);</span>
+<span class="fc" id="L349">        Label label = new Label(value);</span>
 
-<span class="nc" id="L490">        label.setFont(</span>
-<span class="nc" id="L491">                Font.font(</span>
+<span class="fc" id="L351">        label.setFont(</span>
+<span class="fc" id="L352">                Font.font(</span>
                         &quot;System&quot;,
                         weight,
                         size
                 )
         );
 
-<span class="nc" id="L498">        label.setTextFill(</span>
-<span class="nc" id="L499">                Color.web(color)</span>
+<span class="fc" id="L359">        label.setTextFill(</span>
+<span class="fc" id="L360">                Color.web(color)</span>
         );
 
-<span class="nc" id="L502">        return label;</span>
+<span class="fc" id="L363">        return label;</span>
     }
 
     // Tyhjä apuluokka, jotta sidebar-rakenne pysyy selkeänä.
