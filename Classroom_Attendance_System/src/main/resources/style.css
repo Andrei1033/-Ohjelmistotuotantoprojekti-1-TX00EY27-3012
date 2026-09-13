@@ -111,3 +111,106 @@
 .table-row-cell:hover {
     -fx-background-color: #f7f7f7;
 }
+
+.profile-avatar {
+    -fx-background-color: #e8eef7;
+    -fx-text-fill: #31558a;
+    -fx-background-radius: 50%;
+    -fx-min-width: 28px;
+    -fx-min-height: 28px;
+    -fx-max-width: 28px;
+    -fx-max-height: 28px;
+    -fx-alignment: center;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.user-name {
+    -fx-text-fill: #222222;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+
+.role-student {
+    -fx-background-color: #c9f5d9;
+    -fx-text-fill: #16834a;
+    -fx-background-radius: 5px;
+    -fx-padding: 4px 8px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.role-teacher {
+    -fx-background-color: #c9e3fa;
+    -fx-text-fill: #2872aa;
+    -fx-background-radius: 5px;
+    -fx-padding: 4px 8px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.role-admin {
+    -fx-background-color: #efc6f1;
+    -fx-text-fill: #9a309d;
+    -fx-background-radius: 5px;
+    -fx-padding: 4px 8px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+
+
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #eeeeee transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: white;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #777777;
+    -fx-font-size: 10px;
+    -fx-font-weight: normal;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #eeeeee transparent;
+    -fx-cell-size: 48px;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f7f7f7;
+}
+
+.table-cell {
+    -fx-border-color: transparent;
+    -fx-padding: 8px;
+    -fx-text-fill: #444444;
+    -fx-font-size: 11px;
+}
+
+
+.edit-button {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-text-fill: #666666;
+    -fx-padding: 3px 6px;
+}
+
+.edit-button:hover {
+    -fx-background-color: #f2f2f2;
+}
