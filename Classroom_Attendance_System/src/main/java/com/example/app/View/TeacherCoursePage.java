@@ -13,7 +13,12 @@ import javafx.scene.text.FontWeight;
 
 public class TeacherCoursePage extends BorderPane {
 
+
     private static final String NAVY = "#202F49";
+
+    public TeacherCoursePage() {
+        this(() -> {}, () -> {}, () -> {});
+    }
 
     public TeacherCoursePage(Runnable onBack, Runnable onStartLesson, Runnable onAddStudents) {
 
