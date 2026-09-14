@@ -4,26 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< Updated upstream
     <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="Tehty jacoko ja minun StudentAttendanceTracking sivu + unversioned files.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" afterDir="false" />
-=======
-    <list default="true" id="de341b6e-a52a-406d-8c5d-0b2901072eea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/view/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/view/Admin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
->>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-<<<<<<< Updated upstream
   <component name="EmbeddingIndexingInfo">
     <option name="cachedIndexableFilesCount" value="26" />
   </component>
@@ -32,12 +21,7 @@
       <list>
         <option value="FxmlFile" />
         <option value="Class" />
-=======
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
         <option value="JUnit5 Test Class" />
->>>>>>> Stashed changes
       </list>
     </option>
   </component>
@@ -46,87 +30,67 @@
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;AaroHaavisto&quot;
-  }
-}</component>
+        &quot;lastFilter&quot;: {
+        &quot;state&quot;: &quot;OPEN&quot;,
+        &quot;assignee&quot;: &quot;AaroHaavisto&quot;
+        }
+        }</component>
   <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git&quot;,
-    &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;
-  }
-}</component>
-<<<<<<< Updated upstream
+        &quot;selectedUrlAndAccountId&quot;: {
+        &quot;url&quot;: &quot;https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git&quot;,
+        &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;
+        }
+        }</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-=======
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
->>>>>>> Stashed changes
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 7
-}</component>
+        &quot;associatedIndex&quot;: 7
+        }</component>
   <component name="ProjectId" id="3IzRPztDzgmZrAs5ZQdQn1BnpcV" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-<<<<<<< Updated upstream
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.HelloWorldApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PageShow.executor&quot;: &quot;Run&quot;,
-    &quot;Application.main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AdminTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoginTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StudentAttendanceTrackingTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StudentStartPageTest.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-=======
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AdminTest.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Classroom_Attendance_System [javafx:run].executor&quot;: &quot;Run&quot;,
->>>>>>> Stashed changes
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-<<<<<<< Updated upstream
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot&quot;,
-=======
->>>>>>> Stashed changes
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-<<<<<<< Updated upstream
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-=======
->>>>>>> Stashed changes
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
+        &quot;keyToString&quot;: {
+        &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+        &quot;Application.HelloWorldApplication.executor&quot;: &quot;Run&quot;,
+        &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+        &quot;Application.PageShow.executor&quot;: &quot;Run&quot;,
+        &quot;Application.main.executor&quot;: &quot;Run&quot;,
+        &quot;JUnit.AdminTest.executor&quot;: &quot;Run&quot;,
+        &quot;JUnit.LoginTest.executor&quot;: &quot;Run&quot;,
+        &quot;JUnit.StudentAttendanceTrackingTest.executor&quot;: &quot;Run&quot;,
+        &quot;JUnit.StudentStartPageTest.executor&quot;: &quot;Run&quot;,
+        &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+        &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+        &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+        &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+        &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+        &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+        &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+        &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+        &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+        &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+        &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+        &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+        &quot;last_opened_file_path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot&quot;,
+        &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+        &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+        &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+        &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+        &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+        &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java&quot;,
+        &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+        &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+        &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+        &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+        &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+        }
+        }</component>
   <component name="RecentsManager">
-<<<<<<< Updated upstream
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Documents\SQLKaaviot" />
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\src\main\java" />
@@ -135,6 +99,12 @@
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012" />
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\Kaaviot" />
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\Documents" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.example.app.View" />
     </key>
   </component>
   <component name="RunManager">
@@ -147,15 +117,8 @@
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
       <module name="-Ohjelmistotuotantoprojekti-1-TX00EY27-3012" />
       <option name="filePath" />
-=======
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.example.app.View" />
-    </key>
-  </component>
-  <component name="RunManager">
+      <method v="2" />
+    </configuration>
     <configuration name="Classroom_Attendance_System [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -184,7 +147,6 @@
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
->>>>>>> Stashed changes
       <method v="2" />
     </configuration>
   </component>
@@ -202,7 +164,6 @@
       <created>1788765391312</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-<<<<<<< Updated upstream
       <updated>1787118696699</updated>
       <workItem from="1787118697756" duration="161000" />
       <workItem from="1787220651549" duration="15000" />
@@ -291,13 +252,6 @@
       <updated>1789216507786</updated>
     </task>
     <option name="localTasksCounter" value="10" />
-=======
-      <updated>1788765391312</updated>
-      <workItem from="1788765392828" duration="2450000" />
-      <workItem from="1788775008916" duration="3106000" />
-      <workItem from="1788869837680" duration="2404000" />
-    </task>
->>>>>>> Stashed changes
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,7 +278,6 @@
       </map>
     </option>
   </component>
-<<<<<<< Updated upstream
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Java fx now work." />
     <MESSAGE value="..." />
@@ -348,6 +301,4 @@
       </breakpoints>
     </breakpoint-manager>
   </component>
-=======
->>>>>>> Stashed changes
 </project>

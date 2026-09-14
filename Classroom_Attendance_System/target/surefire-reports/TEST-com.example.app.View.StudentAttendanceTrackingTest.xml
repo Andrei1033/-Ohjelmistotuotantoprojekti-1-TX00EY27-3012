@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.example.app.View.StudentAttendanceTrackingTest" time="8.268" tests="21" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.example.app.View.StudentAttendanceTrackingTest" time="7.608" tests="21" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="javafx.runtime.version" value="25+29"/>
@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="RU"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-25.0.4.1\bin"/>
-    <property name="sun.java.command" value="C:\Users\andre\AppData\Local\Temp\surefire2831292595917030482\surefirebooter-20260913172401775_3.jar C:\Users\andre\AppData\Local\Temp\surefire2831292595917030482 2026-09-13T17-24-01_618-jvmRun1 surefire-20260913172401775_1tmp surefire_0-20260913172401775_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\andre\AppData\Local\Temp\surefire12819416690143502532\surefirebooter-20260914081312531_3.jar C:\Users\andre\AppData\Local\Temp\surefire12819416690143502532 2026-09-14T08-13-12_389-jvmRun1 surefire-20260914081312531_1tmp surefire_0-20260914081312531_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\target\test-classes;C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\target\classes;C:\Users\andre\.m2\repository\org\openjfx\javafx-controls\25\javafx-controls-25.jar;C:\Users\andre\.m2\repository\org\openjfx\javafx-controls\25\javafx-controls-25-win.jar;C:\Users\andre\.m2\repository\org\openjfx\javafx-graphics\25\javafx-graphics-25.jar;C:\Users\andre\.m2\repository\org\openjfx\javafx-graphics\25\javafx-graphics-25-win.jar;C:\Users\andre\.m2\repository\org\openjfx\javafx-base\25\javafx-base-25.jar;C:\Users\andre\.m2\repository\org\openjfx\javafx-base\25\javafx-base-25-win.jar;C:\Users\andre\.m2\repository\org\openjfx\javafx-fxml\25\javafx-fxml-25.jar;C:\Users\andre\.m2\repository\org\openjfx\javafx-fxml\25\javafx-fxml-25-win.jar;C:\Users\andre\.m2\repository\org\junit\jupiter\junit-jupiter\5.14.0\junit-jupiter-5.14.0.jar;C:\Users\andre\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.14.0\junit-jupiter-api-5.14.0.jar;C:\Users\andre\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\andre\.m2\repository\org\junit\platform\junit-platform-commons\1.14.0\junit-platform-commons-1.14.0.jar;C:\Users\andre\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\andre\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.14.0\junit-jupiter-params-5.14.0.jar;C:\Users\andre\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.14.0\junit-jupiter-engine-5.14.0.jar;C:\Users\andre\.m2\repository\org\junit\platform\junit-platform-engine\1.14.0\junit-platform-engine-1.14.0.jar;C:\Users\andre\.m2\repository\org\testfx\testfx-core\4.0.18\testfx-core-4.0.18.jar;C:\Users\andre\.m2\repository\org\hamcrest\hamcrest\2.1\hamcrest-2.1.jar;C:\Users\andre\.m2\repository\org\assertj\assertj-core\3.13.2\assertj-core-3.13.2.jar;C:\Users\andre\.m2\repository\org\osgi\org.osgi.core\6.0.0\org.osgi.core-6.0.0.jar;C:\Users\andre\.m2\repository\org\testfx\testfx-junit5\4.0.18\testfx-junit5-4.0.18.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -32,7 +32,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\andre\AppData\Local\Temp\surefire2831292595917030482\surefirebooter-20260913172401775_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\andre\AppData\Local\Temp\surefire12819416690143502532\surefirebooter-20260914081312531_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.4.1+1-LTS-5"/>
@@ -61,25 +61,25 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="testStatusBadgeShape" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.416"/>
-  <testcase name="testAttendanceListSpacing" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.389"/>
-  <testcase name="testMyohassaStyle" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.391"/>
-  <testcase name="testSidebarNavAndCircles" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.384"/>
-  <testcase name="testContentSections" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.386"/>
-  <testcase name="testSidebarUser" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.391"/>
-  <testcase name="testLayoutStructure" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.386"/>
-  <testcase name="testPoissaStyle" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.394"/>
-  <testcase name="testPaikallaStyle" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.392"/>
-  <testcase name="testRowStyle" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.389"/>
+  <testcase name="testStatusBadgeShape" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.282"/>
+  <testcase name="testAttendanceListSpacing" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.271"/>
+  <testcase name="testMyohassaStyle" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.273"/>
+  <testcase name="testSidebarNavAndCircles" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.275"/>
+  <testcase name="testContentSections" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.275"/>
+  <testcase name="testSidebarUser" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.3"/>
+  <testcase name="testLayoutStructure" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.388"/>
+  <testcase name="testPoissaStyle" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.403"/>
+  <testcase name="testPaikallaStyle" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.39"/>
+  <testcase name="testRowStyle" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.387"/>
   <testcase name="testRowDateBoxes" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.385"/>
-  <testcase name="testSidebarBrand" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.387"/>
-  <testcase name="testSidebarWidth" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.391"/>
-  <testcase name="testDivider" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.387"/>
-  <testcase name="testRowStatuses" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.385"/>
+  <testcase name="testSidebarBrand" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.388"/>
+  <testcase name="testSidebarWidth" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.386"/>
+  <testcase name="testDivider" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.391"/>
+  <testcase name="testRowStatuses" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.388"/>
   <testcase name="testHeader" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.386"/>
-  <testcase name="testThreeAttendanceRows" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.388"/>
-  <testcase name="testRowLesson" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.386"/>
-  <testcase name="testSummaryCounts" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.385"/>
-  <testcase name="testNoPrematureBack" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.464"/>
-  <testcase name="testStatusCircleRadius" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.385"/>
+  <testcase name="testThreeAttendanceRows" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.386"/>
+  <testcase name="testRowLesson" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.385"/>
+  <testcase name="testSummaryCounts" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.392"/>
+  <testcase name="testNoPrematureBack" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.465"/>
+  <testcase name="testStatusCircleRadius" classname="com.example.app.View.StudentAttendanceTrackingTest" time="0.39"/>
 </testsuite>
