@@ -6,15 +6,19 @@ Classroom_Attendance_System,com.example.app.Model,Presence,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.Model,Admin,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.Model,Teacher,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.View,PageShow,81,0,2,0,32,0,3,0,2,0
+Classroom_Attendance_System,com.example.app.View,TeacherAttendanceTracking.StudentRow,363,0,6,0,90,0,14,0,11,0
+Classroom_Attendance_System,com.example.app.View,Admin.new TableCell() {...},11,105,2,4,3,19,2,3,0,2
 Classroom_Attendance_System,com.example.app.View,StudentAttendanceTracking,0,596,0,0,0,100,0,3,0,3
+Classroom_Attendance_System,com.example.app.View,Admin.new TableCell() {...},15,40,0,2,5,9,1,3,1,2
+Classroom_Attendance_System,com.example.app.View,Admin.new TableCell() {...},0,81,2,6,0,15,2,5,0,2
 Classroom_Attendance_System,com.example.app.View,StudentStartPage,3,428,0,0,0,68,1,3,1,3
 Classroom_Attendance_System,com.example.app.View,PageShow.SelectedPage,3,0,0,0,1,0,1,0,1,0
-Classroom_Attendance_System,com.example.app.View,TeacherCoursePage,551,0,2,0,88,0,8,0,7,0
+Classroom_Attendance_System,com.example.app.View,TeacherCoursePage,15,545,0,2,2,88,7,5,7,4
 Classroom_Attendance_System,com.example.app.View,PageShow.App,183,0,8,0,54,0,17,0,10,0
 Classroom_Attendance_System,com.example.app.View,Login,0,317,0,0,0,56,0,4,0,4
-Classroom_Attendance_System,com.example.app.View,TeacherAttendanceTracking,70,0,0,0,22,0,3,0,3,0
-Classroom_Attendance_System,com.example.app.View,Admin,0,379,0,0,0,67,0,2,0,2
-Classroom_Attendance_System,com.example.app.View,TeacherStartPage,422,0,0,0,67,0,4,0,4,0
+Classroom_Attendance_System,com.example.app.View,TeacherAttendanceTracking,917,0,12,0,196,0,17,0,11,0
+Classroom_Attendance_System,com.example.app.View,Admin,0,625,0,0,0,86,0,9,0,9
+Classroom_Attendance_System,com.example.app.View,TeacherStartPage,3,419,0,0,0,67,1,3,1,3
 Classroom_Attendance_System,com.example.app,Main,27,0,0,0,9,0,3,0,3,0
 Classroom_Attendance_System,Java_fx_Testi,Main,14,0,0,0,4,0,2,0,2,0
 Classroom_Attendance_System,Java_fx_Testi,HelloWorldApplication,76,0,0,0,17,0,3,0,3,0

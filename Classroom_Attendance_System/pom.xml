@@ -55,19 +55,18 @@
 
     <build>
         <plugins>
-            <!-- JaCoCo Plugin for Code Coverage -->
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.14</version>
                 <executions>
-                    <!-- Attach JaCoCo agent -->
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                    <!-- Generate coverage report -->
+
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
@@ -77,6 +76,16 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>com.example.app.Main</mainClass>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

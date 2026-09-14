@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.example.app.View.AdminTest" time="3.059" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.example.app.View.TeacherCoursePageTest" time="2.804" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="javafx.runtime.version" value="25+29"/>
@@ -61,12 +61,13 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="tableShouldContainUsersAndColumns" classname="com.example.app.View.AdminTest" time="1.981">
-    <system-err><![CDATA[сент. 14, 2026 8:13:13 AM com.sun.javafx.application.PlatformImpl startup
-WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @25b485ba'
-]]></system-err>
-  </testcase>
-  <testcase name="viewShouldHaveSidebarAndContent" classname="com.example.app.View.AdminTest" time="0.368"/>
-  <testcase name="sidebarShouldContainCoursesButton" classname="com.example.app.View.AdminTest" time="0.327"/>
-  <testcase name="getViewShouldReturnBorderPane" classname="com.example.app.View.AdminTest" time="0.331"/>
+  <testcase name="teacherCoursePageShouldInitialize" classname="com.example.app.View.TeacherCoursePageTest" time="0.311"/>
+  <testcase name="testAddStudentsButton" classname="com.example.app.View.TeacherCoursePageTest" time="0.308"/>
+  <testcase name="testLayoutStructure" classname="com.example.app.View.TeacherCoursePageTest" time="0.311"/>
+  <testcase name="testCourseTitle" classname="com.example.app.View.TeacherCoursePageTest" time="0.31"/>
+  <testcase name="testLessonCardsExist" classname="com.example.app.View.TeacherCoursePageTest" time="0.31"/>
+  <testcase name="testStartLessonButton" classname="com.example.app.View.TeacherCoursePageTest" time="0.313"/>
+  <testcase name="testSidebarWidth" classname="com.example.app.View.TeacherCoursePageTest" time="0.309"/>
+  <testcase name="testMyCoursesButton" classname="com.example.app.View.TeacherCoursePageTest" time="0.311"/>
+  <testcase name="testCourseCode" classname="com.example.app.View.TeacherCoursePageTest" time="0.313"/>
 </testsuite>
