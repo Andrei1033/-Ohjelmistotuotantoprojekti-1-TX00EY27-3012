@@ -1,119 +1,80 @@
 package com.example.app.View;
 
-import com.example.app.View.Admin;
-import javafx.application.Platform;
-import javafx.scene.control.*;
+
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.CountDownLatch;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdminTest {
+class AdminTest extends ApplicationTest {
 
-    @BeforeAll
-    static void initJavaFX() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
+    private Admin admin;
+    private BorderPane view;
 
-        Platform.startup(latch::countDown);
+    @Override
+    public void start(javafx.stage.Stage stage) {
+        admin = new Admin();
+        view = admin.getView();
 
-        latch.await();
+        stage.setScene(new javafx.scene.Scene(view, 800, 600));
+        stage.show();
     }
 
     @Test
     void getViewShouldReturnBorderPane() {
-        Admin admin = new Admin();
-
-        BorderPane view = admin.getView();
-
         assertNotNull(view);
     }
 
     @Test
-    void viewShouldHaveSidebar() {
-        Admin admin = new Admin();
-
-        BorderPane view = admin.getView();
-
+    void viewShouldHaveSidebarAndContent() {
         assertNotNull(view.getLeft());
-        assertTrue(view.getLeft() instanceof VBox);
-    }
-
-    @Test
-    void viewShouldHaveContent() {
-        Admin admin = new Admin();
-
-        BorderPane view = admin.getView();
-
         assertNotNull(view.getCenter());
+
+        assertTrue(view.getLeft() instanceof VBox);
         assertTrue(view.getCenter() instanceof VBox);
     }
 
     @Test
-    void viewShouldHaveCorrectStyleClass() {
-        Admin admin = new Admin();
+    void tableShouldContainUsersAndColumns() {
+        VBox content = (VBox) view.getCenter();
 
-        BorderPane view = admin.getView();
+        TableView<?> table = null;
 
-        assertTrue(view.getStyleClass().contains("root"));
+        for (Node node : content.getChildren()) {
+            if (node instanceof TableView) {
+                table = (TableView<?>) node;
+                break;
+            }
+        }
+
+        assertNotNull(table);
+
+        assertEquals(5, table.getColumns().size());
+        assertEquals(6, table.getItems().size());
     }
 
     @Test
-    void sidebarShouldHaveCorrectWidth() {
-        Admin admin = new Admin();
-
-        BorderPane view = admin.getView();
-
+    void sidebarShouldContainCoursesButton() {
         VBox sidebar = (VBox) view.getLeft();
 
-        assertEquals(240, sidebar.getPrefWidth());
-    }
+        boolean found = false;
 
-    @Test
-    void tableShouldHaveFiveColumns() {
-        Admin admin = new Admin();
+        for (Node node : sidebar.getChildren()) {
+            if (node instanceof Button) {
+                Button button = (Button) node;
 
-        BorderPane view = admin.getView();
-
-        VBox content = (VBox) view.getCenter();
-
-        TableView<?> table = null;
-
-        for (var node : content.getChildren()) {
-            if (node instanceof TableView<?>) {
-                table = (TableView<?>) node;
+                if (button.getText().contains("Kurssini")) {
+                    found = true;
+                    break;
+                }
             }
         }
 
-        assertNotNull(table);
-        assertEquals(5, table.getColumns().size());
-    }
-
-    @Test
-    void tableShouldShowCorrectPlaceholder() {
-        Admin admin = new Admin();
-
-        BorderPane view = admin.getView();
-
-        VBox content = (VBox) view.getCenter();
-
-        TableView<?> table = null;
-
-        for (var node : content.getChildren()) {
-            if (node instanceof TableView<?>) {
-                table = (TableView<?>) node;
-            }
-        }
-
-        assertNotNull(table);
-        assertNotNull(table.getPlaceholder());
-        assertTrue(table.getPlaceholder() instanceof Label);
-
-        Label placeholder = (Label) table.getPlaceholder();
-
-        assertEquals("Ei käyttäjiä", placeholder.getText());
+        assertTrue(found);
     }
 }

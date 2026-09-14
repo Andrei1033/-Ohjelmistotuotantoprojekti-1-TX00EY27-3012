@@ -1,5 +1,7 @@
 package com.example.app.View;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -25,7 +27,7 @@ public class Admin {
 
         Button coursesButton = new Button("•  Kurssini");
         coursesButton.getStyleClass().add("sidebar-button");
-        coursesButton.setPrefWidth(210);
+        coursesButton.setMaxWidth(Double.MAX_VALUE);
 
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
@@ -58,12 +60,19 @@ public class Admin {
         studentButton.getStyleClass().add("filter-button");
 
         TextField searchField = new TextField();
-        searchField.setPromptText("Hae nimi tai s-postila");
-        searchField.setPrefWidth(150);
+        searchField.setPromptText("Hae nimellä tai s-postilla");
+        searchField.setPrefWidth(180);
 
         ComboBox<String> courseFilter = new ComboBox<>();
         courseFilter.setPromptText("Kaikki kurssit");
-        courseFilter.setPrefWidth(120);
+        courseFilter.setPrefWidth(140);
+
+        courseFilter.getItems().addAll(
+                "Ohjelmoinnin perusteet",
+                "Tietokannat",
+                "Java",
+                "Web-ohjelmointi"
+        );
 
         Button addUserButton = new Button("+ Lisää uusi käyttäjä");
         addUserButton.getStyleClass().add("add-user-button");
@@ -77,8 +86,6 @@ public class Admin {
                 courseFilter,
                 addUserButton
         );
-
-
 
         TableView<String[]> table = new TableView<>();
 
@@ -97,11 +104,147 @@ public class Admin {
         TableColumn<String[], String> editColumn =
                 new TableColumn<>("");
 
-        nameColumn.setPrefWidth(180);
-        emailColumn.setPrefWidth(160);
-        roleColumn.setPrefWidth(110);
-        courseColumn.setPrefWidth(180);
-        editColumn.setPrefWidth(50);
+
+        nameColumn.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue()[0])
+        );
+
+        emailColumn.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue()[1])
+        );
+
+        roleColumn.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue()[2])
+        );
+
+        courseColumn.setCellValueFactory(data ->
+                new SimpleStringProperty(data.getValue()[3])
+        );
+
+
+        nameColumn.setCellFactory(column -> new TableCell<>() {
+
+            private final HBox container = new HBox(10);
+            private final Label avatar = new Label();
+            private final Label name = new Label();
+
+            {
+                container.setAlignment(Pos.CENTER_LEFT);
+
+                avatar.getStyleClass().add("profile-avatar");
+                name.getStyleClass().add("user-name");
+
+                container.getChildren().addAll(
+                        avatar,
+                        name
+                );
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+
+                    name.setText(item);
+
+                    String[] parts = item.split(" ");
+
+                    if (parts.length >= 2) {
+                        avatar.setText(
+                                parts[0].substring(0, 1).toUpperCase()
+                                        +
+                                        parts[1].substring(0, 1).toUpperCase()
+                        );
+                    } else {
+                        avatar.setText(
+                                item.substring(0, Math.min(2, item.length()))
+                                        .toUpperCase()
+                        );
+                    }
+
+                    setGraphic(container);
+                }
+            }
+        });
+
+
+
+        roleColumn.setCellFactory(column -> new TableCell<>() {
+
+            private final Label roleLabel = new Label();
+
+            @Override
+            protected void updateItem(String role, boolean empty) {
+                super.updateItem(role, empty);
+
+                if (empty || role == null) {
+                    setGraphic(null);
+                } else {
+
+                    roleLabel.setText(role);
+
+                    roleLabel.getStyleClass().removeAll(
+                            "role-student",
+                            "role-teacher",
+                            "role-admin"
+                    );
+
+                    switch (role) {
+                        case "Opiskelija":
+                            roleLabel.getStyleClass().add("role-student");
+                            break;
+
+                        case "Opettaja":
+                            roleLabel.getStyleClass().add("role-teacher");
+                            break;
+
+                        case "Admin":
+                            roleLabel.getStyleClass().add("role-admin");
+                            break;
+                    }
+
+                    setGraphic(roleLabel);
+                }
+            }
+        });
+
+
+
+        editColumn.setCellFactory(column -> new TableCell<>() {
+
+            private final Button editButton = new Button("✎");
+
+            {
+                editButton.getStyleClass().add("edit-button");
+
+                editButton.setOnAction(event -> {
+
+                    String[] user = getTableView()
+                            .getItems()
+                            .get(getIndex());
+
+                    System.out.println(
+                            "Muokataan käyttäjää: " + user[0]
+                    );
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(editButton);
+                }
+            }
+        });
+
+
 
         table.getColumns().addAll(
                 nameColumn,
@@ -111,7 +254,72 @@ public class Admin {
                 editColumn
         );
 
-        table.setPlaceholder(new Label("Ei käyttäjiä"));
+
+        table.setColumnResizePolicy(
+                TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN
+        );
+
+        nameColumn.setMinWidth(180);
+        emailColumn.setMinWidth(180);
+        roleColumn.setMinWidth(120);
+        courseColumn.setMinWidth(180);
+        editColumn.setMinWidth(55);
+
+        nameColumn.setPrefWidth(220);
+        emailColumn.setPrefWidth(220);
+        roleColumn.setPrefWidth(130);
+        courseColumn.setPrefWidth(250);
+        editColumn.setPrefWidth(60);
+
+
+        table.setItems(FXCollections.observableArrayList(
+
+                new String[]{
+                        "Maija Meikäläinen",
+                        "maija.meikalainen@metropolia.fi",
+                        "Opiskelija",
+                        "Ohjelmoinnin perusteet, Tietokannat"
+                },
+
+                new String[]{
+                        "Matti Mallikas",
+                        "matti.mallikas@metropolia.fi",
+                        "Opiskelija",
+                        "Ohjelmoinnin perusteet"
+                },
+
+                new String[]{
+                        "Laura Opettaja",
+                        "laura.opettaja@metropolia.fi",
+                        "Opettaja",
+                        "Java, Tietokannat"
+                },
+
+                new String[]{
+                        "Antti Admin",
+                        "antti.admin@metropolia.fi",
+                        "Admin",
+                        "—"
+                },
+
+                new String[]{
+                        "Ville Virtanen",
+                        "ville.virtanen@metropolia.fi",
+                        "Opiskelija",
+                        "Web-ohjelmointi"
+                },
+
+                new String[]{
+                        "Sara Salminen",
+                        "sara.salminen@metropolia.fi",
+                        "Opiskelija",
+                        "Java"
+                }
+        ));
+
+        table.setPlaceholder(
+                new Label("Ei käyttäjiä")
+        );
 
 
         VBox content = new VBox(25);
@@ -124,7 +332,6 @@ public class Admin {
         );
 
         VBox.setVgrow(table, Priority.ALWAYS);
-
 
         BorderPane root = new BorderPane();
 
