@@ -178,7 +178,13 @@ public class PageShow {
         private void openTeacherCoursePage() {
 
             TeacherCoursePage view = new TeacherCoursePage(
-                    this::openTeacherStartPage
+                    this::openTeacherStartPage,
+                    () -> {
+                        System.out.println("Aloita oppitunti");
+                    },
+                    () -> {
+                        System.out.println("Lisää opiskelijoita");
+                    }
             );
 
             stage.setScene(

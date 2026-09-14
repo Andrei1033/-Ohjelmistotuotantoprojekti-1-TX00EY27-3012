@@ -20,7 +20,9 @@ public class TeacherCoursePage extends BorderPane {
         this(() -> {}, () -> {}, () -> {});
     }
 
-    public TeacherCoursePage(Runnable onBack, Runnable onStartLesson, Runnable onAddStudents) {
+    public TeacherCoursePage(Runnable onBack,
+                             Runnable onStartLesson,
+                             Runnable onAddStudents) {
 
         setStyle("-fx-background-color: white;");
 
@@ -102,8 +104,6 @@ public class TeacherCoursePage extends BorderPane {
 
     }
 
-    public TeacherCoursePage(Runnable openTeacherStartPage) {
-    }
 
     private HBox createLessonCard(String date, String day, String topic, String statusText, boolean isDone) {
         HBox lessonCard = new HBox();
