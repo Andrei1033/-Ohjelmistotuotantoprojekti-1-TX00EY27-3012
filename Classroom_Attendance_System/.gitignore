@@ -4,3 +4,4 @@ target/
 out/
 *.class
 *.log
+database.properties
