@@ -1,5 +1,6 @@
 package com.example.app.Database;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,8 +13,11 @@ public class DatabaseConnection {
     private static final Properties properties = new Properties();
 
     static {
-        try {
-            properties.load(new FileInputStream("database.properties"));
+        try (InputStream input = DatabaseConnection.class.getClassLoader().getResourceAsStream("database.properties")) {
+            if (input == null) {
+                throw new RuntimeException("Файл database.properties не найден в classpath. Проверьте его расположение.");
+            }
+            properties.load(input);
         } catch (IOException e) {
             throw new RuntimeException("Database configuration could not be loaded.", e);
         }

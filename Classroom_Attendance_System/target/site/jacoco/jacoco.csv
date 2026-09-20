@@ -3,27 +3,28 @@ Classroom_Attendance_System,com.example.app.Model,Course,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.Model,Lesson,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.Model,Student,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.Model,Presence,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Model,Role,42,0,6,0,10,0,6,0,2,0
 Classroom_Attendance_System,com.example.app.Model,Admin,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Model,User,48,0,0,0,14,0,8,0,8,0
 Classroom_Attendance_System,com.example.app.Model,Teacher,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.View,PageShow,81,0,2,0,32,0,3,0,2,0
-Classroom_Attendance_System,com.example.app.View,TeacherAttendanceTracking.StudentRow,363,0,6,0,90,0,14,0,11,0
+Classroom_Attendance_System,com.example.app.View,TeacherAttendanceTracking.StudentRow,31,332,0,6,9,81,6,8,6,5
 Classroom_Attendance_System,com.example.app.View,Admin.new TableCell() {...},11,105,2,4,3,19,2,3,0,2
 Classroom_Attendance_System,com.example.app.View,StudentAttendanceTracking,0,596,0,0,0,100,0,3,0,3
 Classroom_Attendance_System,com.example.app.View,Admin.new TableCell() {...},15,40,0,2,5,9,1,3,1,2
 Classroom_Attendance_System,com.example.app.View,Admin.new TableCell() {...},0,81,2,6,0,15,2,5,0,2
 Classroom_Attendance_System,com.example.app.View,StudentStartPage,3,428,0,0,0,68,1,3,1,3
 Classroom_Attendance_System,com.example.app.View,PageShow.SelectedPage,3,0,0,0,1,0,1,0,1,0
-Classroom_Attendance_System,com.example.app.View,TeacherCoursePage,15,545,0,2,2,88,7,5,7,4
-Classroom_Attendance_System,com.example.app.View,PageShow.App,183,0,8,0,54,0,17,0,10,0
-Classroom_Attendance_System,com.example.app.View,Login,0,317,0,0,0,56,0,4,0,4
-Classroom_Attendance_System,com.example.app.View,TeacherAttendanceTracking,917,0,12,0,196,0,17,0,11,0
+Classroom_Attendance_System,com.example.app.View,TeacherCoursePage,12,545,0,2,0,88,6,5,6,4
+Classroom_Attendance_System,com.example.app.View,PageShow.App,193,0,8,0,58,0,19,0,12,0
+Classroom_Attendance_System,com.example.app.View,Login,0,331,0,0,0,58,0,6,0,6
+Classroom_Attendance_System,com.example.app.View,TeacherAttendanceTracking,27,890,3,9,9,187,7,10,5,6
 Classroom_Attendance_System,com.example.app.View,Admin,0,625,0,0,0,86,0,9,0,9
 Classroom_Attendance_System,com.example.app.View,TeacherStartPage,3,419,0,0,0,67,1,3,1,3
-Classroom_Attendance_System,com.example.app,Main,27,0,0,0,9,0,3,0,3,0
-Classroom_Attendance_System,Java_fx_Testi,Main,14,0,0,0,4,0,2,0,2,0
-Classroom_Attendance_System,Java_fx_Testi,HelloWorldApplication,76,0,0,0,17,0,3,0,3,0
-Classroom_Attendance_System,Java_fx_Testi,HelloWorldApplication.new EventHandler() {...},16,0,0,0,3,0,2,0,2,0
-Classroom_Attendance_System,com.example.app.Controller,LoginController,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app,Main,69,0,2,0,19,0,6,0,5,0
+Classroom_Attendance_System,com.example.app.Controller,LoginController,59,0,13,0,15,0,10,0,3,0
 Classroom_Attendance_System,com.example.app.Controller,AdminController,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.Controller,TeacherController,3,0,0,0,1,0,1,0,1,0
 Classroom_Attendance_System,com.example.app.Controller,StudentController,3,0,0,0,1,0,1,0,1,0
+Classroom_Attendance_System,com.example.app.Database,DatabaseConnection,15,27,1,1,4,10,2,2,1,2
+Classroom_Attendance_System,com.example.app.DaoElements,UserDao,91,0,16,0,23,0,10,0,2,0

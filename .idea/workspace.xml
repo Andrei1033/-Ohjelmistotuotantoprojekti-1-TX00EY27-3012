@@ -3,25 +3,95 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="auto" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="Tehty jacoko ja minun StudentAttendanceTracking sivu + unversioned files.">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="b">
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/UserDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/database.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/Java_fx_Testi/HelloWorldApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/Java_fx_Testi/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Database/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Database/DatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/Java_fx_Testi/HelloWorldApplication$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/Java_fx_Testi/HelloWorldApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/Java_fx_Testi/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Controller/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/Login.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/PageShow$App.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/PageShow$App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherCoursePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/classes/com/example/app/View/TeacherCoursePage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/jacoco.exec" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/jacoco.exec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Controller/LoginController.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Controller/LoginController.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Controller/LoginController.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Controller/LoginController.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Controller/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Controller/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Controller/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Controller/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Model/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Model/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Model/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.Model/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/Login.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/Login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/Login.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/Login.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/PageShow$App.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/PageShow$App.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/PageShow.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/PageShow.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherAttendanceTracking$StudentRow.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherAttendanceTracking$StudentRow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherAttendanceTracking.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherAttendanceTracking.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherAttendanceTracking.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherAttendanceTracking.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherCoursePage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherCoursePage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherCoursePage.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/TeacherCoursePage.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app.View/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app/Main.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app/Main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app/Main.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app/Main.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/com.example.app/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/jacoco-sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/jacoco-sessions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/jacoco.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/jacoco.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/jacoco.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/site/jacoco/jacoco.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.AdminTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.AdminTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.LoginTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.LoginTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.StudentAttendanceTrackingTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.StudentAttendanceTrackingTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.StudentStartPageTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.StudentStartPageTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.TeacherCoursePageTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.TeacherCoursePageTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.TeacherStartPageTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/TEST-com.example.app.View.TeacherStartPageTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.AdminTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.AdminTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.LoginTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.LoginTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.StudentAttendanceTrackingTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.StudentAttendanceTrackingTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.StudentStartPageTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.StudentStartPageTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.TeacherCoursePageTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.TeacherCoursePageTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.TeacherStartPageTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/surefire-reports/com.example.app.View.TeacherStartPageTest.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System" value="3JbMNz72Fq92BiodGhEHzX2wSo1" />
+    </persistenceIdMap>
+  </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="26" />
+    <option name="cachedIndexableFilesCount" value="33" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -30,17 +100,17 @@
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-        &quot;lastFilter&quot;: {
-        &quot;state&quot;: &quot;OPEN&quot;,
-        &quot;assignee&quot;: &quot;AaroHaavisto&quot;
-        }
-        }</component>
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AaroHaavisto&quot;
+  }
+}</component>
   <component name="GithubPullRequestsUISettings">{
-        &quot;selectedUrlAndAccountId&quot;: {
-        &quot;url&quot;: &quot;https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git&quot;,
-        &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;
-        }
-        }</component>
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git&quot;,
+    &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;
+  }
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -49,59 +119,83 @@
         &quot;associatedIndex&quot;: 7
         }</component>
   <component name="ProjectId" id="3IzRPztDzgmZrAs5ZQdQn1BnpcV" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="Agent" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_id" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="BACKGROUND" />
+        <option name="worktreeMode" value="WORKSPACE" />
+      </template>
+    </option>
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-        &quot;keyToString&quot;: {
-        &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-        &quot;Application.HelloWorldApplication.executor&quot;: &quot;Run&quot;,
-        &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-        &quot;Application.PageShow.executor&quot;: &quot;Run&quot;,
-        &quot;Application.main.executor&quot;: &quot;Run&quot;,
-        &quot;JUnit.AdminTest.executor&quot;: &quot;Run&quot;,
-        &quot;JUnit.LoginTest.executor&quot;: &quot;Run&quot;,
-        &quot;JUnit.StudentAttendanceTrackingTest.executor&quot;: &quot;Run&quot;,
-        &quot;JUnit.StudentStartPageTest.executor&quot;: &quot;Run&quot;,
-        &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-        &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-        &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-        &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-        &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-        &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-        &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-        &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-        &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-        &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-        &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-        &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-        &quot;last_opened_file_path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot&quot;,
-        &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-        &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-        &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-        &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-        &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-        &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java&quot;,
-        &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-        &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-        &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-        &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-        &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-        }
-        }</component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.App.executor": "Run",
+    "Application.HelloWorldApplication.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.PageShow.executor": "Run",
+    "Application.UserDao.executor": "Run",
+    "Application.main.executor": "Run",
+    "JUnit.AdminTest.executor": "Run",
+    "JUnit.LoginTest.executor": "Run",
+    "JUnit.StudentAttendanceTrackingTest.executor": "Run",
+    "JUnit.StudentStartPageTest.executor": "Run",
+    "JUnit.TeacherCoursePageTest.executor": "Run",
+    "Maven.Classroom_Attendance_System [javafx:run].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Documents\SQLKaaviot" />
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\src\main\java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\src\main\resources" />
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012" />
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\Kaaviot" />
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Classroom_Attendance_System\Documents" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.app.Database" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="com.example.app.View" />
@@ -160,7 +254,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="de341b6e-a52a-406d-8c5d-0b2901072eea" name="Changes" comment="" />
+      <changelist id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="b" />
       <created>1788765391312</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -178,6 +272,10 @@
       <workItem from="1788713575855" duration="1090000" />
       <workItem from="1789216032446" duration="1565000" />
       <workItem from="1789299660211" duration="8711000" />
+      <workItem from="1789475466328" duration="21000" />
+      <workItem from="1789663956807" duration="99000" />
+      <workItem from="1789759292635" duration="805000" />
+      <workItem from="1789914805672" duration="12811000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -251,11 +349,22 @@
       <option name="project" value="LOCAL" />
       <updated>1789216507786</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="b">
+      <option name="closed" value="true" />
+      <created>1789362924961</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1789362924961</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="OPEN_GENERIC_TABS">
@@ -288,7 +397,8 @@
     <MESSAGE value="view, controller, model kansio lisäty 2" />
     <MESSAGE value="Tehty jacoko ja minun StudentAttendanceTracking sivu." />
     <MESSAGE value="Tehty jacoko ja minun StudentAttendanceTracking sivu + unversioned files." />
-    <option name="LAST_COMMIT_MESSAGE" value="Tehty jacoko ja minun StudentAttendanceTracking sivu + unversioned files." />
+    <MESSAGE value="b" />
+    <option name="LAST_COMMIT_MESSAGE" value="b" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

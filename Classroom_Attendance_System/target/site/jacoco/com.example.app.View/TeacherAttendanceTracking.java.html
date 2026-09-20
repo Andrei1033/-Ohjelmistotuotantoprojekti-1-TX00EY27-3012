@@ -43,7 +43,7 @@ public class TeacherAttendanceTracking extends BorderPane {
     private static final int LATE = 2;
     private static final int ABSENT = 3;
 
-<span class="nc" id="L46">    private final List&lt;StudentRow&gt; studentRows = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L46">    private final List&lt;StudentRow&gt; studentRows = new ArrayList&lt;&gt;();</span>
 
     private Label presentCount;
     private Label lateCount;
@@ -53,9 +53,9 @@ public class TeacherAttendanceTracking extends BorderPane {
     // CONSTRUCTOR
 
 
-<span class="nc" id="L56">    public TeacherAttendanceTracking(Runnable onFinish) {</span>
+<span class="fc" id="L56">    public TeacherAttendanceTracking(Runnable onFinish) {</span>
 
-<span class="nc" id="L58">        setStyle(</span>
+<span class="fc" id="L58">        setStyle(</span>
                 &quot;-fx-background-color: white;&quot;
         );
 
@@ -63,18 +63,18 @@ public class TeacherAttendanceTracking extends BorderPane {
         // VASEN SIDEBAR
 
 
-<span class="nc" id="L66">        VBox sidebar = createSidebar();</span>
+<span class="fc" id="L66">        VBox sidebar = createSidebar();</span>
 
-<span class="nc" id="L68">        setLeft(sidebar);</span>
+<span class="fc" id="L68">        setLeft(sidebar);</span>
 
 
         // PÄÄSISÄLTÖ
 
 
-<span class="nc" id="L74">        VBox content = createMainContent(onFinish);</span>
+<span class="fc" id="L74">        VBox content = createMainContent(onFinish);</span>
 
-<span class="nc" id="L76">        setCenter(content);</span>
-<span class="nc" id="L77">    }</span>
+<span class="fc" id="L76">        setCenter(content);</span>
+<span class="fc" id="L77">    }</span>
 
 
     // SIDEBAR
@@ -82,13 +82,13 @@ public class TeacherAttendanceTracking extends BorderPane {
 
     private VBox createSidebar() {
 
-<span class="nc" id="L85">        VBox sidebar = new VBox();</span>
+<span class="fc" id="L85">        VBox sidebar = new VBox();</span>
 
-<span class="nc" id="L87">        sidebar.setPrefWidth(220);</span>
-<span class="nc" id="L88">        sidebar.setMinWidth(220);</span>
-<span class="nc" id="L89">        sidebar.setMaxWidth(220);</span>
+<span class="fc" id="L87">        sidebar.setPrefWidth(220);</span>
+<span class="fc" id="L88">        sidebar.setMinWidth(220);</span>
+<span class="fc" id="L89">        sidebar.setMaxWidth(220);</span>
 
-<span class="nc" id="L91">        sidebar.setStyle(</span>
+<span class="fc" id="L91">        sidebar.setStyle(</span>
                 &quot;-fx-background-color: &quot; + NAVY + &quot;;&quot;
         );
 
@@ -96,39 +96,39 @@ public class TeacherAttendanceTracking extends BorderPane {
         // LOGO
 
 
-<span class="nc" id="L99">        Rectangle logoRectangle = new Rectangle(</span>
+<span class="fc" id="L99">        Rectangle logoRectangle = new Rectangle(</span>
                 28,
                 28
         );
 
-<span class="nc" id="L104">        logoRectangle.setArcWidth(8);</span>
-<span class="nc" id="L105">        logoRectangle.setArcHeight(8);</span>
+<span class="fc" id="L104">        logoRectangle.setArcWidth(8);</span>
+<span class="fc" id="L105">        logoRectangle.setArcHeight(8);</span>
 
-<span class="nc" id="L107">        logoRectangle.setFill(</span>
-<span class="nc" id="L108">                Color.web(LOGO_BLUE)</span>
+<span class="fc" id="L107">        logoRectangle.setFill(</span>
+<span class="fc" id="L108">                Color.web(LOGO_BLUE)</span>
         );
 
-<span class="nc" id="L111">        Label logoText = new Label(&quot;LO&quot;);</span>
+<span class="fc" id="L111">        Label logoText = new Label(&quot;LO&quot;);</span>
 
-<span class="nc" id="L113">        logoText.setTextFill(Color.WHITE);</span>
+<span class="fc" id="L113">        logoText.setTextFill(Color.WHITE);</span>
 
-<span class="nc" id="L115">        logoText.setFont(</span>
-<span class="nc" id="L116">                Font.font(</span>
+<span class="fc" id="L115">        logoText.setFont(</span>
+<span class="fc" id="L116">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         12
                 )
         );
 
-<span class="nc" id="L123">        StackPane logoBox = new StackPane(</span>
+<span class="fc" id="L123">        StackPane logoBox = new StackPane(</span>
                 logoRectangle,
                 logoText
         );
 
-<span class="nc" id="L128">        logoBox.setPrefSize(28, 28);</span>
-<span class="nc" id="L129">        logoBox.setMaxSize(28, 28);</span>
+<span class="fc" id="L128">        logoBox.setPrefSize(28, 28);</span>
+<span class="fc" id="L129">        logoBox.setMaxSize(28, 28);</span>
 
-<span class="nc" id="L131">        logoBox.setAlignment(</span>
+<span class="fc" id="L131">        logoBox.setAlignment(</span>
                 Pos.CENTER
         );
 
@@ -136,33 +136,33 @@ public class TeacherAttendanceTracking extends BorderPane {
         // LÄSNÄOLO
 
 
-<span class="nc" id="L139">        Label applicationName = new Label(</span>
+<span class="fc" id="L139">        Label applicationName = new Label(</span>
                 &quot;Läsnäolo&quot;
         );
 
-<span class="nc" id="L143">        applicationName.setTextFill(</span>
+<span class="fc" id="L143">        applicationName.setTextFill(</span>
                 Color.WHITE
         );
 
-<span class="nc" id="L147">        applicationName.setFont(</span>
-<span class="nc" id="L148">                Font.font(</span>
+<span class="fc" id="L147">        applicationName.setFont(</span>
+<span class="fc" id="L148">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         15
                 )
         );
 
-<span class="nc" id="L155">        HBox logoRow = new HBox(</span>
+<span class="fc" id="L155">        HBox logoRow = new HBox(</span>
                 10,
                 logoBox,
                 applicationName
         );
 
-<span class="nc" id="L161">        logoRow.setAlignment(</span>
+<span class="fc" id="L161">        logoRow.setAlignment(</span>
                 Pos.CENTER_LEFT
         );
 
-<span class="nc" id="L165">        logoRow.setPadding(</span>
+<span class="fc" id="L165">        logoRow.setPadding(</span>
                 new Insets(
                         14,
                         10,
@@ -175,12 +175,12 @@ public class TeacherAttendanceTracking extends BorderPane {
         // SIDEBAR SEPARATOR
 
 
-<span class="nc" id="L178">        Region separator = new Region();</span>
+<span class="fc" id="L178">        Region separator = new Region();</span>
 
-<span class="nc" id="L180">        separator.setPrefHeight(1);</span>
-<span class="nc" id="L181">        separator.setMaxHeight(1);</span>
+<span class="fc" id="L180">        separator.setPrefHeight(1);</span>
+<span class="fc" id="L181">        separator.setMaxHeight(1);</span>
 
-<span class="nc" id="L183">        separator.setStyle(</span>
+<span class="fc" id="L183">        separator.setStyle(</span>
                 &quot;-fx-background-color: #2B3A54;&quot;
         );
 
@@ -188,78 +188,78 @@ public class TeacherAttendanceTracking extends BorderPane {
         // KURSSINI
 
 
-<span class="nc" id="L191">        Circle courseDot = new Circle(</span>
+<span class="fc" id="L191">        Circle courseDot = new Circle(</span>
                 2.5,
-<span class="nc" id="L193">                Color.web(&quot;#6681B1&quot;)</span>
+<span class="fc" id="L193">                Color.web(&quot;#6681B1&quot;)</span>
         );
 
-<span class="nc" id="L196">        Label courseLabel = new Label(</span>
+<span class="fc" id="L196">        Label courseLabel = new Label(</span>
                 &quot;Kurssini&quot;
         );
 
-<span class="nc" id="L200">        courseLabel.setTextFill(</span>
+<span class="fc" id="L200">        courseLabel.setTextFill(</span>
                 Color.WHITE
         );
 
-<span class="nc" id="L204">        courseLabel.setFont(</span>
-<span class="nc" id="L205">                Font.font(</span>
+<span class="fc" id="L204">        courseLabel.setFont(</span>
+<span class="fc" id="L205">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         13
                 )
         );
 
-<span class="nc" id="L212">        HBox courseContent = new HBox(</span>
+<span class="fc" id="L212">        HBox courseContent = new HBox(</span>
                 10,
                 courseDot,
                 courseLabel
         );
 
-<span class="nc" id="L218">        courseContent.setAlignment(</span>
+<span class="fc" id="L218">        courseContent.setAlignment(</span>
                 Pos.CENTER_LEFT
         );
 
-<span class="nc" id="L222">        Button courseButton = new Button();</span>
+<span class="fc" id="L222">        Button courseButton = new Button();</span>
 
-<span class="nc" id="L224">        courseButton.setGraphic(</span>
+<span class="fc" id="L224">        courseButton.setGraphic(</span>
                 courseContent
         );
 
-<span class="nc" id="L228">        courseButton.setPrefHeight(32);</span>
-<span class="nc" id="L229">        courseButton.setMinHeight(32);</span>
-<span class="nc" id="L230">        courseButton.setMaxHeight(32);</span>
+<span class="fc" id="L228">        courseButton.setPrefHeight(32);</span>
+<span class="fc" id="L229">        courseButton.setMinHeight(32);</span>
+<span class="fc" id="L230">        courseButton.setMaxHeight(32);</span>
 
-<span class="nc" id="L232">        courseButton.setMaxWidth(</span>
+<span class="fc" id="L232">        courseButton.setMaxWidth(</span>
                 Double.MAX_VALUE
         );
 
-<span class="nc" id="L236">        courseButton.setAlignment(</span>
+<span class="fc" id="L236">        courseButton.setAlignment(</span>
                 Pos.CENTER_LEFT
         );
 
-<span class="nc" id="L240">        String courseButtonBase =</span>
+<span class="fc" id="L240">        String courseButtonBase =</span>
                 &quot;-fx-background-color: &quot; + BLUE + &quot;;&quot; +
                         &quot;-fx-background-radius: 4;&quot; +
                         &quot;-fx-padding: 0 10;&quot; +
                         &quot;-fx-cursor: hand;&quot;;
 
-<span class="nc" id="L246">        courseButton.setStyle(courseButtonBase);</span>
+<span class="fc" id="L246">        courseButton.setStyle(courseButtonBase);</span>
 
-<span class="nc" id="L248">        courseButton.setOnMouseEntered(e -&gt;</span>
+<span class="fc" id="L248">        courseButton.setOnMouseEntered(e -&gt;</span>
 <span class="nc" id="L249">                courseButton.setStyle(</span>
 <span class="nc" id="L250">                        courseButtonBase.replace(BLUE, &quot;#3F567E&quot;)</span>
                 )
         );
 
-<span class="nc" id="L254">        courseButton.setOnMouseExited(e -&gt;</span>
+<span class="fc" id="L254">        courseButton.setOnMouseExited(e -&gt;</span>
 <span class="nc" id="L255">                courseButton.setStyle(courseButtonBase)</span>
         );
 
-<span class="nc" id="L258">        VBox courseContainer = new VBox(</span>
+<span class="fc" id="L258">        VBox courseContainer = new VBox(</span>
                 courseButton
         );
 
-<span class="nc" id="L262">        courseContainer.setPadding(</span>
+<span class="fc" id="L262">        courseContainer.setPadding(</span>
                 new Insets(
                         16,
                         14,
@@ -272,95 +272,95 @@ public class TeacherAttendanceTracking extends BorderPane {
         // SIDEBARIN ALAOSA
 
 
-<span class="nc" id="L275">        Region sidebarSpacer = new Region();</span>
+<span class="fc" id="L275">        Region sidebarSpacer = new Region();</span>
 
-<span class="nc" id="L277">        VBox.setVgrow(</span>
+<span class="fc" id="L277">        VBox.setVgrow(</span>
                 sidebarSpacer,
                 Priority.ALWAYS
         );
 
-<span class="nc" id="L282">        Circle userCircle = new Circle(</span>
+<span class="fc" id="L282">        Circle userCircle = new Circle(</span>
                 15,
-<span class="nc" id="L284">                Color.web(LOGO_BLUE)</span>
+<span class="fc" id="L284">                Color.web(LOGO_BLUE)</span>
         );
 
-<span class="nc" id="L287">        Label userInitials = new Label(</span>
+<span class="fc" id="L287">        Label userInitials = new Label(</span>
                 &quot;MA&quot;
         );
 
-<span class="nc" id="L291">        userInitials.setTextFill(</span>
+<span class="fc" id="L291">        userInitials.setTextFill(</span>
                 Color.WHITE
         );
 
-<span class="nc" id="L295">        userInitials.setFont(</span>
-<span class="nc" id="L296">                Font.font(</span>
+<span class="fc" id="L295">        userInitials.setFont(</span>
+<span class="fc" id="L296">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         11
                 )
         );
 
-<span class="nc" id="L303">        StackPane userIcon = new StackPane(</span>
+<span class="fc" id="L303">        StackPane userIcon = new StackPane(</span>
                 userCircle,
                 userInitials
         );
 
-<span class="nc" id="L308">        userIcon.setPrefSize(30, 30);</span>
-<span class="nc" id="L309">        userIcon.setMaxSize(30, 30);</span>
+<span class="fc" id="L308">        userIcon.setPrefSize(30, 30);</span>
+<span class="fc" id="L309">        userIcon.setMaxSize(30, 30);</span>
 
-<span class="nc" id="L311">        Label userName = new Label(</span>
+<span class="fc" id="L311">        Label userName = new Label(</span>
                 &quot;Etunimi Sukunimi&quot;
         );
 
-<span class="nc" id="L315">        userName.setTextFill(</span>
+<span class="fc" id="L315">        userName.setTextFill(</span>
                 Color.WHITE
         );
 
-<span class="nc" id="L319">        userName.setFont(</span>
-<span class="nc" id="L320">                Font.font(</span>
+<span class="fc" id="L319">        userName.setFont(</span>
+<span class="fc" id="L320">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         12
                 )
         );
 
-<span class="nc" id="L327">        Label userRole = new Label(</span>
+<span class="fc" id="L327">        Label userRole = new Label(</span>
                 &quot;Opettaja&quot;
         );
 
-<span class="nc" id="L331">        userRole.setTextFill(</span>
-<span class="nc" id="L332">                Color.web(&quot;#9BA8BB&quot;)</span>
+<span class="fc" id="L331">        userRole.setTextFill(</span>
+<span class="fc" id="L332">                Color.web(&quot;#9BA8BB&quot;)</span>
         );
 
-<span class="nc" id="L335">        userRole.setFont(</span>
-<span class="nc" id="L336">                Font.font(</span>
+<span class="fc" id="L335">        userRole.setFont(</span>
+<span class="fc" id="L336">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.NORMAL,
                         10
                 )
         );
 
-<span class="nc" id="L343">        VBox userText = new VBox(</span>
+<span class="fc" id="L343">        VBox userText = new VBox(</span>
                 0,
                 userName,
                 userRole
         );
 
-<span class="nc" id="L349">        HBox userBox = new HBox(</span>
+<span class="fc" id="L349">        HBox userBox = new HBox(</span>
                 8,
                 userIcon,
                 userText
         );
 
-<span class="nc" id="L355">        userBox.setAlignment(</span>
+<span class="fc" id="L355">        userBox.setAlignment(</span>
                 Pos.CENTER_LEFT
         );
 
-<span class="nc" id="L359">        VBox sidebarBottom = new VBox(</span>
+<span class="fc" id="L359">        VBox sidebarBottom = new VBox(</span>
                 userBox
         );
 
-<span class="nc" id="L363">        sidebarBottom.setPadding(</span>
+<span class="fc" id="L363">        sidebarBottom.setPadding(</span>
                 new Insets(
                         0,
                         10,
@@ -371,7 +371,7 @@ public class TeacherAttendanceTracking extends BorderPane {
 
         // SIDEBAR KOKONAISUUDESSAAN
 
-<span class="nc" id="L374">        sidebar.getChildren().addAll(</span>
+<span class="fc" id="L374">        sidebar.getChildren().addAll(</span>
                 logoRow,
                 separator,
                 courseContainer,
@@ -379,7 +379,7 @@ public class TeacherAttendanceTracking extends BorderPane {
                 sidebarBottom
         );
 
-<span class="nc" id="L382">        return sidebar;</span>
+<span class="fc" id="L382">        return sidebar;</span>
     }
 
 
@@ -390,9 +390,9 @@ public class TeacherAttendanceTracking extends BorderPane {
             Runnable onFinish
     ) {
 
-<span class="nc" id="L393">        VBox content = new VBox();</span>
+<span class="fc" id="L393">        VBox content = new VBox();</span>
 
-<span class="nc" id="L395">        content.setPadding(</span>
+<span class="fc" id="L395">        content.setPadding(</span>
                 new Insets(
                         40,
                         40,
@@ -401,7 +401,7 @@ public class TeacherAttendanceTracking extends BorderPane {
                 )
         );
 
-<span class="nc" id="L404">        content.setStyle(</span>
+<span class="fc" id="L404">        content.setStyle(</span>
                 &quot;-fx-background-color: white;&quot;
         );
 
@@ -409,16 +409,16 @@ public class TeacherAttendanceTracking extends BorderPane {
         // OTSIKKO
 
 
-<span class="nc" id="L412">        Label title = new Label(</span>
+<span class="fc" id="L412">        Label title = new Label(</span>
                 &quot;Oppitunti11111111111111 — 16.9.2026&quot;
         );
 
-<span class="nc" id="L416">        title.setTextFill(</span>
-<span class="nc" id="L417">                Color.web(&quot;#171717&quot;)</span>
+<span class="fc" id="L416">        title.setTextFill(</span>
+<span class="fc" id="L417">                Color.web(&quot;#171717&quot;)</span>
         );
 
-<span class="nc" id="L420">        title.setFont(</span>
-<span class="nc" id="L421">                Font.font(</span>
+<span class="fc" id="L420">        title.setFont(</span>
+<span class="fc" id="L421">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         22
@@ -429,49 +429,49 @@ public class TeacherAttendanceTracking extends BorderPane {
         // TALLENNA JA LOPETA
 
 
-<span class="nc" id="L432">        Button saveButton = new Button(</span>
+<span class="fc" id="L432">        Button saveButton = new Button(</span>
                 &quot;Tallenna ja lopeta&quot;
         );
 
-<span class="nc" id="L436">        saveButton.setPrefWidth(150);</span>
-<span class="nc" id="L437">        saveButton.setPrefHeight(36);</span>
+<span class="fc" id="L436">        saveButton.setPrefWidth(150);</span>
+<span class="fc" id="L437">        saveButton.setPrefHeight(36);</span>
 
-<span class="nc" id="L439">        saveButton.setMinWidth(150);</span>
-<span class="nc" id="L440">        saveButton.setMinHeight(36);</span>
+<span class="fc" id="L439">        saveButton.setMinWidth(150);</span>
+<span class="fc" id="L440">        saveButton.setMinHeight(36);</span>
 
-<span class="nc" id="L442">        saveButton.setMaxWidth(150);</span>
-<span class="nc" id="L443">        saveButton.setMaxHeight(36);</span>
+<span class="fc" id="L442">        saveButton.setMaxWidth(150);</span>
+<span class="fc" id="L443">        saveButton.setMaxHeight(36);</span>
 
-<span class="nc" id="L445">        saveButton.setTextFill(</span>
+<span class="fc" id="L445">        saveButton.setTextFill(</span>
                 Color.WHITE
         );
 
-<span class="nc" id="L449">        saveButton.setFont(</span>
-<span class="nc" id="L450">                Font.font(</span>
+<span class="fc" id="L449">        saveButton.setFont(</span>
+<span class="fc" id="L450">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         13
                 )
         );
 
-<span class="nc" id="L457">        String saveButtonBase =</span>
+<span class="fc" id="L457">        String saveButtonBase =</span>
                 &quot;-fx-background-color: &quot; + NAVY + &quot;;&quot; +
                         &quot;-fx-background-radius: 3;&quot; +
                         &quot;-fx-cursor: hand;&quot;;
 
-<span class="nc" id="L462">        saveButton.setStyle(saveButtonBase);</span>
+<span class="fc" id="L462">        saveButton.setStyle(saveButtonBase);</span>
 
-<span class="nc" id="L464">        saveButton.setOnMouseEntered(e -&gt;</span>
+<span class="fc" id="L464">        saveButton.setOnMouseEntered(e -&gt;</span>
 <span class="nc" id="L465">                saveButton.setStyle(</span>
 <span class="nc" id="L466">                        saveButtonBase.replace(NAVY, &quot;#2C4066&quot;)</span>
                 )
         );
 
-<span class="nc" id="L470">        saveButton.setOnMouseExited(e -&gt;</span>
+<span class="fc" id="L470">        saveButton.setOnMouseExited(e -&gt;</span>
 <span class="nc" id="L471">                saveButton.setStyle(saveButtonBase)</span>
         );
 
-<span class="nc" id="L474">        saveButton.setOnAction(event -&gt; {</span>
+<span class="fc" id="L474">        saveButton.setOnAction(event -&gt; {</span>
 
             /*
              * Tähän voidaan myöhemmin lisätä tietokantaan
@@ -483,20 +483,20 @@ public class TeacherAttendanceTracking extends BorderPane {
             }
 <span class="nc" id="L484">        });</span>
 
-<span class="nc" id="L486">        Region titleSpacer = new Region();</span>
+<span class="fc" id="L486">        Region titleSpacer = new Region();</span>
 
-<span class="nc" id="L488">        HBox.setHgrow(</span>
+<span class="fc" id="L488">        HBox.setHgrow(</span>
                 titleSpacer,
                 Priority.ALWAYS
         );
 
-<span class="nc" id="L493">        HBox titleRow = new HBox(</span>
+<span class="fc" id="L493">        HBox titleRow = new HBox(</span>
                 title,
                 titleSpacer,
                 saveButton
         );
 
-<span class="nc" id="L499">        titleRow.setAlignment(</span>
+<span class="fc" id="L499">        titleRow.setAlignment(</span>
                 Pos.CENTER_LEFT
         );
 
@@ -504,33 +504,33 @@ public class TeacherAttendanceTracking extends BorderPane {
         // TYHJÄ TILA
 
 
-<span class="nc" id="L507">        Region topSpace = new Region();</span>
+<span class="fc" id="L507">        Region topSpace = new Region();</span>
 
-<span class="nc" id="L509">        topSpace.setPrefHeight(44);</span>
-<span class="nc" id="L510">        topSpace.setMinHeight(44);</span>
+<span class="fc" id="L509">        topSpace.setPrefHeight(44);</span>
+<span class="fc" id="L510">        topSpace.setMinHeight(44);</span>
 
 
         // OPISKELIJOIDEN KORTTI
 
 
-<span class="nc" id="L516">        VBox attendanceCard =</span>
-<span class="nc" id="L517">                createAttendanceCard();</span>
+<span class="fc" id="L516">        VBox attendanceCard =</span>
+<span class="fc" id="L517">                createAttendanceCard();</span>
 
         // Kortti venyy nyt ikkunan levyiseksi ja kasvaa/pienenee
         // ikkunan koon mukana.
-<span class="nc" id="L521">        attendanceCard.setMaxWidth(Double.MAX_VALUE);</span>
+<span class="fc" id="L521">        attendanceCard.setMaxWidth(Double.MAX_VALUE);</span>
 
         // Jos opiskelijoita on paljon, lista vierittyy sen sijaan
         // että se leikkautuisi tai venyttäisi ikkunaa loputtomiin.
-<span class="nc" id="L525">        ScrollPane scrollPane = new ScrollPane(attendanceCard);</span>
+<span class="fc" id="L525">        ScrollPane scrollPane = new ScrollPane(attendanceCard);</span>
 
-<span class="nc" id="L527">        scrollPane.setFitToWidth(true);</span>
-<span class="nc" id="L528">        scrollPane.setStyle(</span>
+<span class="fc" id="L527">        scrollPane.setFitToWidth(true);</span>
+<span class="fc" id="L528">        scrollPane.setStyle(</span>
                 &quot;-fx-background-color: transparent;&quot; +
                         &quot;-fx-background: transparent;&quot;
         );
 
-<span class="nc" id="L533">        VBox.setVgrow(</span>
+<span class="fc" id="L533">        VBox.setVgrow(</span>
                 scrollPane,
                 Priority.ALWAYS
         );
@@ -539,15 +539,15 @@ public class TeacherAttendanceTracking extends BorderPane {
         // MAIN CONTENT
 
 
-<span class="nc" id="L542">        VBox.setVgrow(content, Priority.ALWAYS);</span>
+<span class="fc" id="L542">        VBox.setVgrow(content, Priority.ALWAYS);</span>
 
-<span class="nc" id="L544">        content.getChildren().addAll(</span>
+<span class="fc" id="L544">        content.getChildren().addAll(</span>
                 titleRow,
                 topSpace,
                 scrollPane
         );
 
-<span class="nc" id="L550">        return content;</span>
+<span class="fc" id="L550">        return content;</span>
     }
 
 
@@ -556,14 +556,14 @@ public class TeacherAttendanceTracking extends BorderPane {
 
     private VBox createAttendanceCard() {
 
-<span class="nc" id="L559">        VBox card = new VBox();</span>
+<span class="fc" id="L559">        VBox card = new VBox();</span>
 
-<span class="nc" id="L561">        card.setPrefWidth(1000);</span>
-<span class="nc" id="L562">        card.setMaxWidth(</span>
+<span class="fc" id="L561">        card.setPrefWidth(1000);</span>
+<span class="fc" id="L562">        card.setMaxWidth(</span>
                 Double.MAX_VALUE
         );
 
-<span class="nc" id="L566">        card.setStyle(</span>
+<span class="fc" id="L566">        card.setStyle(</span>
                 &quot;-fx-background-color: white;&quot; +
                         &quot;-fx-border-color: &quot; + BORDER + &quot;;&quot; +
                         &quot;-fx-border-radius: 16;&quot; +
@@ -572,66 +572,66 @@ public class TeacherAttendanceTracking extends BorderPane {
 
         // Kevyt varjostus, jotta kortti erottuu valkoisesta
         // taustasta paremmin.
-<span class="nc" id="L575">        DropShadow shadow = new DropShadow();</span>
-<span class="nc" id="L576">        shadow.setRadius(18);</span>
-<span class="nc" id="L577">        shadow.setOffsetY(4);</span>
-<span class="nc" id="L578">        shadow.setColor(Color.rgb(0, 0, 0, 0.08));</span>
+<span class="fc" id="L575">        DropShadow shadow = new DropShadow();</span>
+<span class="fc" id="L576">        shadow.setRadius(18);</span>
+<span class="fc" id="L577">        shadow.setOffsetY(4);</span>
+<span class="fc" id="L578">        shadow.setColor(Color.rgb(0, 0, 0, 0.08));</span>
 
-<span class="nc" id="L580">        card.setEffect(shadow);</span>
+<span class="fc" id="L580">        card.setEffect(shadow);</span>
 
 
         // HEADER
 
 
-<span class="nc" id="L586">        Label studentHeader = new Label(</span>
+<span class="fc" id="L586">        Label studentHeader = new Label(</span>
                 &quot;Opiskelijat (7)&quot;
         );
 
-<span class="nc" id="L590">        studentHeader.setTextFill(</span>
-<span class="nc" id="L591">                Color.web(&quot;#333333&quot;)</span>
+<span class="fc" id="L590">        studentHeader.setTextFill(</span>
+<span class="fc" id="L591">                Color.web(&quot;#333333&quot;)</span>
         );
 
-<span class="nc" id="L594">        studentHeader.setFont(</span>
-<span class="nc" id="L595">                Font.font(</span>
+<span class="fc" id="L594">        studentHeader.setFont(</span>
+<span class="fc" id="L595">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         14
                 )
         );
 
-<span class="nc" id="L602">        presentCount = createCountLabel(GREEN);</span>
-<span class="nc" id="L603">        lateCount = createCountLabel(ORANGE);</span>
-<span class="nc" id="L604">        absentCount = createCountLabel(RED);</span>
+<span class="fc" id="L602">        presentCount = createCountLabel(GREEN);</span>
+<span class="fc" id="L603">        lateCount = createCountLabel(ORANGE);</span>
+<span class="fc" id="L604">        absentCount = createCountLabel(RED);</span>
 
-<span class="nc" id="L606">        HBox counts = new HBox(</span>
+<span class="fc" id="L606">        HBox counts = new HBox(</span>
                 36,
                 presentCount,
                 lateCount,
                 absentCount
         );
 
-<span class="nc" id="L613">        counts.setAlignment(</span>
+<span class="fc" id="L613">        counts.setAlignment(</span>
                 Pos.CENTER_RIGHT
         );
 
-<span class="nc" id="L617">        Region headerSpacer = new Region();</span>
+<span class="fc" id="L617">        Region headerSpacer = new Region();</span>
 
-<span class="nc" id="L619">        HBox.setHgrow(</span>
+<span class="fc" id="L619">        HBox.setHgrow(</span>
                 headerSpacer,
                 Priority.ALWAYS
         );
 
-<span class="nc" id="L624">        HBox header = new HBox(</span>
+<span class="fc" id="L624">        HBox header = new HBox(</span>
                 studentHeader,
                 headerSpacer,
                 counts
         );
 
-<span class="nc" id="L630">        header.setAlignment(</span>
+<span class="fc" id="L630">        header.setAlignment(</span>
                 Pos.CENTER_LEFT
         );
 
-<span class="nc" id="L634">        header.setPadding(</span>
+<span class="fc" id="L634">        header.setPadding(</span>
                 new Insets(
                         0,
                         24,
@@ -640,24 +640,24 @@ public class TeacherAttendanceTracking extends BorderPane {
                 )
         );
 
-<span class="nc" id="L643">        header.setPrefHeight(56);</span>
-<span class="nc" id="L644">        header.setMinHeight(56);</span>
-<span class="nc" id="L645">        header.setMaxHeight(56);</span>
+<span class="fc" id="L643">        header.setPrefHeight(56);</span>
+<span class="fc" id="L644">        header.setMinHeight(56);</span>
+<span class="fc" id="L645">        header.setMaxHeight(56);</span>
 
 
         // HEADER LINE
 
 
-<span class="nc" id="L651">        Region headerLine = new Region();</span>
+<span class="fc" id="L651">        Region headerLine = new Region();</span>
 
-<span class="nc" id="L653">        headerLine.setPrefHeight(1);</span>
-<span class="nc" id="L654">        headerLine.setMaxHeight(1);</span>
+<span class="fc" id="L653">        headerLine.setPrefHeight(1);</span>
+<span class="fc" id="L654">        headerLine.setMaxHeight(1);</span>
 
-<span class="nc" id="L656">        headerLine.setStyle(</span>
+<span class="fc" id="L656">        headerLine.setStyle(</span>
                 &quot;-fx-background-color: &quot; + BORDER + &quot;;&quot;
         );
 
-<span class="nc" id="L660">        card.getChildren().addAll(</span>
+<span class="fc" id="L660">        card.getChildren().addAll(</span>
                 header,
                 headerLine
         );
@@ -665,7 +665,7 @@ public class TeacherAttendanceTracking extends BorderPane {
 
         // OPISKELIJAT
 
-<span class="nc" id="L668">        String[] names = {</span>
+<span class="fc" id="L668">        String[] names = {</span>
                 &quot;Etunimi Sukunimi&quot;,
                 &quot;Etunimi Sukunimi&quot;,
                 &quot;Etunimi Sukunimi&quot;,
@@ -687,7 +687,7 @@ public class TeacherAttendanceTracking extends BorderPane {
          * 7. Paikalla
          */
 
-<span class="nc" id="L690">        int[] states = {</span>
+<span class="fc" id="L690">        int[] states = {</span>
                 PRESENT,
                 PRESENT,
                 LATE,
@@ -697,23 +697,23 @@ public class TeacherAttendanceTracking extends BorderPane {
                 PRESENT
         };
 
-<span class="nc bnc" id="L700" title="All 2 branches missed.">        for (int i = 0; i &lt; names.length; i++) {</span>
+<span class="fc bfc" id="L700" title="All 2 branches covered.">        for (int i = 0; i &lt; names.length; i++) {</span>
 
-<span class="nc" id="L702">            StudentRow row = new StudentRow(</span>
+<span class="fc" id="L702">            StudentRow row = new StudentRow(</span>
                     names[i],
                     states[i]
             );
 
-<span class="nc" id="L707">            studentRows.add(row);</span>
+<span class="fc" id="L707">            studentRows.add(row);</span>
 
-<span class="nc" id="L709">            card.getChildren().add(</span>
-<span class="nc" id="L710">                    row.getRow()</span>
+<span class="fc" id="L709">            card.getChildren().add(</span>
+<span class="fc" id="L710">                    row.getRow()</span>
             );
         }
 
-<span class="nc" id="L714">        updateCounters();</span>
+<span class="fc" id="L714">        updateCounters();</span>
 
-<span class="nc" id="L716">        return card;</span>
+<span class="fc" id="L716">        return card;</span>
     }
 
 
@@ -721,21 +721,21 @@ public class TeacherAttendanceTracking extends BorderPane {
 
     private Label createCountLabel(String accentColor) {
 
-<span class="nc" id="L724">        Label label = new Label();</span>
+<span class="fc" id="L724">        Label label = new Label();</span>
 
-<span class="nc" id="L726">        label.setTextFill(</span>
-<span class="nc" id="L727">                Color.web(accentColor)</span>
+<span class="fc" id="L726">        label.setTextFill(</span>
+<span class="fc" id="L727">                Color.web(accentColor)</span>
         );
 
-<span class="nc" id="L730">        label.setFont(</span>
-<span class="nc" id="L731">                Font.font(</span>
+<span class="fc" id="L730">        label.setFont(</span>
+<span class="fc" id="L731">                Font.font(</span>
                         &quot;System&quot;,
                         FontWeight.BOLD,
                         13
                 )
         );
 
-<span class="nc" id="L738">        return label;</span>
+<span class="fc" id="L738">        return label;</span>
     }
 
 
@@ -744,37 +744,37 @@ public class TeacherAttendanceTracking extends BorderPane {
 
     private void updateCounters() {
 
-<span class="nc" id="L747">        int present = 0;</span>
-<span class="nc" id="L748">        int late = 0;</span>
-<span class="nc" id="L749">        int absent = 0;</span>
+<span class="fc" id="L747">        int present = 0;</span>
+<span class="fc" id="L748">        int late = 0;</span>
+<span class="fc" id="L749">        int absent = 0;</span>
 
-<span class="nc bnc" id="L751" title="All 2 branches missed.">        for (StudentRow row : studentRows) {</span>
+<span class="fc bfc" id="L751" title="All 2 branches covered.">        for (StudentRow row : studentRows) {</span>
 
-<span class="nc bnc" id="L753" title="All 2 branches missed.">            if (row.getState() == PRESENT) {</span>
-<span class="nc" id="L754">                present++;</span>
+<span class="fc bfc" id="L753" title="All 2 branches covered.">            if (row.getState() == PRESENT) {</span>
+<span class="fc" id="L754">                present++;</span>
             }
 
-<span class="nc bnc" id="L757" title="All 2 branches missed.">            else if (row.getState() == LATE) {</span>
-<span class="nc" id="L758">                late++;</span>
+<span class="fc bfc" id="L757" title="All 2 branches covered.">            else if (row.getState() == LATE) {</span>
+<span class="fc" id="L758">                late++;</span>
             }
 
-<span class="nc bnc" id="L761" title="All 2 branches missed.">            else if (row.getState() == ABSENT) {</span>
-<span class="nc" id="L762">                absent++;</span>
+<span class="pc bpc" id="L761" title="1 of 2 branches missed.">            else if (row.getState() == ABSENT) {</span>
+<span class="fc" id="L762">                absent++;</span>
             }
-<span class="nc" id="L764">        }</span>
+<span class="fc" id="L764">        }</span>
 
-<span class="nc" id="L766">        presentCount.setText(</span>
+<span class="fc" id="L766">        presentCount.setText(</span>
                 present + &quot; Paikalla&quot;
         );
 
-<span class="nc" id="L770">        lateCount.setText(</span>
+<span class="fc" id="L770">        lateCount.setText(</span>
                 late + &quot; Myöhässä&quot;
         );
 
-<span class="nc" id="L774">        absentCount.setText(</span>
+<span class="fc" id="L774">        absentCount.setText(</span>
                 absent + &quot; Poissa&quot;
         );
-<span class="nc" id="L777">    }</span>
+<span class="fc" id="L777">    }</span>
 
 
     // STUDENT ROW
@@ -799,101 +799,101 @@ public class TeacherAttendanceTracking extends BorderPane {
         StudentRow(
                 String name,
                 int initialState
-<span class="nc" id="L802">        ) {</span>
+<span class="fc" id="L802">        ) {</span>
 
-<span class="nc" id="L804">            this.name = name;</span>
-<span class="nc" id="L805">            this.state = initialState;</span>
+<span class="fc" id="L804">            this.name = name;</span>
+<span class="fc" id="L805">            this.state = initialState;</span>
 
 
             // AVATAR
 
 
-<span class="nc" id="L811">            Circle avatarCircle = new Circle(</span>
+<span class="fc" id="L811">            Circle avatarCircle = new Circle(</span>
                     17,
-<span class="nc" id="L813">                    Color.web(LIGHT_BLUE)</span>
+<span class="fc" id="L813">                    Color.web(LIGHT_BLUE)</span>
             );
 
-<span class="nc" id="L816">            Label initials = new Label(</span>
+<span class="fc" id="L816">            Label initials = new Label(</span>
                     &quot;MA&quot;
             );
 
-<span class="nc" id="L820">            initials.setTextFill(</span>
-<span class="nc" id="L821">                    Color.web(&quot;#4C6D9D&quot;)</span>
+<span class="fc" id="L820">            initials.setTextFill(</span>
+<span class="fc" id="L821">                    Color.web(&quot;#4C6D9D&quot;)</span>
             );
 
-<span class="nc" id="L824">            initials.setFont(</span>
-<span class="nc" id="L825">                    Font.font(</span>
+<span class="fc" id="L824">            initials.setFont(</span>
+<span class="fc" id="L825">                    Font.font(</span>
                             &quot;System&quot;,
                             FontWeight.BOLD,
                             12
                     )
             );
 
-<span class="nc" id="L832">            StackPane avatar = new StackPane(</span>
+<span class="fc" id="L832">            StackPane avatar = new StackPane(</span>
                     avatarCircle,
                     initials
             );
 
-<span class="nc" id="L837">            avatar.setPrefSize(34, 34);</span>
-<span class="nc" id="L838">            avatar.setMinSize(34, 34);</span>
-<span class="nc" id="L839">            avatar.setMaxSize(34, 34);</span>
+<span class="fc" id="L837">            avatar.setPrefSize(34, 34);</span>
+<span class="fc" id="L838">            avatar.setMinSize(34, 34);</span>
+<span class="fc" id="L839">            avatar.setMaxSize(34, 34);</span>
 
 
             // OPISKELIJAN NIMI
 
 
-<span class="nc" id="L845">            Label nameLabel = new Label(</span>
+<span class="fc" id="L845">            Label nameLabel = new Label(</span>
                     name
             );
 
-<span class="nc" id="L849">            nameLabel.setTextFill(</span>
-<span class="nc" id="L850">                    Color.web(&quot;#333333&quot;)</span>
+<span class="fc" id="L849">            nameLabel.setTextFill(</span>
+<span class="fc" id="L850">                    Color.web(&quot;#333333&quot;)</span>
             );
 
-<span class="nc" id="L853">            nameLabel.setFont(</span>
-<span class="nc" id="L854">                    Font.font(</span>
+<span class="fc" id="L853">            nameLabel.setFont(</span>
+<span class="fc" id="L854">                    Font.font(</span>
                             &quot;System&quot;,
                             FontWeight.BOLD,
                             13
                     )
             );
 
-<span class="nc" id="L861">            Label roleLabel = new Label(</span>
+<span class="fc" id="L861">            Label roleLabel = new Label(</span>
                     &quot;Opiskelija&quot;
             );
 
-<span class="nc" id="L865">            roleLabel.setTextFill(</span>
-<span class="nc" id="L866">                    Color.web(&quot;#888888&quot;)</span>
+<span class="fc" id="L865">            roleLabel.setTextFill(</span>
+<span class="fc" id="L866">                    Color.web(&quot;#888888&quot;)</span>
             );
 
-<span class="nc" id="L869">            roleLabel.setFont(</span>
-<span class="nc" id="L870">                    Font.font(</span>
+<span class="fc" id="L869">            roleLabel.setFont(</span>
+<span class="fc" id="L870">                    Font.font(</span>
                             &quot;System&quot;,
                             FontWeight.NORMAL,
                             10
                     )
             );
 
-<span class="nc" id="L877">            VBox studentInfo = new VBox(</span>
+<span class="fc" id="L877">            VBox studentInfo = new VBox(</span>
                     2,
                     nameLabel,
                     roleLabel
             );
 
-<span class="nc" id="L883">            studentInfo.setAlignment(</span>
+<span class="fc" id="L883">            studentInfo.setAlignment(</span>
                     Pos.CENTER_LEFT
             );
 
 
             // STUDENT INFO
 
-<span class="nc" id="L890">            HBox student = new HBox(</span>
+<span class="fc" id="L890">            HBox student = new HBox(</span>
                     16,
                     avatar,
                     studentInfo
             );
 
-<span class="nc" id="L896">            student.setAlignment(</span>
+<span class="fc" id="L896">            student.setAlignment(</span>
                     Pos.CENTER_LEFT
             );
 
@@ -901,18 +901,18 @@ public class TeacherAttendanceTracking extends BorderPane {
             // NAPIT
 
 
-<span class="nc" id="L904">            presentButton =</span>
-<span class="nc" id="L905">                    createStatusButton(</span>
+<span class="fc" id="L904">            presentButton =</span>
+<span class="fc" id="L905">                    createStatusButton(</span>
                             &quot;Paikalla&quot;
                     );
 
-<span class="nc" id="L909">            lateButton =</span>
-<span class="nc" id="L910">                    createStatusButton(</span>
+<span class="fc" id="L909">            lateButton =</span>
+<span class="fc" id="L910">                    createStatusButton(</span>
                             &quot;Myöhässä&quot;
                     );
 
-<span class="nc" id="L914">            absentButton =</span>
-<span class="nc" id="L915">                    createStatusButton(</span>
+<span class="fc" id="L914">            absentButton =</span>
+<span class="fc" id="L915">                    createStatusButton(</span>
                             &quot;Poissa&quot;
                     );
 
@@ -920,15 +920,15 @@ public class TeacherAttendanceTracking extends BorderPane {
             // BUTTON ACTIONS
 
 
-<span class="nc" id="L923">            presentButton.setOnAction(</span>
+<span class="fc" id="L923">            presentButton.setOnAction(</span>
 <span class="nc" id="L924">                    event -&gt; setState(PRESENT)</span>
             );
 
-<span class="nc" id="L927">            lateButton.setOnAction(</span>
+<span class="fc" id="L927">            lateButton.setOnAction(</span>
 <span class="nc" id="L928">                    event -&gt; setState(LATE)</span>
             );
 
-<span class="nc" id="L931">            absentButton.setOnAction(</span>
+<span class="fc" id="L931">            absentButton.setOnAction(</span>
 <span class="nc" id="L932">                    event -&gt; setState(ABSENT)</span>
             );
 
@@ -936,14 +936,14 @@ public class TeacherAttendanceTracking extends BorderPane {
             // BUTTON CONTAINER
 
 
-<span class="nc" id="L939">            HBox buttons = new HBox(</span>
+<span class="fc" id="L939">            HBox buttons = new HBox(</span>
                     10,
                     presentButton,
                     lateButton,
                     absentButton
             );
 
-<span class="nc" id="L946">            buttons.setAlignment(</span>
+<span class="fc" id="L946">            buttons.setAlignment(</span>
                     Pos.CENTER_RIGHT
             );
 
@@ -951,9 +951,9 @@ public class TeacherAttendanceTracking extends BorderPane {
             // SPACER
 
 
-<span class="nc" id="L954">            Region spacer = new Region();</span>
+<span class="fc" id="L954">            Region spacer = new Region();</span>
 
-<span class="nc" id="L956">            HBox.setHgrow(</span>
+<span class="fc" id="L956">            HBox.setHgrow(</span>
                     spacer,
                     Priority.ALWAYS
             );
@@ -962,17 +962,17 @@ public class TeacherAttendanceTracking extends BorderPane {
             // ROW
 
 
-<span class="nc" id="L965">            row = new HBox(</span>
+<span class="fc" id="L965">            row = new HBox(</span>
                     student,
                     spacer,
                     buttons
             );
 
-<span class="nc" id="L971">            row.setAlignment(</span>
+<span class="fc" id="L971">            row.setAlignment(</span>
                     Pos.CENTER_LEFT
             );
 
-<span class="nc" id="L975">            row.setPadding(</span>
+<span class="fc" id="L975">            row.setPadding(</span>
                     new Insets(
                             0,
                             24,
@@ -981,18 +981,18 @@ public class TeacherAttendanceTracking extends BorderPane {
                     )
             );
 
-<span class="nc" id="L984">            row.setPrefHeight(66);</span>
-<span class="nc" id="L985">            row.setMinHeight(66);</span>
-<span class="nc" id="L986">            row.setMaxHeight(66);</span>
+<span class="fc" id="L984">            row.setPrefHeight(66);</span>
+<span class="fc" id="L985">            row.setMinHeight(66);</span>
+<span class="fc" id="L986">            row.setMaxHeight(66);</span>
 
-<span class="nc" id="L988">            row.setStyle(</span>
+<span class="fc" id="L988">            row.setStyle(</span>
                     &quot;-fx-border-color: transparent transparent &quot;
                             + BORDER + &quot; transparent;&quot;
             );
 
             // Rivi korostuu hiiren alla, jotta on selkeämpää
             // mitä opiskelijaa ollaan muokkaamassa.
-<span class="nc" id="L995">            row.setOnMouseEntered(e -&gt;</span>
+<span class="fc" id="L995">            row.setOnMouseEntered(e -&gt;</span>
 <span class="nc" id="L996">                    row.setStyle(</span>
                             &quot;-fx-background-color: #FAFBFD;&quot; +
                                     &quot;-fx-border-color: transparent transparent &quot;
@@ -1000,15 +1000,15 @@ public class TeacherAttendanceTracking extends BorderPane {
                     )
             );
 
-<span class="nc" id="L1003">            row.setOnMouseExited(e -&gt;</span>
+<span class="fc" id="L1003">            row.setOnMouseExited(e -&gt;</span>
 <span class="nc" id="L1004">                    row.setStyle(</span>
                             &quot;-fx-border-color: transparent transparent &quot;
                                     + BORDER + &quot; transparent;&quot;
                     )
             );
 
-<span class="nc" id="L1010">            updateButtonStyles();</span>
-<span class="nc" id="L1011">        }</span>
+<span class="fc" id="L1010">            updateButtonStyles();</span>
+<span class="fc" id="L1011">        }</span>
 
 
         // STATUS BUTTON
@@ -1018,32 +1018,32 @@ public class TeacherAttendanceTracking extends BorderPane {
                 String text
         ) {
 
-<span class="nc" id="L1021">            Button button = new Button(</span>
+<span class="fc" id="L1021">            Button button = new Button(</span>
                     text
             );
 
-<span class="nc" id="L1025">            button.setPrefWidth(104);</span>
-<span class="nc" id="L1026">            button.setPrefHeight(30);</span>
+<span class="fc" id="L1025">            button.setPrefWidth(104);</span>
+<span class="fc" id="L1026">            button.setPrefHeight(30);</span>
 
-<span class="nc" id="L1028">            button.setMinWidth(104);</span>
-<span class="nc" id="L1029">            button.setMinHeight(30);</span>
+<span class="fc" id="L1028">            button.setMinWidth(104);</span>
+<span class="fc" id="L1029">            button.setMinHeight(30);</span>
 
-<span class="nc" id="L1031">            button.setMaxWidth(104);</span>
-<span class="nc" id="L1032">            button.setMaxHeight(30);</span>
+<span class="fc" id="L1031">            button.setMaxWidth(104);</span>
+<span class="fc" id="L1032">            button.setMaxHeight(30);</span>
 
-<span class="nc" id="L1034">            button.setFont(</span>
-<span class="nc" id="L1035">                    Font.font(</span>
+<span class="fc" id="L1034">            button.setFont(</span>
+<span class="fc" id="L1035">                    Font.font(</span>
                             &quot;System&quot;,
                             FontWeight.NORMAL,
                             11
                     )
             );
 
-<span class="nc" id="L1042">            button.setStyle(</span>
-<span class="nc" id="L1043">                    button.getStyle() + &quot;-fx-cursor: hand;&quot;</span>
+<span class="fc" id="L1042">            button.setStyle(</span>
+<span class="fc" id="L1043">                    button.getStyle() + &quot;-fx-cursor: hand;&quot;</span>
             );
 
-<span class="nc" id="L1046">            return button;</span>
+<span class="fc" id="L1046">            return button;</span>
         }
 
         // SET STATE
@@ -1066,7 +1066,7 @@ public class TeacherAttendanceTracking extends BorderPane {
 
         private int getState() {
 
-<span class="nc" id="L1069">            return state;</span>
+<span class="fc" id="L1069">            return state;</span>
         }
 
 
@@ -1075,7 +1075,7 @@ public class TeacherAttendanceTracking extends BorderPane {
 
         private HBox getRow() {
 
-<span class="nc" id="L1078">            return row;</span>
+<span class="fc" id="L1078">            return row;</span>
         }
 
 
@@ -1084,13 +1084,13 @@ public class TeacherAttendanceTracking extends BorderPane {
 
         private void updateButtonStyles() {
 
-<span class="nc" id="L1087">            String activeSuffix =</span>
+<span class="fc" id="L1087">            String activeSuffix =</span>
                     &quot;-fx-background-radius: 15;&quot; +
                             &quot;-fx-border-radius: 15;&quot; +
                             &quot;-fx-font-weight: bold;&quot; +
                             &quot;-fx-cursor: hand;&quot;;
 
-<span class="nc" id="L1093">            String inactiveSuffix =</span>
+<span class="fc" id="L1093">            String inactiveSuffix =</span>
                     &quot;-fx-background-color: white;&quot; +
                             &quot;-fx-text-fill: #777777;&quot; +
                             &quot;-fx-border-color: #D8D8D8;&quot; +
@@ -1102,34 +1102,34 @@ public class TeacherAttendanceTracking extends BorderPane {
             // PAIKALLA
 
 
-<span class="nc" id="L1105">            presentButton.setStyle(</span>
-<span class="nc bnc" id="L1106" title="All 2 branches missed.">                    state == PRESENT</span>
+<span class="fc" id="L1105">            presentButton.setStyle(</span>
+<span class="fc bfc" id="L1106" title="All 2 branches covered.">                    state == PRESENT</span>
                             ? &quot;-fx-background-color: &quot; + GREEN + &quot;;&quot;
-<span class="nc" id="L1108">                            + &quot;-fx-text-fill: white;&quot; + activeSuffix</span>
-<span class="nc" id="L1109">                            : inactiveSuffix</span>
+<span class="fc" id="L1108">                            + &quot;-fx-text-fill: white;&quot; + activeSuffix</span>
+<span class="fc" id="L1109">                            : inactiveSuffix</span>
             );
 
             // MYÖHÄSSÄ
 
 
-<span class="nc" id="L1115">            lateButton.setStyle(</span>
-<span class="nc bnc" id="L1116" title="All 2 branches missed.">                    state == LATE</span>
+<span class="fc" id="L1115">            lateButton.setStyle(</span>
+<span class="fc bfc" id="L1116" title="All 2 branches covered.">                    state == LATE</span>
                             ? &quot;-fx-background-color: &quot; + ORANGE + &quot;;&quot;
-<span class="nc" id="L1118">                            + &quot;-fx-text-fill: white;&quot; + activeSuffix</span>
-<span class="nc" id="L1119">                            : inactiveSuffix</span>
+<span class="fc" id="L1118">                            + &quot;-fx-text-fill: white;&quot; + activeSuffix</span>
+<span class="fc" id="L1119">                            : inactiveSuffix</span>
             );
 
 
             // POISSA
 
 
-<span class="nc" id="L1126">            absentButton.setStyle(</span>
-<span class="nc bnc" id="L1127" title="All 2 branches missed.">                    state == ABSENT</span>
+<span class="fc" id="L1126">            absentButton.setStyle(</span>
+<span class="fc bfc" id="L1127" title="All 2 branches covered.">                    state == ABSENT</span>
                             ? &quot;-fx-background-color: &quot; + RED + &quot;;&quot;
-<span class="nc" id="L1129">                            + &quot;-fx-text-fill: white;&quot; + activeSuffix</span>
-<span class="nc" id="L1130">                            : inactiveSuffix</span>
+<span class="fc" id="L1129">                            + &quot;-fx-text-fill: white;&quot; + activeSuffix</span>
+<span class="fc" id="L1130">                            : inactiveSuffix</span>
             );
-<span class="nc" id="L1132">        }</span>
+<span class="fc" id="L1132">        }</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

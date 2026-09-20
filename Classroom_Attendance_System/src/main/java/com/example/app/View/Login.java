@@ -12,6 +12,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.function.BiConsumer;
+
 public class Login extends BorderPane {
 
     private static final String NAVY = "#202F49";
@@ -19,6 +21,10 @@ public class Login extends BorderPane {
     private static final String MUTED = "#858585";
 
     public Login(Runnable onLogin) {
+        this((email, password) -> onLogin.run());
+    }
+
+    public Login(BiConsumer<String, String> onLoginAttempt) {
         setStyle("-fx-background-color: " + NAVY + ";");
 
         VBox card = new VBox(0);
@@ -70,7 +76,7 @@ public class Login extends BorderPane {
         login.setPrefSize(196, 29);
         login.setStyle("-fx-background-color: " + BLUE + "; -fx-text-fill: white; "
                 + "-fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 4;");
-        login.setOnAction(e -> onLogin.run());
+        login.setOnAction(e -> onLoginAttempt.accept(email.getText(), password.getText()));
 
         Label forgot = new Label("Unohtuiko salasana? Ota yhteyttä opettajaan");
         forgot.setFont(Font.font("System", FontWeight.BOLD, 9));

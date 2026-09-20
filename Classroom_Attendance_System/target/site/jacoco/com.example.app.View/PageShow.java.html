@@ -178,50 +178,56 @@ import java.util.Scanner;
         private void openTeacherCoursePage() {
 
 <span class="nc" id="L180">            TeacherCoursePage view = new TeacherCoursePage(</span>
-                    this::openTeacherStartPage
+                    this::openTeacherStartPage,
+                    () -&gt; {
+<span class="nc" id="L183">                        System.out.println(&quot;Aloita oppitunti&quot;);</span>
+<span class="nc" id="L184">                    },</span>
+                    () -&gt; {
+<span class="nc" id="L186">                        System.out.println(&quot;Lisää opiskelijoita&quot;);</span>
+<span class="nc" id="L187">                    }</span>
             );
 
-<span class="nc" id="L184">            stage.setScene(</span>
+<span class="nc" id="L190">            stage.setScene(</span>
                     new Scene(view, 1024, 399)
             );
-<span class="nc" id="L187">        }</span>
+<span class="nc" id="L193">        }</span>
 
         private void openTeacherAttendanceTracking() {
 
-<span class="nc" id="L191">            TeacherAttendanceTracking view =</span>
+<span class="nc" id="L197">            TeacherAttendanceTracking view =</span>
                     new TeacherAttendanceTracking(
                             this::openTeacherStartPage
                     );
 
-<span class="nc" id="L196">            Scene scene = new Scene(view, 1400, 900);</span>
+<span class="nc" id="L202">            Scene scene = new Scene(view, 1400, 900);</span>
 
-<span class="nc" id="L198">            stage.setScene(scene);</span>
+<span class="nc" id="L204">            stage.setScene(scene);</span>
 
             // Vähimmäiskoko, johon asti sisältö skaalautuu pienemmäksi.
             // Alle tämän ikkunaa ei voi pienentää.
-<span class="nc" id="L202">            stage.setMinWidth(875);</span>
-<span class="nc" id="L203">            stage.setMinHeight(560);</span>
+<span class="nc" id="L208">            stage.setMinWidth(875);</span>
+<span class="nc" id="L209">            stage.setMinHeight(560);</span>
 
             // Oletuskoko
-<span class="nc" id="L206">            stage.setWidth(1400);</span>
-<span class="nc" id="L207">            stage.setHeight(900);</span>
+<span class="nc" id="L212">            stage.setWidth(1400);</span>
+<span class="nc" id="L213">            stage.setHeight(900);</span>
 
-<span class="nc" id="L209">            stage.centerOnScreen();</span>
+<span class="nc" id="L215">            stage.centerOnScreen();</span>
 
             // Ikkunan koon muuttaminen on sallittu — kaikki elementit
             // skaalautuvat automaattisesti bindingien ansiosta.
-<span class="nc" id="L213">            stage.setResizable(true);</span>
-<span class="nc" id="L214">        }</span>
+<span class="nc" id="L219">            stage.setResizable(true);</span>
+<span class="nc" id="L220">        }</span>
 
         private void openAdminPage() {
 
-<span class="nc" id="L218">            Admin view = new Admin(</span>
+<span class="nc" id="L224">            Admin view = new Admin(</span>
             );
 
-<span class="nc" id="L221">            stage.setScene(</span>
-<span class="nc" id="L222">                    new Scene(view.getView(), 1024, 399)</span>
+<span class="nc" id="L227">            stage.setScene(</span>
+<span class="nc" id="L228">                    new Scene(view.getView(), 1024, 399)</span>
             );
-<span class="nc" id="L224">        }</span>
+<span class="nc" id="L230">        }</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
