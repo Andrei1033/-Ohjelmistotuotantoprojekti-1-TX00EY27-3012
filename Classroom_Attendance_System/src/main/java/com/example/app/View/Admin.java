@@ -1,5 +1,7 @@
 package com.example.app.View;
 
+import com.example.app.Controller.AdminController;
+import com.example.app.Model.Role;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -8,6 +10,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class Admin {
+    private final AdminController controller;
+
+    public Admin() {
+        this(new AdminController());
+    }
+
+    public Admin(AdminController controller) {
+        this.controller = controller;
+    }
 
     public BorderPane getView() {
 
@@ -64,15 +75,12 @@ public class Admin {
         searchField.setPrefWidth(180);
 
         ComboBox<String> courseFilter = new ComboBox<>();
-        courseFilter.setPromptText("Kaikki kurssit");
+        courseFilter.setPromptText("Kaikki");
         courseFilter.setPrefWidth(140);
 
-        courseFilter.getItems().addAll(
-                "Ohjelmoinnin perusteet",
-                "Tietokannat",
-                "Java",
-                "Web-ohjelmointi"
-        );
+        courseFilter.getItems().add("Kaikki");
+        courseFilter.getItems().addAll(controller.getCourses());
+        courseFilter.setValue("Kaikki");
 
         Button addUserButton = new Button("+ Lisää uusi käyttäjä");
         addUserButton.getStyleClass().add("add-user-button");
@@ -87,38 +95,42 @@ public class Admin {
                 addUserButton
         );
 
-        TableView<String[]> table = new TableView<>();
+        TableView<com.example.app.Model.Admin> table = new TableView<>();
 
-        TableColumn<String[], String> nameColumn =
+        TableColumn<com.example.app.Model.Admin, String> nameColumn =
                 new TableColumn<>("Nimi");
 
-        TableColumn<String[], String> emailColumn =
+        TableColumn<com.example.app.Model.Admin, String> emailColumn =
                 new TableColumn<>("Sähköposti");
 
-        TableColumn<String[], String> roleColumn =
+        TableColumn<com.example.app.Model.Admin, String> roleColumn =
                 new TableColumn<>("Rooli");
 
-        TableColumn<String[], String> courseColumn =
+        TableColumn<com.example.app.Model.Admin, String> courseColumn =
                 new TableColumn<>("Kurssit");
 
-        TableColumn<String[], String> editColumn =
+        TableColumn<com.example.app.Model.Admin, String> editColumn =
                 new TableColumn<>("");
 
 
         nameColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue()[0])
+                new SimpleStringProperty(data.getValue().getName())
         );
 
         emailColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue()[1])
+                new SimpleStringProperty(data.getValue().getEmail())
         );
 
         roleColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue()[2])
+                new SimpleStringProperty(roleText(data.getValue().getRole()))
         );
 
         courseColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue()[3])
+                new SimpleStringProperty(data.getValue().getCourses())
+        );
+
+        editColumn.setCellValueFactory(data ->
+                new SimpleStringProperty("")
         );
 
 
@@ -221,14 +233,10 @@ public class Admin {
                 editButton.getStyleClass().add("edit-button");
 
                 editButton.setOnAction(event -> {
-
-                    String[] user = getTableView()
-                            .getItems()
-                            .get(getIndex());
-
-                    System.out.println(
-                            "Muokataan käyttäjää: " + user[0]
-                    );
+                    com.example.app.Model.Admin user = getTableRow().getItem();
+                    if (user != null) {
+                        showUserDialog(user, table);
+                    }
                 });
             }
 
@@ -236,10 +244,12 @@ public class Admin {
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if (empty) {
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                     setGraphic(null);
+                    setContentDisplay(ContentDisplay.TEXT_ONLY);
                 } else {
                     setGraphic(editButton);
+                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                 }
             }
         });
@@ -272,59 +282,49 @@ public class Admin {
         editColumn.setPrefWidth(60);
 
 
-        table.setItems(FXCollections.observableArrayList(
-
-                new String[]{
-                        "Maija Meikäläinen",
-                        "maija.meikalainen@metropolia.fi",
-                        "Opiskelija",
-                        "Ohjelmoinnin perusteet, Tietokannat"
-                },
-
-                new String[]{
-                        "Matti Mallikas",
-                        "matti.mallikas@metropolia.fi",
-                        "Opiskelija",
-                        "Ohjelmoinnin perusteet"
-                },
-
-                new String[]{
-                        "Laura Opettaja",
-                        "laura.opettaja@metropolia.fi",
-                        "Opettaja",
-                        "Java, Tietokannat"
-                },
-
-                new String[]{
-                        "Antti Admin",
-                        "antti.admin@metropolia.fi",
-                        "Admin",
-                        "—"
-                },
-
-                new String[]{
-                        "Ville Virtanen",
-                        "ville.virtanen@metropolia.fi",
-                        "Opiskelija",
-                        "Web-ohjelmointi"
-                },
-
-                new String[]{
-                        "Sara Salminen",
-                        "sara.salminen@metropolia.fi",
-                        "Opiskelija",
-                        "Java"
-                }
-        ));
+        table.setItems(controller.getUsers());
 
         table.setPlaceholder(
                 new Label("Ei käyttäjiä")
         );
 
+        Runnable refresh = () -> table.setItems(controller.filterUsers(
+                selectedRole(allButton, adminButton, teacherButton, studentButton),
+                searchField.getText(),
+                courseFilter.getValue()));
+        allButton.setOnAction(event -> {
+            setActiveFilter(allButton, adminButton, teacherButton, studentButton);
+            refresh.run();
+        });
+        adminButton.setOnAction(event -> {
+            setActiveFilter(adminButton, allButton, teacherButton, studentButton);
+            refresh.run();
+        });
+        teacherButton.setOnAction(event -> {
+            setActiveFilter(teacherButton, allButton, adminButton, studentButton);
+            refresh.run();
+        });
+        studentButton.setOnAction(event -> {
+            setActiveFilter(studentButton, allButton, adminButton, teacherButton);
+            refresh.run();
+        });
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> refresh.run());
+        courseFilter.valueProperty().addListener((observable, oldValue, newValue) -> refresh.run());
+        addUserButton.setOnAction(event -> showUserDialog(null, table));
+
 
         VBox content = new VBox(25);
         content.setPadding(new Insets(30));
         content.getStyleClass().add("content");
+
+        if (controller.getDatabaseError() != null) {
+            Label error = new Label(
+                    "Käyttäjätietojen haku tietokannasta epäonnistui: "
+                            + controller.getDatabaseError());
+            error.setWrapText(true);
+            error.setStyle("-fx-text-fill: #b00020;");
+            content.getChildren().add(error);
+        }
 
         content.getChildren().addAll(
                 filters,
@@ -347,5 +347,90 @@ public class Admin {
         );
 
         return root;
+    }
+
+    private Role selectedRole(Button all, Button admin, Button teacher, Button student) {
+        if (admin.getStyleClass().contains("filter-button-active")) return Role.ADMIN;
+        if (teacher.getStyleClass().contains("filter-button-active")) return Role.TEACHER;
+        if (student.getStyleClass().contains("filter-button-active")) return Role.STUDENT;
+        return null;
+    }
+
+    private void setActiveFilter(Button active, Button... inactive) {
+        active.getStyleClass().removeAll("filter-button", "filter-button-active");
+        active.getStyleClass().add("filter-button-active");
+        for (Button button : inactive) {
+            button.getStyleClass().removeAll("filter-button", "filter-button-active");
+            button.getStyleClass().add("filter-button");
+        }
+    }
+
+    private String roleText(Role role) {
+        return switch (role) {
+            case ADMIN -> "Admin";
+            case TEACHER -> "Opettaja";
+            case STUDENT -> "Opiskelija";
+        };
+    }
+
+    private void showUserDialog(com.example.app.Model.Admin user,
+                                TableView<com.example.app.Model.Admin> table) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle(user == null ? "Lisää käyttäjä" : "Muokkaa käyttäjää");
+        dialog.setHeaderText(user == null
+                ? "Luo uusi käyttäjä"
+                : "Muokkaa käyttäjän tietoja");
+        dialog.getDialogPane().getStyleClass().add("admin-dialog");
+        dialog.getDialogPane().getStylesheets().add(
+                getClass().getResource("/style.css").toExternalForm()
+        );
+        ButtonType save = new ButtonType("Tallenna", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(save, ButtonType.CANCEL);
+
+        TextField name = new TextField(user == null ? "" : user.getName());
+        TextField email = new TextField(user == null ? "" : user.getEmail());
+        ComboBox<String> role = new ComboBox<>(FXCollections.observableArrayList("Opiskelija", "Opettaja", "Admin"));
+        role.setValue(user == null ? "Opiskelija" : roleText(user.getRole()));
+        TextField courses = new TextField(user == null ? "" : user.getCourses());
+        GridPane fields = new GridPane();
+        fields.getStyleClass().add("admin-dialog-fields");
+        fields.setHgap(10);
+        fields.setVgap(10);
+        fields.addRow(0, new Label("Nimi"), name);
+        fields.addRow(1, new Label("Sähköposti"), email);
+        fields.addRow(2, new Label("Rooli"), role);
+        fields.addRow(3, new Label("Kurssit"), courses);
+        dialog.getDialogPane().setContent(fields);
+        dialog.getDialogPane().lookupButton(save).getStyleClass().add("dialog-save-button");
+        dialog.getDialogPane().lookupButton(ButtonType.CANCEL)
+                .getStyleClass().add("dialog-cancel-button");
+
+        dialog.setResultConverter(button -> {
+            if (button != save) return null;
+            try {
+                Role selectedRole = roleFromText(role.getValue());
+                String selectedCourses = courses.getText().isBlank() ? "—" : courses.getText();
+                if (user == null) {
+                    controller.addUser(name.getText(), email.getText(), selectedRole, selectedCourses);
+                } else {
+                    controller.updateUser(user, name.getText(), email.getText(), selectedRole, selectedCourses);
+                }
+                table.refresh();
+            } catch (IllegalArgumentException exception) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);
+                alert.setHeaderText("Virheelliset käyttäjätiedot");
+                alert.showAndWait();
+            }
+            return null;
+        });
+        dialog.showAndWait();
+    }
+
+    private Role roleFromText(String value) {
+        return switch (value) {
+            case "Admin" -> Role.ADMIN;
+            case "Opettaja" -> Role.TEACHER;
+            default -> Role.STUDENT;
+        };
     }
 }

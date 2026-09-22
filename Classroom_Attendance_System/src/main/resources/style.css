@@ -83,8 +83,67 @@
 .add-user-button {
     -fx-background-color: #293b5b;
     -fx-text-fill: white;
-    -fx-background-radius: 4px;
+    -fx-background-radius: 8px;
+    -fx-padding: 9px 16px;
     -fx-font-weight: bold;
+}
+
+.add-user-button:hover {
+    -fx-background-color: #3b5278;
+}
+
+.admin-dialog {
+    -fx-background-color: #f4f5f3;
+}
+
+.admin-dialog .header-panel {
+    -fx-background-color: #293b5b;
+}
+
+.admin-dialog .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+.admin-dialog-fields {
+    -fx-padding: 20px;
+}
+
+.admin-dialog-fields .label {
+    -fx-text-fill: #293b5b;
+    -fx-font-weight: bold;
+}
+
+.admin-dialog-fields .text-field,
+.admin-dialog-fields .combo-box {
+    -fx-pref-width: 280px;
+    -fx-background-color: white;
+    -fx-background-radius: 6px;
+    -fx-border-color: #d5d9df;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px;
+}
+
+.admin-dialog .button-bar .button {
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 18px;
+}
+
+.dialog-save-button {
+    -fx-background-color: #293b5b;
+    -fx-text-fill: white;
+}
+
+.dialog-save-button:hover {
+    -fx-background-color: #3b5278;
+}
+
+.dialog-cancel-button {
+    -fx-background-color: white;
+    -fx-border-color: #c9cdd3;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
 }
 
 
