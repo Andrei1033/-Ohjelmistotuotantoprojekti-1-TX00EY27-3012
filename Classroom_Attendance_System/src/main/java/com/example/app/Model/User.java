@@ -8,7 +8,7 @@ public class User {
     private final String lastName;
     private final Role role;
 
-    public User(int userId, String email, String firstName, String lastName, com.example.app.Model.Role role) {
+    public User(int userId, String firstName, String lastName, String email, Role role) {
         this.id = userId;
         this.email = email;
         this.firstName = firstName;

@@ -25,10 +25,9 @@ public class TeacherDao {
                 if (rs.next()) {
                     Teacher teacher = new Teacher(
                             rs.getInt("user_id"),
-                            rs.getString("email"),
                             rs.getString("first_name"),
-                            rs.getString("last_name")
-
+                            rs.getString("last_name"),
+                            rs.getString("email")
                     );
                     return Optional.of(teacher);
                 }
@@ -39,6 +38,7 @@ public class TeacherDao {
         }
         return Optional.empty();
     }
+
     }
 
 
