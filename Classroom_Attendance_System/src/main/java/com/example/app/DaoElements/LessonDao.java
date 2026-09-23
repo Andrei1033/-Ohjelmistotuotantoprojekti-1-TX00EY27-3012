@@ -13,7 +13,7 @@ import java.util.List;
 public class LessonDao {
     public List<Lesson> getLessonsByCourseById(int courseId) {
         List<Lesson> lessons = new ArrayList<>();
-        String sql = "SELECT lesson_id, course_id, start_time " +
+        String sql = "SELECT lesson_id, course_id, start_time, end_time " +
                 "FROM lessons WHERE course_id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -27,6 +27,7 @@ public class LessonDao {
                             rs.getInt("lesson_id"),
                             rs.getInt("course_id"),
                             rs.getString("start_time"),
+                            rs.getString("end_time"),
                             "Oppitunti",
                             "upcoming"
                     );
