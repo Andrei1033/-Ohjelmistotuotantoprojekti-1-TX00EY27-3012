@@ -1,8 +1,0 @@
-.idea/
-target/
-*.iml
-out/
-*.class
-*.log
-*.env
-src/main/resources/database.properties
