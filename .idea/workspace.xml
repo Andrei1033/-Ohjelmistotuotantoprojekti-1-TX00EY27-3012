@@ -9,8 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="olen tehny login logika. nyt main sivu aloita ohjelma">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +138,7 @@
       <recent name="com.example.app.View" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.app.Main" />
       <module name="Classroom_Attendance_System" />
