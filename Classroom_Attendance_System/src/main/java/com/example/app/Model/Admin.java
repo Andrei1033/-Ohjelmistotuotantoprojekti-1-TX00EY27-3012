@@ -1,5 +1,7 @@
 package com.example.app.Model;
 
+import com.example.app.Model.LoginComponents.Role;
+
 public class Admin {
     private final int id;
     private String name;

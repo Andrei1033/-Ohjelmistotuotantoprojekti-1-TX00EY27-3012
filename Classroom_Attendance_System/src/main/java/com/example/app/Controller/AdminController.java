@@ -2,7 +2,7 @@ package com.example.app.Controller;
 
 import com.example.app.DaoElements.AdminDao;
 import com.example.app.Model.Admin;
-import com.example.app.Model.Role;
+import com.example.app.Model.LoginComponents.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

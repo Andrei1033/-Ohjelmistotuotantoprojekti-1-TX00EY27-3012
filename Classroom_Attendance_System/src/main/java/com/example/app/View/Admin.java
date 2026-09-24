@@ -1,7 +1,7 @@
 package com.example.app.View;
 
 import com.example.app.Controller.AdminController;
-import com.example.app.Model.Role;
+import com.example.app.Model.LoginComponents.Role;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;

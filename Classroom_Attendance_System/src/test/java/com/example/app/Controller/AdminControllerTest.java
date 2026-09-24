@@ -1,7 +1,7 @@
 package com.example.app.Controller;
 
 import com.example.app.Model.Admin;
-import com.example.app.Model.Role;
+import com.example.app.Model.LoginComponents.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

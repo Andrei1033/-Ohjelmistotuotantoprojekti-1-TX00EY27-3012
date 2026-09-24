@@ -1,4 +1,4 @@
-package com.example.app.Model;
+package com.example.app.Model.LoginComponents;
 
 public class User {
 
@@ -20,7 +20,7 @@ public class User {
     public String getEmail()    { return email; }
     public String getFirstName(){ return firstName; }
     public String getLastName() { return lastName; }
-    public com.example.app.Model.Role getRole()       { return role; }
+    public Role getRole()       { return role; }
 
     public String getFullName() {
         return firstName + " " + lastName;

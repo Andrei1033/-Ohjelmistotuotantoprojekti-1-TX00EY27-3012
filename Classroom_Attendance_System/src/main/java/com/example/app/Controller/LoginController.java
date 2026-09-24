@@ -1,8 +1,8 @@
 package com.example.app.Controller;
 
-import com.example.app.DaoElements.UserDao;
-import com.example.app.Model.Role;
-import com.example.app.Model.User;
+import com.example.app.DaoElements.LoginDao.UserDao;
+import com.example.app.Model.LoginComponents.Role;
+import com.example.app.Model.LoginComponents.User;
 import com.example.app.View.Admin;
 import com.example.app.View.StudentStartPage;
 import com.example.app.View.TeacherStartPage;
@@ -34,8 +34,8 @@ public class LoginController {
 
         Role role = user.getRole();
         return switch (role) {
-            case STUDENT -> new StudentStartPage(onLogout);
-            case TEACHER -> new TeacherStartPage(onLogout);
+            case STUDENT -> new StudentController(user, onLogout).getView();
+            case TEACHER -> new TeacherController(user, onLogout).getView();
             case ADMIN -> new Admin().getView();
         };
     }

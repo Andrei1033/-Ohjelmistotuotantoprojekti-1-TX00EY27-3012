@@ -2,7 +2,7 @@ package com.example.app.DaoElements;
 
 import com.example.app.Database.DatabaseConnection;
 import com.example.app.Model.Admin;
-import com.example.app.Model.Role;
+import com.example.app.Model.LoginComponents.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,8 +1,8 @@
-package com.example.app.DaoElements;
+package com.example.app.DaoElements.LoginDao;
 
 import com.example.app.Database.DatabaseConnection;
-import com.example.app.Model.Role;
-import com.example.app.Model.User;
+import com.example.app.Model.LoginComponents.Role;
+import com.example.app.Model.LoginComponents.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
