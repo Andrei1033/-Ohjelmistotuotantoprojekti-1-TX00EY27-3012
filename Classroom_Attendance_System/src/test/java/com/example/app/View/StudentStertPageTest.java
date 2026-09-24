@@ -1,14 +1,24 @@
 package com.example.app.View;
 
+import com.example.app.Model.LoginComponents.User;
+import com.example.app.Model.LoginComponents.Role;
+import com.example.app.Model.StudentComponents.Course;
+
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+
+import javafx.stage.Stage;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,21 +27,53 @@ import org.testfx.framework.junit5.ApplicationTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentStartPageTest extends ApplicationTest {
 
     private StudentStartPage view;
+    private User testUser;
+    private List<Course> testCourses;
+    private AtomicReference<Course> selectedCourse;
+    private AtomicBoolean loggedOut;
+    private Stage stage;
 
     @Override
     public void start(javafx.stage.Stage stage) {
-        // Not used — we build the view manually
     }
 
     @BeforeEach
     void setUp() {
-        interact(() -> view = new StudentStartPage(() -> {}));
+        testUser = new User(1, "Etunimi", "Sukunimi", "etunimi.sukunimi@example.com", Role.STUDENT);
+
+        Course c1 = new Course(1, "TX00CV45", "Ohjelmoinnin perusteet", 10); c1.setLessonCount(5);
+        Course c2 = new Course(2, "TX00CV46", "Tietokannat",            10); c2.setLessonCount(4);
+        Course c3 = new Course(3, "TX00CV47", "Web-sovellukset",        10); c3.setLessonCount(3);
+        testCourses = List.of(c1, c2, c3);
+
+        selectedCourse = new AtomicReference<>();
+        loggedOut = new AtomicBoolean(false);
+
+        interact(() -> {
+            view = new StudentStartPage(testUser, testCourses,
+                    selectedCourse::set, () -> loggedOut.set(true));
+
+            stage = new Stage();
+            stage.setScene(new Scene(view, 800, 600));
+            stage.show();
+        });
+    }
+
+    @AfterEach
+    void tearDown() {
+        interact(() -> {
+            if (stage != null) {
+                stage.close();
+                stage = null;
+            }
+        });
     }
 
     // ---------- Helpers ----------
@@ -81,7 +123,7 @@ class StudentStartPageTest extends ApplicationTest {
         return (VBox) center;
     }
 
-    /** Extracts all course cards: VBox with exactly 3 Label children. */
+    /** Extracts all course cards: VBox with exactly 3 Label children and matching pref size. */
     private List<VBox> findCourseCards() {
         List<VBox> cards = new ArrayList<>();
         for (VBox v : findAllByType(view, VBox.class)) {
@@ -134,9 +176,9 @@ class StudentStartPageTest extends ApplicationTest {
     }
 
     @Test
-    @DisplayName("Avatar shows user initials 'MA'")
+    @DisplayName("Avatar shows user initials 'ES'")
     void testAvatarInitials() {
-        assertNotNull(labelWithText("MA"));
+        assertNotNull(labelWithText("ES"));
     }
 
     @Test
@@ -147,13 +189,12 @@ class StudentStartPageTest extends ApplicationTest {
     }
 
     @Test
-    @DisplayName("Sidebar has 'Omat kurssit' navigation button")
-    void testCoursesNavButton() {
-        Button nav = buttonWithText("•   Omat kurssit");
-        assertEquals(22, nav.getPrefHeight(), 0.01);
-        assertEquals(Double.MAX_VALUE, nav.getMaxWidth(), 0.01);
-        assertFalse(nav.isFocusTraversable(),
-                "Nav button should not be focus-traversable");
+    @DisplayName("Back button exists but is hidden and not managed")
+    void testBackButtonHidden() {
+        Button back = buttonWithText("<   Takaisin");
+        assertFalse(back.isVisible(), "Back button should be invisible on start page");
+        assertFalse(back.isManaged(), "Back button should not be managed on start page");
+        assertFalse(back.isFocusTraversable(), "Back button should not be focus-traversable");
     }
 
     // ---------- Content ----------
@@ -171,30 +212,59 @@ class StudentStartPageTest extends ApplicationTest {
     }
 
     @Test
-    @DisplayName("Content contains exactly 3 course cards in an HBox with 22px spacing")
+    @DisplayName("Empty course list shows placeholder text and no FlowPane")
+    void testEmptyCourseList() {
+        interact(() -> view = new StudentStartPage(
+                testUser, List.of(), selectedCourse::set, () -> {}));
+
+        assertNotNull(labelWithText("Sinulla ei ole vielä kursseja."));
+        assertTrue(findAllByType(view, FlowPane.class).isEmpty(),
+                "No FlowPane should exist for empty course list");
+        assertTrue(findAllByType(view, ScrollPane.class).isEmpty(),
+                "No ScrollPane should exist for empty course list");
+    }
+
+    @Test
+    @DisplayName("Content contains exactly 3 course cards in a FlowPane with 22px gaps")
     void testCourseCardsContainer() {
         List<VBox> cards = findCourseCards();
         assertEquals(3, cards.size(), "Exactly 3 course cards expected");
 
-        HBox cardsBox = (HBox) cards.get(0).getParent();
-        assertNotNull(cardsBox);
-        assertEquals(3, cardsBox.getChildren().size());
-        assertEquals(22, cardsBox.getSpacing(), 0.01);
+        FlowPane cardsPane = (FlowPane) cards.get(0).getParent();
+        assertNotNull(cardsPane);
+        assertEquals(3, cardsPane.getChildren().size());
+        assertEquals(22, cardsPane.getHgap(), 0.01);
+        assertEquals(22, cardsPane.getVgap(), 0.01);
     }
 
     @Test
-    @DisplayName("Each course card has a code badge, name and hours label")
+    @DisplayName("Course cards are wrapped in a ScrollPane with fitToWidth=true")
+    void testScrollPaneWrapsCards() {
+        ScrollPane scroll = findByType(view, ScrollPane.class);
+        assertTrue(scroll.isFitToWidth(), "ScrollPane should fit to width");
+
+        Node inner = scroll.getContent();
+        assertInstanceOf(FlowPane.class, inner);
+    }
+
+    @Test
+    @DisplayName("Each course card has a code badge, name and hours label (data-driven)")
     void testCourseCardContent() {
-        for (VBox card : findCourseCards()) {
-            List<Label> labels = card.getChildren().stream()
+        List<VBox> cards = findCourseCards();
+        assertEquals(testCourses.size(), cards.size());
+
+        for (int i = 0; i < cards.size(); i++) {
+            Course expected = testCourses.get(i);
+            List<Label> labels = cards.get(i).getChildren().stream()
                     .filter(n -> n instanceof Label)
                     .map(n -> (Label) n)
                     .toList();
 
             assertEquals(3, labels.size());
-            assertEquals("TX00CV45", labels.get(0).getText(), "Course code");
-            assertEquals("Ohjelmoinnin perusteet", labels.get(1).getText(), "Course name");
-            assertEquals("5 oppituntia", labels.get(2).getText(), "Hours");
+            assertEquals(expected.getCode(), labels.get(0).getText(), "Course code");
+            assertEquals(expected.getName(), labels.get(1).getText(), "Course name");
+            assertEquals(expected.getLessonCount() + " oppituntia",
+                    labels.get(2).getText(), "Hours");
         }
     }
 
@@ -217,33 +287,54 @@ class StudentStartPageTest extends ApplicationTest {
         assertTrue(style.contains("-fx-background-radius"), "Badge rounding missing");
     }
 
+    // ---------- Interaction ----------
+
+    @Test
+    @DisplayName("Clicking a course card triggers onCourseSelected with that course")
+    void testCourseCardClickFiresCallback() {
+        List<VBox> cards = findCourseCards();
+        VBox firstCard = cards.get(0);
+
+        // Ensure no course is selected before the click
+        assertNull(selectedCourse.get(), "No course should be selected before clicking");
+
+        // Real mouse click — TestFX moves the pointer and fires MOUSE_CLICKED
+        clickOn(firstCard);
+
+        assertEquals(testCourses.get(0), selectedCourse.get(),
+                "Clicking first card should select the first course");
+    }
+
+    @Test
+    @DisplayName("Clicking the second card selects the second course")
+    void testSecondCourseCardClick() {
+        List<VBox> cards = findCourseCards();
+        clickOn(cards.get(1));
+        assertEquals(testCourses.get(1), selectedCourse.get());
+    }
+
     // ---------- Logout (hidden button) ----------
 
-    /*
     @Test
-    @DisplayName("Logout button exists, is invisible, and triggers callback")
+    @DisplayName("Logout button exists, is invisible, and triggers callback when fired")
     void testLogoutButtonTriggersCallback() {
-        AtomicBoolean loggedOut = new AtomicBoolean(false);
-        interact(() -> view = new StudentStartPage(() -> loggedOut.set(true)));
-
         Button logout = buttonWithText("Kirjaudu ulos");
         assertFalse(logout.isVisible(), "Logout button should start invisible");
+        assertFalse(logout.isManaged(), "Logout button should not be managed");
 
         interact(logout::fire);
         assertTrue(loggedOut.get(), "onLogout callback should have been invoked");
-    }*/
+    }
 
     @Test
     @DisplayName("Logout callback does not fire on construction")
     void testNoPrematureLogout() {
-        AtomicBoolean loggedOut = new AtomicBoolean(false);
-        interact(() -> view = new StudentStartPage(() -> loggedOut.set(true)));
-        assertFalse(loggedOut.get());
+        assertFalse(loggedOut.get(),
+                "onLogout should not be invoked during construction");
     }
 
     // ---------- Invariants ----------
 
-    /*
     @Test
     @DisplayName("Only one 'Kirjaudu ulos' button exists")
     void testSingleLogoutButton() {
@@ -254,29 +345,22 @@ class StudentStartPageTest extends ApplicationTest {
     }
 
     @Test
-    @DisplayName("Only one 'Omat kurssit' navigation button exists")
-    void testSingleNavButton() {
+    @DisplayName("Only one '<   Takaisin' button exists")
+    void testSingleBackButton() {
         long count = findAllByType(view, Button.class).stream()
-                .filter(b -> "•   Omat kurssit".equals(b.getText()))
+                .filter(b -> "<   Takaisin".equals(b.getText()))
                 .count();
         assertEquals(1, count);
-    }*/
+    }
 
     @Test
-    @DisplayName("All course cards share the same size and content (data-driven invariant)")
-    void testCardsAreUniform() {
+    @DisplayName("All course cards share the same size (uniform layout invariant)")
+    void testCardsAreUniformInSize() {
         List<VBox> cards = findCourseCards();
-        String firstText = cards.get(0).getChildren().stream()
-                .filter(n -> n instanceof Label)
-                .map(n -> ((Label) n).getText())
-                .reduce("", (a, b) -> a + "|" + b);
-
         for (VBox card : cards) {
-            String text = card.getChildren().stream()
-                    .filter(n -> n instanceof Label)
-                    .map(n -> ((Label) n).getText())
-                    .reduce("", (a, b) -> a + "|" + b);
-            assertEquals(firstText, text, "All cards should show the same demo data");
+            assertEquals(190, card.getPrefWidth(), 0.01);
+            assertEquals(75, card.getPrefHeight(), 0.01);
+            assertEquals(3, card.getChildren().size());
         }
     }
 }

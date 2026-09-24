@@ -10,9 +10,7 @@ import com.example.app.View.StudentAttendanceTracking;
 import com.example.app.View.StudentStartPage;
 
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.util.List;
 
