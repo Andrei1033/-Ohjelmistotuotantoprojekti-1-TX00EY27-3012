@@ -14,11 +14,17 @@ public class App extends Application {
     private Stage primaryStage;
     private final LoginController loginController = new LoginController();
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage stage) {
         this.primaryStage = stage;
         stage.setTitle("Classroom Attendance System");
+
         showLogin();
+
         stage.setMaximized(true);
         stage.show();
     }
@@ -32,13 +38,22 @@ public class App extends Application {
 
             User user = userOptional.get();
             Parent page = loginController.getStartPageFor(user, this::showLogin);
-            primaryStage.setScene(new Scene(page, 800, 600));
+
+            if (primaryStage.getScene() != null) {
+                primaryStage.getScene().setRoot(page);
+            }
+            else {
+                primaryStage.setScene(new Scene(page));
+            }
+            primaryStage.setMaximized(true);
         });
 
-        primaryStage.setScene(new Scene(loginView, 800, 600));
-    }
 
-    public static void main(String[] args) {
-        launch(args);
+        if (primaryStage.getScene() == null) {
+            primaryStage.setScene(new Scene(loginView));
+        }
+        else {
+            primaryStage.getScene().setRoot(loginView);
+        }
     }
 }

@@ -7,10 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="olen tehny login logika. nyt main sivu aloita ohjelma">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="most important features in student pages are done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +139,7 @@
       <recent name="com.example.app.View" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.app.Main" />
       <module name="Classroom_Attendance_System" />
@@ -325,7 +324,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789928150852</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="most important features in student pages are done">
+      <option name="closed" value="true" />
+      <created>1790282002239</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1790282002239</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -367,7 +374,8 @@
     <MESSAGE value="Tehty jacoko ja minun StudentAttendanceTracking sivu + unversioned files." />
     <MESSAGE value="b" />
     <MESSAGE value="olen tehny login logika. nyt main sivu aloita ohjelma" />
-    <option name="LAST_COMMIT_MESSAGE" value="olen tehny login logika. nyt main sivu aloita ohjelma" />
+    <MESSAGE value="most important features in student pages are done" />
+    <option name="LAST_COMMIT_MESSAGE" value="most important features in student pages are done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
