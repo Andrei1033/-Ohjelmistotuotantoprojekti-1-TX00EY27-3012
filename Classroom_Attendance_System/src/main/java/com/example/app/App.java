@@ -1,7 +1,7 @@
 package com.example.app;
 
 import com.example.app.Controller.LoginController;
-import com.example.app.Model.User;
+import com.example.app.Model.LoginComponents.User;
 import com.example.app.View.Login;
 import javafx.application.Application;
 import javafx.scene.Parent;

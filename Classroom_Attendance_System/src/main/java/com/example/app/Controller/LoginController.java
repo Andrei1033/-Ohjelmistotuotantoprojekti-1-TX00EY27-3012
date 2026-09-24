@@ -1,8 +1,8 @@
 package com.example.app.Controller;
 
-import com.example.app.DaoElements.UserDao;
-import com.example.app.Model.Role;
-import com.example.app.Model.User;
+import com.example.app.DaoElements.LoginDao.UserDao;
+import com.example.app.Model.LoginComponents.Role;
+import com.example.app.Model.LoginComponents.User;
 import com.example.app.View.Admin;
 import com.example.app.View.StudentStartPage;
 import com.example.app.View.TeacherStartPage;
