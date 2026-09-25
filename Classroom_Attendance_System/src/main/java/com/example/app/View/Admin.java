@@ -385,7 +385,11 @@ public class Admin {
                 getClass().getResource("/style.css").toExternalForm()
         );
         ButtonType save = new ButtonType("Tallenna", ButtonBar.ButtonData.OK_DONE);
+        ButtonType delete = new ButtonType("Poista", ButtonBar.ButtonData.OTHER);
         dialog.getDialogPane().getButtonTypes().addAll(save, ButtonType.CANCEL);
+        if (user != null) {
+            dialog.getDialogPane().getButtonTypes().add(delete);
+        }
 
         TextField name = new TextField(user == null ? "" : user.getName());
         TextField email = new TextField(user == null ? "" : user.getEmail());
@@ -406,6 +410,30 @@ public class Admin {
                 .getStyleClass().add("dialog-cancel-button");
 
         dialog.setResultConverter(button -> {
+            if (button == delete) {
+                Alert confirmation = new Alert(
+                        Alert.AlertType.CONFIRMATION,
+                        "Haluatko varmasti poistaa käyttäjän " + user.getName() + "?",
+                        ButtonType.YES,
+                        ButtonType.NO
+                );
+                confirmation.setHeaderText("Vahvista käyttäjän poisto");
+                if (confirmation.showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
+                    try {
+                        controller.deleteUser(user);
+                        table.refresh();
+                    } catch (RuntimeException exception) {
+                        Alert alert = new Alert(
+                                Alert.AlertType.ERROR,
+                                exception.getMessage(),
+                                ButtonType.OK
+                        );
+                        alert.setHeaderText("Käyttäjän poisto epäonnistui");
+                        alert.showAndWait();
+                    }
+                }
+                return null;
+            }
             if (button != save) return null;
             try {
                 Role selectedRole = roleFromText(role.getValue());
@@ -416,7 +444,7 @@ public class Admin {
                     controller.updateUser(user, name.getText(), email.getText(), selectedRole, selectedCourses);
                 }
                 table.refresh();
-            } catch (IllegalArgumentException exception) {
+            } catch (RuntimeException exception) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);
                 alert.setHeaderText("Virheelliset käyttäjätiedot");
                 alert.showAndWait();
