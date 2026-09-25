@@ -14,7 +14,7 @@ pipeline {
         stage ('check'){
             steps{
                 git branch: 'main',
-                git 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
+                        url: 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
             }
         }
         stage ('build'){
@@ -42,8 +42,6 @@ pipeline {
                 }
             }
         }
-
-
 
         stage('Push Docker Image to Docker Hub') {
             steps {
