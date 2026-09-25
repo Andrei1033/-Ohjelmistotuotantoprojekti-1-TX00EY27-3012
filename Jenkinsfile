@@ -13,6 +13,7 @@ pipeline {
     stages {
         stage ('check'){
             steps{
+                git branch: 'main',
                 git 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
             }
         }
@@ -39,6 +40,33 @@ pipeline {
                 script {
                     docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
                 }
+            }
+        }
+
+        post {
+            always {
+                junit testResults: '**/target/surefire-reports/*.xml',
+                        allowEmptyResults: true
+
+                archiveArtifacts(
+                        artifacts: 'target/site/jacoco/**/*',
+                        allowEmptyArchive: true
+                )
+            }
+
+            success {
+                echo '======================================'
+                echo 'BUILD SUCCESSFUL'
+                echo 'Tests and JaCoCo completed.'
+                echo 'Docker image built successfully.'
+                echo '======================================'
+            }
+
+            failure {
+                echo '======================================'
+                echo 'BUILD FAILED'
+                echo 'Check the Jenkins console output.'
+                echo '======================================'
             }
         }
 
