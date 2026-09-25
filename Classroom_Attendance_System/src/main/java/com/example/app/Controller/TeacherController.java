@@ -6,6 +6,8 @@ import com.example.app.Model.TeacherCourse;
 import com.example.app.Model.Lesson;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.Teacher;
+import com.example.app.View.TeacherAttendanceTracking;
+import com.example.app.View.TeacherCoursePage;
 import com.example.app.View.TeacherStartPage;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -69,5 +71,44 @@ public class TeacherController {
             return Collections.emptyList();
         }
         return lessonDao.getLessonsByCourseById(courseId);
+    }
+
+    public void startLesson(int courseId) {
+        int lessonId = lessonDao.startLesson(courseId);
+
+        TeacherAttendanceTracking trackingpage = new TeacherAttendanceTracking(currentTeacher,
+                courseId,
+                lessonId,
+                this,
+                this::showStartPage);
+        root.setCenter(trackingpage);
+    }
+
+    public void startLessonAndNavigate(int courseId) {
+        startLesson(courseId);
+    }
+
+
+    public void openExistingLesson(int courseId, int lessonId) {
+        TeacherAttendanceTracking trackingpage = new TeacherAttendanceTracking(
+                currentTeacher,
+                courseId,
+                lessonId,
+                this,
+                this::showStartPage
+        );
+        root.setCenter(trackingpage);
+    }
+
+    public void openCoursePage(int courseId) {
+        TeacherCoursePage coursePage = new TeacherCoursePage(
+                currentTeacher,
+                courseId,
+                this,
+                this::showStartPage,
+                () -> System.out.println("Lisää opiskelijoita")
+        );
+        root.setCenter(coursePage);
+
     }
 }
