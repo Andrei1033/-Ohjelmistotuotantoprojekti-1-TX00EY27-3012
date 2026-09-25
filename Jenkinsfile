@@ -34,9 +34,12 @@ pipeline {
                 bat 'mvn test'
             }
         }
-        stage('jacoco'){
-            steps{
-                jacoco()
+
+        stage('jacoco') {
+            steps {
+                dir('Classroom_Attendance_System') {
+                    bat 'mvn jacoco:report'
+                }
             }
         }
 
