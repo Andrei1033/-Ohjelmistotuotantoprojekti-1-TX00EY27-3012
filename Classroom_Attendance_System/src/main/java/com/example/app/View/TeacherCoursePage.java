@@ -1,5 +1,9 @@
 package com.example.app.View;
 
+import com.example.app.Controller.TeacherController;
+import com.example.app.Model.Lesson;
+import com.example.app.Model.Teacher;
+import com.example.app.Model.TeacherCourse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,21 +14,21 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class TeacherCoursePage extends BorderPane {
 
-
     private static final String NAVY = "#202F49";
 
-    public TeacherCoursePage() {
-        this(() -> {}, () -> {}, () -> {});
-    }
-
-    public TeacherCoursePage(Runnable onBack,
-                             Runnable onStartLesson,
+    public TeacherCoursePage(Teacher teacher,
+                             int courseId,
+                             TeacherController teacherController,
+                             Runnable onBack,
                              Runnable onAddStudents) {
 
         setStyle("-fx-background-color: white;");
+
 
         VBox sidebar = new VBox();
         sidebar.setPrefWidth(160);
@@ -50,62 +54,96 @@ public class TeacherCoursePage extends BorderPane {
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
+
+        String teacherName = (teacher != null) ? teacher.getFirstName() + " " + teacher.getLastName() : "Etunimi Sukunimi";
+
+
         HBox userBox = new HBox(8);
         userBox.setAlignment(Pos.CENTER_LEFT);
         Circle avatarCircle = new Circle(9, Color.web("#4A6594"));
-        Label initials = text("MA", 8, FontWeight.BOLD, "#FFFFFF");
-        StackPane avatarStack = new StackPane(avatarCircle, initials);
+
+        StackPane avatarStack = new StackPane(avatarCircle);
         VBox userInfo = new VBox(0,
-                text("Etunimi Sukunimi", 8, FontWeight.BOLD, "#FFFFFF"),
+                text(teacherName, 8, FontWeight.BOLD, "#FFFFFF"),
                 text("Opettaja", 6, FontWeight.NORMAL, "#A9B0BD")
         );
         userBox.getChildren().addAll(avatarStack, userInfo);
 
         sidebar.getChildren().addAll(logoBox, coursesButton, spacer, userBox);
 
-        VBox contentBox = new VBox(16);
-        contentBox.setPadding(new Insets(25,30, 25,30));
 
-        Label courseTitle = text("Kurssi: Ohjelmoinnin perusteet", 16, FontWeight.BOLD, "#202F49");
-        Label courseCode = text("Kurssikoodi: CS101", 14, FontWeight.NORMAL, "#202F49");
+        VBox contentBox = new VBox(16);
+        contentBox.setPadding(new Insets(25, 30, 25, 30));
+
+
+        String courseNameText = "Kurssi " + courseId;
+        String courseCodeText = "Koodi: " + String.format("%02d", courseId);
+
+        List<TeacherCourse> courses = teacherController.getTeacherCourses((teacher != null) ? teacher.getId() : 1);
+        for (TeacherCourse tc : courses) {
+            if (tc.getCourseid() == courseId) {
+                courseNameText = tc.getCoursename();
+                break;
+            }
+        }
+
+        Label courseTitle = text("Kurssi: " + courseNameText, 16, FontWeight.BOLD, "#202F49");
+        Label courseCode = text("Kurssikoodi: " + courseCodeText, 14, FontWeight.NORMAL, "#202F49");
         VBox titleBox = new VBox(2, courseTitle, courseCode);
 
         Button addStudent = new Button("Lisää opiskelijoita");
         addStudent.setStyle("-fx-background-color: transparent; -fx-border-color: #D1D5DB; "
                 + "-fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 8px; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-cursor: hand;");
-        addStudent.setOnAction(e -> onAddStudents.run());
+        addStudent.setOnAction(e -> {
+            if (onAddStudents != null) onAddStudents.run();
+        });
+
 
         Button startLesson = new Button("Aloita oppitunti");
         startLesson.setStyle("-fx-background-color: " + NAVY + "; -fx-text-fill: white; "
                 + "-fx-font-size: 8px; -fx-font-weight: bold; -fx-background-radius: 4; -fx-cursor: hand;");
-        startLesson.setOnAction(e -> onStartLesson.run());
+        startLesson.setOnAction(e -> teacherController.startLesson(courseId));
 
         HBox actionButtons = new HBox(10, addStudent, startLesson);
         actionButtons.setAlignment(Pos.CENTER_RIGHT);
 
         Region headerSpacer = new Region();
-        VBox.setVgrow(headerSpacer, Priority.ALWAYS);
-
-        HBox headerBar = new HBox(10, titleBox, headerSpacer, actionButtons);
         HBox.setHgrow(headerSpacer, Priority.ALWAYS);
 
-        VBox LessonList = new VBox(10);
-        LessonList.getChildren().addAll(
-                createLessonCard("2.9.2026", "Ma", "Muuttujat ja tietotyypit", "Merkitty", true),
-                createLessonCard("2.9.2026", "Ke", "Muuttujat ja tietotyypit", "Merkitty", true),
-                createLessonCard("2.9.2026", "Pe", "Muuttujat ja tietotyypit", "Käynnissä nyt", false)
-        );
-        contentBox.getChildren().addAll(headerBar, LessonList);
+        HBox headerBar = new HBox(10, titleBox, headerSpacer, actionButtons);
+
+
+        VBox lessonList = new VBox(10);
+        List<Lesson> lessons = teacherController.getLessonsForCourse(courseId);
+
+        if (lessons.isEmpty()) {
+            lessonList.getChildren().add(text("Tällä kurssilla ei ole vielä oppitunteja.", 10, FontWeight.NORMAL, "#6B7280"));
+        } else {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d.M.yyyy");
+            for (Lesson lesson : lessons) {
+                String dateStr = lesson.getFormattedData();
+
+
+                boolean isDone = lesson.isDone();
+                String statusText = lesson.getLessonStatus();
+
+                HBox card = createLessonCard(dateStr, "Oppitunti #" + lesson.getId(), statusText, isDone);
+
+
+                card.setOnMouseClicked(e -> teacherController.openExistingLesson(courseId, lesson.getId()));
+                card.setStyle(card.getStyle() + "; -fx-cursor: hand;");
+
+                lessonList.getChildren().add(card);
+            }
+        }
+
+        contentBox.getChildren().addAll(headerBar, lessonList);
 
         setLeft(sidebar);
         setCenter(contentBox);
-
-
-
     }
 
-
-    private HBox createLessonCard(String date, String day, String topic, String statusText, boolean isDone) {
+    private HBox createLessonCard(String date, String topic, String statusText, boolean isDone) {
         HBox lessonCard = new HBox();
         lessonCard.setAlignment(Pos.CENTER_LEFT);
         lessonCard.setPadding(new Insets(12, 16, 12, 16));
@@ -113,8 +151,7 @@ public class TeacherCoursePage extends BorderPane {
                 + "-fx-border-radius: 8; -fx-background-radius: 8;");
 
         VBox dateBox = new VBox(1,
-                text(date, 9, FontWeight.BOLD, "#111827"),
-                text(day, 7, FontWeight.NORMAL, "#6B7280")
+                text(date, 9, FontWeight.BOLD, "#111827")
         );
         dateBox.setPrefWidth(90);
 
@@ -127,27 +164,24 @@ public class TeacherCoursePage extends BorderPane {
         status.setPadding(new Insets(4, 12, 4, 12));
 
         if (isDone) {
-
-        Circle dot = new Circle(2.5, Color.web("#16A34A"));
-        Label label = text(statusText, 8, FontWeight.BOLD, "#166534");
-        status.getChildren().addAll(dot, label);
-        status.setStyle("-fx-background-color: #DCFCE7; -fx-background-radius: 12; -fx-border-color: #BBF7D0; -fx-border-radius: 12;");
-    } else {
+            Circle dot = new Circle(2.5, Color.web("#16A34A"));
+            Label label = text(statusText, 8, FontWeight.BOLD, "#166534");
+            status.getChildren().addAll(dot, label);
+            status.setStyle("-fx-background-color: #DCFCE7; -fx-background-radius: 12; -fx-border-color: #BBF7D0; -fx-border-radius: 12;");
+        } else {
             Label label = text(statusText, 8, FontWeight.BOLD, "#374151");
             status.getChildren().add(label);
             status.setStyle("-fx-background-color: #F3F4F6; -fx-background-radius: 12; -fx-border-color: #E5E7EB; -fx-border-radius: 12;");
         }
+
         lessonCard.getChildren().addAll(dateBox, topicLabel, spacer, status);
         return lessonCard;
-
     }
+
     private static Label text(String content, int size, FontWeight weight, String color) {
         Label label = new Label(content);
         label.setFont(Font.font("System", weight, size));
         label.setTextFill(Color.web(color));
         return label;
     }
-
-
-
 }
