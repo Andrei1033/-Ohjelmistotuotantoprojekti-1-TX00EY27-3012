@@ -1,7 +1,10 @@
 package com.example.app.View;
 
+import com.example.app.Controller.TeacherController;
+import com.example.app.Model.Teacher;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -18,7 +21,22 @@ public class TeacherStartPageTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) {
-        teacherStartPage = new TeacherStartPage(() -> {});
+        // 1. Luodaan valheellinen opettaja testille
+        Teacher mockTeacher = new Teacher(1, "Matti", "Meikäläinen", "matti@testi.fi");
+
+        // 2. Luodaan controlleri (tai käytetään mockia)
+        TeacherController mockController = new TeacherController(mockTeacher, () -> {});
+
+        // 3. Syötetään kaikki kolme argumenttia
+        teacherStartPage = new TeacherStartPage(
+                mockTeacher,
+                mockController,
+                () -> {} // Vasta tämä 3. argumentti on lambda (Runnable onLogout)
+        );
+
+        Scene scene = new Scene(teacherStartPage, 1024, 399);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Test

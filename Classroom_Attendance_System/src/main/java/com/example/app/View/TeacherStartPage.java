@@ -1,5 +1,9 @@
 package com.example.app.View;
 
+import com.example.app.Controller.TeacherController;
+
+import com.example.app.Model.TeacherCourse;
+import com.example.app.Model.Teacher;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,7 +14,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-
+import java.util.List;
 
 
 public class TeacherStartPage extends BorderPane {
@@ -18,7 +22,8 @@ public class TeacherStartPage extends BorderPane {
     private static final String NAVY = "#202F49";
 
 
-    public TeacherStartPage(Runnable onLogout) {
+    public TeacherStartPage(Teacher teacher, TeacherController teacherController, Runnable onLogout) {
+
         setStyle("-fx-background-color: white;");
 
         VBox sidebar = new VBox();
@@ -49,43 +54,70 @@ public class TeacherStartPage extends BorderPane {
         Region sideSpacer = new Region();
         VBox.setVgrow(sideSpacer, Priority.ALWAYS);
 
+        Button logout = new Button("Kirjaudu ulos");
+        logout.setMaxWidth(Double.MAX_VALUE);
+        logout.setStyle("-fx-background-color: transparent; -fx-text-fill: #A9B0BD; "
+                + "-fx-font-size: 9px; -fx-alignment: CENTER-LEFT; -fx-cursor: hand;");
+        logout.setOnAction(e -> {
+            if(onLogout != null) {
+                onLogout.run();
+            }
+        });
+
+
+
+        String teacherName = (teacher != null) ? teacher.getFirstName() + " " + teacher.getLastName() : "Etunimi Sukunimi";
+
+
         VBox userInfo = new VBox(0,
-                text("Etunimi Sukunimi", 8, FontWeight.BOLD, "#FFFFFF"),
+                text(teacherName, 8, FontWeight.BOLD, "#FFFFFF"),
                 text("Opettaja", 6, FontWeight.NORMAL, "#A9B0BD")
         );
+
+
 
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
         Circle avatar = new Circle(10, Color.web("#536FA4"));
-        Label initials = text("MA", 8, FontWeight.BOLD, "#FFFFFF");
-        StackPane avatarBox = new StackPane(avatar, initials);
+
+        StackPane avatarBox = new StackPane(avatar);
         avatarBox.setPrefSize(20, 20);
 
         user.getChildren().addAll(avatarBox, userInfo);
 
-        sidebar.getChildren().addAll(hBox, new Region(), courses, sideSpacer, user);
+        sidebar.getChildren().addAll(hBox, courses, sideSpacer, logout, user);
 
         VBox content = new VBox(0);
         content.setPadding(new Insets(41, 30, 20, 31));
 
+        int teacherId = (teacher != null) ? teacher.getId(): 1;
+        List<TeacherCourse> teacherCours = teacherController.getTeacherCourses(teacherId);
+
         Label heading = text("Omat kurssit", 15, FontWeight.BOLD, "#171717");
-        Label intro = text("Sinulla on 3 kurssia tällä lukukaudella.", 8, FontWeight.BOLD, "#171717");
+        Label intro = text("Sinulla on " + teacherCours.size() + " Kurssia  tällä lukukaudella", 8, FontWeight.BOLD, "#171717");
 
         VBox headingBox = new VBox(2, heading, intro);
         headingBox.setPadding(new Insets(0, 0, 18, 0));
 
         HBox cards = new HBox(22);
-        cards.getChildren().addAll(
-                courseCard("TX00CV45", "Ohjelmoinnin perusteet", "5 oppituntia"),
-                courseCard("TX00CV45", "Ohjelmoinnin perusteet", "5 oppituntia"),
-                courseCard("TX00CV45", "Ohjelmoinnin perusteet", "5 oppituntia")
-        );
+        if (teacherCours.isEmpty()) {
+            cards.getChildren().add(text("Ei aktiivisia kursseja tällä lukukaudella",8,FontWeight.NORMAL, "#858585"));
+        } else {
+            for (TeacherCourse teacherCourse : teacherCours) {
+                int lessonCount = teacherController.getLessonsForCourse(teacherCourse.getCourseid()).size();
+                String courseCode = String.format("%02d", teacherCourse.getCourseid());
+                String courseName = teacherCourse.getCoursename();
+                String lessonsText = lessonCount + " Oppituntia";
+                VBox card = courseCard(courseCode, courseName,lessonsText);
+                cards.getChildren().add(card);
+
+
+            }
+        }
+
 
         content.getChildren().addAll(headingBox, cards);
 
-        Button logout = new Button("Kirjaudu ulos");
-        logout.setVisible(false);
-        logout.setOnAction(e -> onLogout.run());
 
         setLeft(sidebar);
         setCenter(content);
