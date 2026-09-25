@@ -21,6 +21,9 @@ pipeline {
             steps {
                 // Переходим в папку, где лежит pom.xml
                 dir('Classroom_Attendance_System') {
+                    bat 'java -version'
+                    bat 'javac -version'
+                    bat 'mvn -version'
                     bat 'mvn clean install'
                 }
             }
