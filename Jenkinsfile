@@ -30,8 +30,10 @@ pipeline {
         }
 
         stage('test') {
-            steps{
-                bat 'mvn test'
+            steps {
+                dir('Classroom_Attendance_System') {
+                    bat 'mvn test'
+                }
             }
         }
 
