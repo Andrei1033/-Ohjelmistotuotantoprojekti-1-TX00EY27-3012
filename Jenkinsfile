@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage ('check'){
             steps{
-                git branch: 'main',
+                git branch: 'master',
                 git 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
             }
         }
