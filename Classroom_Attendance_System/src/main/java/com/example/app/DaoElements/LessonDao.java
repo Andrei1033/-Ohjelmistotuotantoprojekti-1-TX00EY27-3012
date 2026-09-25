@@ -39,6 +39,32 @@ public class LessonDao {
         }
         return lessons;
     }
+
+    public int startLesson(int courseId) {
+        String sql = "INSERT INTO lessons (course_id, start_time) VALUES (?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, courseId);
+            stmt.setString(2, java.time.LocalDateTime.now().toString());
+
+            int affected = stmt.executeUpdate();
+            if (affected == 0) {
+                throw new SQLException("Oppitunnin luonti epäonnistui, ei rivejä lisätty.");
+            }
+
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys.next()) {
+                    return keys.getInt(1); // palauttaa uuden lesson_id:n
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Virhe aloitettaessa oppituntia: " + e.getMessage());
+        }
+        return -1; // virhetilanteessa
+    }
+
 }
 
 

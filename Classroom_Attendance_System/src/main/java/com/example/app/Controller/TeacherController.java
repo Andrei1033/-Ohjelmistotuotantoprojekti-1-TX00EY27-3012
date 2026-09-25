@@ -76,25 +76,14 @@ public class TeacherController {
     public void startLesson(int courseId) {
         int lessonId = lessonDao.startLesson(courseId);
 
-        TeacherAttendanceTracking trackingpage = new TeacherAttendanceTracking(currentTeacher,
-                courseId,
-                lessonId,
-                this,
-                this::showStartPage);
+        TeacherAttendanceTracking trackingpage = new TeacherAttendanceTracking(
+                this::showStartPage
+        );
         root.setCenter(trackingpage);
     }
 
-    public void startLessonAndNavigate(int courseId) {
-        startLesson(courseId);
-    }
-
-
     public void openExistingLesson(int courseId, int lessonId) {
         TeacherAttendanceTracking trackingpage = new TeacherAttendanceTracking(
-                currentTeacher,
-                courseId,
-                lessonId,
-                this,
                 this::showStartPage
         );
         root.setCenter(trackingpage);
