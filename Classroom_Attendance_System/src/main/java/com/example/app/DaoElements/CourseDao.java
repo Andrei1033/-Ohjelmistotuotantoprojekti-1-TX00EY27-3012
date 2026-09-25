@@ -1,8 +1,7 @@
 package com.example.app.DaoElements;
 
 import com.example.app.Database.DatabaseConnection;
-import com.example.app.Model.Course;
-import com.example.app.Model.Lesson;
+import com.example.app.Model.TeacherCourse;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDao {
-    public List<Course> getCoursesByTeacherId(int teacherId) {
-        List<Course> courses = new ArrayList<>();
+    public List<TeacherCourse> getCoursesByTeacherId(int teacherId) {
+        List<TeacherCourse> cours = new ArrayList<>();
 
         String sql = "SELECT course_id, name, teacher_id FROM courses WHERE teacher_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -23,18 +22,18 @@ public class CourseDao {
 
             try (ResultSet rs = stmt.executeQuery()) {
                while (rs.next()) {
-                    Course course = new Course(
+                    TeacherCourse teacherCourse = new TeacherCourse(
                             rs.getInt("course_id"),
                             rs.getString("name"),
                             teacherId
                     );
-                    courses.add(course);
+                    cours.add(teacherCourse);
                 }
             }
         } catch (SQLException e) {
             System.err.println("Virhe haettaessa kurssia: " + e.getMessage());
         }
-        return courses;
+        return cours;
     }
 
     public boolean addCourse(String courseName, int teacherId) {
@@ -57,7 +56,7 @@ public class CourseDao {
 
     }
 
-    public boolean addCourse(Course course) {
-        return addCourse(course.getCoursename(), course.getTeacherid());
+    public boolean addCourse(TeacherCourse teacherCourse) {
+        return addCourse(teacherCourse.getCoursename(), teacherCourse.getTeacherid());
     }
 }
