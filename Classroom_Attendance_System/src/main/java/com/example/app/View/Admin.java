@@ -8,6 +8,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class Admin {
     private final AdminController controller;
@@ -22,39 +26,53 @@ public class Admin {
 
     public BorderPane getView() {
 
-        VBox sidebar = new VBox(20);
-        sidebar.setPadding(new Insets(15));
-        sidebar.setPrefWidth(240);
-        sidebar.getStyleClass().add("sidebar");
+        VBox sidebar = new VBox();
+        sidebar.setPrefWidth(158);
+        sidebar.setPadding(new Insets(12, 14, 10, 10));
+        sidebar.setStyle("-fx-background-color: #202F49;");
 
-        Label logo = new Label("LO");
-        logo.getStyleClass().add("logo");
-
-        Label appName = new Label("Läsnäolo");
-        appName.getStyleClass().add("app-name");
-
-        HBox header = new HBox(8, logo, appName);
+        HBox header = new HBox(9);
         header.setAlignment(Pos.CENTER_LEFT);
+        header.setPadding(new Insets(0, 0, 20, 0));
 
-        Button coursesButton = new Button("•  Kurssini");
-        coursesButton.getStyleClass().add("sidebar-button");
+        Circle logoCircle = new Circle(10, Color.web("#536FA4"));
+        Label logoText = sidebarText("LO", 9, FontWeight.BOLD, "#FFFFFF");
+        StackPane logo = new StackPane(logoCircle, logoText);
+        logo.setPrefSize(20, 20);
+
+        Label appName = sidebarText("Läsnäolo", 11, FontWeight.BOLD, "#FFFFFF");
+        header.getChildren().addAll(logo, appName);
+
+        Button coursesButton = new Button("<   Kurssini");
+        coursesButton.setPrefHeight(22);
         coursesButton.setMaxWidth(Double.MAX_VALUE);
+        coursesButton.setAlignment(Pos.CENTER_LEFT);
+        coursesButton.setFocusTraversable(false);
+        coursesButton.setStyle("-fx-background-color: #344A70; -fx-text-fill: white; "
+                + "-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4;");
 
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        Label userName = new Label("Etunimi Sukunimi");
-        Label userRole = new Label("Admin");
+        com.example.app.Model.Admin currentAdmin = controller.getUsers().stream()
+                .filter(user -> user.getRole() == Role.ADMIN)
+                .findFirst()
+                .orElse(null);
+        String userName = currentAdmin == null ? "Etunimi Sukunimi" : currentAdmin.getName();
 
-        VBox userInfo = new VBox(2, userName, userRole);
-        userInfo.getStyleClass().add("user-info");
+        HBox user = new HBox(7);
+        user.setAlignment(Pos.CENTER_LEFT);
+        Circle avatarCircle = new Circle(10, Color.web("#536FA4"));
+        Label initials = sidebarText(initialsOf(userName), 8, FontWeight.BOLD, "#FFFFFF");
+        StackPane avatar = new StackPane(avatarCircle, initials);
+        avatar.setPrefSize(20, 20);
 
-        sidebar.getChildren().addAll(
-                header,
-                coursesButton,
-                spacer,
-                userInfo
-        );
+        VBox userInfo = new VBox(0,
+                sidebarText(userName, 8, FontWeight.BOLD, "#FFFFFF"),
+                sidebarText("Ylläpitäjä", 6, FontWeight.NORMAL, "#A9B0BD"));
+        user.getChildren().addAll(avatar, userInfo);
+
+        sidebar.getChildren().addAll(header, new Region(), coursesButton, spacer, user);
 
 
         HBox filters = new HBox(10);
@@ -460,5 +478,24 @@ public class Admin {
             case "Opettaja" -> Role.TEACHER;
             default -> Role.STUDENT;
         };
+    }
+
+    private static String initialsOf(String name) {
+        String trimmed = name == null ? "" : name.trim();
+        if (trimmed.isEmpty()) {
+            return "";
+        }
+        String[] parts = trimmed.split("\\s+");
+        if (parts.length == 1) {
+            return parts[0].substring(0, Math.min(2, parts[0].length())).toUpperCase();
+        }
+        return (parts[0].substring(0, 1) + parts[parts.length - 1].substring(0, 1)).toUpperCase();
+    }
+
+    private static Label sidebarText(String value, double size, FontWeight weight, String color) {
+        Label label = new Label(value);
+        label.setFont(Font.font("System", weight, size));
+        label.setTextFill(Color.web(color));
+        return label;
     }
 }
