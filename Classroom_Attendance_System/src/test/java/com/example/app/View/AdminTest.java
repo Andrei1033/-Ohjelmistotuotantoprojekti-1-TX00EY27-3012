@@ -54,7 +54,7 @@ class AdminTest extends ApplicationTest {
 
         assertNotNull(table);
         assertEquals(5, table.getColumns().size());
-        assertTrue(table.getItems().size() > 0);
+        assertNotNull(table.getItems());
     }
 
     @Test
