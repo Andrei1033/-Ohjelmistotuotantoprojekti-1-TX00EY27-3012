@@ -17,9 +17,12 @@ pipeline {
                         url: 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
             }
         }
-        stage ('build'){
-            steps{
-                bat 'mvn clean install'
+        stage('build') {
+            steps {
+                // Переходим в папку, где лежит pom.xml
+                dir('Classroom_Attendance_System') {
+                    bat 'mvn clean install'
+                }
             }
         }
 
