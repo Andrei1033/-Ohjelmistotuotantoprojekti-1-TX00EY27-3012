@@ -12,12 +12,18 @@ import java.util.Set;
 
 public class AdminController {
     private final ObservableList<Admin> users = FXCollections.observableArrayList();
+    private final AdminDao adminDao;
     private String databaseError;
     private int nextId;
 
     public AdminController() {
+        this(new AdminDao());
+    }
+
+    AdminController(AdminDao adminDao) {
+        this.adminDao = adminDao;
         try {
-            users.addAll(new AdminDao().findAll());
+            users.addAll(adminDao.findAll());
         } catch (RuntimeException exception) {
             databaseError = exception.getMessage();
         }
@@ -58,8 +64,9 @@ public class AdminController {
     }
 
     public Admin addUser(String name, String email, Role role, String courses) {
-        Admin user = new Admin(nextId++, name, email, role, courses);
+        Admin user = adminDao.insert(name, email, role, courses);
         users.add(user);
+        nextId = Math.max(nextId, user.getId() + 1);
         return user;
     }
 
@@ -67,6 +74,15 @@ public class AdminController {
         if (user == null || !users.contains(user)) {
             throw new IllegalArgumentException("Unknown user");
         }
+        adminDao.update(user, name, email, role, courses);
         user.update(name, email, role, courses);
+    }
+
+    public void deleteUser(Admin user) {
+        if (user == null || !users.contains(user)) {
+            throw new IllegalArgumentException("Unknown user");
+        }
+        adminDao.delete(user);
+        users.remove(user);
     }
 }

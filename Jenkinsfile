@@ -17,20 +17,31 @@ pipeline {
                         url: 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
             }
         }
-        stage ('build'){
-            steps{
-                bat 'mvn clean install'
+        stage('build') {
+            steps {
+                // Переходим в папку, где лежит pom.xml
+                dir('Classroom_Attendance_System') {
+                    bat 'java -version'
+                    bat 'javac -version'
+                    bat 'mvn -version'
+                    bat 'mvn clean install'
+                }
             }
         }
 
         stage('test') {
-            steps{
-                bat 'mvn test'
+            steps {
+                dir('Classroom_Attendance_System') {
+                    bat 'mvn test'
+                }
             }
         }
-        stage('jacoco'){
-            steps{
-                jacoco()
+
+        stage('jacoco') {
+            steps {
+                dir('Classroom_Attendance_System') {
+                    bat 'mvn jacoco:report'
+                }
             }
         }
 

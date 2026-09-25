@@ -3,6 +3,6 @@ WORKDIR /app
 COPY pom.xml .
 COPY . /app
 RUN mvn package
-CMD ["java", "-jar", "target/"]
+CMD ["java", "-jar", "target/Classroom_Attendance_System-1.0-SNAPSHOT.jar"]
 
 

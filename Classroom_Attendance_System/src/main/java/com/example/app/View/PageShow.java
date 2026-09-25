@@ -1,7 +1,7 @@
 /* Temporary file for testing purposes. This file will be deleted in the future. */
 /* only for ui debug*/
 
-
+/*
 package com.example.app.View;
 
 import javafx.application.Application;
@@ -196,4 +196,4 @@ public class PageShow {
             );
         }
     }
-}
+}*/

@@ -1,7 +1,7 @@
 package com.example.app.Controller;
 
-import com.example.app.DaoElements.CourseDao;
 import com.example.app.DaoElements.LessonDao;
+import com.example.app.DaoElements.StudentDao.CourseDao;
 import com.example.app.Model.TeacherCourse;
 import com.example.app.Model.Lesson;
 import com.example.app.Model.LoginComponents.User;
