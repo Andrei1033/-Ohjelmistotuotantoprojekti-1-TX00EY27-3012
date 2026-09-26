@@ -54,91 +54,34 @@ public class StudentStartPage extends BorderPane {
         brand.setAlignment(Pos.CENTER_LEFT);
         brand.setPadding(new Insets(0, 0, 20, 0));
 
-        Circle logo = new Circle(10, Color.web("#536FA4"));
-
+        Circle logo = new Circle(13, Color.web("#536FA4"));
         Label lo = new Label("LO");
         lo.setTextFill(Color.WHITE);
-        lo.setFont(Font.font("System", FontWeight.BOLD, 11));
-
+        lo.setFont(Font.font("System", FontWeight.BOLD, 12));
         StackPane logoBox = new StackPane(logo, lo);
         logoBox.setPrefSize(20, 20);
 
-        Label brandText = text(
-                "Läsnäolo",
-                13,
-                FontWeight.BOLD,
-                "#FFFFFF"
-        );
-
+        Label brandText = text("Läsnäolo", 13, FontWeight.BOLD, "#FFFFFF");
         brand.getChildren().addAll(logoBox, brandText);
-
-        // Etusivulla ei ole paluupainikkeelle käyttöä.
-        Button back = new Button("<   Takaisin");
-        back.setPrefHeight(22);
-        back.setMaxWidth(Double.MAX_VALUE);
-        back.setAlignment(Pos.CENTER_LEFT);
-        back.setStyle(
-                "-fx-background-color: #344A70; " +
-                        "-fx-text-fill: white; " +
-                        "-fx-font-size: 10px; " +
-                        "-fx-font-weight: bold; " +
-                        "-fx-background-radius: 4;"
-        );
-        back.setFocusTraversable(false);
-        back.setVisible(false);
-        back.setManaged(false);
 
         Region sideSpacer = new Region();
         VBox.setVgrow(sideSpacer, Priority.ALWAYS);
-
-        // =========================
-        // USER INFO
-        // =========================
 
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
         user.setCursor(Cursor.HAND);
 
-        Circle avatar = new Circle(
-                10,
-                Color.web("#536FA4")
-        );
-
-        Label initials = text(
-                initialsOf(currentUser),
-                10,
-                FontWeight.BOLD,
-                "#FFFFFF"
-        );
-
-        StackPane avatarBox = new StackPane(
-                avatar,
-                initials
-        );
-
+        Circle avatar = new Circle(15, Color.web("#536FA4"));
+        Label initials = text(initialsOf(currentUser), 12, FontWeight.BOLD, "#FFFFFF");
+        StackPane avatarBox = new StackPane(avatar, initials);
         avatarBox.setPrefSize(20, 20);
         avatarBox.setCursor(Cursor.HAND);
 
-        VBox userInfo = new VBox(
-                0,
-                text(
-                        currentUser.getFullName(),
-                        10,
-                        FontWeight.BOLD,
-                        "#FFFFFF"
-                ),
-                text(
-                        roleLabel(currentUser),
-                        9,
-                        FontWeight.NORMAL,
-                        "#C9D0DB"
-                )
+        VBox userInfo = new VBox(0,
+                text(currentUser.getFullName(), 12, FontWeight.BOLD, "#FFFFFF"),
+                text(roleLabel(currentUser), 11, FontWeight.NORMAL, "#A9B0BD")
         );
-
-        user.getChildren().addAll(
-                avatarBox,
-                userInfo
-        );
+        user.getChildren().addAll(avatarBox, userInfo);
 
         // Avaa "Omat tiedot" -ikkunan kun sivupalkin käyttäjärivistä klikataan.
         user.setOnMouseClicked((MouseEvent event) -> {
@@ -148,13 +91,7 @@ public class StudentStartPage extends BorderPane {
             }
         });
 
-        sidebar.getChildren().addAll(
-                brand,
-                new Region(),
-                back,
-                sideSpacer,
-                user
-        );
+        sidebar.getChildren().addAll(brand, new Region(), sideSpacer, user);
 
         // =========================
         // MAIN CONTENT
@@ -292,17 +229,17 @@ public class StudentStartPage extends BorderPane {
 
         card.setPrefSize(
                 190,
-                75
+                90
         );
 
         card.setMinSize(
                 190,
-                75
+                90
         );
 
         card.setMaxSize(
                 190,
-                75
+                90
         );
 
         card.setPadding(

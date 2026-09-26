@@ -7,14 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="these focking text now are visible">
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" afterDir="false" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="added new. student user can change own gmail name and pswd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LoginDao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LoginDao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/LoginComponents/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/LoginComponents/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Documents/SQLKaaviot/Classroom_Attendance_System_2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/SQLKaaviot/Classroom_Attendance_System_2.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,7 +260,7 @@
       <workItem from="1790371345657" duration="2567000" />
       <workItem from="1790399479155" duration="800000" />
       <workItem from="1790414649545" duration="1029000" />
-      <workItem from="1790415700494" duration="487000" />
+      <workItem from="1790415700494" duration="2313000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -435,7 +430,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790403677197</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="added new. student user can change own gmail name and pswd">
+      <option name="closed" value="true" />
+      <created>1790416536307</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1790416536307</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -500,7 +503,8 @@
     <MESSAGE value="todenäköisesti jenkins pitä toimia" />
     <MESSAGE value="fixing+updating start" />
     <MESSAGE value="these focking text now are visible" />
-    <option name="LAST_COMMIT_MESSAGE" value="these focking text now are visible" />
+    <MESSAGE value="added new. student user can change own gmail name and pswd" />
+    <option name="LAST_COMMIT_MESSAGE" value="added new. student user can change own gmail name and pswd" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

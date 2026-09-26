@@ -59,14 +59,14 @@ public class StudentAttendanceTracking extends BorderPane {
         brand.setAlignment(Pos.CENTER_LEFT);
         brand.setPadding(new Insets(0, 0, 20, 0));
 
-        Circle logo = new Circle(10, Color.web("#536FA4"));
+        Circle logo = new Circle(13, Color.web("#536FA4"));
         Label lo = new Label("LO");
         lo.setTextFill(Color.WHITE);
-        lo.setFont(Font.font("System", FontWeight.BOLD, 9));
+        lo.setFont(Font.font("System", FontWeight.BOLD, 12));
         StackPane logoBox = new StackPane(logo, lo);
         logoBox.setPrefSize(20, 20);
 
-        Label brandText = text("Läsnäolo", 11, FontWeight.BOLD, "#FFFFFF");
+        Label brandText = text("Läsnäolo", 13, FontWeight.BOLD, "#FFFFFF");
         brand.getChildren().addAll(logoBox, brandText);
 
         Button back = new Button("<   Takaisin");
@@ -85,15 +85,15 @@ public class StudentAttendanceTracking extends BorderPane {
         user.setAlignment(Pos.CENTER_LEFT);
         user.setCursor(Cursor.HAND);
 
-        Circle avatar = new Circle(10, Color.web("#536FA4"));
-        Label initials = text(initialsOf(currentUser), 8, FontWeight.BOLD, "#FFFFFF");
+        Circle avatar = new Circle(15, Color.web("#536FA4"));
+        Label initials = text(initialsOf(currentUser), 12, FontWeight.BOLD, "#FFFFFF");
         StackPane avatarBox = new StackPane(avatar, initials);
         avatarBox.setPrefSize(20, 20);
         avatarBox.setCursor(Cursor.HAND);
 
         VBox userInfo = new VBox(0,
-                text(currentUser.getFullName(), 8, FontWeight.BOLD, "#FFFFFF"),
-                text(roleLabel(currentUser), 6, FontWeight.NORMAL, "#A9B0BD")
+                text(currentUser.getFullName(), 12, FontWeight.BOLD, "#FFFFFF"),
+                text(roleLabel(currentUser), 11, FontWeight.NORMAL, "#A9B0BD")
         );
         user.getChildren().addAll(avatarBox, userInfo);
 
