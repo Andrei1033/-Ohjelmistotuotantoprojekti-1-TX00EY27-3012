@@ -7,11 +7,7 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="student pages ui compleately done">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentAttendanceTrackingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentAttendanceTrackingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentStertPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentStertPageTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="fixed tests" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -261,7 +257,7 @@
       <workItem from="1790371345657" duration="2567000" />
       <workItem from="1790399479155" duration="800000" />
       <workItem from="1790414649545" duration="1029000" />
-      <workItem from="1790415700494" duration="2862000" />
+      <workItem from="1790415700494" duration="3560000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -447,7 +443,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790418199362</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fixed tests">
+      <option name="closed" value="true" />
+      <created>1790418684617</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1790418684617</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -514,7 +518,8 @@
     <MESSAGE value="these focking text now are visible" />
     <MESSAGE value="added new. student user can change own gmail name and pswd" />
     <MESSAGE value="student pages ui compleately done" />
-    <option name="LAST_COMMIT_MESSAGE" value="student pages ui compleately done" />
+    <MESSAGE value="fixed tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
