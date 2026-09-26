@@ -7,8 +7,7 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="maby it work">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="aaaaaaaa">
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/Jenkinsfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -473,7 +472,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790423987487</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="aaaaaaaa">
+      <option name="closed" value="true" />
+      <created>1790441700514</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1790441700514</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -517,7 +524,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="..." />
     <MESSAGE value="Documents" />
     <MESSAGE value="Kaaviot" />
     <MESSAGE value="refactor" />
@@ -542,7 +548,8 @@
     <MESSAGE value="b" />
     <MESSAGE value="new docker ignore" />
     <MESSAGE value="maby it work" />
-    <option name="LAST_COMMIT_MESSAGE" value="maby it work" />
+    <MESSAGE value="aaaaaaaa" />
+    <option name="LAST_COMMIT_MESSAGE" value="aaaaaaaa" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

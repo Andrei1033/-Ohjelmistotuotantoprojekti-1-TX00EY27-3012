@@ -24,20 +24,24 @@ pipeline {
                     bat 'java -version'
                     bat 'javac -version'
                     bat 'mvn -version'
-                    // -B (Batch mode) предотвращает зависание Maven в CI-системах
                     bat 'mvn clean install -B'
                 }
             }
         }
 
         stage('test') {
-            steps{
-                bat 'mvn test'
+            steps {
+                dir('Classroom_Attendance_System') {
+                    bat 'mvn test -B'
+                }
             }
         }
-        stage('jacoco'){
-            steps{
-                jacoco()
+
+        stage('jacoco') {
+            steps {
+                dir('Classroom_Attendance_System') {
+                    bat 'mvn jacoco:report'
+                }
             }
         }
 
@@ -45,14 +49,11 @@ pipeline {
             steps {
                 dir('Classroom_Attendance_System') {
                     script {
-                        // Создаем .dockerignore «на лету», чтобы Docker не зависал при сканировании папок
                         writeFile file: '.dockerignore', text: '''
                         .git
                         .gitignore
                         .jenkins
                         '''
-
-                        // Сборка образа (теперь она пройдет мгновенно)
                         docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
                     }
                 }
@@ -66,6 +67,22 @@ pipeline {
                         docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()
                     }
                 }
+            }
+        }
+    }
+
+    post {
+        always {
+            dir('Classroom_Attendance_System') {
+                // Tulostetaan raportin sijainti konsoliin (debuggausta varten)
+                bat 'dir target\\site\\jacoco'
+
+                // Julkaistaan JaCoCo-raportti Jenkinsin Coverage-näkymään
+                recordCoverage(
+                    tools: [[parser: 'JACOCO', pattern: 'target/site/jacoco/jacoco.xml']],
+                    sourceCodeRetention: 'EVERY_BUILD',
+                    failOnError: false
+                )
             }
         }
     }
