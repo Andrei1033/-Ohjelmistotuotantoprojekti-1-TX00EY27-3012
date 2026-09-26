@@ -5,26 +5,27 @@ pipeline {
     }
     environment {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
-        DOCKERHUB_CREDENTIALS_ID = 'projekti_ID'
-        DOCKERHUB_REPO = 'khaledmarai/classroom_attendance_system'
+        DOCKERHUB_CREDENTIALS_ID = 'Andrei_Docker_Id'
+        DOCKERHUB_REPO = 'andrei1033/classroom_attendance_system'
         DOCKER_IMAGE_TAG = 'latest'
     }
 
     stages {
-        stage ('check'){
-            steps{
+        stage('check') {
+            steps {
                 git branch: 'main',
-                        url: 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
+                    url: 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
             }
         }
+
         stage('build') {
             steps {
-                // Переходим в папку, где лежит pom.xml
                 dir('Classroom_Attendance_System') {
                     bat 'java -version'
                     bat 'javac -version'
                     bat 'mvn -version'
-                    bat 'mvn clean install'
+                    // -B (Batch mode) предотвращает зависание Maven в CI-системах
+                    bat 'mvn clean install -B'
                 }
             }
         }
@@ -32,7 +33,7 @@ pipeline {
         stage('test') {
             steps {
                 dir('Classroom_Attendance_System') {
-                    bat 'mvn test'
+                    bat 'mvn test -B'
                 }
             }
         }
@@ -45,11 +46,18 @@ pipeline {
             }
         }
 
-
         stage('Build Docker Image') {
             steps {
                 dir('Classroom_Attendance_System') {
                     script {
+                        // Создаем .dockerignore «на лету», чтобы Docker не зависал при сканировании папок
+                        writeFile file: '.dockerignore', text: '''
+                        .git
+                        .gitignore
+                        .jenkins
+                        '''
+
+                        // Сборка образа (теперь она пройдет мгновенно)
                         docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
                     }
                 }
@@ -64,7 +72,6 @@ pipeline {
                     }
                 }
             }
-
         }
     }
 }
