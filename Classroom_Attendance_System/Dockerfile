@@ -1,13 +1,13 @@
-# Используем легковесный JRE (только рантайм) вместо полного Maven-образа
+# Используем стабильный JRE
 FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-# Скачиваем библиотеки, необходимые для графического интерфейса JavaFX внутри Linux-контейнера
+# Установка графических библиотек для JavaFX (с учетом новых имен пакетов в Ubuntu)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1-mesa-glx \
+    libgl1 \
     libgtk-3-0 \
-    libasound2 \
+    libasound2t64 \
     libxxf86vm1 \
     libxrender1 \
     libxtst6 \
@@ -15,11 +15,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxext6 \
     && rm -rf /var/lib/apt/lists/*
 
-# Копируем ТОЛЬКО готовый JAR-файл, собранный Jenkins на этапе 'build'
-COPY target/Classroom_Attendance_System-1.0-SNAPSHOT.jar app.jar
+# Ищем любой JAR-файл в папке target (работает и в Jenkins, и в IDE)
+COPY **/Classroom_Attendance_System-1.0-SNAPSHOT.jar app.jar
 
-# Настройка дисплея для GUI JavaFX
 ENV DISPLAY=:0
 
-# Запуск приложения
 ENTRYPOINT ["java", "-jar", "app.jar"]
