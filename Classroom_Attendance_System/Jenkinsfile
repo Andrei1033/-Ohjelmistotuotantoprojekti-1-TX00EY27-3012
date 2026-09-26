@@ -70,20 +70,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            dir('Classroom_Attendance_System') {
-                // Tulostetaan raportin sijainti konsoliin (debuggausta varten)
-                bat 'dir target\\site\\jacoco'
-
-                // Julkaistaan JaCoCo-raportti Jenkinsin Coverage-näkymään
-                recordCoverage(
-                    tools: [[parser: 'JACOCO', pattern: 'target/site/jacoco/jacoco.xml']],
-                    sourceCodeRetention: 'EVERY_BUILD',
-                    failOnError: false
-                )
-            }
-        }
-    }
 }
