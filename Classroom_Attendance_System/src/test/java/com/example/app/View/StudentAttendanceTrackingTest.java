@@ -55,14 +55,20 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     // ---------------- helpers ----------------
 
     /**
-     * Builds the view, attaches it to a shown Scene so lookupAll works,
-     * and returns the root.
+     * Builds the view with the new 6-arg constructor and shows it so
+     * lookupAll works.
      */
     private StudentAttendanceTracking show(List<AttendanceRecord> records, Runnable onBack) {
         StudentAttendanceTracking[] ref = new StudentAttendanceTracking[1];
         interact(() -> {
-            StudentAttendanceTracking view =
-                    new StudentAttendanceTracking(course, records, onBack, student);
+            StudentAttendanceTracking view = new StudentAttendanceTracking(
+                    course,
+                    records,
+                    onBack,
+                    student,
+                    () -> { },  // onLogout
+                    () -> { }   // onProfileUpdated
+            );
             Scene scene = new Scene(view, 900, 600);
             stage.setScene(scene);
             stage.show();
@@ -237,5 +243,35 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
         AtomicBoolean called = new AtomicBoolean(false);
         show(List.of(), () -> called.set(true));
         assertFalse(called.get());
+    }
+
+    // ---------------- bonus: logout behaviour ----------------
+
+    @Test
+    @DisplayName("Logout button fires the onLogout callback")
+    void logoutButtonFiresCallback() {
+        AtomicBoolean loggedOut = new AtomicBoolean(false);
+        StudentAttendanceTracking[] ref = new StudentAttendanceTracking[1];
+        interact(() -> {
+            StudentAttendanceTracking view = new StudentAttendanceTracking(
+                    course,
+                    List.of(),
+                    () -> { },
+                    student,
+                    () -> loggedOut.set(true),
+                    () -> { }
+            );
+            stage.setScene(new Scene(view, 900, 600));
+            stage.show();
+            ref[0] = view;
+        });
+
+        Button logout = findAllByType(ref[0], Button.class).stream()
+                .filter(b -> "Kirjaudu ulos".equals(b.getText()))
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("Logout button not found"));
+
+        interact(logout::fire);
+        assertTrue(loggedOut.get(), "onLogout must be invoked");
     }
 }
