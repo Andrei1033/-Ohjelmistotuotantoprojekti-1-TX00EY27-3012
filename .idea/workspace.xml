@@ -7,9 +7,8 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="todenäköisesti jenkins pitä toimia">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="fixing+updating start">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -259,7 +258,7 @@
       <workItem from="1790330137176" duration="20378000" />
       <workItem from="1790361985267" duration="1353000" />
       <workItem from="1790371345657" duration="2567000" />
-      <workItem from="1790399479155" duration="328000" />
+      <workItem from="1790399479155" duration="800000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -413,7 +412,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790355338441</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fixing+updating start">
+      <option name="closed" value="true" />
+      <created>1790399859940</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1790399859940</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,7 +483,8 @@
     <MESSAGE value="d" />
     <MESSAGE value="nyt ohjelma taas toimi ja ei anna erroreita" />
     <MESSAGE value="todenäköisesti jenkins pitä toimia" />
-    <option name="LAST_COMMIT_MESSAGE" value="todenäköisesti jenkins pitä toimia" />
+    <MESSAGE value="fixing+updating start" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing+updating start" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

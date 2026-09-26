@@ -276,9 +276,20 @@ public class StudentStartPage extends BorderPane {
 
         VBox card = new VBox(6);
 
-        card.setPrefSize(190, 100);
-        card.setMinSize(190, 100);
-        card.setMaxSize(190, 100);
+        card.setPrefSize(
+                190,
+                75
+        );
+
+        card.setMinSize(
+                190,
+                75
+        );
+
+        card.setMaxSize(
+                190,
+                75
+        );
 
         card.setPadding(
                 new Insets(11, 13, 8, 13)
