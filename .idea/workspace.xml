@@ -7,9 +7,10 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="nyt ohjelma taas toimi ja ei anna erroreita">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="todenäköisesti jenkins pitä toimia">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherCoursePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherCoursePageTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +35,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -48,10 +54,10 @@
     &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;
   }
 }</component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -109,7 +115,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "copilot.chat.legacySessionMetadata.migrated": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "fixing+updating",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot",
@@ -250,7 +256,10 @@
       <workItem from="1789970073188" duration="5984000" />
       <workItem from="1789977954030" duration="11000" />
       <workItem from="1789990072672" duration="395000" />
-      <workItem from="1790330137176" duration="18559000" />
+      <workItem from="1790330137176" duration="20378000" />
+      <workItem from="1790361985267" duration="1353000" />
+      <workItem from="1790371345657" duration="2567000" />
+      <workItem from="1790399479155" duration="328000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -396,7 +405,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790354987488</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="todenäköisesti jenkins pitä toimia">
+      <option name="closed" value="true" />
+      <created>1790355338441</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1790355338441</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -458,7 +475,8 @@
     <MESSAGE value="jenkins test" />
     <MESSAGE value="d" />
     <MESSAGE value="nyt ohjelma taas toimi ja ei anna erroreita" />
-    <option name="LAST_COMMIT_MESSAGE" value="nyt ohjelma taas toimi ja ei anna erroreita" />
+    <MESSAGE value="todenäköisesti jenkins pitä toimia" />
+    <option name="LAST_COMMIT_MESSAGE" value="todenäköisesti jenkins pitä toimia" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
