@@ -7,9 +7,8 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="b">
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/.dockerignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="new docker ignore">
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -454,7 +453,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790418684617</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="new docker ignore">
+      <option name="closed" value="true" />
+      <created>1790423829827</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1790423829827</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -522,7 +529,8 @@
     <MESSAGE value="student pages ui compleately done" />
     <MESSAGE value="fixed tests" />
     <MESSAGE value="b" />
-    <option name="LAST_COMMIT_MESSAGE" value="b" />
+    <MESSAGE value="new docker ignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="new docker ignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
