@@ -6,6 +6,7 @@ import com.example.app.Model.StudentComponents.Course;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -28,15 +29,16 @@ public class StudentAttendanceTracking extends BorderPane {
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("d.M.yyyy");
 
     /**
-     * @param course  valittu kurssi (määrää otsikon ja koodin)
-     * @param records kurssin oppitunnit + opiskelijan läsnäolomerkinnät
-     *                 (esim. AttendanceDAO.getAttendanceForStudentAndCourse:n tulos)
-     * @param onBack  kutsutaan kun "Takaisin"-nappia painetaan - Controller
-     *                vaihtaa tällöin näkymän takaisin StudentStartPageen
+     * @param course      valittu kurssi (määrää otsikon ja koodin)
+     * @param records     kurssin oppitunnit + opiskelijan läsnäolomerkinnät
+     *                     (esim. AttendanceDAO.getAttendanceForStudentAndCourse:n tulos)
+     * @param onBack      kutsutaan kun "Takaisin"-nappia painetaan - Controller
+     *                     vaihtaa tällöin näkymän takaisin StudentStartPageen
      * @param currentUser kirjautunut opiskelija (näytetään sivupalkissa)
+     * @param onLogout    uloskirjautumisen callback
      */
     public StudentAttendanceTracking(Course course, List<AttendanceRecord> records, Runnable onBack,
-                                     User currentUser) {
+                                     User currentUser, Runnable onLogout) {
 
         setStyle("-fx-background-color: white;");
 
@@ -69,6 +71,7 @@ public class StudentAttendanceTracking extends BorderPane {
         back.setAlignment(Pos.CENTER_LEFT);
         back.setStyle("-fx-background-color: #344A70; -fx-text-fill: white; "
                 + "-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4;");
+        back.setCursor(Cursor.HAND);
         back.setOnAction(e -> onBack.run());
 
         Region sideSpacer = new Region();
@@ -152,6 +155,30 @@ public class StudentAttendanceTracking extends BorderPane {
         VBox.setVgrow(scroll, Priority.ALWAYS);
 
         content.getChildren().addAll(line, scroll);
+
+        // =========================
+        // LOGOUT
+        // =========================
+
+        Button logout = new Button("Kirjaudu ulos");
+
+        logout.setStyle(
+                "-fx-background-color: " + BLUE + "; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-font-size: 11px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-background-radius: 4; " +
+                        "-fx-padding: 6 14;"
+        );
+
+        logout.setCursor(Cursor.HAND);
+        logout.setOnAction(e -> onLogout.run());
+
+        VBox logoutBox = new VBox(logout);
+        logoutBox.setPadding(new Insets(14, 0, 0, 0));
+        logoutBox.setAlignment(Pos.CENTER_RIGHT);
+
+        content.getChildren().add(logoutBox);
 
         setLeft(sidebar);
         setCenter(content);
@@ -275,10 +302,31 @@ public class StudentAttendanceTracking extends BorderPane {
     // TEXT HELPER
     // =====================================================
 
+    /**
+     * Luo Labelin, jonka fontti ja väri asetetaan AINA inline-tyylillä
+     * (setStyle), ei setFont()/setTextFill()-kutsuilla. Inline-tyyli
+     * voittaa aina ulkoiset stylesheetit CSS-cascade-järjestyksessä,
+     * joten tämä komponentti näyttää oikein riippumatta siitä, mitä
+     * globaaleja .css-tiedostoja sovelluksen muualla on ladattu.
+     */
     private static Label text(String value, double size, FontWeight weight, String color) {
         Label label = new Label(value);
-        label.setFont(Font.font("System", weight, size));
-        label.setTextFill(Color.web(color));
+        label.setStyle(
+                "-fx-font-family: 'System'; " +
+                        "-fx-font-size: " + size + "px; " +
+                        "-fx-font-weight: " + weightToCss(weight) + "; " +
+                        "-fx-text-fill: " + color + ";"
+        );
         return label;
+    }
+
+    private static String weightToCss(FontWeight weight) {
+        switch (weight) {
+            case BOLD:
+                return "bold";
+            case NORMAL:
+            default:
+                return "normal";
+        }
     }
 }

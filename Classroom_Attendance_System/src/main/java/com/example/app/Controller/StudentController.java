@@ -14,11 +14,11 @@ import javafx.scene.layout.BorderPane;
 
 import java.util.List;
 
-/**
- * Manages navigation between student views and fetches the necessary data
- * from DAO classes. Keeps the View classes "dumb": they merely render the
- * provided data and invoke callbacks in response to user actions.
- */
+
+ //Manages navigation between student views and fetches the necessary data
+ //from DAO classes. Keeps the View classes "dumb": they merely render the
+ //provided data and invoke callbacks in response to user actions.
+
 public class StudentController {
 
     private final User currentUser;
@@ -32,16 +32,16 @@ public class StudentController {
         this.onLogout = onLogout;
     }
 
-    /**
-     * Palauttaa opiskelijan näkymän (aloittaa kurssilistasta).
-     * Käytä tätä LoginControllerista StudentStartPagen suoran konstruoinnin sijaan.
-     */
+
+     //Palauttaa opiskelijan näkymän (aloittaa kurssilistasta).
+     //Käytä tätä LoginControllerista StudentStartPagen suoran konstruoinnin sijaan.
+
     public Parent getView() {
         showStartPage();
         return root;
     }
 
-    /** Näyttää opiskelijan kurssilistan (StudentStartPage). */
+    // Näyttää opiskelijan kurssilistan (StudentStartPage).
     private void showStartPage() {
         List<Course> courses = courseDao.getCoursesForStudent(currentUser.getId());
 
@@ -55,7 +55,7 @@ public class StudentController {
         root.setCenter(page);
     }
 
-    /** Näyttää valitun kurssin läsnäolohistorian (StudentAttendanceTracking). */
+    // Näyttää valitun kurssin läsnäolohistorian (StudentAttendanceTracking).
     private void showAttendancePage(Course course) {
         List<AttendanceRecord> records =
                 attendanceDao.getAttendanceForStudentAndCourse(currentUser.getId(), course.getId());
@@ -64,7 +64,8 @@ public class StudentController {
                 course,
                 records,
                 this::showStartPage,
-                currentUser
+                currentUser,
+                onLogout
         );
 
         root.setCenter(page);

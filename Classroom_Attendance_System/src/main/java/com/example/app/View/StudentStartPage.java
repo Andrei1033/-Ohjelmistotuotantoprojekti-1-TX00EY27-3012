@@ -263,13 +263,13 @@ public class StudentStartPage extends BorderPane {
     }
 
 
-    /**
-     * Luo yhden kurssikortin.
-     *
-     * Tärkeä kohta:
-     * Kurssikortin klikkaus kutsuu aina onCourseSelected-callbackia
-     * kyseisellä Course-oliolla.
-     */
+
+    //Luo yhden kurssikortin.
+
+    //Tärkeä kohta:
+    //Kurssikortin klikkaus kutsuu aina onCourseSelected-callbackia
+    //kyseisellä Course-oliolla.
+
     private VBox courseCard(
             Course course,
             Consumer<Course> onCourseSelected) {
@@ -317,8 +317,11 @@ public class StudentStartPage extends BorderPane {
                 "#4B83A0"
         );
 
+        // HUOM: käytä codeLabel.getStyle() edellisen tyylin säilyttämiseksi,
+        // koska setStyle() KORVAA koko tyylin, ei yhdistele sitä.
         codeLabel.setStyle(
-                "-fx-background-color: #D9F0FA; " +
+                codeLabel.getStyle() +
+                        "-fx-background-color: #D9F0FA; " +
                         "-fx-background-radius: 3; " +
                         "-fx-padding: 3 6;"
         );
@@ -430,6 +433,13 @@ public class StudentStartPage extends BorderPane {
     }
 
 
+    /**
+     * Luo Labelin, jonka fontti ja väri asetetaan AINA inline-tyylillä
+     * (setStyle), ei setFont()/setTextFill()-kutsuilla. Inline-tyyli
+     * voittaa aina ulkoiset stylesheetit CSS-cascade-järjestyksessä,
+     * joten tämä komponentti näyttää oikein riippumatta siitä, mitä
+     * globaaleja .css-tiedostoja sovelluksen muualla on ladattu.
+     */
     private static Label text(
             String value,
             double size,
@@ -438,18 +448,23 @@ public class StudentStartPage extends BorderPane {
 
         Label label = new Label(value);
 
-        label.setFont(
-                Font.font(
-                        "System",
-                        weight,
-                        size
-                )
-        );
-
-        label.setTextFill(
-                Color.web(color)
+        label.setStyle(
+                "-fx-font-family: 'System'; " +
+                        "-fx-font-size: " + size + "px; " +
+                        "-fx-font-weight: " + weightToCss(weight) + "; " +
+                        "-fx-text-fill: " + color + ";"
         );
 
         return label;
+    }
+
+    private static String weightToCss(FontWeight weight) {
+        switch (weight) {
+            case BOLD:
+                return "bold";
+            case NORMAL:
+            default:
+                return "normal";
+        }
     }
 }
