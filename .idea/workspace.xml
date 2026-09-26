@@ -7,10 +7,8 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="bbbbb">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="ccc">
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,7 +263,7 @@
       <workItem from="1790415700494" duration="3560000" />
       <workItem from="1790427099433" duration="195000" />
       <workItem from="1790427622781" duration="1701000" />
-      <workItem from="1790442534930" duration="529000" />
+      <workItem from="1790442534930" duration="1028000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -491,7 +489,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790442031451</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="ccc">
+      <option name="closed" value="true" />
+      <created>1790443199770</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1790443199770</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -535,7 +541,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Kaaviot" />
     <MESSAGE value="refactor" />
     <MESSAGE value="view, controller, model kansio lisäty" />
     <MESSAGE value="view, controller, model kansio lisäty 2" />
@@ -560,7 +565,8 @@
     <MESSAGE value="maby it work" />
     <MESSAGE value="aaaaaaaa" />
     <MESSAGE value="bbbbb" />
-    <option name="LAST_COMMIT_MESSAGE" value="bbbbb" />
+    <MESSAGE value="ccc" />
+    <option name="LAST_COMMIT_MESSAGE" value="ccc" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

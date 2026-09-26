@@ -37,13 +37,22 @@ pipeline {
             }
         }
 
-        stage('jacoco') {
-            steps {
-                dir('Classroom_Attendance_System') {
-                    bat 'mvn jacoco:report'
-                }
-            }
-        }
+         stage('jacoco') {
+             steps {
+                 dir('Classroom_Attendance_System') {
+                     bat 'mvn jacoco:report -B'
+                 }
+             }
+             post {
+                 always {
+                     jacoco(
+                         execPattern: 'Classroom_Attendance_System/target/jacoco.exec',
+                         classPattern: 'Classroom_Attendance_System/target/classes',
+                         sourcePattern: 'Classroom_Attendance_System/src/main/java'
+                     )
+                 }
+             }
+         }
 
         stage('Build Docker Image') {
             steps {
