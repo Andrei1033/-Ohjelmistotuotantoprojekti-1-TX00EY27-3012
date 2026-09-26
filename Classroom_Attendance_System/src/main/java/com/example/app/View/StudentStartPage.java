@@ -25,15 +25,19 @@ public class StudentStartPage extends BorderPane {
     private static final String BLUE = "#344A70";
 
     /**
-     * @param currentUser      kirjautunut opiskelija (näytetään sivupalkissa)
-     * @param courses          opiskelijan kurssit
-     * @param onCourseSelected kutsutaan kun kurssikorttia klikataan
-     * @param onLogout         uloskirjautumisen callback
+     * @param currentUser       kirjautunut opiskelija (näytetään sivupalkissa)
+     * @param courses           opiskelijan kurssit
+     * @param onCourseSelected  kutsutaan kun kurssikorttia klikataan
+     * @param onLogout          uloskirjautumisen callback
+     * @param onProfileUpdated  kutsutaan kun käyttäjä on tallentanut muutokset
+     *                          "Omat tiedot" -ikkunassa (avataan avatarista),
+     *                          jotta sivu voidaan piirtää uudelleen uusilla tiedoilla
      */
     public StudentStartPage(User currentUser,
                             List<Course> courses,
                             Consumer<Course> onCourseSelected,
-                            Runnable onLogout) {
+                            Runnable onLogout,
+                            Runnable onProfileUpdated) {
 
         setStyle("-fx-background-color: white;");
 
@@ -93,6 +97,7 @@ public class StudentStartPage extends BorderPane {
 
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
+        user.setCursor(Cursor.HAND);
 
         Circle avatar = new Circle(
                 10,
@@ -112,6 +117,7 @@ public class StudentStartPage extends BorderPane {
         );
 
         avatarBox.setPrefSize(20, 20);
+        avatarBox.setCursor(Cursor.HAND);
 
         VBox userInfo = new VBox(
                 0,
@@ -133,6 +139,14 @@ public class StudentStartPage extends BorderPane {
                 avatarBox,
                 userInfo
         );
+
+        // Avaa "Omat tiedot" -ikkunan kun sivupalkin käyttäjärivistä klikataan.
+        user.setOnMouseClicked((MouseEvent event) -> {
+            if (event.getButton().name().equals("PRIMARY")) {
+                ProfileEditWindow.show(user.getScene().getWindow(), currentUser, onProfileUpdated);
+                event.consume();
+            }
+        });
 
         sidebar.getChildren().addAll(
                 brand,
@@ -468,3 +482,4 @@ public class StudentStartPage extends BorderPane {
         }
     }
 }
+ 

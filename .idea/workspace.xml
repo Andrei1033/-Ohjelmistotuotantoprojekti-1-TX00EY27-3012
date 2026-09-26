@@ -7,11 +7,14 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="fixing+updating start">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="these focking text now are visible">
+      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/StudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LoginDao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LoginDao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/LoginComponents/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/LoginComponents/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Documents/SQLKaaviot/Classroom_Attendance_System_2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Documents/SQLKaaviot/Classroom_Attendance_System_2.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +27,7 @@
     </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="45" />
+    <option name="cachedIndexableFilesCount" value="47" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -261,6 +264,8 @@
       <workItem from="1790361985267" duration="1353000" />
       <workItem from="1790371345657" duration="2567000" />
       <workItem from="1790399479155" duration="800000" />
+      <workItem from="1790414649545" duration="1029000" />
+      <workItem from="1790415700494" duration="487000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -422,7 +427,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790399859940</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="these focking text now are visible">
+      <option name="closed" value="true" />
+      <created>1790403677197</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1790403677197</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -486,7 +499,8 @@
     <MESSAGE value="nyt ohjelma taas toimi ja ei anna erroreita" />
     <MESSAGE value="todenäköisesti jenkins pitä toimia" />
     <MESSAGE value="fixing+updating start" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing+updating start" />
+    <MESSAGE value="these focking text now are visible" />
+    <option name="LAST_COMMIT_MESSAGE" value="these focking text now are visible" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

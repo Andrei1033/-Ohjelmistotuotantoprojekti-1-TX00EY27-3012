@@ -10,6 +10,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -29,16 +30,19 @@ public class StudentAttendanceTracking extends BorderPane {
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("d.M.yyyy");
 
     /**
-     * @param course      valittu kurssi (määrää otsikon ja koodin)
-     * @param records     kurssin oppitunnit + opiskelijan läsnäolomerkinnät
-     *                     (esim. AttendanceDAO.getAttendanceForStudentAndCourse:n tulos)
-     * @param onBack      kutsutaan kun "Takaisin"-nappia painetaan - Controller
-     *                     vaihtaa tällöin näkymän takaisin StudentStartPageen
-     * @param currentUser kirjautunut opiskelija (näytetään sivupalkissa)
-     * @param onLogout    uloskirjautumisen callback
+     * @param course           valittu kurssi (määrää otsikon ja koodin)
+     * @param records          kurssin oppitunnit + opiskelijan läsnäolomerkinnät
+     *                          (esim. AttendanceDAO.getAttendanceForStudentAndCourse:n tulos)
+     * @param onBack           kutsutaan kun "Takaisin"-nappia painetaan - Controller
+     *                          vaihtaa tällöin näkymän takaisin StudentStartPageen
+     * @param currentUser      kirjautunut opiskelija (näytetään sivupalkissa)
+     * @param onLogout         uloskirjautumisen callback
+     * @param onProfileUpdated kutsutaan kun käyttäjä on tallentanut muutokset
+     *                          "Omat tiedot" -ikkunassa (avataan avatarista),
+     *                          jotta sivu voidaan piirtää uudelleen uusilla tiedoilla
      */
     public StudentAttendanceTracking(Course course, List<AttendanceRecord> records, Runnable onBack,
-                                     User currentUser, Runnable onLogout) {
+                                     User currentUser, Runnable onLogout, Runnable onProfileUpdated) {
 
         setStyle("-fx-background-color: white;");
 
@@ -79,16 +83,27 @@ public class StudentAttendanceTracking extends BorderPane {
 
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
+        user.setCursor(Cursor.HAND);
+
         Circle avatar = new Circle(10, Color.web("#536FA4"));
         Label initials = text(initialsOf(currentUser), 8, FontWeight.BOLD, "#FFFFFF");
         StackPane avatarBox = new StackPane(avatar, initials);
         avatarBox.setPrefSize(20, 20);
+        avatarBox.setCursor(Cursor.HAND);
 
         VBox userInfo = new VBox(0,
                 text(currentUser.getFullName(), 8, FontWeight.BOLD, "#FFFFFF"),
                 text(roleLabel(currentUser), 6, FontWeight.NORMAL, "#A9B0BD")
         );
         user.getChildren().addAll(avatarBox, userInfo);
+
+        // Avaa "Omat tiedot" -ikkunan kun sivupalkin käyttäjärivistä klikataan.
+        user.setOnMouseClicked((MouseEvent event) -> {
+            if (event.getButton().name().equals("PRIMARY")) {
+                ProfileEditWindow.show(user.getScene().getWindow(), currentUser, onProfileUpdated);
+                event.consume();
+            }
+        });
 
         sidebar.getChildren().addAll(brand, new Region(), back, sideSpacer, user);
 

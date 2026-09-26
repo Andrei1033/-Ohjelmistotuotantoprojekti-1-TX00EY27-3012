@@ -14,11 +14,11 @@ import javafx.scene.layout.BorderPane;
 
 import java.util.List;
 
-
- //Manages navigation between student views and fetches the necessary data
- //from DAO classes. Keeps the View classes "dumb": they merely render the
- //provided data and invoke callbacks in response to user actions.
-
+/**
+ * Manages navigation between student views and fetches the necessary data
+ * from DAO classes. Keeps the View classes "dumb": they merely render the
+ * provided data and invoke callbacks in response to user actions.
+ */
 public class StudentController {
 
     private final User currentUser;
@@ -27,36 +27,46 @@ public class StudentController {
     private final AttendanceDao attendanceDao = new AttendanceDao();
     private final BorderPane root = new BorderPane();
 
+    // Muistaa mikä kurssi on tällä hetkellä auki (null = kurssilistanäkymä),
+    // jotta "Omat tiedot" -ikkunan sulkemisen jälkeen osataan piirtää
+    // oikea sivu uudelleen päivitetyillä käyttäjätiedoilla.
+    private Course currentCourse;
+
     public StudentController(User currentUser, Runnable onLogout) {
         this.currentUser = currentUser;
         this.onLogout = onLogout;
     }
 
-
-     //Palauttaa opiskelijan näkymän (aloittaa kurssilistasta).
-     //Käytä tätä LoginControllerista StudentStartPagen suoran konstruoinnin sijaan.
-
+    /**
+     * Palauttaa opiskelijan näkymän (aloittaa kurssilistasta).
+     * Käytä tätä LoginControllerista StudentStartPagen suoran konstruoinnin sijaan.
+     */
     public Parent getView() {
         showStartPage();
         return root;
     }
 
-    // Näyttää opiskelijan kurssilistan (StudentStartPage).
+    /** Näyttää opiskelijan kurssilistan (StudentStartPage). */
     private void showStartPage() {
+        currentCourse = null;
+
         List<Course> courses = courseDao.getCoursesForStudent(currentUser.getId());
 
         StudentStartPage page = new StudentStartPage(
                 currentUser,
                 courses,
                 this::showAttendancePage,
-                onLogout
+                onLogout,
+                this::refreshCurrentPage
         );
 
         root.setCenter(page);
     }
 
-    // Näyttää valitun kurssin läsnäolohistorian (StudentAttendanceTracking).
+    /** Näyttää valitun kurssin läsnäolohistorian (StudentAttendanceTracking). */
     private void showAttendancePage(Course course) {
+        currentCourse = course;
+
         List<AttendanceRecord> records =
                 attendanceDao.getAttendanceForStudentAndCourse(currentUser.getId(), course.getId());
 
@@ -65,9 +75,23 @@ public class StudentController {
                 records,
                 this::showStartPage,
                 currentUser,
-                onLogout
+                onLogout,
+                this::refreshCurrentPage
         );
 
         root.setCenter(page);
     }
+
+    /**
+     * Piirtää nykyisen sivun uudelleen. Kutsutaan kun "Omat tiedot" -ikkunassa
+     * on tallennettu muutoksia, jotta esim. sivupalkin nimi päivittyy heti.
+     */
+    private void refreshCurrentPage() {
+        if (currentCourse == null) {
+            showStartPage();
+        } else {
+            showAttendancePage(currentCourse);
+        }
+    }
 }
+ 
