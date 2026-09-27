@@ -1,7 +1,7 @@
 package com.example.app.View;
 
 import com.example.app.Controller.TeacherController;
-import com.example.app.Model.Lesson;
+import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
 import javafx.geometry.Insets;
@@ -13,18 +13,16 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TeacherCoursePage extends BorderPane {
 
     private static final String NAVY = "#202F49";
     private final TeacherController teacherController;
     private final int courseId;
-    private final VBox lessonList;
+    private final VBox studentList;
 
     public TeacherCoursePage(Teacher teacher,
                              int courseId,
@@ -33,7 +31,7 @@ public class TeacherCoursePage extends BorderPane {
                              Runnable onAddLesson) {
         this.teacherController = teacherController;
         this.courseId = courseId;
-        this.lessonList = new VBox(10);
+        this.studentList = new VBox(10);
 
         setStyle("-fx-background-color: white;");
 
@@ -99,10 +97,10 @@ public class TeacherCoursePage extends BorderPane {
         Label courseCode = text("Kurssikoodi: " + courseCodeText, 14, FontWeight.NORMAL, "#202F49");
         VBox titleBox = new VBox(2, courseTitle, courseCode);
 
-        Button addLesson = new Button("Lisää oppituntu");
-        addLesson.setStyle("-fx-background-color: transparent; -fx-border-color: #D1D5DB; "
+        Button addStudent = new Button("Lisää opiskelija");
+        addStudent.setStyle("-fx-background-color: transparent; -fx-border-color: #D1D5DB; "
                 + "-fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 8px; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-cursor: hand;");
-        addLesson.setOnAction(e -> showCreateLessonDialog());
+        addStudent.setOnAction(e -> ShowaddStudent());
 
 
 
@@ -112,7 +110,7 @@ public class TeacherCoursePage extends BorderPane {
                 + "-fx-font-size: 8px; -fx-font-weight: bold; -fx-background-radius: 4; -fx-cursor: hand;");
         startLesson.setOnAction(e -> teacherController.startLesson(courseId));
 
-        HBox actionButtons = new HBox(10, addLesson, startLesson);
+        HBox actionButtons = new HBox(10, addStudent, startLesson);
         actionButtons.setAlignment(Pos.CENTER_RIGHT);
 
         Region headerSpacer = new Region();
@@ -121,31 +119,11 @@ public class TeacherCoursePage extends BorderPane {
         HBox headerBar = new HBox(10, titleBox, headerSpacer, actionButtons);
 
 
-        VBox lessonList = new VBox(10);
-        List<Lesson> lessons = teacherController.getLessonsForCourse(courseId);
-
-        if (lessons.isEmpty()) {
-            lessonList.getChildren().add(text("Tällä kurssilla ei ole vielä oppitunteja.", 10, FontWeight.NORMAL, "#6B7280"));
-        } else {
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d.M.yyyy");
-            for (Lesson lesson : lessons) {
-                String dateStr = lesson.getFormattedData();
+        Label studentsHeader = text("Opiskelijat", 12, FontWeight.BOLD, "#111827");
+        refreshStudents();
 
 
-                boolean isDone = lesson.isDone();
-                String statusText = lesson.getLessonStatus();
-
-                HBox card = createLessonCard(dateStr, "Oppitunti #" + lesson.getId(), statusText, isDone);
-
-
-                card.setOnMouseClicked(e -> teacherController.openExistingLesson(courseId, lesson.getId()));
-                card.setStyle(card.getStyle() + "; -fx-cursor: hand;");
-
-                lessonList.getChildren().add(card);
-            }
-        }
-
-        contentBox.getChildren().addAll(headerBar, lessonList);
+        contentBox.getChildren().addAll(headerBar, studentList,studentsHeader);
 
         setLeft(sidebar);
         setCenter(contentBox);
@@ -186,17 +164,6 @@ public class TeacherCoursePage extends BorderPane {
         return lessonCard;
     }
 
-    private void refreshLessons() {
-        lessonList.getChildren().clear();
-        List<Lesson> lessons = teacherController.getLessonsForCourse(courseId);
-        if (lessons.isEmpty()) {
-            lessonList.getChildren().add(text("Tällä kurssilla ei ole oppituntia",10, FontWeight.NORMAL, "#6B7280"));
-
-        }else {
-            
-        }
-    }
-
     private static Label text(String content, int size, FontWeight weight, String color) {
         Label label = new Label(content);
         label.setFont(Font.font("System", weight, size));
@@ -204,45 +171,95 @@ public class TeacherCoursePage extends BorderPane {
         return label;
     }
 
-    private void showCreateLessonDialog() {
+
+    private void refreshStudents() {
+
+        studentList.getChildren().clear();
+        List<User> students = teacherController.getStudentsForCourse(courseId);
+
+        if (students.isEmpty()) {
+            studentList.getChildren().add(text("Tälle kurssille ei ole vielä lisätty opiskelijoita.", 10, FontWeight.NORMAL, "#6B7280"));
+            return;
+        }
+        students.forEach(student -> {
+            HBox card = new HBox(
+                    new VBox(2, text(student.getFullName(), 10, FontWeight.BOLD, "#111827"),
+                            text("ID: " + student.getId(), 8, FontWeight.NORMAL, "#6B7280"))
+            );
+            card.setPadding(new Insets(10, 14, 10, 14));
+            card.setStyle("-fx-background-color: white; -fx-border-color: #E5E7EB; -fx-border-radius: 6; -fx-background-radius: 6;");
+            studentList.getChildren().add(card);
+        });
+    }
+
+
+
+    private void ShowaddStudent() {
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Luo uusi oppitunti");
-        dialog.setHeaderText("Aika");
+        dialog.setTitle("Lisää opiskelijoita");
 
-        DatePicker startDate = new DatePicker(LocalDate.now());
-        TextField startTime = new TextField("00:00");
+        List<User> allStudents = teacherController.getAllStudents(courseId);
+        Map<User, CheckBox> selectedMap = new HashMap<>();
 
+        TextField searchField = new TextField();
+        searchField.setPromptText("Hae opiskelijaa");
 
-        DatePicker endDate = new DatePicker(LocalDate.now());
-        TextField endTime = new TextField("00:00");
+        ListView<User> listView = new ListView<>();
+        listView.getItems().addAll(allStudents);
+        listView.setPrefHeight(300);
 
-
-
-        VBox dialogForm = new VBox(10,
-                new Label("Alkamisaika:"), new HBox(10, startDate, startTime),
-                new Label("Päättymisaika:"), new HBox(10, endDate, endTime)
-        ); dialogForm.setPadding(new Insets(15));
-
-        dialog.getDialogPane().setContent(dialogForm);
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
-        dialog.showAndWait().ifPresent(e -> {
-            if(e == ButtonType.OK) {
-                try {
-                    LocalDateTime start = LocalDateTime.of(startDate.getValue(), LocalTime.parse(startTime.getText()));
-                    LocalDateTime end = LocalDateTime.of(endDate.getValue(), LocalTime.parse(endTime.getText()));
-
-                    if (teacherController.createLesson(start, end, courseId)) {
-                        refreshLessons();
-                    }
-
-                } catch (Exception ex) {
-                    System.err.println("Tarkista kello");
+        listView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(User user, boolean empty) {
+                super.updateItem(user, empty);
+                if (empty || user == null) {
+                    setGraphic(null);
+                } else {
+                    CheckBox cb = selectedMap.computeIfAbsent(user, u -> new CheckBox());
+                    HBox row = new HBox(10, cb, new Label(user.getFullName()));
+                    row.setAlignment(Pos.CENTER_LEFT);
+                    setGraphic(row);
                 }
             }
         });
 
 
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            String filter = newVal.toLowerCase().trim();
+            listView.getItems().setAll(allStudents.stream()
+                    .filter(u -> u.getFullName().toLowerCase().contains(filter))
+                    .toList());
+        });
+
+        VBox layout = new VBox(10, text("Lisää opiskelijoita", 14, FontWeight.BOLD, "#111827"), searchField, listView);
+        layout.setPadding(new Insets(15));
+        layout.setPrefWidth(350);
+
+        ButtonType saveBtn = new ButtonType("Tallenna", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().setContent(layout);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, saveBtn);
+
+        dialog.showAndWait().ifPresent(btn -> {
+            if (btn == saveBtn) {
+                List<Integer> ids = selectedMap.entrySet().stream()
+                        .filter(e -> e.getValue().isSelected())
+                        .map(e -> e.getKey().getId())
+                        .toList();
+
+                if (!ids.isEmpty() && teacherController.addStudents(ids, courseId)) {
+                    refreshStudents();
+                }
+            }
+        });
+    }
+
+
+
+
 
     }
-}
+
+
+
+
+

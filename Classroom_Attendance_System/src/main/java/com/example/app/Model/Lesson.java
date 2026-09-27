@@ -68,9 +68,10 @@ public class Lesson {
             return null;
         }
         try {
-            return LocalDateTime.parse(startTime, formatter);
+            String cleanTime = startTime.trim().replace("T", " ");
+            return LocalDateTime.parse(cleanTime, formatter);
         } catch (DateTimeParseException e) {
-            System.err.println("Virheellinen aika ja päivä " + startTime);
+            System.err.println("Virheellinen aika ja päivä: " + startTime);
             return null;
         }
     }
