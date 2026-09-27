@@ -4,6 +4,8 @@
 /*
 package com.example.app.View;
 
+import com.example.app.Controller.TeacherController;
+import com.example.app.Model.Teacher;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -132,10 +134,20 @@ public class PageShow {
 
 
         private void openTeacherStartPage() {
+            Teacher mockTeacher = new Teacher(1, "Matti", "Meikäläinen", "matti@koulu.fi");
+
+            // Uloskirjautuminen ohjaa takaisin kirjautumissivulle
+            Runnable onLogout = this::openLogin;
+
+            // Luodaan kontrolleri opettajalle
+            TeacherController teacherController = new TeacherController(mockTeacher, onLogout);
 
             TeacherStartPage view = new TeacherStartPage(
-                    this::openTeacherStartPage
+                    mockTeacher,
+                    teacherController,
+                    onLogout
             );
+
 
             stage.setScene(
                     new Scene(view, 1024, 399)
@@ -143,15 +155,22 @@ public class PageShow {
         }
 
         private void openTeacherCoursePage() {
+            // 1. Luodaan testi-/nykyinen opettaja
+            Teacher teacher = new Teacher(1, "Matti", "Meikäläinen", "matti@koulu.fi");
 
+            // 2. Luodaan controller
+            TeacherController controller = new TeacherController(teacher, this::openTeacherStartPage);
+
+            // 3. Valitaan avattavan kurssin ID
+            int courseId = 1;
+
+            // 4. Luodaan näkymä päivitetyillä parametreilla
             TeacherCoursePage view = new TeacherCoursePage(
+                    teacher,
+                    courseId,
+                    controller,
                     this::openTeacherStartPage,
-                    () -> {
-                        System.out.println("Aloita oppitunti");
-                    },
-                    () -> {
-                        System.out.println("Lisää opiskelijoita");
-                    }
+                    () -> System.out.println("Lisää opiskelijoita")
             );
 
             stage.setScene(
@@ -160,14 +179,27 @@ public class PageShow {
         }
 
         private void openTeacherAttendanceTracking() {
+            // 1. Luodaan testi-Teacher (varmista että parametrit täsmäävät Teacher-luokan konstruktoriin)
+            Teacher teacher = new Teacher(1, "Matti", "Meikäläinen", "matti@koulu.fi");
 
-            TeacherAttendanceTracking view =
-                    new TeacherAttendanceTracking(
-                            this::openTeacherStartPage
-                    );
+            // 2. Luodaan TeacherController
+            TeacherController controller = new TeacherController(teacher, this::openTeacherStartPage);
+
+            // 3. Kurssi- ja oppituntitiedot
+            int courseId = 1;
+            int lessonId = 1;
+
+            // 4. Luodaan näkymä kaikilla parametreilla
+            TeacherAttendanceTracking view = new TeacherAttendanceTracking(
+                    teacher,
+                    courseId,
+                    lessonId,
+                    controller,
+                    this::openTeacherStartPage
+            );
+
 
             Scene scene = new Scene(view, 1400, 900);
-
             stage.setScene(scene);
 
             // Vähimmäiskoko, johon asti sisältö skaalautuu pienemmäksi.

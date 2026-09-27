@@ -6,26 +6,34 @@ import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TeacherCoursePage extends BorderPane {
 
     private static final String NAVY = "#202F49";
+    private final TeacherController teacherController;
+    private final int courseId;
+    private final VBox lessonList;
 
     public TeacherCoursePage(Teacher teacher,
                              int courseId,
                              TeacherController teacherController,
                              Runnable onBack,
-                             Runnable onAddStudents) {
+                             Runnable onAddLesson) {
+        this.teacherController = teacherController;
+        this.courseId = courseId;
+        this.lessonList = new VBox(10);
 
         setStyle("-fx-background-color: white;");
 
@@ -91,12 +99,12 @@ public class TeacherCoursePage extends BorderPane {
         Label courseCode = text("Kurssikoodi: " + courseCodeText, 14, FontWeight.NORMAL, "#202F49");
         VBox titleBox = new VBox(2, courseTitle, courseCode);
 
-        Button addStudent = new Button("Lisää opiskelijoita");
-        addStudent.setStyle("-fx-background-color: transparent; -fx-border-color: #D1D5DB; "
+        Button addLesson = new Button("Lisää oppituntu");
+        addLesson.setStyle("-fx-background-color: transparent; -fx-border-color: #D1D5DB; "
                 + "-fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 8px; -fx-font-weight: bold; -fx-text-fill: #374151; -fx-cursor: hand;");
-        addStudent.setOnAction(e -> {
-            if (onAddStudents != null) onAddStudents.run();
-        });
+        addLesson.setOnAction(e -> showCreateLessonDialog());
+
+
 
 
         Button startLesson = new Button("Aloita oppitunti");
@@ -104,7 +112,7 @@ public class TeacherCoursePage extends BorderPane {
                 + "-fx-font-size: 8px; -fx-font-weight: bold; -fx-background-radius: 4; -fx-cursor: hand;");
         startLesson.setOnAction(e -> teacherController.startLesson(courseId));
 
-        HBox actionButtons = new HBox(10, addStudent, startLesson);
+        HBox actionButtons = new HBox(10, addLesson, startLesson);
         actionButtons.setAlignment(Pos.CENTER_RIGHT);
 
         Region headerSpacer = new Region();
@@ -178,10 +186,63 @@ public class TeacherCoursePage extends BorderPane {
         return lessonCard;
     }
 
+    private void refreshLessons() {
+        lessonList.getChildren().clear();
+        List<Lesson> lessons = teacherController.getLessonsForCourse(courseId);
+        if (lessons.isEmpty()) {
+            lessonList.getChildren().add(text("Tällä kurssilla ei ole oppituntia",10, FontWeight.NORMAL, "#6B7280"));
+
+        }else {
+            
+        }
+    }
+
     private static Label text(String content, int size, FontWeight weight, String color) {
         Label label = new Label(content);
         label.setFont(Font.font("System", weight, size));
         label.setTextFill(Color.web(color));
         return label;
+    }
+
+    private void showCreateLessonDialog() {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Luo uusi oppitunti");
+        dialog.setHeaderText("Aika");
+
+        DatePicker startDate = new DatePicker(LocalDate.now());
+        TextField startTime = new TextField("00:00");
+
+
+        DatePicker endDate = new DatePicker(LocalDate.now());
+        TextField endTime = new TextField("00:00");
+
+
+
+        VBox dialogForm = new VBox(10,
+                new Label("Alkamisaika:"), new HBox(10, startDate, startTime),
+                new Label("Päättymisaika:"), new HBox(10, endDate, endTime)
+        ); dialogForm.setPadding(new Insets(15));
+
+        dialog.getDialogPane().setContent(dialogForm);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        dialog.showAndWait().ifPresent(e -> {
+            if(e == ButtonType.OK) {
+                try {
+                    LocalDateTime start = LocalDateTime.of(startDate.getValue(), LocalTime.parse(startTime.getText()));
+                    LocalDateTime end = LocalDateTime.of(endDate.getValue(), LocalTime.parse(endTime.getText()));
+
+                    if (teacherController.createLesson(start, end, courseId)) {
+                        refreshLessons();
+                    }
+
+                } catch (Exception ex) {
+                    System.err.println("Tarkista kello");
+                }
+            }
+        });
+
+
+
     }
 }

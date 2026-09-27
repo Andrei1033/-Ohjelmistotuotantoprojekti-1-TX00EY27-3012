@@ -13,11 +13,14 @@ public class DatabaseConnection {
     private static final Properties properties = new Properties();
 
     static {
-        try (InputStream input = DatabaseConnection.class.getClassLoader().getResourceAsStream("database.properties")) {
+        try (InputStream input = DatabaseConnection.class.getClassLoader()
+                .getResourceAsStream("database.properties")) {
+
             if (input == null) {
-                throw new RuntimeException("Файл database.properties не найден в classpath. Проверьте его расположение.");
+                throw new RuntimeException("Tiedostoa 'database.properties' ei löytynyt resources-kansiosta!");
             }
             properties.load(input);
+
         } catch (IOException e) {
             throw new RuntimeException("Database configuration could not be loaded.", e);
         }
