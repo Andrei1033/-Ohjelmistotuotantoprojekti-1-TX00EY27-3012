@@ -7,13 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="joku juttu">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="c">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,7 +266,7 @@
       <workItem from="1790427622781" duration="1701000" />
       <workItem from="1790442534930" duration="1028000" />
       <workItem from="1790496966973" duration="5000" />
-      <workItem from="1790511867820" duration="5065000" />
+      <workItem from="1790511867820" duration="5537000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -504,7 +500,23 @@
       <option name="project" value="LOCAL" />
       <updated>1790443199770</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="xui">
+      <option name="closed" value="true" />
+      <created>1790517304305</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1790517304305</updated>
+    </task>
+    <task id="LOCAL-00031" summary="c">
+      <option name="closed" value="true" />
+      <created>1790517480164</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1790517480164</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -548,8 +560,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor" />
-    <MESSAGE value="view, controller, model kansio lisäty" />
     <MESSAGE value="view, controller, model kansio lisäty 2" />
     <MESSAGE value="Tehty jacoko ja minun StudentAttendanceTracking sivu." />
     <MESSAGE value="Tehty jacoko ja minun StudentAttendanceTracking sivu + unversioned files." />
@@ -573,7 +583,9 @@
     <MESSAGE value="aaaaaaaa" />
     <MESSAGE value="bbbbb" />
     <MESSAGE value="ccc" />
-    <option name="LAST_COMMIT_MESSAGE" value="ccc" />
+    <MESSAGE value="xui" />
+    <MESSAGE value="c" />
+    <option name="LAST_COMMIT_MESSAGE" value="c" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

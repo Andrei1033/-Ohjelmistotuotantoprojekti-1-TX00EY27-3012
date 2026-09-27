@@ -56,27 +56,24 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                dir('Classroom_Attendance_System') {
-                    script {
-                        writeFile file: '.dockerignore', text: '''
-                        .git
-                        .gitignore
-                        .jenkins
-                        '''
-                        docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+                script {
+                    dir("${env.PROJECT_DIR}") {
+                        docker.build("${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_TAG}")
                     }
                 }
             }
         }
 
-        stage('Push Docker Image to Docker Hub') {
+        stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS_ID) {
-                        docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()
+                    docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS_ID) {
+                        docker.image("${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_TAG}").push()
+                        docker.image("${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_TAG}").push('latest')
                     }
                 }
             }
         }
+    }
     }
 }
