@@ -40,31 +40,61 @@ public class LessonDao {
         return lessons;
     }
 
-    public int startLesson(int courseId) {
-        String sql = "INSERT INTO lessons (course_id, start_time) VALUES (?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+    public int startLesson(int courseId) {
+
+        String sql =
+                "INSERT INTO lessons " +
+                        "(course_id, start_time, end_time, topic) " +
+                        "VALUES (?, ?, ?, ?)";
+
+        try (
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt =
+                        conn.prepareStatement(
+                                sql,
+                                PreparedStatement.RETURN_GENERATED_KEYS
+                        )
+        ) {
+
+            java.time.LocalDateTime startTime =
+                    java.time.LocalDateTime.now();
+
+            // Väliaikainen end_time.
+            // Todellinen lopetusaika asetetaan endLesson()-metodissa.
+            java.time.LocalDateTime endTime =
+                    startTime.plusMinutes(1);
 
             stmt.setInt(1, courseId);
-            stmt.setString(2, java.time.LocalDateTime.now().toString());
+            stmt.setObject(2, startTime);
+            stmt.setObject(3, endTime);
+            stmt.setString(4, "");
 
             int affected = stmt.executeUpdate();
+
             if (affected == 0) {
-                throw new SQLException("Oppitunnin luonti epäonnistui, ei rivejä lisätty.");
+                throw new SQLException(
+                        "Oppitunnin luonti epäonnistui."
+                );
             }
 
             try (ResultSet keys = stmt.getGeneratedKeys()) {
+
                 if (keys.next()) {
-                    return keys.getInt(1); // palauttaa uuden lesson_id:n
+                    return keys.getInt(1);
                 }
             }
-        } catch (SQLException e) {
-            System.err.println("Virhe aloitettaessa oppituntia: " + e.getMessage());
-        }
-        return -1; // virhetilanteessa
-    }
 
+        } catch (SQLException e) {
+
+            System.err.println(
+                    "Virhe aloitettaessa oppituntia:"
+            );
+
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }
 
 
