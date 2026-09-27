@@ -2,7 +2,7 @@
 package com.example.app.View;
 
 import com.example.app.Controller.TeacherController;
-import com.example.app.Model.Teacher;
+import com.example.app.Model.TeacherTest;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,7 +21,7 @@ class TeacherStartPageTest {
 
     @BeforeEach
     void setUp() {
-        Teacher mockTeacher = new Teacher(
+        TeacherTest mockTeacher = new TeacherTest(
                 1,
                 "Matti",
                 "Meikäläinen",
@@ -495,7 +495,7 @@ class TeacherStartPageTest {
 package com.example.app.View;
 
 import com.example.app.Controller.TeacherController;
-import com.example.app.Model.Teacher;
+import com.example.app.Model.TeacherTest;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -516,7 +516,7 @@ public class TeacherStartPageTest extends ApplicationTest {
     @Override
     public void start(Stage stage) {
         // 1. Luodaan valheellinen opettaja testille
-        Teacher mockTeacher = new Teacher(1, "Matti", "Meikäläinen", "matti@testi.fi");
+        TeacherTest mockTeacher = new TeacherTest(1, "Matti", "Meikäläinen", "matti@testi.fi");
 
         // 2. Luodaan controlleri (tai käytetään mockia)
         TeacherController mockController = new TeacherController(mockTeacher, () -> {});

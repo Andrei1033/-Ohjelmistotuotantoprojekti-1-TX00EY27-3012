@@ -1,7 +1,7 @@
 package com.example.app.DaoElements;
 
 import com.example.app.Database.DatabaseConnection;
-import com.example.app.Model.Admin;
+import com.example.app.Model.AdminTest;
 import com.example.app.Model.LoginComponents.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ class AdminDaoTest {
         execute("INSERT INTO courses (name) VALUES ('Mathematics')");
         execute("INSERT INTO course_students (course_id, student_id) VALUES (1, 1)");
 
-        List<Admin> users = dao.findAll();
+        List<AdminTest> users = dao.findAll();
 
         assertEquals(1, users.size());
         assertEquals("Ada Lovelace", users.get(0).getName());
@@ -72,7 +72,7 @@ class AdminDaoTest {
     void insertStoresUserPasswordAndStudentCourse() throws Exception {
         execute("INSERT INTO courses (name) VALUES ('Physics')");
 
-        Admin user = dao.insert(
+        AdminTest user = dao.insert(
                 "Grace Hopper", "grace@example.com", Role.STUDENT, "Physics", "temporary"
         );
 
@@ -88,7 +88,7 @@ class AdminDaoTest {
         execute("INSERT INTO users (first_name, last_name, email, password, role) " +
                 "VALUES ('Alan', 'Turing', 'alan@example.com', 'old', 'student')");
         execute("INSERT INTO courses (name) VALUES ('Programming')");
-        Admin user = dao.findAll().get(0);
+        AdminTest user = dao.findAll().get(0);
 
         dao.update(user, "Alan Mathison Turing", "alan-new@example.com",
                 Role.STUDENT, "Programming", "new");
@@ -103,7 +103,7 @@ class AdminDaoTest {
     void deleteRemovesUser() throws Exception {
         execute("INSERT INTO users (first_name, last_name, email, password, role) " +
                 "VALUES ('Katherine', 'Johnson', 'katherine@example.com', 'secret', 'admin')");
-        Admin user = dao.findAll().get(0);
+        AdminTest user = dao.findAll().get(0);
 
         dao.delete(user);
 

@@ -1,6 +1,5 @@
 package com.example.app.View;
-import com.example.app.Model.Teacher;
-import com.example.app.Model.TeacherCourse;
+import com.example.app.Model.TeacherTest;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -11,13 +10,13 @@ public class TeacherAttendanceTrackingTest extends ApplicationTest {
 
     private TeacherAttendanceTracking teacherAttendanceTracking;
 
-    private Teacher teacher;
+    private TeacherTest teacher;
     private TeacherCourse course;
 
     @Override
     public void start(Stage stage) {
 
-        teacher = new Teacher(
+        teacher = new TeacherTest(
                 1,
                 "Testi",
                 "Opettaja",

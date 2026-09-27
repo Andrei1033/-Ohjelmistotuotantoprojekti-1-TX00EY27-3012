@@ -1,7 +1,7 @@
 package com.example.app.View;
 
 import com.example.app.Controller.TeacherController;
-import com.example.app.Model.Teacher;
+import com.example.app.Model.TeacherTest;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TeacherCoursePageTest extends ApplicationTest {
 
     private TeacherCoursePage teacherCoursePage;
-    private Teacher teacher;
+    private TeacherTest teacher;
     private TeacherController controller;
 
     @Override
     public void start(Stage stage) {
         // Luo testidata
-        teacher = new Teacher(1, "Etunimi", "Sukunimi", "test@example.com");
+        teacher = new TeacherTest(1, "Etunimi", "Sukunimi", "test@example.com");
         controller = new TeacherController(teacher, () -> {});
 
         Runnable onBack = () -> {};
