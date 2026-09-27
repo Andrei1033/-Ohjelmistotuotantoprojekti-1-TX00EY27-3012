@@ -1,90 +1,82 @@
 pipeline {
     agent any
-
     tools {
         maven 'Maven3'
     }
-
     environment {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         DOCKERHUB_CREDENTIALS_ID = 'Andrei_Docker_Id'
-        DOCKERHUB_REPO           = 'andrei1033/classroom_attendance_system'
-        DOCKER_IMAGE_TAG         = 'latest'
-        PROJECT_DIR              = 'OTP1_inclass1_assignment_AndreiTsizikov'
+        DOCKERHUB_REPO = 'andrei1033/classroom_attendance_system'
+        DOCKER_IMAGE_TAG = 'latest'
     }
 
     stages {
-
-        stage('Checkout') {
+        stage('check') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Andrei1033/Suunnittelumallit_TX00EY29-3012'
+                    url: 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
             }
         }
 
-        stage('Build (package)') {
+        stage('build') {
             steps {
-                dir("${env.PROJECT_DIR}") {
-                    bat 'mvn -B clean package -DskipTests'
+                dir('Classroom_Attendance_System') {
+                    bat 'java -version'
+                    bat 'javac -version'
+                    bat 'mvn -version'
+                    bat 'mvn clean install -B'
                 }
             }
         }
 
-        stage('Test') {
+        stage('test') {
             steps {
-                dir("${env.PROJECT_DIR}") {
-                    bat 'mvn -B test'
+                dir('Classroom_Attendance_System') {
+                    bat 'mvn test -B'
                 }
             }
         }
 
-        stage('JaCoCo Report') {
-            steps {
-                dir("${env.PROJECT_DIR}") {
-                    jacoco(
-                        execPattern:        'target/jacoco.exec',
-                        classPattern:       'target/classes',
-                        sourcePattern:      'src/main/java',
-                        exclusionPattern:   '**/module-info.class'
-                    )
-                }
-            }
-        }
+         stage('jacoco') {
+             steps {
+                 dir('Classroom_Attendance_System') {
+                     bat 'mvn jacoco:report -B'
+                 }
+             }
+             post {
+                 always {
+                     jacoco(
+                         execPattern: 'Classroom_Attendance_System/target/jacoco.exec',
+                         classPattern: 'Classroom_Attendance_System/target/classes',
+                         sourcePattern: 'Classroom_Attendance_System/src/main/java'
+                     )
+                 }
+             }
+         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    dir("${env.PROJECT_DIR}") {
-                        docker.build("${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_TAG}")
+                dir('Classroom_Attendance_System') {
+                    script {
+                        writeFile file: '.dockerignore', text: '''
+                        .git
+                        .gitignore
+                        .jenkins
+                        '''
+                        docker.build("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
                     }
                 }
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS_ID) {
-                        docker.image("${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_TAG}").push()
-                        docker.image("${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_TAG}").push('latest')
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS_ID) {
+                        docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()
                     }
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            junit allowEmptyResults: true,
-                  testResults:       "${env.PROJECT_DIR}/target/surefire-reports/*.xml"
-            archiveArtifacts allowEmptyArchive: true,
-                             artifacts:        "${env.PROJECT_DIR}/target/*.jar, ${env.PROJECT_DIR}/target/site/jacoco/**"
-        }
-        success {
-            echo "✅ Build & push OK: ${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_TAG}"
-        }
-        failure {
-            echo "❌ Pipeline failed"
         }
     }
 }
