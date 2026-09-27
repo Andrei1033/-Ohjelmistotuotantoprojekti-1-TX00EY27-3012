@@ -4,8 +4,6 @@ import com.example.app.DaoElements.LoginDao.UserDao;
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.View.Admin;
-import com.example.app.View.StudentStartPage;
-import com.example.app.View.TeacherStartPage;
 import javafx.scene.Parent;
 
 import java.util.Optional;
@@ -14,7 +12,11 @@ public class LoginController {
     private final UserDao userDao;
 
     public LoginController() {
-        this.userDao = new UserDao();
+        this(new UserDao());
+    }
+
+    public LoginController(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     public Optional<User> login(String email, String password) {

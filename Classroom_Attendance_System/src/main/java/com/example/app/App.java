@@ -20,6 +20,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        System.out.println("[BOOT] JavaFX start() called. Stage: " + stage);
         this.primaryStage = stage;
         stage.setTitle("Classroom Attendance System");
 
