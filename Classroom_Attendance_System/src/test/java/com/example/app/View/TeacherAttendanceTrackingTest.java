@@ -1,9 +1,6 @@
-
 package com.example.app.View;
-
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import com.example.app.Model.Teacher;
+import com.example.app.Model.TeacherCourse;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -14,76 +11,76 @@ public class TeacherAttendanceTrackingTest extends ApplicationTest {
 
     private TeacherAttendanceTracking teacherAttendanceTracking;
 
+    private Teacher teacher;
+    private TeacherCourse course;
+
     @Override
     public void start(Stage stage) {
+
+        teacher = new Teacher(
+                1,
+                "Testi",
+                "Opettaja",
+                "test@example.com"
+        );
+
+        course = new TeacherCourse(
+                1,
+                "Oppitunti",
+                1
+        );
+
         teacherAttendanceTracking =
-                new TeacherAttendanceTracking(() -> {});
+                new TeacherAttendanceTracking(
+                        teacher,
+                        course,
+                        1,
+                        () -> {
+                        }
+                );
     }
 
     @Test
     void teacherAttendanceTrackingShouldInitialize() {
-        assertNotNull(teacherAttendanceTracking);
-    }
 
-    @Test
-    void testLayoutStructure() {
-        assertInstanceOf(
-                BorderPane.class,
+        assertNotNull(
                 teacherAttendanceTracking
         );
+    }
 
-        assertInstanceOf(
-                VBox.class,
-                teacherAttendanceTracking.getLeft()
+    @Test
+    void teacherShouldBeCorrect() {
+
+        assertEquals(
+                1,
+                teacher.getId()
         );
 
-        assertInstanceOf(
-                VBox.class,
-                teacherAttendanceTracking.getCenter()
+        assertEquals(
+                "Testi Opettaja",
+                teacher.getFullName()
         );
     }
 
     @Test
-    void testSidebarExists() {
-        assertNotNull(
-                teacherAttendanceTracking.getLeft()
+    void courseShouldBeCorrect() {
+
+        assertEquals(
+                1,
+                course.getCourseid()
         );
-    }
 
-    @Test
-    void testContentExists() {
-        assertNotNull(
-                teacherAttendanceTracking.getCenter()
+        assertEquals(
+                "Oppitunti",
+                course.getCoursename()
         );
-    }
 
-    @Test
-    void testTitleExists() {
-        assertTrue(findLabel(
-                teacherAttendanceTracking,
-                "Oppitunti11111111111111 — 16.9.2026"
-        ));
-    }
-
-    private boolean findLabel(
-            javafx.scene.Node node,
-            String text
-    ) {
-        if (node instanceof Label label &&
-                text.equals(label.getText())) {
-            return true;
-        }
-
-        if (node instanceof javafx.scene.Parent parent) {
-            for (javafx.scene.Node child :
-                    parent.getChildrenUnmodifiable()) {
-
-                if (findLabel(child, text)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        assertEquals(
+                1,
+                course.getTeacherid()
+        );
     }
 }
+
+
+

@@ -32,9 +32,8 @@ import java.util.Map;
 
 public class TeacherAttendanceTracking {
 
-    // =========================================================
     // VÄRIT
-    // =========================================================
+
 
     private static final String NAVY = "#202F49";
     private static final String BLUE = "#344A70";
@@ -47,17 +46,17 @@ public class TeacherAttendanceTracking {
     private static final String BORDER = "#D8D8D8";
     private static final String LIGHT_BLUE = "#EAF0F8";
 
-    // =========================================================
+
     // LÄSNÄOLOTILAT
-    // =========================================================
+
 
     private static final String PRESENT = "present";
     private static final String LATE = "late";
     private static final String ABSENT = "absent";
 
-    // =========================================================
+
     // DATA
-    // =========================================================
+
 
     private final Teacher teacher;
     private final TeacherCourse course;
@@ -76,9 +75,9 @@ public class TeacherAttendanceTracking {
 
     private final Runnable onFinished;
 
-    // =========================================================
+
     // CONSTRUCTOR
-    // =========================================================
+
 
     public TeacherAttendanceTracking(
             Teacher teacher,
@@ -94,9 +93,9 @@ public class TeacherAttendanceTracking {
         this.attendanceDao = new AttendanceDao();
     }
 
-    // =========================================================
+
     // SHOW
-    // =========================================================
+
 
     public void show() {
 
@@ -112,31 +111,29 @@ public class TeacherAttendanceTracking {
                 "-fx-background-color: white;"
         );
 
-        // -----------------------------------------------------
+
         // SIDEBAR
-        // -----------------------------------------------------
+
 
         VBox sidebar = createSidebar();
 
         root.setLeft(sidebar);
 
-        // -----------------------------------------------------
+
         // MAIN CONTENT
-        // -----------------------------------------------------
+
 
         VBox content = createMainContent(stage);
 
         root.setCenter(content);
 
-        // -----------------------------------------------------
+
         // LATAA OPISKELIJAT
-        // -----------------------------------------------------
 
         loadStudents();
 
-        // -----------------------------------------------------
         // SCENE
-        // -----------------------------------------------------
+
 
         Scene scene = new Scene(
                 root,
@@ -149,9 +146,9 @@ public class TeacherAttendanceTracking {
         stage.show();
     }
 
-    // =========================================================
+
     // SIDEBAR
-    // =========================================================
+
 
     private VBox createSidebar() {
 
@@ -165,9 +162,9 @@ public class TeacherAttendanceTracking {
                 "-fx-background-color: " + NAVY + ";"
         );
 
-        // -----------------------------------------------------
+
         // LOGO
-        // -----------------------------------------------------
+
 
         Rectangle logoRectangle = new Rectangle(
                 28,
@@ -235,9 +232,9 @@ public class TeacherAttendanceTracking {
                 )
         );
 
-        // -----------------------------------------------------
+
         // KURSSINI
-        // -----------------------------------------------------
+
 
         Circle courseDot = new Circle(
                 2.5,
@@ -326,9 +323,9 @@ public class TeacherAttendanceTracking {
                 )
         );
 
-        // -----------------------------------------------------
+
         // SPACER
-        // -----------------------------------------------------
+
 
         Region sidebarSpacer = new Region();
 
@@ -337,9 +334,9 @@ public class TeacherAttendanceTracking {
                 Priority.ALWAYS
         );
 
-        // -----------------------------------------------------
+
         // OPETTAJAN TIEDOT
-        // -----------------------------------------------------
+
 
         Circle userCircle = new Circle(
                 15,
@@ -443,9 +440,9 @@ public class TeacherAttendanceTracking {
         return sidebar;
     }
 
-    // =========================================================
+
     // MAIN CONTENT
-    // =========================================================
+
 
     private VBox createMainContent(Stage stage) {
 
@@ -464,9 +461,8 @@ public class TeacherAttendanceTracking {
                 "-fx-background-color: white;"
         );
 
-        // -----------------------------------------------------
         // OTSIKKO
-        // -----------------------------------------------------
+
 
         Label title = new Label(
                 "Oppitunti — " + getCurrentDate()
@@ -484,9 +480,9 @@ public class TeacherAttendanceTracking {
                 )
         );
 
-        // -----------------------------------------------------
+
         // TALLENNA
-        // -----------------------------------------------------
+
 
         Button saveButton = new Button(
                 "Tallenna ja lopeta"
@@ -558,18 +554,17 @@ public class TeacherAttendanceTracking {
                 Pos.CENTER_LEFT
         );
 
-        // -----------------------------------------------------
         // VÄLI
-        // -----------------------------------------------------
+
 
         Region topSpace = new Region();
 
         topSpace.setPrefHeight(38);
         topSpace.setMinHeight(38);
 
-        // -----------------------------------------------------
+
         // ATTENDANCE CARD
-        // -----------------------------------------------------
+
 
         VBox attendanceCard =
                 createAttendanceCard();
@@ -609,9 +604,8 @@ public class TeacherAttendanceTracking {
         return content;
     }
 
-    // =========================================================
     // ATTENDANCE CARD
-    // =========================================================
+
 
     private VBox createAttendanceCard() {
 
@@ -643,9 +637,9 @@ public class TeacherAttendanceTracking {
 
         card.setEffect(shadow);
 
-        // -----------------------------------------------------
+
         // HEADER
-        // -----------------------------------------------------
+
 
         Label studentHeader = new Label(
                 "Opiskelijat"
@@ -731,9 +725,8 @@ public class TeacherAttendanceTracking {
         return card;
     }
 
-    // =========================================================
     // OPISKELIJOIDEN LATAUS
-    // =========================================================
+
 
     private void loadStudents() {
 
@@ -774,9 +767,8 @@ public class TeacherAttendanceTracking {
         updateCounters();
     }
 
-    // =========================================================
     // OPISKELIJARIVI
-    // =========================================================
+
 
     private void createStudentRow(User student) {
 
@@ -792,9 +784,9 @@ public class TeacherAttendanceTracking {
         String studentName =
                 student.getFullName();
 
-        // -----------------------------------------------------
+
         // AVATAR
-        // -----------------------------------------------------
+
 
         Circle avatarCircle = new Circle(
                 17,
@@ -837,9 +829,8 @@ public class TeacherAttendanceTracking {
                 34
         );
 
-        // -----------------------------------------------------
+
         // NIMI
-        // -----------------------------------------------------
 
         Label nameLabel =
                 new Label(studentName);
@@ -896,9 +887,9 @@ public class TeacherAttendanceTracking {
                 Pos.CENTER_LEFT
         );
 
-        // -----------------------------------------------------
+
         // NAPIT
-        // -----------------------------------------------------
+
 
         Button presentButton =
                 createStatusButton("Paikalla");
@@ -971,9 +962,9 @@ public class TeacherAttendanceTracking {
                 Pos.CENTER_RIGHT
         );
 
-        // -----------------------------------------------------
+
         // SPACER
-        // -----------------------------------------------------
+
 
         Region spacer = new Region();
 
@@ -982,9 +973,9 @@ public class TeacherAttendanceTracking {
                 Priority.ALWAYS
         );
 
-        // -----------------------------------------------------
+
         // RIVI
-        // -----------------------------------------------------
+
 
         HBox row = new HBox(
                 studentBox,
@@ -1035,9 +1026,9 @@ public class TeacherAttendanceTracking {
                 )
         );
 
-        // -----------------------------------------------------
+
         // ALUSTA POISSA
-        // -----------------------------------------------------
+
 
         updateButtonStyles(
                 presentButton,
@@ -1051,9 +1042,9 @@ public class TeacherAttendanceTracking {
         );
     }
 
-    // =========================================================
+
     // STATUS BUTTON
-    // =========================================================
+
 
     private Button createStatusButton(
             String text
@@ -1081,9 +1072,9 @@ public class TeacherAttendanceTracking {
         return button;
     }
 
-    // =========================================================
+
     // BUTTONIEN VÄRIT
-    // =========================================================
+
 
     private void updateButtonStyles(
             Button presentButton,
@@ -1153,9 +1144,9 @@ public class TeacherAttendanceTracking {
         );
     }
 
-    // =========================================================
+
     // LASKURIT
-    // =========================================================
+
 
     private void updateCounters() {
 
@@ -1199,9 +1190,9 @@ public class TeacherAttendanceTracking {
         );
     }
 
-    // =========================================================
+
     // COUNT LABEL
-    // =========================================================
+
 
     private Label createCountLabel(
             String color
@@ -1224,9 +1215,8 @@ public class TeacherAttendanceTracking {
         return label;
     }
 
-    // =========================================================
     // TALLENNUS
-    // =========================================================
+
 
     private void saveAndFinish(
             Stage stage
@@ -1281,9 +1271,9 @@ public class TeacherAttendanceTracking {
         }
     }
 
-    // =========================================================
+
     // VIRHE
-    // =========================================================
+
 
     private void showError(
             String message
@@ -1309,9 +1299,9 @@ public class TeacherAttendanceTracking {
         alert.showAndWait();
     }
 
-    // =========================================================
+
     // OPETTAJAN NIMI
-    // =========================================================
+
 
     private String getTeacherName() {
 
@@ -1337,9 +1327,9 @@ public class TeacherAttendanceTracking {
         return "Etunimi Sukunimi";
     }
 
-    // =========================================================
+
     // INITIALS
-    // =========================================================
+
 
     private String getInitials(
             String name
@@ -1374,9 +1364,9 @@ public class TeacherAttendanceTracking {
         ).toUpperCase();
     }
 
-    // =========================================================
+
     // PÄIVÄMÄÄRÄ
-    // =========================================================
+
 
     private String getCurrentDate() {
 
