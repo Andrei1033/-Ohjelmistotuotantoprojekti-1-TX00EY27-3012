@@ -15,10 +15,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Admin {
     private final AdminController controller;
     private final User currentUser;
     private final Runnable onLogout;
+    private boolean refreshingCourseOptions;
 
     public Admin() {
         this(new AdminController(), null, null);
@@ -452,6 +456,67 @@ public class Admin {
         };
     }
 
+    private void addCourseSelector(VBox courseFields,
+                                   List<ComboBox<String>> courseSelectors,
+                                   List<String> availableCourses,
+                                   String selectedCourse) {
+        ComboBox<String> course = new ComboBox<>(
+                FXCollections.observableArrayList("Ei kursseja")
+        );
+        course.getItems().addAll(availableCourses);
+        course.setValue(selectedCourse);
+        course.setPrefWidth(220);
+        courseSelectors.add(course);
+        course.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (refreshingCourseOptions) {
+                return;
+            }
+            if (newValue != null
+                    && !newValue.equals("Ei kursseja")
+                    && courseSelectors.stream()
+                    .anyMatch(other -> other != course && newValue.equals(other.getValue()))) {
+                refreshingCourseOptions = true;
+                course.setValue(oldValue == null ? "Ei kursseja" : oldValue);
+                refreshingCourseOptions = false;
+                return;
+            }
+            refreshCourseOptions(courseSelectors, availableCourses);
+        });
+
+        int addButtonIndex = courseFields.getChildren().size();
+        if (addButtonIndex > 0
+                && courseFields.getChildren().get(addButtonIndex - 1) instanceof Button) {
+            addButtonIndex--;
+        }
+        courseFields.getChildren().add(addButtonIndex, course);
+    }
+
+    private void refreshCourseOptions(List<ComboBox<String>> courseSelectors,
+                                      List<String> availableCourses) {
+        refreshingCourseOptions = true;
+        try {
+            List<String> selectedCourses = courseSelectors.stream()
+                    .map(ComboBox::getValue)
+                    .filter(course -> course != null && !course.equals("Ei kursseja"))
+                    .toList();
+
+            for (ComboBox<String> selector : courseSelectors) {
+                String currentCourse = selector.getValue();
+                List<String> options = new ArrayList<>();
+                options.add("Ei kursseja");
+                for (String course : availableCourses) {
+                    if (!selectedCourses.contains(course) || course.equals(currentCourse)) {
+                        options.add(course);
+                    }
+                }
+                selector.setItems(FXCollections.observableArrayList(options));
+                selector.setValue(options.contains(currentCourse) ? currentCourse : "Ei kursseja");
+            }
+        } finally {
+            refreshingCourseOptions = false;
+        }
+    }
+
     private void showUserDialog(com.example.app.Model.Admin user,
                                 TableView<com.example.app.Model.Admin> table) {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -474,7 +539,30 @@ public class Admin {
         TextField email = new TextField(user == null ? "" : user.getEmail());
         ComboBox<String> role = new ComboBox<>(FXCollections.observableArrayList("Opiskelija", "Opettaja", "Admin"));
         role.setValue(user == null ? "Opiskelija" : roleText(user.getRole()));
-        TextField courses = new TextField(user == null ? "" : user.getCourses());
+        List<ComboBox<String>> courseSelectors = new ArrayList<>();
+        VBox courseFields = new VBox(5);
+        List<String> existingCourses = user == null || user.getCourses().equals("—")
+                ? List.of()
+                : List.of(user.getCourses().split(",\\s*"));
+        List<String> availableCourses = new ArrayList<>(controller.getCourses());
+        if (existingCourses.isEmpty()) {
+            addCourseSelector(courseFields, courseSelectors, availableCourses, "Ei kursseja");
+        } else {
+            for (String course : existingCourses) {
+                if (!availableCourses.contains(course)) {
+                    availableCourses.add(course);
+                }
+                addCourseSelector(courseFields, courseSelectors, availableCourses, course);
+            }
+        }
+        refreshCourseOptions(courseSelectors, availableCourses);
+        Button addCourse = new Button("+");
+        addCourse.setFocusTraversable(false);
+        addCourse.setOnAction(event -> {
+            addCourseSelector(courseFields, courseSelectors, availableCourses, "Ei kursseja");
+            refreshCourseOptions(courseSelectors, availableCourses);
+        });
+        courseFields.getChildren().add(addCourse);
         PasswordField password = new PasswordField();
         password.setPromptText(user == null ? "Pakollinen" : "Jätä tyhjäksi, jos ei vaihdeta");
         PasswordField confirmPassword = new PasswordField();
@@ -486,10 +574,14 @@ public class Admin {
         fields.addRow(0, new Label("Nimi"), name);
         fields.addRow(1, new Label("Sähköposti"), email);
         fields.addRow(2, new Label("Rooli"), role);
-        fields.addRow(3, new Label("Kurssit"), courses);
+        fields.addRow(3, new Label("Kurssit"), courseFields);
         fields.addRow(4, new Label("Salasana"), password);
         fields.addRow(5, new Label("Vahvista"), confirmPassword);
-        dialog.getDialogPane().setContent(fields);
+        ScrollPane scrollPane = new ScrollPane(fields);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefViewportHeight(360);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        dialog.getDialogPane().setContent(scrollPane);
         dialog.getDialogPane().lookupButton(save).getStyleClass().add("dialog-save-button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL)
                 .getStyleClass().add("dialog-cancel-button");
@@ -522,7 +614,12 @@ public class Admin {
             if (button != save) return null;
             try {
                 Role selectedRole = roleFromText(role.getValue());
-                String selectedCourses = courses.getText().isBlank() ? "—" : courses.getText();
+                String selectedCourses = courseSelectors.stream()
+                        .map(ComboBox::getValue)
+                        .filter(course -> course != null && !course.equals("Ei kursseja"))
+                        .distinct()
+                        .reduce((first, second) -> first + ", " + second)
+                        .orElse("—");
                 String selectedPassword = password.getText();
                 if (user == null && selectedPassword.isBlank()) {
                     throw new IllegalArgumentException("Salasana on pakollinen uudelle käyttäjälle");
