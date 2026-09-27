@@ -1,6 +1,8 @@
 package com.example.app.Model;
 
 
+import com.example.app.DaoElements.LessonDao;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -86,4 +88,5 @@ public class Lesson {
         }
         return date.format(DateTimeFormatter.ofPattern("d.M.yyyy"));
     }
+
 }

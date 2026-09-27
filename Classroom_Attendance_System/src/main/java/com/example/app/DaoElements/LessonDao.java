@@ -2,10 +2,9 @@ package com.example.app.DaoElements;
 
 import com.example.app.Database.DatabaseConnection;
 import com.example.app.Model.Lesson;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +94,27 @@ public class LessonDao {
         }
         return -1;
     }
+    public static boolean addLesson(LocalDateTime startTime, LocalDateTime endTime, int courseId) {
+        String sql = "INSERT INTO lesson (start_time, end_time, course_id, status) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setTimestamp(1, Timestamp.valueOf(startTime));
+            pstmt.setTimestamp(2, Timestamp.valueOf(endTime));
+            pstmt.setInt(3, courseId);
+            pstmt.setString(4, "UPCOMING"); // Oletustila uudelle oppitunnille
+
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Virhe oppitunnin lisäyksessä: " + e.getMessage());
+            return false;
+        }
+    }
+
+
 }
 
 
