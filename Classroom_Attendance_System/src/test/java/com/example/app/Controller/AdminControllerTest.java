@@ -1,7 +1,7 @@
 package com.example.app.Controller;
 
 import com.example.app.DaoElements.AdminDao;
-import com.example.app.Model.AdminTest;
+import com.example.app.Model.Admin;
 import com.example.app.Model.LoginComponents.Role;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class AdminControllerTest {
     @Test
     void loadsUsersAndCalculatesNextIdFromDao() {
-        AdminTest student = student();
-        AdminTest teacher = teacher();
+        Admin student = student();
+        Admin teacher = teacher();
         AdminController controller = new AdminController(
                 new StubAdminDao(List.of(student, teacher)));
 
@@ -27,8 +27,8 @@ class AdminControllerTest {
     void storesDistinctCoursesAndExcludesPlaceholder() {
         AdminController controller = new AdminController(new StubAdminDao(List.of(
                 student(),
-                new AdminTest(12, "No Course", "none@example.com", Role.ADMIN, "—"),
-                new AdminTest(15, "Another Student", "another@example.com",
+                new Admin(12, "No Course", "none@example.com", Role.ADMIN, "—"),
+                new Admin(15, "Another Student", "another@example.com",
                         Role.STUDENT, "Physics, Chemistry"))));
 
         assertEquals(Set.of("Mathematics", "Physics", "Chemistry"), controller.getCourses());
@@ -36,8 +36,8 @@ class AdminControllerTest {
 
     @Test
     void filtersByRoleCaseInsensitiveSearchAndCourse() {
-        AdminTest student = student();
-        AdminTest teacher = teacher();
+        Admin student = student();
+        Admin teacher = teacher();
         AdminController controller = new AdminController(new StubAdminDao(List.of(student, teacher)));
 
         assertSingleMatch(student,
@@ -60,7 +60,7 @@ class AdminControllerTest {
     @Test
     void addUserDelegatesToDaoAndAddsReturnedUser() {
         StubAdminDao dao = new StubAdminDao(List.of(student(), teacher()));
-        AdminTest added = new AdminTest(20, "Katherine Johnson", "katherine@example.com",
+        Admin added = new Admin(20, "Katherine Johnson", "katherine@example.com",
                 Role.STUDENT, "Physics");
         dao.insertedUser = added;
         AdminController controller = new AdminController(dao);
@@ -74,7 +74,7 @@ class AdminControllerTest {
 
     @Test
     void updateUserDelegatesToDaoAndUpdatesTheObservableUser() {
-        AdminTest user = student();
+        Admin user = student();
         StubAdminDao dao = new StubAdminDao(List.of(user));
         AdminController controller = new AdminController(dao);
 
@@ -91,7 +91,7 @@ class AdminControllerTest {
 
     @Test
     void deleteUserDelegatesToDaoAndRemovesTheUser() {
-        AdminTest user = student();
+        Admin user = student();
         StubAdminDao dao = new StubAdminDao(List.of(user, teacher()));
         AdminController controller = new AdminController(dao);
 
@@ -105,7 +105,7 @@ class AdminControllerTest {
     void rejectsNullAndUnknownUsersBeforeCallingDao() {
         StubAdminDao dao = new StubAdminDao(List.of(student()));
         AdminController controller = new AdminController(dao);
-        AdminTest unknown = new AdminTest(99, "Unknown User", "unknown@example.com", Role.ADMIN, "—");
+        Admin unknown = new Admin(99, "Unknown User", "unknown@example.com", Role.ADMIN, "—");
 
         assertAll(
                 () -> assertThrows(IllegalArgumentException.class,
@@ -130,30 +130,30 @@ class AdminControllerTest {
         return new AdminController(new StubAdminDao(List.of(student(), teacher())));
     }
 
-    private static void assertSingleMatch(AdminTest expected, List<AdminTest> actual) {
+    private static void assertSingleMatch(Admin expected, List<Admin> actual) {
         assertEquals(1, actual.size());
         assertSame(expected, actual.get(0));
     }
 
-    private static AdminTest student() {
-        return new AdminTest(4, "Ada Lovelace", "ada@example.com",
+    private static Admin student() {
+        return new Admin(4, "Ada Lovelace", "ada@example.com",
                 Role.STUDENT, "Mathematics, Physics");
     }
 
-    private static AdminTest teacher() {
-        return new AdminTest(9, "Grace Hopper", "grace@example.com",
+    private static Admin teacher() {
+        return new Admin(9, "Grace Hopper", "grace@example.com",
                 Role.TEACHER, "Programming");
     }
 
     private static final class StubAdminDao extends AdminDao {
-        private final List<AdminTest> users;
+        private final List<Admin> users;
         private final RuntimeException loadException;
-        private AdminTest insertedUser;
+        private Admin insertedUser;
         private final List<String> insertCalls = new java.util.ArrayList<>();
         private final List<String> updateCalls = new java.util.ArrayList<>();
         private final List<String> deleteCalls = new java.util.ArrayList<>();
 
-        private StubAdminDao(List<AdminTest> users) {
+        private StubAdminDao(List<Admin> users) {
             this.users = users;
             this.loadException = null;
         }
@@ -164,7 +164,7 @@ class AdminControllerTest {
         }
 
         @Override
-        public List<AdminTest> findAll() {
+        public List<Admin> findAll() {
             if (loadException != null) {
                 throw loadException;
             }
@@ -172,18 +172,18 @@ class AdminControllerTest {
         }
 
         @Override
-        public AdminTest insert(String name, String email, Role role, String courses) {
+        public Admin insert(String name, String email, Role role, String courses) {
             insertCalls.add(name + "|" + email + "|" + role + "|" + courses);
             return insertedUser;
         }
 
         @Override
-        public void update(AdminTest user, String name, String email, Role role, String courses) {
+        public void update(Admin user, String name, String email, Role role, String courses) {
             updateCalls.add(user.getId() + "|" + name + "|" + email + "|" + role + "|" + courses);
         }
 
         @Override
-        public void delete(AdminTest user) {
+        public void delete(Admin user) {
             deleteCalls.add(String.valueOf(user.getId()));
         }
     }

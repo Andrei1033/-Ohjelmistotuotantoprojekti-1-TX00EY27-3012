@@ -7,26 +7,8 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="dfg">
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/LoginControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/StudentControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/TeacherControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/LessonDaoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/LoginDao/UserDaoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/AttendanceDaoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/TeacherDaoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/AdminTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/LessonTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/LoginComponents/UserTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/AttendanceRecordTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/TeacherTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/TeachetCourseTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ProfileEditWindowTest.java" afterDir="false" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="&quot;empty&quot; test files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/AdminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/AdminControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/AdminDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/AdminDaoTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherAttendanceTrackingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherAttendanceTrackingTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherCoursePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherCoursePageTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherStartPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherStartPageTest.java" afterDir="false" />
@@ -287,7 +269,7 @@
       <workItem from="1790442534930" duration="1028000" />
       <workItem from="1790496966973" duration="5000" />
       <workItem from="1790511867820" duration="5537000" />
-      <workItem from="1790535061751" duration="2268000" />
+      <workItem from="1790535061751" duration="2646000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -537,7 +519,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790517480164</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="&quot;empty&quot; test files">
+      <option name="closed" value="true" />
+      <created>1790537400536</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1790537400536</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -581,7 +571,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="view, controller, model kansio lisäty 2" />
     <MESSAGE value="Tehty jacoko ja minun StudentAttendanceTracking sivu." />
     <MESSAGE value="Tehty jacoko ja minun StudentAttendanceTracking sivu + unversioned files." />
     <MESSAGE value="olen tehny login logika. nyt main sivu aloita ohjelma" />
@@ -606,7 +595,8 @@
     <MESSAGE value="ccc" />
     <MESSAGE value="xui" />
     <MESSAGE value="c" />
-    <option name="LAST_COMMIT_MESSAGE" value="c" />
+    <MESSAGE value="&quot;empty&quot; test files" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;empty&quot; test files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
