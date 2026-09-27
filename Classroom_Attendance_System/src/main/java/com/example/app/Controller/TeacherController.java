@@ -2,6 +2,7 @@ package com.example.app.Controller;
 
 import com.example.app.DaoElements.LessonDao;
 import com.example.app.DaoElements.StudentDao.CourseDao;
+
 import com.example.app.Model.TeacherCourse;
 import com.example.app.Model.Lesson;
 import com.example.app.Model.LoginComponents.User;
@@ -44,19 +45,17 @@ public class TeacherController {
 
 
     public void showStartPage() {
-        TeacherStartPage startPage = new TeacherStartPage(currentTeacher, this ,onLogout);
+        TeacherStartPage startPage = new TeacherStartPage(currentTeacher, this, onLogout);
         root.setCenter(startPage);
     }
 
 
-
-    public boolean createCourses(String courseName  ,int teacherId) {
+    public boolean createCourses(String courseName, int teacherId) {
         if (courseName == null) {
             return false;
         }
         return courseDao.addCourse(courseName.trim(), teacherId);
     }
-
 
 
     public List<TeacherCourse> getTeacherCourses(int teacherId) {
@@ -66,7 +65,7 @@ public class TeacherController {
         return courseDao.getCoursesByTeacherId(teacherId);
     }
 
-    public List<Lesson> getLessonsForCourse(int courseId){
+    public List<Lesson> getLessonsForCourse(int courseId) {
         if (courseId <= 0) {
             return Collections.emptyList();
         }
@@ -74,30 +73,125 @@ public class TeacherController {
     }
 
     public void startLesson(int courseId) {
+
         int lessonId = lessonDao.startLesson(courseId);
 
-        TeacherAttendanceTracking trackingpage = new TeacherAttendanceTracking(
-                this::showStartPage
-        );
-        root.setCenter(trackingpage);
+        if (lessonId == -1) {
+
+            javafx.scene.control.Alert alert =
+                    new javafx.scene.control.Alert(
+                            javafx.scene.control.Alert.AlertType.ERROR
+                    );
+
+            alert.setTitle("Virhe");
+            alert.setHeaderText(null);
+            alert.setContentText(
+                    "Oppitunnin aloittaminen epäonnistui."
+            );
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        TeacherCourse course = null;
+
+        for (TeacherCourse c : getTeacherCourses(currentTeacher.getId())) {
+
+            if (c.getCourseid() == courseId) {
+                course = c;
+                break;
+            }
+        }
+
+        if (course == null) {
+
+            javafx.scene.control.Alert alert =
+                    new javafx.scene.control.Alert(
+                            javafx.scene.control.Alert.AlertType.ERROR
+                    );
+
+            alert.setTitle("Virhe");
+            alert.setHeaderText(null);
+            alert.setContentText(
+                    "Kurssia ei löytynyt."
+            );
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        TeacherCourse finalCourse = course;
+
+        TeacherAttendanceTracking tracking =
+                new TeacherAttendanceTracking(
+                        currentTeacher,
+                        finalCourse,
+                        lessonId,
+                        () -> {
+                            // Päivitetään kurssisivu tarvittaessa.
+                        }
+                );
+
+        tracking.show();
     }
 
     public void openExistingLesson(int courseId, int lessonId) {
-        TeacherAttendanceTracking trackingpage = new TeacherAttendanceTracking(
-                this::showStartPage
-        );
-        root.setCenter(trackingpage);
-    }
 
-    public void openCoursePage(int courseId) {
-        TeacherCoursePage coursePage = new TeacherCoursePage(
-                currentTeacher,
-                courseId,
-                this,
-                this::showStartPage,
-                () -> System.out.println("Lisää opiskelijoita")
-        );
-        root.setCenter(coursePage);
+        TeacherCourse course = null;
+
+        for (TeacherCourse c :
+                getTeacherCourses(currentTeacher.getId())) {
+
+            if (c.getCourseid() == courseId) {
+                course = c;
+                break;
+            }
+        }
+
+        if (course == null) {
+
+            javafx.scene.control.Alert alert =
+                    new javafx.scene.control.Alert(
+                            javafx.scene.control.Alert.AlertType.ERROR
+                    );
+
+            alert.setTitle("Virhe");
+            alert.setHeaderText(null);
+            alert.setContentText(
+                    "Kurssia ei löytynyt."
+            );
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        TeacherCourse finalCourse = course;
+
+        TeacherAttendanceTracking tracking =
+                new TeacherAttendanceTracking(
+                        currentTeacher,
+                        finalCourse,
+                        lessonId,
+                        this::showStartPage
+                );
+
+        tracking.show();
+    }
+    //////////////
+
+        public void openCoursePage ( int courseId){
+            TeacherCoursePage coursePage = new TeacherCoursePage(
+                    currentTeacher,
+                    courseId,
+                    this,
+                    this::showStartPage,
+                    () -> System.out.println("Lisää opiskelijoita")
+            );
+            root.setCenter(coursePage);
+
+        }
 
     }
-}
