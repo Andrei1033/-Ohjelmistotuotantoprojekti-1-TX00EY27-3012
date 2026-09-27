@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
+
 public class LessonDao {
     public List<Lesson> getLessonsByCourseById(int courseId) {
         List<Lesson> lessons = new ArrayList<>();
@@ -44,8 +47,8 @@ public class LessonDao {
 
         String sql =
                 "INSERT INTO lessons " +
-                        "(course_id, start_time, end_time, topic) " +
-                        "VALUES (?, ?, ?, ?)";
+                        "(course_id, start_time, end_time) " +
+                        "VALUES (?, ?, ?)";
 
         try (
                 Connection conn = DatabaseConnection.getConnection();
@@ -57,7 +60,7 @@ public class LessonDao {
         ) {
 
             java.time.LocalDateTime startTime =
-                    java.time.LocalDateTime.now();
+                    LocalDateTime.now().withNano(0);
 
             // Väliaikainen end_time.
             // Todellinen lopetusaika asetetaan endLesson()-metodissa.
@@ -65,9 +68,8 @@ public class LessonDao {
                     startTime.plusMinutes(1);
 
             stmt.setInt(1, courseId);
-            stmt.setObject(2, startTime);
-            stmt.setObject(3, endTime);
-            stmt.setString(4, "");
+            stmt.setObject(2, Timestamp.valueOf(startTime));
+            stmt.setObject(3, Timestamp.valueOf(endTime));
 
             int affected = stmt.executeUpdate();
 
@@ -94,28 +96,11 @@ public class LessonDao {
         }
         return -1;
     }
-    public static boolean addLesson(LocalDateTime startTime, LocalDateTime endTime, int courseId) {
-        String sql = "INSERT INTO lesson (start_time, end_time, course_id, status) VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setTimestamp(1, Timestamp.valueOf(startTime));
-            pstmt.setTimestamp(2, Timestamp.valueOf(endTime));
-            pstmt.setInt(3, courseId);
-            pstmt.setString(4, "UPCOMING"); // Oletustila uudelle oppitunnille
-
-            int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
-
-        } catch (SQLException e) {
-            System.err.println("Virhe oppitunnin lisäyksessä: " + e.getMessage());
-            return false;
-        }
-    }
-
-
 }
+
+
+
+
 
 
 

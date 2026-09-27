@@ -1,6 +1,8 @@
 package com.example.app.DaoElements.StudentDao;
 
 import com.example.app.Database.DatabaseConnection;
+import com.example.app.Model.LoginComponents.Role;
+import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.StudentComponents.Course;
 import com.example.app.Model.TeacherCourse;
 
@@ -106,4 +108,89 @@ public class CourseDao {
 
         return courses;
     }
+
+    public List<User> getAllStudents() {
+        List<User> students = new ArrayList<>();
+        String sql = "SELECT user_id, first_name, last_name, email FROM users WHERE role = 'STUDENT' ORDER BY last_name, first_name";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                User student = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("email"),
+                        Role.STUDENT
+                );
+                students.add(student);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Virhe opiskelijoiden hakemisessa: " + e.getMessage());
+        }
+
+        return students;
+    }
+
+
+    public boolean addStudents(int studentId, int courseId) {
+        String sql = "INSERT INTO course_students (course_id, student_id) VALUES (?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, courseId);
+            ps.setInt(2, studentId);
+
+            int affectedRows = ps.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Virhe opiskelijan lisäämisessä kurssille: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public List<User>getStudentsForCourse(int courseId) {
+        List<User> students = new ArrayList<>();
+        String sql = "SELECT u.user_id, u.first_name, u.last_name, u.email, u.role " +
+                "FROM users u " +
+                "JOIN course_students cs ON u.user_id = cs.student_id " +
+                "WHERE cs.course_id = ? AND u.role = 'STUDENT'";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, courseId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int userId = rs.getInt("user_id");
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    String email = rs.getString("email");
+                    String roleStr = rs.getString("role");
+                    Role role = Role.fromString(roleStr);
+
+                    students.add(new User(userId, firstName, lastName, email, role));
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Virhe haettaessa kurssin opiskelijoita: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return students;
+    }
+
+
 }
+
+
+
+
+

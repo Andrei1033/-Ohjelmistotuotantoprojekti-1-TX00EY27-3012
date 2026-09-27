@@ -14,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -195,20 +194,24 @@ public class TeacherController {
 
         }
 
+    public List<User> getAllStudents(int courseId) {
+        return courseDao.getAllStudents();
+    }
+    public boolean addStudents(List<Integer> studentIds, int courseId) {
+        if (studentIds == null || studentIds.isEmpty()) {
+            return false;
+        }
+        for (int studentId : studentIds) {
+            courseDao.addStudents(studentId, courseId);
+        }
+        return true;
+    }
 
-    public boolean createLesson (LocalDateTime startTime, LocalDateTime endTime, int courseId) {
+    public List<User> getStudentsForCourse(int courseId) {
         if (courseId <= 0) {
-            System.err.println("Virhe: Virheellinen kurssi-ID.");
-            return false;
+            return Collections.emptyList();
         }
-        if (startTime == null) {
-            System.err.println("Virhe: Aloitus- tai päättymisaika puuttuu.");
-            return false;
-        }
-        if (endTime.isBefore(startTime)) {
-            System.err.println("Virhe: Päättymisaika ei voi olla ennen alkamisaikaa.");
-            return false;
-        }
-        return LessonDao.addLesson(startTime, endTime, courseId);
+        return courseDao.getStudentsForCourse(courseId);
     }
 }
+
