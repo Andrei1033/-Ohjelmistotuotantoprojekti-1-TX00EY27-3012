@@ -64,17 +64,32 @@ public class AdminController {
     }
 
     public Admin addUser(String name, String email, Role role, String courses) {
-        Admin user = adminDao.insert(name, email, role, courses);
+        return addUser(name, email, role, courses, null);
+    }
+
+    public Admin addUser(String name, String email, Role role, String courses, String password) {
+        Admin user = password == null
+                ? adminDao.insert(name, email, role, courses)
+                : adminDao.insert(name, email, role, courses, password);
         users.add(user);
         nextId = Math.max(nextId, user.getId() + 1);
         return user;
     }
 
     public void updateUser(Admin user, String name, String email, Role role, String courses) {
+        updateUser(user, name, email, role, courses, null);
+    }
+
+    public void updateUser(Admin user, String name, String email, Role role, String courses,
+                           String password) {
         if (user == null || !users.contains(user)) {
             throw new IllegalArgumentException("Unknown user");
         }
-        adminDao.update(user, name, email, role, courses);
+        if (password == null) {
+            adminDao.update(user, name, email, role, courses);
+        } else {
+            adminDao.update(user, name, email, role, courses, password);
+        }
         user.update(name, email, role, courses);
     }
 

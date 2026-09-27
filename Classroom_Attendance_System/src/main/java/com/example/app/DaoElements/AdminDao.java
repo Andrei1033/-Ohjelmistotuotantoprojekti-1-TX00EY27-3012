@@ -61,6 +61,10 @@ public class AdminDao {
     }
 
     public Admin insert(String name, String email, Role role, String courses) {
+        return insert(name, email, role, courses, DEFAULT_PASSWORD_HASH);
+    }
+
+    public Admin insert(String name, String email, Role role, String courses, String password) {
         String[] nameParts = splitName(name);
         String insertUser = """
                 INSERT INTO users (first_name, last_name, email, password, role)
@@ -74,7 +78,7 @@ public class AdminDao {
                 statement.setString(1, nameParts[0]);
                 statement.setString(2, nameParts[1]);
                 statement.setString(3, email);
-                statement.setString(4, DEFAULT_PASSWORD_HASH);
+                statement.setString(4, password);
                 statement.setString(5, role.name().toLowerCase());
                 statement.executeUpdate();
 
@@ -97,10 +101,21 @@ public class AdminDao {
     }
 
     public void update(Admin user, String name, String email, Role role, String courses) {
+        update(user, name, email, role, courses, null);
+    }
+
+    public void update(Admin user, String name, String email, Role role, String courses,
+                       String password) {
         String[] nameParts = splitName(name);
-        String updateUser = """
+        String updateUser = password == null || password.isBlank()
+                ? """
                 UPDATE users
                 SET first_name = ?, last_name = ?, email = ?, role = ?
+                WHERE user_id = ?
+                """
+                : """
+                UPDATE users
+                SET first_name = ?, last_name = ?, email = ?, role = ?, `password` = ?
                 WHERE user_id = ?
                 """;
 
@@ -111,7 +126,12 @@ public class AdminDao {
                 statement.setString(2, nameParts[1]);
                 statement.setString(3, email);
                 statement.setString(4, role.name().toLowerCase());
-                statement.setInt(5, user.getId());
+                if (password == null || password.isBlank()) {
+                    statement.setInt(5, user.getId());
+                } else {
+                    statement.setString(5, password);
+                    statement.setInt(6, user.getId());
+                }
                 if (statement.executeUpdate() != 1) {
                     throw new SQLException("Käyttäjää ei löytynyt tietokannasta");
                 }

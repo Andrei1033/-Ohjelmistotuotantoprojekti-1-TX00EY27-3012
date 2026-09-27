@@ -36,7 +36,7 @@ public class LoginController {
         return switch (role) {
             case STUDENT -> new StudentController(user, onLogout).getView();
             case TEACHER -> new TeacherController(user, onLogout).getView();
-            case ADMIN -> new Admin().getView();
+            case ADMIN -> new Admin(user, onLogout).getView();
         };
     }
 }

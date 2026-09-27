@@ -2,8 +2,10 @@ package com.example.app.View;
 
 import com.example.app.Controller.AdminController;
 import com.example.app.Model.LoginComponents.Role;
+import com.example.app.Model.LoginComponents.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.Cursor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -15,13 +17,33 @@ import javafx.scene.text.FontWeight;
 
 public class Admin {
     private final AdminController controller;
+    private final User currentUser;
+    private final Runnable onLogout;
 
     public Admin() {
-        this(new AdminController());
+        this(new AdminController(), null, null);
     }
 
     public Admin(AdminController controller) {
+        this(controller, null, null);
+    }
+
+    public Admin(User currentUser) {
+        this(new AdminController(), currentUser, null);
+    }
+
+    public Admin(User currentUser, Runnable onLogout) {
+        this(new AdminController(), currentUser, onLogout);
+    }
+
+    public Admin(AdminController controller, User currentUser) {
+        this(controller, currentUser, null);
+    }
+
+    public Admin(AdminController controller, User currentUser, Runnable onLogout) {
         this.controller = controller;
+        this.currentUser = currentUser;
+        this.onLogout = onLogout;
     }
 
     public BorderPane getView() {
@@ -35,12 +57,12 @@ public class Admin {
         header.setAlignment(Pos.CENTER_LEFT);
         header.setPadding(new Insets(0, 0, 20, 0));
 
-        Circle logoCircle = new Circle(10, Color.web("#536FA4"));
-        Label logoText = sidebarText("LO", 9, FontWeight.BOLD, "#FFFFFF");
+        Circle logoCircle = new Circle(13, Color.web("#536FA4"));
+        Label logoText = sidebarText("LO", 12, FontWeight.BOLD, "#FFFFFF");
         StackPane logo = new StackPane(logoCircle, logoText);
         logo.setPrefSize(20, 20);
 
-        Label appName = sidebarText("Läsnäolo", 11, FontWeight.BOLD, "#FFFFFF");
+        Label appName = sidebarText("Läsnäolo", 13, FontWeight.BOLD, "#FFFFFF");
         header.getChildren().addAll(logo, appName);
 
         Button coursesButton = new Button("<   Kurssini");
@@ -58,21 +80,52 @@ public class Admin {
                 .filter(user -> user.getRole() == Role.ADMIN)
                 .findFirst()
                 .orElse(null);
-        String userName = currentAdmin == null ? "Etunimi Sukunimi" : currentAdmin.getName();
+        String userName = currentUser == null
+                ? (currentAdmin == null ? "Etunimi Sukunimi" : currentAdmin.getName())
+                : currentUser.getFullName();
+        String userRole = currentUser == null
+                ? "Ylläpitäjä"
+                : roleLabel(currentUser);
 
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
-        Circle avatarCircle = new Circle(10, Color.web("#536FA4"));
-        Label initials = sidebarText(initialsOf(userName), 8, FontWeight.BOLD, "#FFFFFF");
+        user.setCursor(Cursor.HAND);
+        Circle avatarCircle = new Circle(15, Color.web("#536FA4"));
+        Label initials = sidebarText(initialsOf(userName), 12, FontWeight.BOLD, "#FFFFFF");
         StackPane avatar = new StackPane(avatarCircle, initials);
         avatar.setPrefSize(20, 20);
+        avatar.setCursor(Cursor.HAND);
 
-        VBox userInfo = new VBox(0,
-                sidebarText(userName, 8, FontWeight.BOLD, "#FFFFFF"),
-                sidebarText("Ylläpitäjä", 6, FontWeight.NORMAL, "#A9B0BD"));
+        Label userNameLabel = sidebarText(userName, 12, FontWeight.BOLD, "#FFFFFF");
+        Label userRoleLabel = sidebarText(userRole, 11, FontWeight.NORMAL, "#A9B0BD");
+        VBox userInfo = new VBox(0, userNameLabel, userRoleLabel);
         user.getChildren().addAll(avatar, userInfo);
 
-        sidebar.getChildren().addAll(header, new Region(), coursesButton, spacer, user);
+        Button logout = new Button("Kirjaudu ulos");
+        logout.setMaxWidth(Double.MAX_VALUE);
+        logout.setStyle("-fx-background-color: transparent; -fx-text-fill: #A9B0BD; "
+                + "-fx-font-size: 9px; -fx-alignment: CENTER-LEFT; -fx-cursor: hand;");
+        logout.setOnAction(event -> {
+            if (onLogout != null) {
+                onLogout.run();
+            }
+        });
+
+        user.setOnMouseClicked(event -> {
+            if (currentUser != null && user.getScene() != null) {
+                ProfileEditWindow.show(
+                        user.getScene().getWindow(),
+                        currentUser,
+                        () -> {
+                            userNameLabel.setText(currentUser.getFullName());
+                            initials.setText(initialsOf(currentUser.getFullName()));
+                        }
+                );
+                event.consume();
+            }
+        });
+
+        sidebar.getChildren().addAll(header, new Region(), coursesButton, spacer, logout, user);
 
 
         HBox filters = new HBox(10);
@@ -391,6 +444,14 @@ public class Admin {
         };
     }
 
+    private String roleLabel(User user) {
+        return switch (user.getRole()) {
+            case ADMIN -> "Ylläpitäjä";
+            case TEACHER -> "Opettaja";
+            case STUDENT -> "Opiskelija";
+        };
+    }
+
     private void showUserDialog(com.example.app.Model.Admin user,
                                 TableView<com.example.app.Model.Admin> table) {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -414,6 +475,10 @@ public class Admin {
         ComboBox<String> role = new ComboBox<>(FXCollections.observableArrayList("Opiskelija", "Opettaja", "Admin"));
         role.setValue(user == null ? "Opiskelija" : roleText(user.getRole()));
         TextField courses = new TextField(user == null ? "" : user.getCourses());
+        PasswordField password = new PasswordField();
+        password.setPromptText(user == null ? "Pakollinen" : "Jätä tyhjäksi, jos ei vaihdeta");
+        PasswordField confirmPassword = new PasswordField();
+        confirmPassword.setPromptText("Vahvista salasana");
         GridPane fields = new GridPane();
         fields.getStyleClass().add("admin-dialog-fields");
         fields.setHgap(10);
@@ -422,6 +487,8 @@ public class Admin {
         fields.addRow(1, new Label("Sähköposti"), email);
         fields.addRow(2, new Label("Rooli"), role);
         fields.addRow(3, new Label("Kurssit"), courses);
+        fields.addRow(4, new Label("Salasana"), password);
+        fields.addRow(5, new Label("Vahvista"), confirmPassword);
         dialog.getDialogPane().setContent(fields);
         dialog.getDialogPane().lookupButton(save).getStyleClass().add("dialog-save-button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL)
@@ -456,10 +523,20 @@ public class Admin {
             try {
                 Role selectedRole = roleFromText(role.getValue());
                 String selectedCourses = courses.getText().isBlank() ? "—" : courses.getText();
+                String selectedPassword = password.getText();
+                if (user == null && selectedPassword.isBlank()) {
+                    throw new IllegalArgumentException("Salasana on pakollinen uudelle käyttäjälle");
+                }
+                if (!selectedPassword.isBlank()
+                        && !selectedPassword.equals(confirmPassword.getText())) {
+                    throw new IllegalArgumentException("Salasanat eivät täsmää");
+                }
                 if (user == null) {
-                    controller.addUser(name.getText(), email.getText(), selectedRole, selectedCourses);
+                    controller.addUser(name.getText(), email.getText(), selectedRole, selectedCourses,
+                            selectedPassword);
                 } else {
-                    controller.updateUser(user, name.getText(), email.getText(), selectedRole, selectedCourses);
+                    controller.updateUser(user, name.getText(), email.getText(), selectedRole,
+                            selectedCourses, selectedPassword.isBlank() ? null : selectedPassword);
                 }
                 table.refresh();
             } catch (RuntimeException exception) {
