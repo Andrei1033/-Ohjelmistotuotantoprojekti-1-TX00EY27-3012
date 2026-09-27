@@ -1,27 +1,40 @@
 package com.example.app.View;
 
+import com.example.app.DaoElements.StudentDao.AttendanceDao;
+import com.example.app.Model.LoginComponents.User;
+import com.example.app.Model.Teacher;
+import com.example.app.Model.TeacherCourse;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class TeacherAttendanceTracking extends BorderPane {
+public class TeacherAttendanceTracking {
 
-
+    // =========================================================
     // VÄRIT
-
+    // =========================================================
 
     private static final String NAVY = "#202F49";
     private static final String BLUE = "#344A70";
@@ -32,69 +45,129 @@ public class TeacherAttendanceTracking extends BorderPane {
     private static final String RED = "#BD4E3B";
 
     private static final String BORDER = "#D8D8D8";
-    private static final String MUTED = "#858585";
     private static final String LIGHT_BLUE = "#EAF0F8";
 
+    // =========================================================
+    // LÄSNÄOLOTILAT
+    // =========================================================
 
-    // OPISKELIJOIDEN TILAT
+    private static final String PRESENT = "present";
+    private static final String LATE = "late";
+    private static final String ABSENT = "absent";
 
+    // =========================================================
+    // DATA
+    // =========================================================
 
-    private static final int PRESENT = 1;
-    private static final int LATE = 2;
-    private static final int ABSENT = 3;
+    private final Teacher teacher;
+    private final TeacherCourse course;
+    private final int lessonId;
 
-    private final List<StudentRow> studentRows = new ArrayList<>();
+    private final AttendanceDao attendanceDao;
+
+    private final Map<Integer, String> attendanceStatuses =
+            new HashMap<>();
+
+    private final VBox studentList = new VBox();
 
     private Label presentCount;
     private Label lateCount;
     private Label absentCount;
 
+    private final Runnable onFinished;
 
+    // =========================================================
     // CONSTRUCTOR
+    // =========================================================
 
+    public TeacherAttendanceTracking(
+            Teacher teacher,
+            TeacherCourse course,
+            int lessonId,
+            Runnable onFinished
+    ) {
+        this.teacher = teacher;
+        this.course = course;
+        this.lessonId = lessonId;
+        this.onFinished = onFinished;
 
-    public TeacherAttendanceTracking(Runnable onFinish) {
+        this.attendanceDao = new AttendanceDao();
+    }
 
-        setStyle(
+    // =========================================================
+    // SHOW
+    // =========================================================
+
+    public void show() {
+
+        Stage stage = new Stage();
+
+        stage.setTitle(
+                "Oppitunti - " + course.getCoursename()
+        );
+
+        BorderPane root = new BorderPane();
+
+        root.setStyle(
                 "-fx-background-color: white;"
         );
 
-
-        // VASEN SIDEBAR
-
+        // -----------------------------------------------------
+        // SIDEBAR
+        // -----------------------------------------------------
 
         VBox sidebar = createSidebar();
 
-        setLeft(sidebar);
+        root.setLeft(sidebar);
 
+        // -----------------------------------------------------
+        // MAIN CONTENT
+        // -----------------------------------------------------
 
-        // PÄÄSISÄLTÖ
+        VBox content = createMainContent(stage);
 
+        root.setCenter(content);
 
-        VBox content = createMainContent(onFinish);
+        // -----------------------------------------------------
+        // LATAA OPISKELIJAT
+        // -----------------------------------------------------
 
-        setCenter(content);
+        loadStudents();
+
+        // -----------------------------------------------------
+        // SCENE
+        // -----------------------------------------------------
+
+        Scene scene = new Scene(
+                root,
+                1000,
+                650
+        );
+
+        stage.setScene(scene);
+
+        stage.show();
     }
 
-
+    // =========================================================
     // SIDEBAR
-
+    // =========================================================
 
     private VBox createSidebar() {
 
         VBox sidebar = new VBox();
 
-        sidebar.setPrefWidth(220);
-        sidebar.setMinWidth(220);
-        sidebar.setMaxWidth(220);
+        sidebar.setPrefWidth(182);
+        sidebar.setMinWidth(182);
+        sidebar.setMaxWidth(182);
 
         sidebar.setStyle(
                 "-fx-background-color: " + NAVY + ";"
         );
 
-
+        // -----------------------------------------------------
         // LOGO
-
+        // -----------------------------------------------------
 
         Rectangle logoRectangle = new Rectangle(
                 28,
@@ -128,17 +201,14 @@ public class TeacherAttendanceTracking extends BorderPane {
         logoBox.setPrefSize(28, 28);
         logoBox.setMaxSize(28, 28);
 
-        logoBox.setAlignment(
-                Pos.CENTER
+        HBox logoRow = new HBox(
+                10,
+                logoBox,
+                new Label("Läsnäolo")
         );
 
-
-        // LÄSNÄOLO
-
-
-        Label applicationName = new Label(
-                "Läsnäolo"
-        );
+        Label applicationName =
+                (Label) logoRow.getChildren().get(1);
 
         applicationName.setTextFill(
                 Color.WHITE
@@ -152,41 +222,22 @@ public class TeacherAttendanceTracking extends BorderPane {
                 )
         );
 
-        HBox logoRow = new HBox(
-                10,
-                logoBox,
-                applicationName
-        );
-
         logoRow.setAlignment(
                 Pos.CENTER_LEFT
         );
 
         logoRow.setPadding(
                 new Insets(
-                        14,
+                        16,
                         10,
-                        14,
-                        20
+                        16,
+                        18
                 )
         );
 
-
-        // SIDEBAR SEPARATOR
-
-
-        Region separator = new Region();
-
-        separator.setPrefHeight(1);
-        separator.setMaxHeight(1);
-
-        separator.setStyle(
-                "-fx-background-color: #2B3A54;"
-        );
-
-
+        // -----------------------------------------------------
         // KURSSINI
-
+        // -----------------------------------------------------
 
         Circle courseDot = new Circle(
                 2.5,
@@ -239,20 +290,27 @@ public class TeacherAttendanceTracking extends BorderPane {
 
         String courseButtonBase =
                 "-fx-background-color: " + BLUE + ";" +
-                        "-fx-background-radius: 4;" +
+                        "-fx-background-radius: 5;" +
                         "-fx-padding: 0 10;" +
                         "-fx-cursor: hand;";
 
-        courseButton.setStyle(courseButtonBase);
+        courseButton.setStyle(
+                courseButtonBase
+        );
 
         courseButton.setOnMouseEntered(e ->
                 courseButton.setStyle(
-                        courseButtonBase.replace(BLUE, "#3F567E")
+                        courseButtonBase.replace(
+                                BLUE,
+                                "#3F567E"
+                        )
                 )
         );
 
         courseButton.setOnMouseExited(e ->
-                courseButton.setStyle(courseButtonBase)
+                courseButton.setStyle(
+                        courseButtonBase
+                )
         );
 
         VBox courseContainer = new VBox(
@@ -262,15 +320,15 @@ public class TeacherAttendanceTracking extends BorderPane {
         courseContainer.setPadding(
                 new Insets(
                         16,
-                        14,
+                        16,
                         0,
-                        14
+                        16
                 )
         );
 
-
-        // SIDEBARIN ALAOSA
-
+        // -----------------------------------------------------
+        // SPACER
+        // -----------------------------------------------------
 
         Region sidebarSpacer = new Region();
 
@@ -279,13 +337,19 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Priority.ALWAYS
         );
 
+        // -----------------------------------------------------
+        // OPETTAJAN TIEDOT
+        // -----------------------------------------------------
+
         Circle userCircle = new Circle(
                 15,
                 Color.web(LOGO_BLUE)
         );
 
+        String teacherName = getTeacherName();
+
         Label userInitials = new Label(
-                "MA"
+                getInitials(teacherName)
         );
 
         userInitials.setTextFill(
@@ -296,7 +360,7 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Font.font(
                         "System",
                         FontWeight.BOLD,
-                        11
+                        10
                 )
         );
 
@@ -309,7 +373,7 @@ public class TeacherAttendanceTracking extends BorderPane {
         userIcon.setMaxSize(30, 30);
 
         Label userName = new Label(
-                "Etunimi Sukunimi"
+                teacherName
         );
 
         userName.setTextFill(
@@ -320,7 +384,7 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Font.font(
                         "System",
                         FontWeight.BOLD,
-                        12
+                        11
                 )
         );
 
@@ -336,7 +400,7 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Font.font(
                         "System",
                         FontWeight.NORMAL,
-                        10
+                        9
                 )
         );
 
@@ -369,11 +433,8 @@ public class TeacherAttendanceTracking extends BorderPane {
                 )
         );
 
-        // SIDEBAR KOKONAISUUDESSAAN
-
         sidebar.getChildren().addAll(
                 logoRow,
-                separator,
                 courseContainer,
                 sidebarSpacer,
                 sidebarBottom
@@ -382,22 +443,20 @@ public class TeacherAttendanceTracking extends BorderPane {
         return sidebar;
     }
 
-
+    // =========================================================
     // MAIN CONTENT
+    // =========================================================
 
-
-    private VBox createMainContent(
-            Runnable onFinish
-    ) {
+    private VBox createMainContent(Stage stage) {
 
         VBox content = new VBox();
 
         content.setPadding(
                 new Insets(
-                        40,
-                        40,
-                        40,
-                        40
+                        38,
+                        30,
+                        30,
+                        28
                 )
         );
 
@@ -405,12 +464,12 @@ public class TeacherAttendanceTracking extends BorderPane {
                 "-fx-background-color: white;"
         );
 
-
+        // -----------------------------------------------------
         // OTSIKKO
-
+        // -----------------------------------------------------
 
         Label title = new Label(
-                "Oppitunti11111111111111 — 16.9.2026"
+                "Oppitunti — " + getCurrentDate()
         );
 
         title.setTextFill(
@@ -421,13 +480,13 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Font.font(
                         "System",
                         FontWeight.BOLD,
-                        22
+                        20
                 )
         );
 
-
-        // TALLENNA JA LOPETA
-
+        // -----------------------------------------------------
+        // TALLENNA
+        // -----------------------------------------------------
 
         Button saveButton = new Button(
                 "Tallenna ja lopeta"
@@ -450,38 +509,37 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Font.font(
                         "System",
                         FontWeight.BOLD,
-                        13
+                        12
                 )
         );
 
         String saveButtonBase =
                 "-fx-background-color: " + NAVY + ";" +
-                        "-fx-background-radius: 3;" +
+                        "-fx-background-radius: 4;" +
                         "-fx-cursor: hand;";
 
-        saveButton.setStyle(saveButtonBase);
+        saveButton.setStyle(
+                saveButtonBase
+        );
 
         saveButton.setOnMouseEntered(e ->
                 saveButton.setStyle(
-                        saveButtonBase.replace(NAVY, "#2C4066")
+                        saveButtonBase.replace(
+                                NAVY,
+                                "#2C4066"
+                        )
                 )
         );
 
         saveButton.setOnMouseExited(e ->
-                saveButton.setStyle(saveButtonBase)
+                saveButton.setStyle(
+                        saveButtonBase
+                )
         );
 
-        saveButton.setOnAction(event -> {
-
-            /*
-             * Tähän voidaan myöhemmin lisätä tietokantaan
-             * tallentaminen.
-             */
-
-            if (onFinish != null) {
-                onFinish.run();
-            }
-        });
+        saveButton.setOnAction(event ->
+                saveAndFinish(stage)
+        );
 
         Region titleSpacer = new Region();
 
@@ -500,31 +558,33 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Pos.CENTER_LEFT
         );
 
-
-        // TYHJÄ TILA
-
+        // -----------------------------------------------------
+        // VÄLI
+        // -----------------------------------------------------
 
         Region topSpace = new Region();
 
-        topSpace.setPrefHeight(44);
-        topSpace.setMinHeight(44);
+        topSpace.setPrefHeight(38);
+        topSpace.setMinHeight(38);
 
-
-        // OPISKELIJOIDEN KORTTI
-
+        // -----------------------------------------------------
+        // ATTENDANCE CARD
+        // -----------------------------------------------------
 
         VBox attendanceCard =
                 createAttendanceCard();
 
-        // Kortti venyy nyt ikkunan levyiseksi ja kasvaa/pienenee
-        // ikkunan koon mukana.
-        attendanceCard.setMaxWidth(Double.MAX_VALUE);
+        attendanceCard.setMaxWidth(
+                Double.MAX_VALUE
+        );
 
-        // Jos opiskelijoita on paljon, lista vierittyy sen sijaan
-        // että se leikkautuisi tai venyttäisi ikkunaa loputtomiin.
-        ScrollPane scrollPane = new ScrollPane(attendanceCard);
+        ScrollPane scrollPane =
+                new ScrollPane(
+                        attendanceCard
+                );
 
         scrollPane.setFitToWidth(true);
+
         scrollPane.setStyle(
                 "-fx-background-color: transparent;" +
                         "-fx-background: transparent;"
@@ -535,30 +595,28 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Priority.ALWAYS
         );
 
-
-        // MAIN CONTENT
-
-
-        VBox.setVgrow(content, Priority.ALWAYS);
-
         content.getChildren().addAll(
                 titleRow,
                 topSpace,
                 scrollPane
         );
 
+        VBox.setVgrow(
+                content,
+                Priority.ALWAYS
+        );
+
         return content;
     }
 
-
+    // =========================================================
     // ATTENDANCE CARD
-
+    // =========================================================
 
     private VBox createAttendanceCard() {
 
         VBox card = new VBox();
 
-        card.setPrefWidth(1000);
         card.setMaxWidth(
                 Double.MAX_VALUE
         );
@@ -570,21 +628,27 @@ public class TeacherAttendanceTracking extends BorderPane {
                         "-fx-background-radius: 16;"
         );
 
-        // Kevyt varjostus, jotta kortti erottuu valkoisesta
-        // taustasta paremmin.
         DropShadow shadow = new DropShadow();
-        shadow.setRadius(18);
-        shadow.setOffsetY(4);
-        shadow.setColor(Color.rgb(0, 0, 0, 0.08));
+
+        shadow.setRadius(14);
+        shadow.setOffsetY(3);
+        shadow.setColor(
+                Color.rgb(
+                        0,
+                        0,
+                        0,
+                        0.07
+                )
+        );
 
         card.setEffect(shadow);
 
-
+        // -----------------------------------------------------
         // HEADER
-
+        // -----------------------------------------------------
 
         Label studentHeader = new Label(
-                "Opiskelijat (7)"
+                "Opiskelijat"
         );
 
         studentHeader.setTextFill(
@@ -595,16 +659,21 @@ public class TeacherAttendanceTracking extends BorderPane {
                 Font.font(
                         "System",
                         FontWeight.BOLD,
-                        14
+                        13
                 )
         );
 
-        presentCount = createCountLabel(GREEN);
-        lateCount = createCountLabel(ORANGE);
-        absentCount = createCountLabel(RED);
+        presentCount =
+                createCountLabel(GREEN);
+
+        lateCount =
+                createCountLabel(ORANGE);
+
+        absentCount =
+                createCountLabel(RED);
 
         HBox counts = new HBox(
-                36,
+                28,
                 presentCount,
                 lateCount,
                 absentCount
@@ -634,19 +703,15 @@ public class TeacherAttendanceTracking extends BorderPane {
         header.setPadding(
                 new Insets(
                         0,
-                        24,
+                        20,
                         0,
-                        30
+                        18
                 )
         );
 
-        header.setPrefHeight(56);
-        header.setMinHeight(56);
-        header.setMaxHeight(56);
-
-
-        // HEADER LINE
-
+        header.setPrefHeight(52);
+        header.setMinHeight(52);
+        header.setMaxHeight(52);
 
         Region headerLine = new Region();
 
@@ -659,106 +724,464 @@ public class TeacherAttendanceTracking extends BorderPane {
 
         card.getChildren().addAll(
                 header,
-                headerLine
+                headerLine,
+                studentList
         );
-
-
-        // OPISKELIJAT
-
-        String[] names = {
-                "Etunimi Sukunimi",
-                "Etunimi Sukunimi",
-                "Etunimi Sukunimi",
-                "Etunimi Sukunimi",
-                "Etunimi Sukunimi",
-                "Etunimi Sukunimi",
-                "Etunimi Sukunimi"
-        };
-
-        /*
-         * Kuvan mukainen lähtötilanne:
-         *
-         * 1. Paikalla
-         * 2. Paikalla
-         * 3. Myöhässä
-         * 4. Poissa
-         * 5. Paikalla
-         * 6. Paikalla
-         * 7. Paikalla
-         */
-
-        int[] states = {
-                PRESENT,
-                PRESENT,
-                LATE,
-                ABSENT,
-                PRESENT,
-                PRESENT,
-                PRESENT
-        };
-
-        for (int i = 0; i < names.length; i++) {
-
-            StudentRow row = new StudentRow(
-                    names[i],
-                    states[i]
-            );
-
-            studentRows.add(row);
-
-            card.getChildren().add(
-                    row.getRow()
-            );
-        }
-
-        updateCounters();
 
         return card;
     }
 
+    // =========================================================
+    // OPISKELIJOIDEN LATAUS
+    // =========================================================
 
-    // COUNT LABEL
+    private void loadStudents() {
 
-    private Label createCountLabel(String accentColor) {
+        studentList.getChildren().clear();
 
-        Label label = new Label();
+        attendanceStatuses.clear();
 
-        label.setTextFill(
-                Color.web(accentColor)
+        List<User> students =
+                attendanceDao.getStudentsForCourse(
+                        course.getCourseid()
+                );
+
+        if (students.isEmpty()) {
+
+            Label emptyLabel =
+                    new Label(
+                            "Kurssilla ei ole opiskelijoita."
+                    );
+
+            emptyLabel.setPadding(
+                    new Insets(25)
+            );
+
+            studentList.getChildren().add(
+                    emptyLabel
+            );
+
+            updateCounters();
+
+            return;
+        }
+
+        for (User student : students) {
+
+            createStudentRow(student);
+        }
+
+        updateCounters();
+    }
+
+    // =========================================================
+    // OPISKELIJARIVI
+    // =========================================================
+
+    private void createStudentRow(User student) {
+
+        int studentId =
+                student.getId();
+
+        // Oletuksena POISSA
+        attendanceStatuses.putIfAbsent(
+                studentId,
+                ABSENT
         );
 
-        label.setFont(
+        String studentName =
+                student.getFullName();
+
+        // -----------------------------------------------------
+        // AVATAR
+        // -----------------------------------------------------
+
+        Circle avatarCircle = new Circle(
+                17,
+                Color.web(LIGHT_BLUE)
+        );
+
+        Label initials = new Label(
+                getInitials(studentName)
+        );
+
+        initials.setTextFill(
+                Color.web("#4C6D9D")
+        );
+
+        initials.setFont(
                 Font.font(
                         "System",
                         FontWeight.BOLD,
-                        13
+                        10
                 )
         );
 
-        return label;
+        StackPane avatar = new StackPane(
+                avatarCircle,
+                initials
+        );
+
+        avatar.setPrefSize(
+                34,
+                34
+        );
+
+        avatar.setMinSize(
+                34,
+                34
+        );
+
+        avatar.setMaxSize(
+                34,
+                34
+        );
+
+        // -----------------------------------------------------
+        // NIMI
+        // -----------------------------------------------------
+
+        Label nameLabel =
+                new Label(studentName);
+
+        nameLabel.setTextFill(
+                Color.BLACK
+        );
+        nameLabel.setStyle(
+                "-fx-text-fill: #000000;" +
+                        "-fx-font-weight: bold;"
+        );
+
+        nameLabel.setFont(
+                Font.font(
+                        "System",
+                        FontWeight.BOLD,
+                        12
+                )
+
+        );
+
+        Label roleLabel =
+                new Label("Opiskelija");
+
+        roleLabel.setTextFill(
+                Color.web("#888888")
+        );
+
+        roleLabel.setFont(
+                Font.font(
+                        "System",
+                        FontWeight.NORMAL,
+                        9
+                )
+        );
+
+        VBox studentInfo = new VBox(
+                1,
+                nameLabel,
+                roleLabel
+        );
+
+        studentInfo.setAlignment(
+                Pos.CENTER_LEFT
+        );
+
+        HBox studentBox = new HBox(
+                12,
+                avatar,
+                studentInfo
+        );
+
+        studentBox.setAlignment(
+                Pos.CENTER_LEFT
+        );
+
+        // -----------------------------------------------------
+        // NAPIT
+        // -----------------------------------------------------
+
+        Button presentButton =
+                createStatusButton("Paikalla");
+
+        Button lateButton =
+                createStatusButton("Myöhässä");
+
+        Button absentButton =
+                createStatusButton("Poissa");
+
+        presentButton.setOnAction(event -> {
+
+            attendanceStatuses.put(
+                    studentId,
+                    PRESENT
+            );
+
+            updateButtonStyles(
+                    presentButton,
+                    lateButton,
+                    absentButton,
+                    PRESENT
+            );
+
+            updateCounters();
+        });
+
+        lateButton.setOnAction(event -> {
+
+            attendanceStatuses.put(
+                    studentId,
+                    LATE
+            );
+
+            updateButtonStyles(
+                    presentButton,
+                    lateButton,
+                    absentButton,
+                    LATE
+            );
+
+            updateCounters();
+        });
+
+        absentButton.setOnAction(event -> {
+
+            attendanceStatuses.put(
+                    studentId,
+                    ABSENT
+            );
+
+            updateButtonStyles(
+                    presentButton,
+                    lateButton,
+                    absentButton,
+                    ABSENT
+            );
+
+            updateCounters();
+        });
+
+        HBox buttons = new HBox(
+                8,
+                presentButton,
+                lateButton,
+                absentButton
+        );
+
+        buttons.setAlignment(
+                Pos.CENTER_RIGHT
+        );
+
+        // -----------------------------------------------------
+        // SPACER
+        // -----------------------------------------------------
+
+        Region spacer = new Region();
+
+        HBox.setHgrow(
+                spacer,
+                Priority.ALWAYS
+        );
+
+        // -----------------------------------------------------
+        // RIVI
+        // -----------------------------------------------------
+
+        HBox row = new HBox(
+                studentBox,
+                spacer,
+                buttons
+        );
+
+        row.setAlignment(
+                Pos.CENTER_LEFT
+        );
+
+        row.setPadding(
+                new Insets(
+                        0,
+                        18,
+                        0,
+                        18
+                )
+        );
+
+        row.setPrefHeight(58);
+        row.setMinHeight(58);
+        row.setMaxHeight(58);
+
+        String normalStyle =
+                "-fx-background-color: white;" +
+                        "-fx-border-color: transparent transparent "
+                        + BORDER + " transparent;";
+
+        String hoverStyle =
+                "-fx-background-color: #FAFBFD;" +
+                        "-fx-border-color: transparent transparent "
+                        + BORDER + " transparent;";
+
+        row.setStyle(
+                normalStyle
+        );
+
+        row.setOnMouseEntered(event ->
+                row.setStyle(
+                        hoverStyle
+                )
+        );
+
+        row.setOnMouseExited(event ->
+                row.setStyle(
+                        normalStyle
+                )
+        );
+
+        // -----------------------------------------------------
+        // ALUSTA POISSA
+        // -----------------------------------------------------
+
+        updateButtonStyles(
+                presentButton,
+                lateButton,
+                absentButton,
+                attendanceStatuses.get(studentId)
+        );
+
+        studentList.getChildren().add(
+                row
+        );
     }
 
+    // =========================================================
+    // STATUS BUTTON
+    // =========================================================
 
-    // PÄIVITÄ LUKUMÄÄRÄT
+    private Button createStatusButton(
+            String text
+    ) {
 
+        Button button =
+                new Button(text);
+
+        button.setPrefWidth(94);
+        button.setMinWidth(94);
+        button.setMaxWidth(94);
+
+        button.setPrefHeight(30);
+        button.setMinHeight(30);
+        button.setMaxHeight(30);
+
+        button.setFont(
+                Font.font(
+                        "System",
+                        FontWeight.NORMAL,
+                        10
+                )
+        );
+
+        return button;
+    }
+
+    // =========================================================
+    // BUTTONIEN VÄRIT
+    // =========================================================
+
+    private void updateButtonStyles(
+            Button presentButton,
+            Button lateButton,
+            Button absentButton,
+            String selectedStatus
+    ) {
+
+        String inactiveStyle =
+                "-fx-background-color: white;" +
+                        "-fx-text-fill: #777777;" +
+                        "-fx-border-color: #D8D8D8;" +
+                        "-fx-border-width: 1;" +
+                        "-fx-background-radius: 16;" +
+                        "-fx-border-radius: 16;" +
+                        "-fx-cursor: hand;";
+
+        String presentStyle =
+                "-fx-background-color: " + GREEN + ";" +
+                        "-fx-text-fill: white;" +
+                        "-fx-border-color: " + GREEN + ";" +
+                        "-fx-border-width: 1;" +
+                        "-fx-background-radius: 16;" +
+                        "-fx-border-radius: 16;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-cursor: hand;";
+
+        String lateStyle =
+                "-fx-background-color: " + ORANGE + ";" +
+                        "-fx-text-fill: white;" +
+                        "-fx-border-color: " + ORANGE + ";" +
+                        "-fx-border-width: 1;" +
+                        "-fx-background-radius: 16;" +
+                        "-fx-border-radius: 16;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-cursor: hand;";
+
+        String absentStyle =
+                "-fx-background-color: " + RED + ";" +
+                        "-fx-text-fill: white;" +
+                        "-fx-border-color: " + RED + ";" +
+                        "-fx-border-width: 1;" +
+                        "-fx-background-radius: 16;" +
+                        "-fx-border-radius: 16;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-cursor: hand;";
+
+        // Paikalla
+        presentButton.setStyle(
+                PRESENT.equals(selectedStatus)
+                        ? presentStyle
+                        : inactiveStyle
+        );
+
+        // Myöhässä
+        lateButton.setStyle(
+                LATE.equals(selectedStatus)
+                        ? lateStyle
+                        : inactiveStyle
+        );
+
+        // Poissa
+        absentButton.setStyle(
+                ABSENT.equals(selectedStatus)
+                        ? absentStyle
+                        : inactiveStyle
+        );
+    }
+
+    // =========================================================
+    // LASKURIT
+    // =========================================================
 
     private void updateCounters() {
+
+        if (presentCount == null ||
+                lateCount == null ||
+                absentCount == null) {
+            return;
+        }
 
         int present = 0;
         int late = 0;
         int absent = 0;
 
-        for (StudentRow row : studentRows) {
+        for (String status :
+                attendanceStatuses.values()) {
 
-            if (row.getState() == PRESENT) {
+            if (PRESENT.equals(status)) {
+
                 present++;
-            }
 
-            else if (row.getState() == LATE) {
+            } else if (LATE.equals(status)) {
+
                 late++;
-            }
 
-            else if (row.getState() == ABSENT) {
+            } else if (ABSENT.equals(status)) {
+
                 absent++;
             }
         }
@@ -776,359 +1199,194 @@ public class TeacherAttendanceTracking extends BorderPane {
         );
     }
 
+    // =========================================================
+    // COUNT LABEL
+    // =========================================================
 
-    // STUDENT ROW
+    private Label createCountLabel(
+            String color
+    ) {
 
+        Label label = new Label();
 
-    private class StudentRow {
+        label.setTextFill(
+                Color.web(color)
+        );
 
-        private final String name;
+        label.setFont(
+                Font.font(
+                        "System",
+                        FontWeight.BOLD,
+                        11
+                )
+        );
 
-        private int state;
+        return label;
+    }
 
-        private final HBox row;
+    // =========================================================
+    // TALLENNUS
+    // =========================================================
 
-        private final Button presentButton;
-        private final Button lateButton;
-        private final Button absentButton;
+    private void saveAndFinish(
+            Stage stage
+    ) {
 
+        boolean success = true;
 
-        // CONSTRUCTOR
+        for (Map.Entry<Integer, String> entry :
+                attendanceStatuses.entrySet()) {
 
-
-        StudentRow(
-                String name,
-                int initialState
-        ) {
-
-            this.name = name;
-            this.state = initialState;
-
-
-            // AVATAR
-
-
-            Circle avatarCircle = new Circle(
-                    17,
-                    Color.web(LIGHT_BLUE)
-            );
-
-            Label initials = new Label(
-                    "MA"
-            );
-
-            initials.setTextFill(
-                    Color.web("#4C6D9D")
-            );
-
-            initials.setFont(
-                    Font.font(
-                            "System",
-                            FontWeight.BOLD,
-                            12
-                    )
-            );
-
-            StackPane avatar = new StackPane(
-                    avatarCircle,
-                    initials
-            );
-
-            avatar.setPrefSize(34, 34);
-            avatar.setMinSize(34, 34);
-            avatar.setMaxSize(34, 34);
-
-
-            // OPISKELIJAN NIMI
-
-
-            Label nameLabel = new Label(
-                    name
-            );
-
-            nameLabel.setTextFill(
-                    Color.web("#333333")
-            );
-
-            nameLabel.setFont(
-                    Font.font(
-                            "System",
-                            FontWeight.BOLD,
-                            13
-                    )
-            );
-
-            Label roleLabel = new Label(
-                    "Opiskelija"
-            );
-
-            roleLabel.setTextFill(
-                    Color.web("#888888")
-            );
-
-            roleLabel.setFont(
-                    Font.font(
-                            "System",
-                            FontWeight.NORMAL,
-                            10
-                    )
-            );
-
-            VBox studentInfo = new VBox(
-                    2,
-                    nameLabel,
-                    roleLabel
-            );
-
-            studentInfo.setAlignment(
-                    Pos.CENTER_LEFT
-            );
-
-
-            // STUDENT INFO
-
-            HBox student = new HBox(
-                    16,
-                    avatar,
-                    studentInfo
-            );
-
-            student.setAlignment(
-                    Pos.CENTER_LEFT
-            );
-
-
-            // NAPIT
-
-
-            presentButton =
-                    createStatusButton(
-                            "Paikalla"
+            boolean saved =
+                    attendanceDao.saveAttendance(
+                            lessonId,
+                            entry.getKey(),
+                            entry.getValue()
                     );
 
-            lateButton =
-                    createStatusButton(
-                            "Myöhässä"
+            if (!saved) {
+
+                success = false;
+            }
+        }
+
+        if (success) {
+
+            boolean lessonEnded =
+                    attendanceDao.endLesson(
+                            lessonId
                     );
 
-            absentButton =
-                    createStatusButton(
-                            "Poissa"
-                    );
+            if (lessonEnded) {
 
+                stage.close();
 
-            // BUTTON ACTIONS
+                if (onFinished != null) {
 
+                    onFinished.run();
+                }
 
-            presentButton.setOnAction(
-                    event -> setState(PRESENT)
+            } else {
+
+                showError(
+                        "Oppitunnin lopettaminen epäonnistui."
+                );
+            }
+
+        } else {
+
+            showError(
+                    "Läsnäolojen tallentamisessa tapahtui virhe."
             );
+        }
+    }
 
-            lateButton.setOnAction(
-                    event -> setState(LATE)
-            );
+    // =========================================================
+    // VIRHE
+    // =========================================================
 
-            absentButton.setOnAction(
-                    event -> setState(ABSENT)
-            );
+    private void showError(
+            String message
+    ) {
 
+        Alert alert =
+                new Alert(
+                        Alert.AlertType.ERROR
+                );
 
-            // BUTTON CONTAINER
+        alert.setTitle(
+                "Virhe"
+        );
 
+        alert.setHeaderText(
+                null
+        );
 
-            HBox buttons = new HBox(
-                    10,
-                    presentButton,
-                    lateButton,
-                    absentButton
-            );
+        alert.setContentText(
+                message
+        );
 
-            buttons.setAlignment(
-                    Pos.CENTER_RIGHT
-            );
+        alert.showAndWait();
+    }
 
+    // =========================================================
+    // OPETTAJAN NIMI
+    // =========================================================
 
-            // SPACER
+    private String getTeacherName() {
 
+        if (teacher == null) {
 
-            Region spacer = new Region();
+            return "Etunimi Sukunimi";
+        }
 
-            HBox.setHgrow(
-                    spacer,
-                    Priority.ALWAYS
-            );
+        try {
 
+            String name =
+                    teacher.getFullName();
 
-            // ROW
+            if (name != null &&
+                    !name.isBlank()) {
 
+                return name;
+            }
 
-            row = new HBox(
-                    student,
-                    spacer,
-                    buttons
-            );
+        } catch (Exception ignored) {
+        }
 
-            row.setAlignment(
-                    Pos.CENTER_LEFT
-            );
+        return "Etunimi Sukunimi";
+    }
 
-            row.setPadding(
-                    new Insets(
+    // =========================================================
+    // INITIALS
+    // =========================================================
+
+    private String getInitials(
+            String name
+    ) {
+
+        if (name == null ||
+                name.isBlank()) {
+
+            return "MA";
+        }
+
+        String[] parts =
+                name.trim().split("\\s+");
+
+        if (parts.length == 1) {
+
+            return parts[0]
+                    .substring(
                             0,
-                            24,
-                            0,
-                            30
+                            Math.min(
+                                    2,
+                                    parts[0].length()
+                            )
                     )
-            );
-
-            row.setPrefHeight(66);
-            row.setMinHeight(66);
-            row.setMaxHeight(66);
-
-            row.setStyle(
-                    "-fx-border-color: transparent transparent "
-                            + BORDER + " transparent;"
-            );
-
-            // Rivi korostuu hiiren alla, jotta on selkeämpää
-            // mitä opiskelijaa ollaan muokkaamassa.
-            row.setOnMouseEntered(e ->
-                    row.setStyle(
-                            "-fx-background-color: #FAFBFD;" +
-                                    "-fx-border-color: transparent transparent "
-                                    + BORDER + " transparent;"
-                    )
-            );
-
-            row.setOnMouseExited(e ->
-                    row.setStyle(
-                            "-fx-border-color: transparent transparent "
-                                    + BORDER + " transparent;"
-                    )
-            );
-
-            updateButtonStyles();
+                    .toUpperCase();
         }
 
+        return (
+                parts[0].substring(0, 1) +
+                        parts[parts.length - 1]
+                                .substring(0, 1)
+        ).toUpperCase();
+    }
 
-        // STATUS BUTTON
+    // =========================================================
+    // PÄIVÄMÄÄRÄ
+    // =========================================================
 
+    private String getCurrentDate() {
 
-        private Button createStatusButton(
-                String text
-        ) {
+        java.time.LocalDate date =
+                java.time.LocalDate.now();
 
-            Button button = new Button(
-                    text
-            );
-
-            button.setPrefWidth(104);
-            button.setPrefHeight(30);
-
-            button.setMinWidth(104);
-            button.setMinHeight(30);
-
-            button.setMaxWidth(104);
-            button.setMaxHeight(30);
-
-            button.setFont(
-                    Font.font(
-                            "System",
-                            FontWeight.NORMAL,
-                            11
-                    )
-            );
-
-            button.setStyle(
-                    button.getStyle() + "-fx-cursor: hand;"
-            );
-
-            return button;
-        }
-
-        // SET STATE
-
-
-        private void setState(
-                int newState
-        ) {
-
-            state = newState;
-
-            updateButtonStyles();
-
-            updateCounters();
-        }
-
-
-        // GET STATE
-
-
-        private int getState() {
-
-            return state;
-        }
-
-
-        // GET ROW
-
-
-        private HBox getRow() {
-
-            return row;
-        }
-
-
-        // BUTTON STYLES
-
-
-        private void updateButtonStyles() {
-
-            String activeSuffix =
-                    "-fx-background-radius: 15;" +
-                            "-fx-border-radius: 15;" +
-                            "-fx-font-weight: bold;" +
-                            "-fx-cursor: hand;";
-
-            String inactiveSuffix =
-                    "-fx-background-color: white;" +
-                            "-fx-text-fill: #777777;" +
-                            "-fx-border-color: #D8D8D8;" +
-                            "-fx-border-width: 1;" +
-                            "-fx-background-radius: 15;" +
-                            "-fx-border-radius: 15;" +
-                            "-fx-cursor: hand;";
-
-            // PAIKALLA
-
-
-            presentButton.setStyle(
-                    state == PRESENT
-                            ? "-fx-background-color: " + GREEN + ";"
-                            + "-fx-text-fill: white;" + activeSuffix
-                            : inactiveSuffix
-            );
-
-            // MYÖHÄSSÄ
-
-
-            lateButton.setStyle(
-                    state == LATE
-                            ? "-fx-background-color: " + ORANGE + ";"
-                            + "-fx-text-fill: white;" + activeSuffix
-                            : inactiveSuffix
-            );
-
-
-            // POISSA
-
-
-            absentButton.setStyle(
-                    state == ABSENT
-                            ? "-fx-background-color: " + RED + ";"
-                            + "-fx-text-fill: white;" + activeSuffix
-                            : inactiveSuffix
-            );
-        }
+        return date.getDayOfMonth()
+                + "."
+                + date.getMonthValue()
+                + "."
+                + date.getYear();
     }
 }
