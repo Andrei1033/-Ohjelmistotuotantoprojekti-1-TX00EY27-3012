@@ -38,8 +38,15 @@ public final class ProfileEditWindow {
     }
 
     public static void show(Window owner, User currentUser, Runnable onProfileUpdated) {
+        show(owner, currentUser, onProfileUpdated, new UserDao());
+    }
 
-        UserDao userDao = new UserDao();
+    public static void show(Window owner,
+                            User currentUser,
+                            Runnable onProfileUpdated,
+                            UserDao userDao) {
+
+        // NOTE: no `new UserDao()` here anymore — use the parameter.
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -56,11 +63,11 @@ public final class ProfileEditWindow {
         Label heading = label("Omat tiedot", 15, true, "#171717");
 
         TextField firstNameField = textField(currentUser.getFirstName());
-        TextField lastNameField = textField(currentUser.getLastName());
-        TextField emailField = textField(currentUser.getEmail());
+        TextField lastNameField  = textField(currentUser.getLastName());
+        TextField emailField     = textField(currentUser.getEmail());
 
         PasswordField currentPasswordField = passwordField();
-        PasswordField newPasswordField = passwordField();
+        PasswordField newPasswordField     = passwordField();
         PasswordField confirmPasswordField = passwordField();
 
         Label errorLabel = label("", 10, false, "#C44D3A");
@@ -74,13 +81,25 @@ public final class ProfileEditWindow {
         Button save = new Button("Tallenna");
         styleButton(save, BLUE, "white");
 
+        // ----- TEST HOOKS: stable IDs -----
+        firstNameField.setId("firstNameField");
+        lastNameField.setId("lastNameField");
+        emailField.setId("emailField");
+        currentPasswordField.setId("currentPasswordField");
+        newPasswordField.setId("newPasswordField");
+        confirmPasswordField.setId("confirmPasswordField");
+        errorLabel.setId("errorLabel");
+        save.setId("saveButton");
+        back.setId("backButton");
+        // ----------------------------------
+
         save.setOnAction(e -> {
 
             errorLabel.setText("");
 
             String firstName = safeTrim(firstNameField.getText());
-            String lastName = safeTrim(lastNameField.getText());
-            String email = safeTrim(emailField.getText());
+            String lastName  = safeTrim(lastNameField.getText());
+            String email     = safeTrim(emailField.getText());
 
             if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
                 errorLabel.setText("Etunimi, sukunimi ja sähköposti ovat pakollisia.");
@@ -99,36 +118,33 @@ public final class ProfileEditWindow {
             }
 
             String currentPassword = currentPasswordField.getText();
-            String newPassword = newPasswordField.getText();
+            String newPassword     = newPasswordField.getText();
             String confirmPassword = confirmPasswordField.getText();
 
             boolean wantsPasswordChange =
                     !isBlank(currentPassword) || !isBlank(newPassword) || !isBlank(confirmPassword);
 
             if (wantsPasswordChange) {
-
                 if (isBlank(currentPassword)) {
                     errorLabel.setText("Anna nykyinen salasana vaihtaaksesi salasanan.");
                     return;
                 }
-
                 if (!userDao.verifyPassword(currentUser.getId(), currentPassword)) {
                     errorLabel.setText("Nykyinen salasana on väärin.");
                     return;
                 }
-
                 if (newPassword == null || newPassword.length() < 6) {
                     errorLabel.setText("Uuden salasanan on oltava vähintään 6 merkkiä.");
                     return;
                 }
-
                 if (!newPassword.equals(confirmPassword)) {
                     errorLabel.setText("Uudet salasanat eivät täsmää.");
                     return;
                 }
             }
 
-            boolean profileOk = userDao.updateProfile(currentUser.getId(), firstName, lastName, email);
+            boolean profileOk = userDao.updateProfile(
+                    currentUser.getId(), firstName, lastName, email);
 
             if (!profileOk) {
                 errorLabel.setText("Tietojen tallennus epäonnistui. Yritä uudelleen.");
@@ -143,8 +159,6 @@ public final class ProfileEditWindow {
                 }
             }
 
-            // Päivitä olemassa oleva User-olio, jotta esim. sivupalkin nimi
-            // näkyy heti oikein ilman uutta kirjautumista.
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setEmail(email);

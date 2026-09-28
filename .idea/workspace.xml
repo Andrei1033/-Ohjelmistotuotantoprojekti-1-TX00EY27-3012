@@ -7,10 +7,12 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="UserDaoTest + UserTest">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="AttendanceDaoTest + CourseDaoTest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/AttendanceDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/AttendanceDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/AttendanceRecordTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/AttendanceRecordTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ProfileEditWindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ProfileEditWindowTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,10 +99,13 @@
     "Docker.Classroom_Attendance_System/Dockerfile.executor": "Run",
     "JUnit.AdminTest.executor": "Run",
     "JUnit.AttendanceDaoTest.executor": "Run",
+    "JUnit.AttendanceRecordTest.executor": "Run",
     "JUnit.CourseDaoTest.executor": "Run",
+    "JUnit.CourseTest.executor": "Run",
     "JUnit.DatabaseConnectionTest.executor": "Run",
     "JUnit.LoginControllerTest.executor": "Run",
     "JUnit.LoginTest.executor": "Run",
+    "JUnit.ProfileEditWindowTest.executor": "Run",
     "JUnit.StudentAttendanceTrackingTest.executor": "Run",
     "JUnit.StudentControllerTest.executor": "Run",
     "JUnit.StudentStartPageTest.executor": "Run",
@@ -556,7 +561,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790570195625</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="AttendanceDaoTest + CourseDaoTest">
+      <option name="closed" value="true" />
+      <created>1790570813799</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1790570813799</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,7 +613,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="most important features in student pages are done" />
     <MESSAGE value="All pages now open in full screen automaticaly" />
     <MESSAGE value="litlebit updated db" />
     <MESSAGE value="ohjelma ei enä palauta error" />
@@ -625,7 +637,8 @@
     <MESSAGE value="ja ebat obosralsja" />
     <MESSAGE value="StudentControllerTest.java" />
     <MESSAGE value="UserDaoTest + UserTest" />
-    <option name="LAST_COMMIT_MESSAGE" value="UserDaoTest + UserTest" />
+    <MESSAGE value="AttendanceDaoTest + CourseDaoTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="AttendanceDaoTest + CourseDaoTest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
