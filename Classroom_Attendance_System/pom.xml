@@ -150,17 +150,6 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.2</version>
-                <configuration>
-                    <argLine>
-                        -Djava.awt.headless=false
-                    </argLine>
-                </configuration>
-            </plugin>
-
             <!-- Shade: fat JAR со всеми зависимостями + Main-Class в манифесте -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
