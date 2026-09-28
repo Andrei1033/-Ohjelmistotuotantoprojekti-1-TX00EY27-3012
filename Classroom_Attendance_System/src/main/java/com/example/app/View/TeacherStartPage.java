@@ -42,7 +42,7 @@ public class TeacherStartPage extends BorderPane {
         // SIDEBAR
         // =========================================================
 
-        VBox sidebar = new VBox();
+        VBox sidebar = new VBox(16);
 
         sidebar.setPrefWidth(158);
         sidebar.setMinWidth(158);
@@ -525,7 +525,7 @@ public class TeacherStartPage extends BorderPane {
     ) {
 
         VBox card =
-                new VBox(4);
+                new VBox(2);
 
         /*
          * Exact dimensions expected by tests.
@@ -541,10 +541,10 @@ public class TeacherStartPage extends BorderPane {
 
         card.setPadding(
                 new Insets(
+                        4,
                         8,
-                        10,
-                        8,
-                        10
+                        4,
+                        8
                 )
         );
 
@@ -563,7 +563,7 @@ public class TeacherStartPage extends BorderPane {
         Label codeLabel =
                 text(
                         code,
-                        7,
+                        9,
                         FontWeight.BOLD,
                         "#4B83A0"
                 );
@@ -571,7 +571,7 @@ public class TeacherStartPage extends BorderPane {
         codeLabel.setStyle(
                 "-fx-background-color: #D9F0FA; "
                         + "-fx-background-radius: 3; "
-                        + "-fx-padding: 2 5;"
+                        + "-fx-padding: 1 4;"
         );
 
         // ---------------------------------------------------------
@@ -581,7 +581,7 @@ public class TeacherStartPage extends BorderPane {
         Label nameLabel =
                 text(
                         name,
-                        10,
+                        9,
                         FontWeight.BOLD,
                         "#171717"
                 );
@@ -593,7 +593,7 @@ public class TeacherStartPage extends BorderPane {
         Label lessonsLabel =
                 text(
                         lessons,
-                        8,
+                        7.5,
                         FontWeight.NORMAL,
                         "#858585"
                 );
@@ -607,8 +607,8 @@ public class TeacherStartPage extends BorderPane {
                         "Aloita oppitunti"
                 );
 
-        startButton.setPrefHeight(18);
-        startButton.setMinHeight(18);
+        startButton.setPrefHeight(16);
+        startButton.setMinHeight(16);
 
         startButton.setMaxWidth(
                 Double.MAX_VALUE
@@ -623,7 +623,7 @@ public class TeacherStartPage extends BorderPane {
                         + NAVY
                         + "; "
                         + "-fx-text-fill: white; "
-                        + "-fx-font-size: 8px; "
+                        + "-fx-font-size: 7px; "
                         + "-fx-font-weight: bold; "
                         + "-fx-background-radius: 3; "
                         + "-fx-cursor: hand;"
