@@ -336,52 +336,9 @@ public class TeacherStartPage extends BorderPane {
                         "#171717"
                 );
 
-        TextField courseNameField = new TextField();
-        courseNameField.setPromptText("Syötä uusi kurssi");
-
-
-        Button addCourseButton = new Button("Luo uusi kurssi");
-        addCourseButton.setOnAction(event -> {
-            String courseName = courseNameField.getText();
-                if (!courseName.isEmpty()) {
-                    boolean success = teacherController.createCourses(courseName, teacherId);
-                    if (success) {
-                        teacherController.showStartPage();
-                    }
-
-                }
-            });
-
-
-        Region headerSpacer = new Region();
-        HBox.setHgrow(headerSpacer, Priority.ALWAYS);
 
 
 
-
-        HBox addCourseBox = new HBox(8, courseNameField, addCourseButton);
-        addCourseBox.setAlignment(Pos.TOP_RIGHT);
-
-
-        VBox headingBox =
-
-                new VBox(
-
-                        2,
-
-                        heading,
-
-                        introduction
-
-                );
-        headingBox.setPadding(
-                new Insets(
-                        0,
-                        0,
-                        18,
-                        0
-                )
-        );
 
         // =========================================================
         // COURSE CARDS CONTAINER
@@ -534,10 +491,19 @@ public class TeacherStartPage extends BorderPane {
 
         content.getChildren()
                 .addAll(
-                        headingBox,
-                        cards,addCourseBox
+                        heading, introduction,
+                        cards
                 );
 
+        content.setSpacing(10);
+        content.setPadding(
+                new Insets(
+                        41,
+                        30,
+                        20,
+                        31
+                )
+        );
         // =========================================================
         // ROOT
         // =========================================================

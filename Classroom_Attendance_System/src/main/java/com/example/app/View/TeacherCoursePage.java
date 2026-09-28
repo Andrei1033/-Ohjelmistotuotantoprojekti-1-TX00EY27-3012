@@ -83,7 +83,7 @@ public class TeacherCoursePage extends BorderPane {
 
 
         String courseNameText = "Kurssi " + courseId;
-        String courseCodeText = "Koodi: " + String.format("%02d", courseId);
+        String courseCodeText = String.format("%02d", courseId);
 
         List<TeacherCourse> courses = teacherController.getTeacherCourses((teacher != null) ? teacher.getId() : 1);
         for (TeacherCourse tc : courses) {
