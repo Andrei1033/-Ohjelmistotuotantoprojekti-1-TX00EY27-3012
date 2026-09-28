@@ -109,27 +109,36 @@ public class CourseDao {
         return courses;
     }
 
-    public List<User> getAllStudents() {
+    public List<User> getStudentsNotInCourse(int courseId) {
         List<User> students = new ArrayList<>();
-        String sql = "SELECT user_id, first_name, last_name, email FROM users WHERE role = 'STUDENT' ORDER BY last_name, first_name";
+        String sql = "SELECT u.user_id, u.first_name, u.last_name, u.email " +
+                "FROM users u " +
+                "WHERE u.role = 'STUDENT' " +
+                "  AND u.user_id NOT IN (" +
+                "      SELECT cs.student_id FROM course_students cs WHERE cs.course_id = ?" +
+                "  ) " +
+                "ORDER BY u.last_name, u.first_name";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            while (rs.next()) {
-                User student = new User(
-                        rs.getInt("user_id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getString("email"),
-                        Role.STUDENT
-                );
-                students.add(student);
+            ps.setInt(1, courseId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User student = new User(
+                            rs.getInt("user_id"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            rs.getString("email"),
+                            Role.STUDENT
+                    );
+                    students.add(student);
+                }
             }
 
         } catch (SQLException e) {
-            System.err.println("Virhe opiskelijoiden hakemisessa: " + e.getMessage());
+            System.err.println("Virhe vapaiden opiskelijoiden hakemisessa: " + e.getMessage());
         }
 
         return students;

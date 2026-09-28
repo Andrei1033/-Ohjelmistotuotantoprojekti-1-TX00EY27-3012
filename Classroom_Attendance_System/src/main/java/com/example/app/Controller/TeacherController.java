@@ -195,9 +195,13 @@ public class TeacherController {
         }
 
     public List<User> getAllStudents(int courseId) {
-        return courseDao.getAllStudents();
+        return courseDao.getStudentsNotInCourse(courseId);
     }
     public boolean addStudents(List<Integer> studentIds, int courseId) {
+
+
+
+
         if (studentIds == null || studentIds.isEmpty()) {
             return false;
         }
