@@ -7,9 +7,8 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="Merge branch 'qqq'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="korjaus">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +168,7 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.app.Main" />
       <module name="Classroom_Attendance_System" />
@@ -598,7 +597,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790576815196</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="korjaus">
+      <option name="closed" value="true" />
+      <created>1790577120393</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1790577120393</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -642,7 +649,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="jenkins test" />
     <MESSAGE value="d" />
     <MESSAGE value="nyt ohjelma taas toimi ja ei anna erroreita" />
     <MESSAGE value="todenäköisesti jenkins pitä toimia" />
@@ -667,7 +673,8 @@
     <MESSAGE value="AttendanceRecordTest + CourseTest + ProfileEditWindowTest" />
     <MESSAGE value="maby some pom problem" />
     <MESSAGE value="aaaa vittu" />
-    <option name="LAST_COMMIT_MESSAGE" value="aaaa vittu" />
+    <MESSAGE value="korjaus" />
+    <option name="LAST_COMMIT_MESSAGE" value="korjaus" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

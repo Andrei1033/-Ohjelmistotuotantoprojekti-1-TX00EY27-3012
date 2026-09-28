@@ -1,4 +1,4 @@
-/*package com.example.app.DaoElements;
+package com.example.app.DaoElements;
 
 import com.example.app.Database.DatabaseConnection;
 import com.example.app.Model.Admin;
@@ -125,4 +125,4 @@ class AdminDaoTest {
             return resultSet.getInt(1);
         }
     }
-}*/
+}
