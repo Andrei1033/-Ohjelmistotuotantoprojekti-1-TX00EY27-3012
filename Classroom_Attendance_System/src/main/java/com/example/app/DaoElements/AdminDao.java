@@ -17,9 +17,9 @@ public class AdminDao {
 
     private static final String FIND_ALL_USERS = """
             SELECT u.user_id, u.first_name, u.last_name, u.email, u.role,
-                   GROUP_CONCAT(DISTINCT c.name ORDER BY c.name SEPARATOR ', ') AS cours
+                   GROUP_CONCAT(DISTINCT c.name ORDER BY c.name SEPARATOR ', ') AS courses
             FROM users u
-            LEFT JOIN cours c
+            LEFT JOIN courses c
               ON c.teacher_id = u.user_id
               OR EXISTS (
                   SELECT 1
@@ -44,13 +44,13 @@ public class AdminDao {
                             "Unknown role for user " + resultSet.getInt("user_id"));
                 }
 
-                String cours = resultSet.getString("cours");
+                String courses = resultSet.getString("courses");
                 users.add(new Admin(
                         resultSet.getInt("user_id"),
                         resultSet.getString("first_name") + " " + resultSet.getString("last_name"),
                         resultSet.getString("email"),
                         role,
-                        cours == null ? "—" : cours
+                        courses == null ? "—" : courses
                 ));
             }
         } catch (SQLException exception) {
