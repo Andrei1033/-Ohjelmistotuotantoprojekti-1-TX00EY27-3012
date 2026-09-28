@@ -7,12 +7,8 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="AttendanceDaoTest + CourseDaoTest">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="AttendanceRecordTest + CourseTest + ProfileEditWindowTest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/AttendanceRecordTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/AttendanceRecordTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ProfileEditWindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ProfileEditWindowTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -569,7 +565,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790570813799</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="AttendanceRecordTest + CourseTest + ProfileEditWindowTest">
+      <option name="closed" value="true" />
+      <created>1790573050971</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1790573050971</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,7 +617,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="All pages now open in full screen automaticaly" />
     <MESSAGE value="litlebit updated db" />
     <MESSAGE value="ohjelma ei enä palauta error" />
     <MESSAGE value="jenkins test" />
@@ -638,7 +641,8 @@
     <MESSAGE value="StudentControllerTest.java" />
     <MESSAGE value="UserDaoTest + UserTest" />
     <MESSAGE value="AttendanceDaoTest + CourseDaoTest" />
-    <option name="LAST_COMMIT_MESSAGE" value="AttendanceDaoTest + CourseDaoTest" />
+    <MESSAGE value="AttendanceRecordTest + CourseTest + ProfileEditWindowTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="AttendanceRecordTest + CourseTest + ProfileEditWindowTest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
