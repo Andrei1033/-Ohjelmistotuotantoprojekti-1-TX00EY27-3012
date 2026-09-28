@@ -146,7 +146,7 @@ class CourseTest {
         Course course = new Course(1, "CS101", "Java Basics", 50);
 
         assertEquals(
-                "Course{id=1, code='CS101', name='Java Basics'}",
+                "TeacherCourse{id=1, code='CS101', name='Java Basics'}",
                 course.toString()
         );
     }
@@ -156,7 +156,7 @@ class CourseTest {
         Course course = new Course(2, null, null, 7);
 
         assertEquals(
-                "Course{id=2, code='null', name='null'}",
+                "TeacherCourse{id=2, code='null', name='null'}",
                 course.toString()
         );
     }
