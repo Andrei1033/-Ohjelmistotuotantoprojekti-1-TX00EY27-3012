@@ -7,7 +7,11 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="StudentControllerTest.java" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="UserDaoTest + UserTest">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/AttendanceDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/AttendanceDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,6 +96,8 @@
     "Application.main.executor": "Run",
     "Docker.Classroom_Attendance_System/Dockerfile.executor": "Run",
     "JUnit.AdminTest.executor": "Run",
+    "JUnit.AttendanceDaoTest.executor": "Run",
+    "JUnit.CourseDaoTest.executor": "Run",
     "JUnit.DatabaseConnectionTest.executor": "Run",
     "JUnit.LoginControllerTest.executor": "Run",
     "JUnit.LoginTest.executor": "Run",
@@ -101,6 +107,8 @@
     "JUnit.TeacherAttendanceTrackingTest.executor": "Run",
     "JUnit.TeacherCoursePageTest.executor": "Run",
     "JUnit.TeacherStartPageTest.executor": "Run",
+    "JUnit.UserDaoTest.executor": "Run",
+    "JUnit.UserTest.executor": "Run",
     "Maven.Classroom_Attendance_System [clean].executor": "Run",
     "Maven.Classroom_Attendance_System [install].executor": "Run",
     "Maven.Classroom_Attendance_System [javafx:run].executor": "Run",
@@ -540,7 +548,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790569643653</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="UserDaoTest + UserTest">
+      <option name="closed" value="true" />
+      <created>1790570195625</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1790570195625</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -584,7 +600,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="olen tehny login logika. nyt main sivu aloita ohjelma" />
     <MESSAGE value="most important features in student pages are done" />
     <MESSAGE value="All pages now open in full screen automaticaly" />
     <MESSAGE value="litlebit updated db" />
@@ -609,7 +624,8 @@
     <MESSAGE value="&quot;empty&quot; test files" />
     <MESSAGE value="ja ebat obosralsja" />
     <MESSAGE value="StudentControllerTest.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="StudentControllerTest.java" />
+    <MESSAGE value="UserDaoTest + UserTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="UserDaoTest + UserTest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
