@@ -2,12 +2,14 @@ package com.example.app.DaoElements;
 
 import com.example.app.Database.DatabaseConnection;
 import com.example.app.Model.Lesson;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+
+
 
 
 public class LessonDao {
@@ -45,8 +47,8 @@ public class LessonDao {
 
         String sql =
                 "INSERT INTO lessons " +
-                        "(course_id, start_time, end_time, topic) " +
-                        "VALUES (?, ?, ?, ?)";
+                        "(course_id, start_time, end_time) " +
+                        "VALUES (?, ?, ?)";
 
         try (
                 Connection conn = DatabaseConnection.getConnection();
@@ -58,7 +60,7 @@ public class LessonDao {
         ) {
 
             java.time.LocalDateTime startTime =
-                    java.time.LocalDateTime.now();
+                    LocalDateTime.now().withNano(0);
 
             // Väliaikainen end_time.
             // Todellinen lopetusaika asetetaan endLesson()-metodissa.
@@ -66,9 +68,8 @@ public class LessonDao {
                     startTime.plusMinutes(1);
 
             stmt.setInt(1, courseId);
-            stmt.setObject(2, startTime);
-            stmt.setObject(3, endTime);
-            stmt.setString(4, "");
+            stmt.setObject(2, Timestamp.valueOf(startTime));
+            stmt.setObject(3, Timestamp.valueOf(endTime));
 
             int affected = stmt.executeUpdate();
 
@@ -96,6 +97,10 @@ public class LessonDao {
         return -1;
     }
 }
+
+
+
+
 
 
 

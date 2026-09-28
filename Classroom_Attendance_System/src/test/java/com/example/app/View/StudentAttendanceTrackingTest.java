@@ -132,7 +132,7 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     }
 
     @Test
-    @DisplayName("Header shows course name and code from the Course model")
+    @DisplayName("Header shows course name and code from the TeacherCourse model")
     void headerShowsCourse() {
         StudentAttendanceTracking view = show(List.of(), () -> {});
         assertTrue(hasLabel(view, "Ohjelmoinnin perusteet"));

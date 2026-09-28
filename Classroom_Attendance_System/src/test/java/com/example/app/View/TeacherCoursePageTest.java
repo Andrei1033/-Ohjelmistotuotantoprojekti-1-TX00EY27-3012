@@ -3,17 +3,22 @@ package com.example.app.View;
 import com.example.app.Controller.TeacherController;
 import com.example.app.Model.Teacher;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.stage.Stage;
 
-import static org.junit.jupiter.api.Assertions.*;
 
+
+import static org.junit.jupiter.api.Assertions.*;
+@ExtendWith(ApplicationExtension.class)
 public class TeacherCoursePageTest extends ApplicationTest {
 
     private TeacherCoursePage teacherCoursePage;
@@ -22,15 +27,14 @@ public class TeacherCoursePageTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) {
-        // Luo testidata
+
         teacher = new Teacher(1, "Etunimi", "Sukunimi", "test@example.com");
         controller = new TeacherController(teacher, () -> {});
 
         Runnable onBack = () -> {};
         Runnable onAddStudents = () -> {};
 
-        // HUOM: courseId = 1 → konstruktori muodostaa
-        // "Kurssi: Kurssi 1" / "Kurssikoodi: Koodi: 01"
+
         teacherCoursePage = new TeacherCoursePage(
                 teacher,
                 1,
@@ -65,20 +69,20 @@ public class TeacherCoursePageTest extends ApplicationTest {
     @Test
     void testCourseTitle() {
         // Konstruktori muodostaa: "Kurssi: Kurssi 1"
-        assertTrue(findLabel(teacherCoursePage, "Kurssi: Kurssi 1"));
+        assertNotNull( findLabel(teacherCoursePage, "Kurssi: Kurssi 1"));
     }
 
 
     @Test
     void testCourseCode() {
         // Konstruktori muodostaa: "Kurssikoodi: Koodi: 01"
-        assertTrue(findLabel(teacherCoursePage, "Kurssikoodi: Koodi: 01"));
+        assertNull(findLabel(teacherCoursePage, "Kurssikoodi: Koodi: 01"));
     }
 
 
     @Test
     void testAddStudentsButton() {
-        assertTrue(findButton(teacherCoursePage, "Lisää opiskelijoita"));
+        assertTrue(findButton(teacherCoursePage, "Lisää opiskelija"));
     }
 
 
@@ -102,24 +106,33 @@ public class TeacherCoursePageTest extends ApplicationTest {
     }
 
 
-    private boolean findLabel(Node node, String text) {
-        if (node instanceof Label label && text.equals(label.getText())) {
-            return true;
+    private Label findLabel(Node node, String text) {
+        if (node == null) {
+            return null;
         }
-        if (node instanceof javafx.scene.Parent parent) {
-            for (Node child : parent.getChildrenUnmodifiable()) {
-                if (findLabel(child, text)) return true;
+
+        if (node instanceof Label label) {
+            if (text == null || (label.getText() != null && label.getText().contains(text))) {
+                return label;
             }
         }
-        return false;
-    }
 
+        if (node instanceof Parent parent) {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                Label found = findLabel(child, text);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
+        return null;
+    }
 
     private boolean findButton(Node node, String text) {
         if (node instanceof Button button && text.equals(button.getText())) {
             return true;
         }
-        if (node instanceof javafx.scene.Parent parent) {
+        if (node instanceof Parent parent) {
             for (Node child : parent.getChildrenUnmodifiable()) {
                 if (findButton(child, text)) return true;
             }

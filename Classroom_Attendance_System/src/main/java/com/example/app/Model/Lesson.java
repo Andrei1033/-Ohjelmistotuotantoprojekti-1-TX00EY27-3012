@@ -1,6 +1,8 @@
 package com.example.app.Model;
 
 
+import com.example.app.DaoElements.LessonDao;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -66,9 +68,10 @@ public class Lesson {
             return null;
         }
         try {
-            return LocalDateTime.parse(startTime, formatter);
+            String cleanTime = startTime.trim().replace("T", " ");
+            return LocalDateTime.parse(cleanTime, formatter);
         } catch (DateTimeParseException e) {
-            System.err.println("Virheellinen aika ja päivä " + startTime);
+            System.err.println("Virheellinen aika ja päivä: " + startTime);
             return null;
         }
     }
@@ -86,4 +89,5 @@ public class Lesson {
         }
         return date.format(DateTimeFormatter.ofPattern("d.M.yyyy"));
     }
+
 }

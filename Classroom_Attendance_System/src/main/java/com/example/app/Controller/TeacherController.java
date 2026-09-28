@@ -194,4 +194,24 @@ public class TeacherController {
 
         }
 
+    public List<User> getAllStudents(int courseId) {
+        return courseDao.getAllStudents();
     }
+    public boolean addStudents(List<Integer> studentIds, int courseId) {
+        if (studentIds == null || studentIds.isEmpty()) {
+            return false;
+        }
+        for (int studentId : studentIds) {
+            courseDao.addStudents(studentId, courseId);
+        }
+        return true;
+    }
+
+    public List<User> getStudentsForCourse(int courseId) {
+        if (courseId <= 0) {
+            return Collections.emptyList();
+        }
+        return courseDao.getStudentsForCourse(courseId);
+    }
+}
+
