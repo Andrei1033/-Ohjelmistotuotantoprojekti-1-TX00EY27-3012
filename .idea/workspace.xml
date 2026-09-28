@@ -9,9 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="ja ebat obosralsja">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/LoginControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/LoginControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/AttendanceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/AttendanceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Teacher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/StudentControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/StudentControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentAttendanceTrackingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentAttendanceTrackingTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentStertPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentStertPageTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +103,7 @@
     "JUnit.LoginControllerTest.executor": "Run",
     "JUnit.LoginTest.executor": "Run",
     "JUnit.StudentAttendanceTrackingTest.executor": "Run",
+    "JUnit.StudentControllerTest.executor": "Run",
     "JUnit.StudentStartPageTest.executor": "Run",
     "JUnit.TeacherAttendanceTrackingTest.executor": "Run",
     "JUnit.TeacherCoursePageTest.executor": "Run",
