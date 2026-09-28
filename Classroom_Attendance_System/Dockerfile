@@ -1,23 +1,37 @@
-# Используем стабильный JRE
-FROM eclipse-temurin:21-jre
-
+# ============================================================
+#  Этап 1: сборка fat JAR через Maven
+# ============================================================
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 
-# Установка графических библиотек для JavaFX (с учетом новых имен пакетов в Ubuntu)
+# Сначала pom.xml — кэшируем зависимости
+COPY pom.xml .
+RUN mvn -B dependency:go-offline
+
+# Затем исходники
+COPY src ./src
+RUN mvn -B clean package -DskipTests
+
+# ============================================================
+#  Этап 2: запуск
+# ============================================================
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+
+# JavaFX в headless-контейнере требует виртуальный дисплей и GTK
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1 \
-    libgtk-3-0 \
-    libasound2t64 \
-    libxxf86vm1 \
-    libxrender1 \
-    libxtst6 \
-    libxi6 \
-    libxext6 \
+        xvfb \
+        libgl1 \
+        libgtk-3-0 \
+        libxtst6 \
+        libxi6 \
+        libxrender1 \
+        libxext6 \
+        fonts-dejavu-core \
     && rm -rf /var/lib/apt/lists/*
 
-# Ищем любой JAR-файл в папке target (работает и в Jenkins, и в IDE)
-COPY **/Classroom_Attendance_System-1.0-SNAPSHOT.jar app.jar
+# Копируем fat JAR и переименовываем в app.jar
+COPY --from=build /app/target/Classroom_Attendance_System.jar app.jar
 
-ENV DISPLAY=:0
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Запуск через виртуальный дисплей (Xvfb)
+CMD ["xvfb-run", "-a", "java", "-jar", "app.jar"]
