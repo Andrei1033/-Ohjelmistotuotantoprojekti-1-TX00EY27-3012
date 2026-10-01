@@ -1,6 +1,7 @@
 package com.example.app.View;
 
 import com.example.app.Model.LoginComponents.User;
+import com.example.app.Model.StudentComponents.AttendanceRecord;
 import com.example.app.Model.StudentComponents.Course;
 
 import javafx.geometry.Insets;
@@ -17,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class StudentStartPage extends BorderPane {
@@ -35,6 +37,15 @@ public class StudentStartPage extends BorderPane {
      */
     public StudentStartPage(User currentUser,
                             List<Course> courses,
+                            Consumer<Course> onCourseSelected,
+                            Runnable onLogout,
+                            Runnable onProfileUpdated) {
+        this(currentUser, courses, Map.of(), onCourseSelected, onLogout, onProfileUpdated);
+    }
+
+    public StudentStartPage(User currentUser,
+                            List<Course> courses,
+                            Map<Integer, List<AttendanceRecord>> attendanceByCourse,
                             Consumer<Course> onCourseSelected,
                             Runnable onLogout,
                             Runnable onProfileUpdated) {
@@ -154,6 +165,8 @@ public class StudentStartPage extends BorderPane {
                 cards.getChildren().add(
                         courseCard(
                                 course,
+                                attendanceByCourse.getOrDefault(course.getId(), List.of()),
+                                !attendanceByCourse.isEmpty(),
                                 onCourseSelected
                         )
                 );
@@ -223,24 +236,16 @@ public class StudentStartPage extends BorderPane {
 
     private VBox courseCard(
             Course course,
+            List<AttendanceRecord> records,
+            boolean showAttendance,
             Consumer<Course> onCourseSelected) {
 
         VBox card = new VBox(6);
 
-        card.setPrefSize(
-                190,
-                90
-        );
-
-        card.setMinSize(
-                190,
-                90
-        );
-
-        card.setMaxSize(
-                190,
-                90
-        );
+        double cardHeight = showAttendance ? 112 : 90;
+        card.setPrefSize(190, cardHeight);
+        card.setMinSize(190, cardHeight);
+        card.setMaxSize(190, cardHeight);
 
         card.setPadding(
                 new Insets(11, 13, 8, 13)
@@ -316,6 +321,10 @@ public class StudentStartPage extends BorderPane {
                 hoursLabel
         );
 
+        if (showAttendance) {
+            card.getChildren().add(attendanceSummary(records));
+        }
+
         // =========================
         // CLICK HANDLER
         // =========================
@@ -330,6 +339,57 @@ public class StudentStartPage extends BorderPane {
         });
 
         return card;
+    }
+
+    private HBox attendanceSummary(List<AttendanceRecord> records) {
+        HBox summary = new HBox(6);
+        summary.setAlignment(Pos.CENTER_LEFT);
+
+        Label percentage = text(attendancePercentage(records) + "% läsnä", 8, FontWeight.BOLD, "#555555");
+        HBox bar = attendanceBar(records, 105);
+        HBox.setHgrow(bar, Priority.ALWAYS);
+        summary.getChildren().addAll(bar, percentage);
+        return summary;
+    }
+
+    private static HBox attendanceBar(List<AttendanceRecord> records, double width) {
+        long present = records.stream().filter(r -> "present".equals(r.getStatus())).count();
+        long late = records.stream().filter(r -> "late".equals(r.getStatus())).count();
+        long absent = records.size() - present - late;
+
+        HBox bar = new HBox();
+        bar.setPrefWidth(width);
+        bar.setMinWidth(0);
+        bar.setPrefHeight(6);
+        bar.setMaxHeight(6);
+        bar.setStyle("-fx-background-color: #EEEEEE; -fx-background-radius: 4;");
+
+        addSegment(bar, present, records.size(), "#2E9560");
+        addSegment(bar, late, records.size(), "#D99A20");
+        addSegment(bar, absent, records.size(), "#C44D3A");
+        return bar;
+    }
+
+    private static void addSegment(HBox bar, long count, int total, String color) {
+        if (count == 0 || total == 0) {
+            return;
+        }
+        Region segment = new Region();
+        segment.setPrefWidth(bar.getPrefWidth() * count / total);
+        segment.setMinWidth(0);
+        segment.setPrefHeight(6);
+        segment.setStyle("-fx-background-color: " + color + ";");
+        bar.getChildren().add(segment);
+    }
+
+    private static int attendancePercentage(List<AttendanceRecord> records) {
+        if (records.isEmpty()) {
+            return 0;
+        }
+        long attended = records.stream()
+                .filter(r -> "present".equals(r.getStatus()) || "late".equals(r.getStatus()))
+                .count();
+        return (int) Math.round(attended * 100.0 / records.size());
     }
 
 

@@ -13,6 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Manages navigation between student views and fetches the necessary data
@@ -51,10 +53,16 @@ public class StudentController {
         currentCourse = null;
 
         List<Course> courses = courseDao.getCoursesForStudent(currentUser.getId());
+        Map<Integer, List<AttendanceRecord>> attendanceByCourse = new HashMap<>();
+        for (Course course : courses) {
+            attendanceByCourse.put(course.getId(),
+                    attendanceDao.getAttendanceForStudentAndCourse(currentUser.getId(), course.getId()));
+        }
 
         StudentStartPage page = new StudentStartPage(
                 currentUser,
                 courses,
+                attendanceByCourse,
                 this::showAttendancePage,
                 onLogout,
                 this::refreshCurrentPage

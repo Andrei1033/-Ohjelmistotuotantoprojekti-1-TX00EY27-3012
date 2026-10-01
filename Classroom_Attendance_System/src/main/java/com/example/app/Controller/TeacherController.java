@@ -7,6 +7,8 @@ import com.example.app.Model.TeacherCourse;
 import com.example.app.Model.Lesson;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.Teacher;
+import com.example.app.Model.StudentComponents.AttendanceRecord;
+import com.example.app.DaoElements.StudentDao.AttendanceDao;
 import com.example.app.View.TeacherAttendanceTracking;
 import com.example.app.View.TeacherCoursePage;
 import com.example.app.View.TeacherStartPage;
@@ -24,6 +26,7 @@ public class TeacherController {
     private final Teacher currentTeacher;
     private final Runnable onLogout;
     private final CourseDao courseDao = new CourseDao();
+    private final AttendanceDao attendanceDao = new AttendanceDao();
     private final LessonDao lessonDao = new LessonDao();
     private final BorderPane root = new BorderPane();
 
@@ -213,5 +216,11 @@ public class TeacherController {
         }
         return courseDao.getStudentsForCourse(courseId);
     }
-}
 
+    public List<AttendanceRecord> getAttendanceForStudentAndCourse(int studentId, int courseId) {
+        if (studentId <= 0 || courseId <= 0) {
+            return Collections.emptyList();
+        }
+        return attendanceDao.getAttendanceForStudentAndCourse(studentId, courseId);
+    }
+}

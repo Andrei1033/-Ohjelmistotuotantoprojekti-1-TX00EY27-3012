@@ -4,6 +4,7 @@ import com.example.app.Controller.TeacherController;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
+import com.example.app.Model.StudentComponents.AttendanceRecord;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -182,14 +183,72 @@ public class TeacherCoursePage extends BorderPane {
             return;
         }
         students.forEach(student -> {
+            List<AttendanceRecord> records =
+                    teacherController.getAttendanceForStudentAndCourse(student.getId(), courseId);
+            VBox studentInfo = new VBox(2,
+                    text(student.getFullName(), 10, FontWeight.BOLD, "#111827"),
+                    text("ID: " + student.getId(), 8, FontWeight.NORMAL, "#6B7280"));
+            HBox attendance = attendanceSummary(records);
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
             HBox card = new HBox(
-                    new VBox(2, text(student.getFullName(), 10, FontWeight.BOLD, "#111827"),
-                            text("ID: " + student.getId(), 8, FontWeight.NORMAL, "#6B7280"))
+                    studentInfo, spacer, attendance
             );
+            card.setAlignment(Pos.CENTER_LEFT);
             card.setPadding(new Insets(10, 14, 10, 14));
             card.setStyle("-fx-background-color: white; -fx-border-color: #E5E7EB; -fx-border-radius: 6; -fx-background-radius: 6;");
             studentList.getChildren().add(card);
         });
+    }
+
+    private HBox attendanceSummary(List<AttendanceRecord> records) {
+        HBox summary = new HBox(8);
+        summary.setAlignment(Pos.CENTER_RIGHT);
+
+        Label percentage = text("Läsnäolo " + attendancePercentage(records) + " %", 8,
+                FontWeight.BOLD, "#374151");
+        HBox bar = attendanceBar(records, 100);
+        summary.getChildren().addAll(bar, percentage);
+        return summary;
+    }
+
+    private static HBox attendanceBar(List<AttendanceRecord> records, double width) {
+        long present = records.stream().filter(r -> "present".equals(r.getStatus())).count();
+        long late = records.stream().filter(r -> "late".equals(r.getStatus())).count();
+        long absent = records.size() - present - late;
+
+        HBox bar = new HBox();
+        bar.setPrefWidth(width);
+        bar.setMinWidth(0);
+        bar.setPrefHeight(7);
+        bar.setMaxHeight(7);
+        bar.setStyle("-fx-background-color: #EEEEEE; -fx-background-radius: 4;");
+        addSegment(bar, present, records.size(), "#2E9560");
+        addSegment(bar, late, records.size(), "#D99A20");
+        addSegment(bar, absent, records.size(), "#C44D3A");
+        return bar;
+    }
+
+    private static void addSegment(HBox bar, long count, int total, String color) {
+        if (count == 0 || total == 0) {
+            return;
+        }
+        Region segment = new Region();
+        segment.setPrefWidth(bar.getPrefWidth() * count / total);
+        segment.setMinWidth(0);
+        segment.setPrefHeight(7);
+        segment.setStyle("-fx-background-color: " + color + ";");
+        bar.getChildren().add(segment);
+    }
+
+    private static int attendancePercentage(List<AttendanceRecord> records) {
+        if (records.isEmpty()) {
+            return 0;
+        }
+        long attended = records.stream()
+                .filter(r -> "present".equals(r.getStatus()) || "late".equals(r.getStatus()))
+                .count();
+        return (int) Math.round(attended * 100.0 / records.size());
     }
 
 
@@ -258,7 +317,6 @@ public class TeacherCoursePage extends BorderPane {
 
 
     }
-
 
 
 

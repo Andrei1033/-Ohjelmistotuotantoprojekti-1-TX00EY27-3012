@@ -144,6 +144,15 @@ public class StudentAttendanceTracking extends BorderPane {
         header.getChildren().addAll(titleBox, pushRight, summary);
         content.getChildren().add(header);
 
+        HBox attendanceOverview = new HBox(10);
+        attendanceOverview.setAlignment(Pos.CENTER_LEFT);
+        attendanceOverview.setPadding(new Insets(14, 0, 0, 0));
+        attendanceOverview.getChildren().addAll(
+                text("Läsnäolo " + attendancePercentage(records) + " %", 9, FontWeight.BOLD, "#555555"),
+                attendanceBar(records, 220)
+        );
+        content.getChildren().add(attendanceOverview);
+
         // =========================
         // ATTENDANCE ROWS
         // =========================
@@ -264,6 +273,7 @@ public class StudentAttendanceTracking extends BorderPane {
         if (status == null) {
             status = "absent";
         }
+
         switch (status) {
             case "present":
                 return new String[]{"#2E9560", "#E5F4EA"};
@@ -272,6 +282,46 @@ public class StudentAttendanceTracking extends BorderPane {
             default: // "absent" ja "excused"
                 return new String[]{"#C44D3A", "#FBE6E2"};
         }
+    }
+
+    private static HBox attendanceBar(List<AttendanceRecord> records, double width) {
+        long present = records.stream().filter(r -> "present".equals(r.getStatus())).count();
+        long late = records.stream().filter(r -> "late".equals(r.getStatus())).count();
+        long absent = records.size() - present - late;
+
+        HBox bar = new HBox();
+        bar.setPrefWidth(width);
+        bar.setMinWidth(0);
+        bar.setPrefHeight(7);
+        bar.setMaxHeight(7);
+        bar.setStyle("-fx-background-color: #EEEEEE; -fx-background-radius: 4;");
+
+        addSegment(bar, present, records.size(), "#2E9560");
+        addSegment(bar, late, records.size(), "#D99A20");
+        addSegment(bar, absent, records.size(), "#C44D3A");
+        return bar;
+    }
+
+    private static void addSegment(HBox bar, long count, int total, String color) {
+        if (count == 0 || total == 0) {
+            return;
+        }
+        Region segment = new Region();
+        segment.setPrefWidth(bar.getPrefWidth() * count / total);
+        segment.setMinWidth(0);
+        segment.setPrefHeight(7);
+        segment.setStyle("-fx-background-color: " + color + ";");
+        bar.getChildren().add(segment);
+    }
+
+    private static int attendancePercentage(List<AttendanceRecord> records) {
+        if (records.isEmpty()) {
+            return 0;
+        }
+        long attended = records.stream()
+                .filter(r -> "present".equals(r.getStatus()) || "late".equals(r.getStatus()))
+                .count();
+        return (int) Math.round(attended * 100.0 / records.size());
     }
 
     private static String statusLabel(String status) {
