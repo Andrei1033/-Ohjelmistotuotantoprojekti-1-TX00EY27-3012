@@ -622,10 +622,12 @@ public class TeacherStartPage extends BorderPane {
             }
 
             String courseCode =
-                    String.format(
-                            "%02d",
-                            courseId
-                    );
+                    course.getCode();
+
+            if (courseCode == null || courseCode.isBlank()) {
+                // Fallback: jos koodi puuttuu, näytetään ID
+                courseCode = String.format("%02d", courseId);
+            }
 
             String lessonText =
                     lessonCount + " oppituntia";

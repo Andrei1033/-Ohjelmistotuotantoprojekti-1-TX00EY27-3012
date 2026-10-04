@@ -86,7 +86,7 @@ public class CourseDao {
         }
 
         List<TeacherCourse> courses = new ArrayList<>();
-        String sql = "SELECT course_id, name, teacher_id FROM courses WHERE teacher_id = ? ORDER BY course_id";
+        String sql = "SELECT course_id, name, code, teacher_id FROM courses WHERE teacher_id = ? ORDER BY course_id";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -98,6 +98,7 @@ public class CourseDao {
                     courses.add(new TeacherCourse(
                             rs.getInt("course_id"),
                             rs.getString("name"),
+                            rs.getString("code"),
                             rs.getInt("teacher_id")
                     ));
                 }
