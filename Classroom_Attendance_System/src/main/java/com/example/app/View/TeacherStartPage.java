@@ -515,6 +515,7 @@ public class TeacherStartPage extends BorderPane {
         boolean created =
                 teacherController.createCourses(
                         courseName,
+                        codeField.getText().trim(),
                         teacherId
                 );
 

@@ -7,9 +7,10 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="database.properties">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="teacher can now add a new courses">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/TeacherCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/TeacherCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/TeacherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/TeacherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/CourseDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="qqq" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,63 +86,63 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.App.executor&quot;: &quot;Run&quot;,
-    &quot;Application.HelloWorldApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PageShow.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UserDao.executor&quot;: &quot;Run&quot;,
-    &quot;Application.main.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.Classroom_Attendance_System/Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AdminTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AttendanceDaoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AttendanceRecordTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CourseDaoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CourseTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DatabaseConnectionTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoginControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LoginTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ProfileEditWindowTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StudentAttendanceTrackingTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StudentControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StudentStartPageTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TeacherAttendanceTrackingTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TeacherCoursePageTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TeacherStartPageTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDaoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserTest.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Classroom_Attendance_System [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Classroom_Attendance_System [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.Classroom_Attendance_System [javafx:run].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.App.executor": "Run",
+    "Application.HelloWorldApplication.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.PageShow.executor": "Run",
+    "Application.UserDao.executor": "Run",
+    "Application.main.executor": "Run",
+    "Docker.Classroom_Attendance_System/Dockerfile.executor": "Run",
+    "JUnit.AdminTest.executor": "Run",
+    "JUnit.AttendanceDaoTest.executor": "Run",
+    "JUnit.AttendanceRecordTest.executor": "Run",
+    "JUnit.CourseDaoTest.executor": "Run",
+    "JUnit.CourseTest.executor": "Run",
+    "JUnit.DatabaseConnectionTest.executor": "Run",
+    "JUnit.LoginControllerTest.executor": "Run",
+    "JUnit.LoginTest.executor": "Run",
+    "JUnit.ProfileEditWindowTest.executor": "Run",
+    "JUnit.StudentAttendanceTrackingTest.executor": "Run",
+    "JUnit.StudentControllerTest.executor": "Run",
+    "JUnit.StudentStartPageTest.executor": "Run",
+    "JUnit.TeacherAttendanceTrackingTest.executor": "Run",
+    "JUnit.TeacherCoursePageTest.executor": "Run",
+    "JUnit.TeacherStartPageTest.executor": "Run",
+    "JUnit.UserDaoTest.executor": "Run",
+    "JUnit.UserTest.executor": "Run",
+    "Maven.Classroom_Attendance_System [clean].executor": "Run",
+    "Maven.Classroom_Attendance_System [install].executor": "Run",
+    "Maven.Classroom_Attendance_System [javafx:run].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "add__newcourse__posibility",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Classroom_Attendance_System/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\andre\Documents\metropolia_tehtavat\-Ohjelmistotuotantoprojekti-1-TX00EY27-3012\Documents\SQLKaaviot" />
@@ -279,7 +280,7 @@
       <workItem from="1790511867820" duration="5537000" />
       <workItem from="1790535061751" duration="4281000" />
       <workItem from="1791091303989" duration="13000" />
-      <workItem from="1791109324789" duration="8775000" />
+      <workItem from="1791109324789" duration="9394000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -617,7 +618,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791114795213</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="teacher can now add a new courses">
+      <option name="closed" value="true" />
+      <created>1791125177752</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1791125177752</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="nyt ohjelma taas toimi ja ei anna erroreita" />
     <MESSAGE value="todenäköisesti jenkins pitä toimia" />
     <MESSAGE value="fixing+updating start" />
     <MESSAGE value="these focking text now are visible" />
@@ -686,7 +694,8 @@
     <MESSAGE value="aaaa vittu" />
     <MESSAGE value="korjaus" />
     <MESSAGE value="database.properties" />
-    <option name="LAST_COMMIT_MESSAGE" value="database.properties" />
+    <MESSAGE value="teacher can now add a new courses" />
+    <option name="LAST_COMMIT_MESSAGE" value="teacher can now add a new courses" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -59,7 +59,7 @@ public class CourseDao {
         return courses;
     }
 
-    public boolean addCourse(String courseName, int teacherId) {
+    public boolean addCourse(String courseName, String courseCode, int teacherId) {
         if (courseName == null || courseName.trim().isEmpty() || teacherId <= 0) {
             return false;
         }
@@ -70,7 +70,7 @@ public class CourseDao {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, courseName.trim());
-            ps.setString(2, "");
+            ps.setString(2, courseCode == null ? "" : courseCode.trim());
             ps.setInt(3, teacherId);
 
             return ps.executeUpdate() > 0;
