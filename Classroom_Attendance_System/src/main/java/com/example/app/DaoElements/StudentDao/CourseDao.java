@@ -80,6 +80,30 @@ public class CourseDao {
         }
     }
 
+    public boolean updateCourse(int courseId, String newName, String newCode) {
+        if (courseId <= 0
+                || newName == null
+                || newName.trim().isEmpty()) {
+            return false;
+        }
+
+        String sql = "UPDATE courses SET name = ?, code = ? WHERE course_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, newName.trim());
+            ps.setString(2, newCode == null ? "" : newCode.trim());
+            ps.setInt(3, courseId);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Virhe kurssin päivittämisessä: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<TeacherCourse> getCoursesByTeacherId(int teacherId) {
         if (teacherId <= 0) {
             return Collections.emptyList();

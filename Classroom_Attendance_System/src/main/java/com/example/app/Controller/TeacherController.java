@@ -54,10 +54,17 @@ public class TeacherController {
 
 
     public boolean createCourses(String courseName, String courseCode, int teacherId) {
-        if (courseName == null) {
+        if (courseName == null || courseName.trim().isEmpty() || teacherId <= 0) {
             return false;
         }
         return courseDao.addCourse(courseName.trim(), courseCode, teacherId);
+    }
+
+    public boolean updateCourse(int courseId, String newName, String newCode) {
+        if (courseId <= 0 || newName == null || newName.trim().isEmpty()) {
+            return false;
+        }
+        return courseDao.updateCourse(courseId, newName.trim(), newCode);
     }
 
 

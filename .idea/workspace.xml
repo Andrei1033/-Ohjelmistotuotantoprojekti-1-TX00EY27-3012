@@ -7,8 +7,10 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="teacher can now add a new courses">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="kursi koodi indikaatori näytä kursikodi eikä sen id">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/TeacherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/TeacherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/CourseDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,6 +280,7 @@
       <workItem from="1790535061751" duration="4281000" />
       <workItem from="1791091303989" duration="13000" />
       <workItem from="1791109324789" duration="9394000" />
+      <workItem from="1791130844101" duration="600000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -623,7 +626,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791125177752</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="kursi koodi indikaatori näytä kursikodi eikä sen id">
+      <option name="closed" value="true" />
+      <created>1791127304037</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1791127304037</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -667,7 +678,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="todenäköisesti jenkins pitä toimia" />
     <MESSAGE value="fixing+updating start" />
     <MESSAGE value="these focking text now are visible" />
     <MESSAGE value="added new. student user can change own gmail name and pswd" />
@@ -692,7 +702,8 @@
     <MESSAGE value="korjaus" />
     <MESSAGE value="database.properties" />
     <MESSAGE value="teacher can now add a new courses" />
-    <option name="LAST_COMMIT_MESSAGE" value="teacher can now add a new courses" />
+    <MESSAGE value="kursi koodi indikaatori näytä kursikodi eikä sen id" />
+    <option name="LAST_COMMIT_MESSAGE" value="kursi koodi indikaatori näytä kursikodi eikä sen id" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
