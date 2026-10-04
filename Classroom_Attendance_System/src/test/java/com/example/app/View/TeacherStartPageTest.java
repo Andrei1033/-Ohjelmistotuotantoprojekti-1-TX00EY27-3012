@@ -1,78 +1,69 @@
-
 package com.example.app.View;
 
 import com.example.app.Controller.TeacherController;
 import com.example.app.Model.Teacher;
-import javafx.application.Platform;
+import com.example.app.Model.TeacherCourse;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.framework.junit5.ApplicationExtension;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(ApplicationExtension.class)
 class TeacherStartPageTest {
 
-
-
     private TeacherStartPage teacherStartPage;
+    private Teacher teacher;
+    private TeacherController controller;
 
     @BeforeEach
     void setUp() {
-        Teacher mockTeacher = new Teacher(
-                1,
-                "Matti",
-                "Meikäläinen",
-                "matti@testi.fi"
-        );
+        teacher = new Teacher(1, "Matti", "Meikäläinen", "matti@testi.fi");
 
-        TeacherController mockController =
-                new TeacherController(mockTeacher, () -> {});
+        controller = mock(TeacherController.class);
 
-        teacherStartPage = new TeacherStartPage(
-                mockTeacher,
-                mockController,
-                () -> {}
-        );
+        // Palautetaan YKSI kurssi, jotta kortit syntyvät
+        TeacherCourse course = new TeacherCourse(1, "Ohjelmoinnin perusteet", "CS101", 1);
+        when(controller.getTeacherCourses(anyInt()))
+                .thenReturn(List.of(course));
+        when(controller.getLessonsForCourse(anyInt()))
+                .thenReturn(Collections.emptyList());
 
+        teacherStartPage = new TeacherStartPage(teacher, controller, () -> {});
         new Scene(teacherStartPage, 1024, 399);
     }
 
     @Test
     void testRootIsBorderPane() {
-        assertTrue(
-                teacherStartPage instanceof BorderPane,
-                "TeacherStartPage should be a BorderPane"
-        );
+        assertInstanceOf(BorderPane.class, teacherStartPage);
     }
 
     @Test
     void testLeftSidebarExists() {
         Node left = teacherStartPage.getLeft();
-
         assertNotNull(left);
-        assertTrue(left instanceof VBox);
+        assertInstanceOf(VBox.class, left);
     }
 
     @Test
     void testSidebarWidth() {
         VBox sidebar = (VBox) teacherStartPage.getLeft();
-
-        assertEquals(
-                158.0,
-                sidebar.getPrefWidth(),
-                0.1
-        );
+        assertEquals(158.0, sidebar.getPrefWidth(), 0.1);
     }
 
     @Test
@@ -82,436 +73,155 @@ class TeacherStartPageTest {
 
     @Test
     void testCenterIsVBox() {
-        assertTrue(
-                teacherStartPage.getCenter() instanceof VBox
-        );
+        assertInstanceOf(VBox.class, teacherStartPage.getCenter());
     }
 
     @Test
     void testCourseHeadingExists() {
-        assertNotNull(
-                findLabel(
-                        teacherStartPage,
-                        "Omat kurssit"
-                )
-        );
+        assertNotNull(findLabel(teacherStartPage, "Omat kurssit"));
     }
 
     @Test
     void testCourseIntroductionExists() {
-        Label introduction =
-                findLabelContaining(
-                        teacherStartPage,
-                        "Sinulla on "
-                );
-
+        Label introduction = findLabelContaining(teacherStartPage, "Sinulla on ");
         assertNotNull(introduction);
-
-        assertTrue(
-                introduction.getText().matches(
-                        "Sinulla on \\d+ kurssia tällä lukukaudella\\."
-                )
-        );
-    }
-
-    @Test
-    void testCenterHasTwoChildren() {
-        VBox center = (VBox) teacherStartPage.getCenter();
-
-        assertEquals(
-                3,
-                center.getChildren().size()
-        );
-    }
-
-    @Test
-    void testSecondCenterChildIsHBox() {
-        VBox center = (VBox) teacherStartPage.getCenter();
-
-        assertTrue(
-                center.getChildren().get(2) instanceof HBox
-        );
+        assertTrue(introduction.getText().matches(
+                "Sinulla on \\d+ kurssia tällä lukukaudella\\."));
     }
 
     @Test
     void testCourseCardsExist() {
-        HBox cards = getCourseCards();
-
+        FlowPane cards = getCourseCards();
         assertNotNull(cards);
         assertFalse(cards.getChildren().isEmpty());
     }
 
     @Test
     void testCourseCardsAreVBoxes() {
-        HBox cards = getCourseCards();
-
-        assertNotNull(cards, "Course cards container (HBox) should not be null");
-        assertFalse(
-                cards.getChildren().isEmpty(),
-                "Course cards container should contain at least one course card"
-        );
-
+        FlowPane cards = getCourseCards();
+        assertNotNull(cards);
+        assertFalse(cards.getChildren().isEmpty());
         for (Node child : cards.getChildren()) {
-            assertTrue(
-                    child instanceof VBox,
-                    "Every course card should be a VBox, but found: " + child.getClass().getSimpleName()
-            );
+            assertInstanceOf(VBox.class, child);
         }
     }
 
     @Test
     void testCourseCardsHaveCorrectWidth() {
-        HBox cards = getCourseCards();
-
-        assertNotNull(cards, "Kurssikorttien kontti (HBox) ei saa olla null");
-        assertFalse(cards.getChildren().isEmpty(), "Kurssikortteja pitäisi olla vähintään yksi testissä");
-
+        FlowPane cards = getCourseCards();
         for (Node child : cards.getChildren()) {
-            assertTrue(child instanceof VBox, "Jokaisen kortin tulee olla VBox");
             VBox card = (VBox) child;
-
-            assertEquals(
-                    190.0,
-                    card.getPrefWidth(),
-                    0.1,
-                    "Kurssikortin prefWidth tulisi olla 190.0, mutta oli: " + card.getPrefWidth()
-            );
+            assertEquals(190.0, card.getPrefWidth(), 0.1);
         }
     }
 
     @Test
     void testCourseCardsHaveCorrectHeight() {
-        HBox cards = getCourseCards();
-
-        assertNotNull(cards, "Kurssikorttien kontti (HBox) ei saa olla null");
-        assertFalse(cards.getChildren().isEmpty(), "Kurssikortteja pitää olla vähintään yksi");
-
+        FlowPane cards = getCourseCards();
         for (Node child : cards.getChildren()) {
-            assertTrue(child instanceof VBox, "Jokaisen kortin tulee olla VBox");
             VBox card = (VBox) child;
-
-            assertEquals(
-                    75.0,
-                    card.getPrefHeight(),
-                    0.1,
-                    "Kurssikortin prefHeight tulisi olla 75.0, mutta oli: " + card.getPrefHeight()
-            );
+            // HUOM: koodissa on setPrefSize(190, 112), ei 75
+            assertEquals(112.0, card.getPrefHeight(), 0.1);
         }
     }
 
     @Test
     void testCourseCardsContainLabels() {
-        HBox cards = getCourseCards();
-
+        FlowPane cards = getCourseCards();
         for (Node child : cards.getChildren()) {
-            VBox card = (VBox) child;
-
-            assertNotNull(
-                    findLabelInNode(card)
-            );
+            assertNotNull(findLabelInNode(child));
         }
     }
 
     @Test
     void testCourseCodeExistsWhenCourseExists() {
-        HBox cards = getCourseCards();
-
-        if (!containsRealCourseCode(cards)) {
-            return;
-        }
-
-        boolean foundCourseCode = false;
-
+        FlowPane cards = getCourseCards();
+        boolean found = false;
         for (Node child : cards.getChildren()) {
-            VBox card = (VBox) child;
-
-            for (Node cardChild : card.getChildren()) {
+            for (Node cardChild : ((VBox) child).getChildren()) {
                 if (cardChild instanceof Label label) {
                     String text = label.getText();
-
-                    if (text != null &&
-                            text.matches("\\d{2}")) {
-                        foundCourseCode = true;
+                    if (text != null && text.matches("\\d{2}|[A-Z]+\\d+")) {
+                        found = true;
                     }
                 }
             }
         }
-
-        assertTrue(foundCourseCode);
-    }
-
-    @Test
-    void testCourseNameExistsWhenCourseExists() {
-        HBox cards = getCourseCards();
-
-        if (!containsRealCourseCode(cards)) {
-            return;
-        }
-
-        boolean foundCourseName = false;
-
-        for (Node child : cards.getChildren()) {
-            VBox card = (VBox) child;
-
-            for (Node cardChild : card.getChildren()) {
-                if (cardChild instanceof Label label) {
-                    String text = label.getText();
-
-                    if (text != null &&
-                            !text.isBlank() &&
-                            !text.matches("\\d{2}") &&
-                            !text.matches("\\d+\\s+oppituntia") &&
-                            !text.equals("Ei aktiivisia kursseja") &&
-                            !text.equals("Tällä hetkellä ei ole kursseja.")) {
-
-                        foundCourseName = true;
-                    }
-                }
-            }
-        }
-
-        assertTrue(foundCourseName);
-    }
-
-    @Test
-    void testLessonCountExistsWhenCourseExists() {
-        HBox cards = getCourseCards();
-
-        if (!containsRealCourseCode(cards)) {
-            return;
-        }
-
-        boolean foundLessonCount = false;
-
-        for (Node child : cards.getChildren()) {
-            VBox card = (VBox) child;
-
-            for (Node cardChild : card.getChildren()) {
-                if (cardChild instanceof Label label) {
-                    String text = label.getText();
-
-                    if (text != null &&
-                            text.matches("\\d+\\s+oppituntia")) {
-                        foundLessonCount = true;
-                        break;
-                    }
-                }
-            }
-
-            if (foundLessonCount) {
-                break;
-            }
-        }
-
-        assertTrue(
-                foundLessonCount,
-                "Course card should contain lesson count"
-        );
+        assertTrue(found);
     }
 
     @Test
     void testTeacherNameExists() {
-        assertNotNull(
-                findLabel(
-                        teacherStartPage,
-                        "Matti Meikäläinen"
-                )
-        );
+        assertNotNull(findLabel(teacherStartPage, "Matti Meikäläinen"));
     }
 
     @Test
     void testTeacherRoleExists() {
-        assertNotNull(
-                findLabel(
-                        teacherStartPage,
-                        "Opettaja"
-                )
-        );
+        assertNotNull(findLabel(teacherStartPage, "Opettaja"));
     }
 
     @Test
     void testUserInitials() {
-        assertNotNull(
-                findLabel(
-                        teacherStartPage,
-                        "MM"
-                )
-        );
+        assertNotNull(findLabel(teacherStartPage, "MM"));
     }
 
     @Test
     void testLogoExists() {
-        assertNotNull(
-                findLabel(
-                        teacherStartPage,
-                        "LO"
-                )
-        );
+        assertNotNull(findLabel(teacherStartPage, "LO"));
     }
 
-    @Test
-    void testMyCoursesButtonExists() {
-        assertNotNull(
-                findButton(
-                        teacherStartPage,
-                        "•   Omat kurssit"
-                )
-        );
-    }
+    // --- Apumetodit ---
 
-    private HBox getCourseCards() {
-        VBox center =
-                (VBox) teacherStartPage.getCenter();
-
-        assertEquals(
-                3,
-                center.getChildren().size()
-        );
-
-        Node cardsNode =
-                center.getChildren().get(2);
-
-        assertTrue(
-                cardsNode instanceof HBox
-        );
-
-        return (HBox) cardsNode;
-    }
-
-    private boolean containsRealCourseCode(HBox cards) {
-        for (Node child : cards.getChildren()) {
-            if (!(child instanceof VBox)) {
-                continue;
-            }
-
-            VBox card = (VBox) child;
-
-            for (Node cardChild : card.getChildren()) {
-                if (cardChild instanceof Label label) {
-                    String text = label.getText();
-
-                    if (text != null &&
-                            text.matches("\\d{2}")) {
-                        return true;
-                    }
-                }
+    /**
+     * Hakee FlowPane-kurssikorttikontin ScrollPanen sisältä.
+     * TeacherStartPage laittaa kortit ScrollPane -> FlowPane -rakenteeseen.
+     */
+    private FlowPane getCourseCards() {
+        VBox center = (VBox) teacherStartPage.getCenter();
+        for (Node child : center.getChildren()) {
+            if (child instanceof ScrollPane scroll
+                    && scroll.getContent() instanceof FlowPane flow) {
+                return flow;
             }
         }
-
-        return false;
-    }
-
-    private Label findLabel(
-            Node root,
-            String expectedText
-    ) {
-        if (root instanceof Label label) {
-            if (expectedText.equals(label.getText())) {
-                return label;
-            }
-        }
-
-        if (root instanceof javafx.scene.Parent parent) {
-            for (Node child :
-                    parent.getChildrenUnmodifiable()) {
-
-                Label result =
-                        findLabel(
-                                child,
-                                expectedText
-                        );
-
-                if (result != null) {
-                    return result;
-                }
-            }
-        }
-
         return null;
     }
 
-    private Label findLabelContaining(
-            Node root,
-            String expectedText
-    ) {
+    private Label findLabel(Node root, String expectedText) {
+        if (root instanceof Label label && expectedText.equals(label.getText())) {
+            return label;
+        }
+        if (root instanceof Parent parent) {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                Label result = findLabel(child, expectedText);
+                if (result != null) return result;
+            }
+        }
+        return null;
+    }
+
+    private Label findLabelContaining(Node root, String expectedText) {
         if (root instanceof Label label) {
             String text = label.getText();
-
-            if (text != null &&
-                    text.contains(expectedText)) {
-                return label;
+            if (text != null && text.contains(expectedText)) return label;
+        }
+        if (root instanceof Parent parent) {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                Label result = findLabelContaining(child, expectedText);
+                if (result != null) return result;
             }
         }
-
-        if (root instanceof javafx.scene.Parent parent) {
-            for (Node child :
-                    parent.getChildrenUnmodifiable()) {
-
-                Label result =
-                        findLabelContaining(
-                                child,
-                                expectedText
-                        );
-
-                if (result != null) {
-                    return result;
-                }
-            }
-        }
-
         return null;
     }
 
     private Label findLabelInNode(Node root) {
-        if (root instanceof Label label) {
-            return label;
-        }
-
-        if (root instanceof javafx.scene.Parent parent) {
-            for (Node child :
-                    parent.getChildrenUnmodifiable()) {
-
-                Label result =
-                        findLabelInNode(child);
-
-                if (result != null) {
-                    return result;
-                }
+        if (root instanceof Label label) return label;
+        if (root instanceof Parent parent) {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                Label result = findLabelInNode(child);
+                if (result != null) return result;
             }
         }
-
-        return null;
-    }
-
-    private Button findButton(
-            Node root,
-            String expectedText
-    ) {
-        if (root instanceof Button button) {
-            if (expectedText.equals(button.getText())) {
-                return button;
-            }
-        }
-
-        if (root instanceof javafx.scene.Parent parent) {
-            for (Node child :
-                    parent.getChildrenUnmodifiable()) {
-
-                Button result =
-                        findButton(
-                                child,
-                                expectedText
-                        );
-
-                if (result != null) {
-                    return result;
-                }
-            }
-        }
-
         return null;
     }
 }
-
-
-

@@ -7,11 +7,12 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="ope voi muoka kursin nimi ja koodi">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="ope sivujen ui korjauksia">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/TeacherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/TeacherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Teacher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherAttendanceTrackingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherAttendanceTrackingTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherCoursePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherCoursePageTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +172,7 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.app.Main" />
       <module name="Classroom_Attendance_System" />
@@ -281,7 +282,7 @@
       <workItem from="1790535061751" duration="4281000" />
       <workItem from="1791091303989" duration="13000" />
       <workItem from="1791109324789" duration="9394000" />
-      <workItem from="1791130844101" duration="4615000" />
+      <workItem from="1791130844101" duration="8496000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -643,7 +644,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791131664936</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="ope sivujen ui korjauksia">
+      <option name="closed" value="true" />
+      <created>1791136103745</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1791136103745</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -687,7 +696,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="these focking text now are visible" />
     <MESSAGE value="added new. student user can change own gmail name and pswd" />
     <MESSAGE value="student pages ui compleately done" />
     <MESSAGE value="fixed tests" />
@@ -712,7 +720,8 @@
     <MESSAGE value="teacher can now add a new courses" />
     <MESSAGE value="kursi koodi indikaatori näytä kursikodi eikä sen id" />
     <MESSAGE value="ope voi muoka kursin nimi ja koodi" />
-    <option name="LAST_COMMIT_MESSAGE" value="ope voi muoka kursin nimi ja koodi" />
+    <MESSAGE value="ope sivujen ui korjauksia" />
+    <option name="LAST_COMMIT_MESSAGE" value="ope sivujen ui korjauksia" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

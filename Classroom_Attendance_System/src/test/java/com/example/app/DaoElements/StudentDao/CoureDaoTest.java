@@ -120,12 +120,12 @@ class CourseDaoTest {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
-            boolean result = dao.addCourse("Java Basics", 50);
+            boolean result = dao.addCourse("Java Basics", "CS101", 50);
 
             assertTrue(result);
 
             verify(ps).setString(1, "Java Basics"); // trimmed
-            verify(ps).setString(2, "");            // empty code
+            verify(ps).setString(2, "CS101");       // code
             verify(ps).setInt(3, 50);
             verify(ps).executeUpdate();
         }
@@ -142,7 +142,7 @@ class CourseDaoTest {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
-            assertTrue(dao.addCourse("   Web Dev   ", 7));
+            assertTrue(dao.addCourse("   Web Dev   ", "WD101", 7));
 
             verify(ps).setString(1, "Web Dev");
         }
@@ -153,27 +153,26 @@ class CourseDaoTest {
         try (MockedStatic<DatabaseConnection> mocked =
                      mockStatic(DatabaseConnection.class)) {
 
-            assertFalse(dao.addCourse(null, 50));
+            assertFalse(dao.addCourse(null, "CS101", 50));
 
-            // No static call to DatabaseConnection.getConnection() should happen
             mocked.verifyNoInteractions();
         }
     }
 
     @Test
     void addCourse_returnsFalseForBlankName() {
-        assertFalse(dao.addCourse("   ", 50));
+        assertFalse(dao.addCourse("   ", "CS101", 50));
     }
 
     @Test
     void addCourse_returnsFalseForEmptyName() {
-        assertFalse(dao.addCourse("", 50));
+        assertFalse(dao.addCourse("", "CS101", 50));
     }
 
     @Test
     void addCourse_returnsFalseForInvalidTeacherId() {
-        assertFalse(dao.addCourse("Java", 0));
-        assertFalse(dao.addCourse("Java", -1));
+        assertFalse(dao.addCourse("Java", "CS101", 0));
+        assertFalse(dao.addCourse("Java", "CS101", -1));
     }
 
     @Test
@@ -186,7 +185,7 @@ class CourseDaoTest {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
-            assertFalse(dao.addCourse("Java", 50));
+            assertFalse(dao.addCourse("Java", "CS101", 50));
         }
     }
 
@@ -198,7 +197,7 @@ class CourseDaoTest {
             mocked.when(DatabaseConnection::getConnection)
                     .thenThrow(new SQLException("fail"));
 
-            assertFalse(dao.addCourse("Java", 50));
+            assertFalse(dao.addCourse("Java", "CS101", 50));
         }
     }
 

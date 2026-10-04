@@ -9,9 +9,4 @@ public class Teacher extends User {
         super(id, firstName, lastName ,email , Role.TEACHER);
     }
 
-
-
-
-
-
 }
