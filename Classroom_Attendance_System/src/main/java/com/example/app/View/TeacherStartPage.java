@@ -5,13 +5,18 @@ import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -20,7 +25,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ import java.util.Optional;
 public class TeacherStartPage extends BorderPane {
 
     private static final String NAVY = "#202F49";
+    private static final String BLUE = "#344A70";
 
     private final Teacher teacher;
     private final TeacherController teacherController;
@@ -43,277 +48,118 @@ public class TeacherStartPage extends BorderPane {
         this.teacher = teacher;
         this.teacherController = teacherController;
 
-        setStyle(
-                "-fx-background-color: white;"
-        );
+        setStyle("-fx-background-color: white;");
 
         // =========================================================
         // SIDEBAR
         // =========================================================
 
-        VBox sidebar = new VBox(16);
-
+        VBox sidebar = new VBox();
         sidebar.setPrefWidth(158);
         sidebar.setMinWidth(158);
         sidebar.setMaxWidth(158);
-
-        sidebar.setPadding(
-                new Insets(
-                        12,
-                        14,
-                        10,
-                        10
-                )
-        );
-
-        sidebar.setStyle(
-                "-fx-background-color: " + NAVY + ";"
-        );
+        sidebar.setPadding(new Insets(12, 14, 10, 10));
+        sidebar.setStyle("-fx-background-color: " + NAVY + ";");
 
         // ---------------------------------------------------------
         // LOGO
         // ---------------------------------------------------------
 
-        HBox logoContainer =
-                new HBox(9);
+        HBox brand = new HBox(9);
+        brand.setAlignment(Pos.CENTER_LEFT);
+        brand.setPadding(new Insets(0, 0, 20, 0));
 
-        logoContainer.setAlignment(
-                Pos.CENTER_LEFT
-        );
+        Circle logo = new Circle(13, Color.web("#536FA4"));
+        Label lo = text("LO", 12, FontWeight.BOLD, "#FFFFFF");
+        StackPane logoBox = new StackPane(logo, lo);
+        logoBox.setPrefSize(20, 20);
 
-        Circle logoCircle =
-                new Circle(
-                        10,
-                        Color.web("#536FA4")
-                );
-
-        Label logoText =
-                text(
-                        "LO",
-                        9,
-                        FontWeight.BOLD,
-                        "#FFFFFF"
-                );
-
-        StackPane logo =
-                new StackPane(
-                        logoCircle,
-                        logoText
-                );
-
-        logo.setPrefSize(20, 20);
-        logo.setMinSize(20, 20);
-        logo.setMaxSize(20, 20);
-
-        Label brand =
-                text(
-                        "Läsnäolo",
-                        11,
-                        FontWeight.BOLD,
-                        "#FFFFFF"
-                );
-
-        logoContainer
-                .getChildren()
-                .addAll(
-                        logo,
-                        brand
-                );
-
-        // ---------------------------------------------------------
-        // COURSES BUTTON
-        // ---------------------------------------------------------
-
-        Button coursesButton =
-                new Button(
-                        "•   Omat kurssit"
-                );
-
-        coursesButton.setPrefHeight(22);
-
-        coursesButton.setMaxWidth(
-                Double.MAX_VALUE
-        );
-
-        coursesButton.setAlignment(
-                Pos.CENTER_LEFT
-        );
-
-        coursesButton.setFocusTraversable(
-                false
-        );
-
-        coursesButton.setStyle(
-                "-fx-background-color: #344A70; "
-                        + "-fx-text-fill: white; "
-                        + "-fx-font-size: 10px; "
-                        + "-fx-font-weight: bold; "
-                        + "-fx-background-radius: 4;"
-        );
+        Label brandText = text("Läsnäolo", 13, FontWeight.BOLD, "#FFFFFF");
+        brand.getChildren().addAll(logoBox, brandText);
 
         // ---------------------------------------------------------
         // SIDEBAR SPACER
         // ---------------------------------------------------------
 
-        Region spacer =
-                new Region();
+        Region sideSpacer = new Region();
+        VBox.setVgrow(sideSpacer, Priority.ALWAYS);
 
-        VBox.setVgrow(
-                spacer,
-                Priority.ALWAYS
+        // ---------------------------------------------------------
+        // USER ROW (avatar + name + role)
+        // Klikkaus avaa "Omat tiedot" -ikkunan.
+        // ---------------------------------------------------------
+
+        HBox user = new HBox(7);
+        user.setAlignment(Pos.CENTER_LEFT);
+        user.setCursor(Cursor.HAND);
+
+        Circle avatar = new Circle(15, Color.web("#536FA4"));
+        Label initials = text(
+                getTeacherInitials(teacher),
+                12,
+                FontWeight.BOLD,
+                "#FFFFFF"
         );
 
-        // ---------------------------------------------------------
-        // LOGOUT
-        // ---------------------------------------------------------
+        StackPane avatarBox = new StackPane(avatar, initials);
+        avatarBox.setPrefSize(20, 20);
+        avatarBox.setCursor(Cursor.HAND);
 
-        Button logout =
-                new Button(
-                        "Kirjaudu ulos"
+        VBox userInfo = new VBox(
+                0,
+                text(getTeacherName(teacher), 12, FontWeight.BOLD, "#FFFFFF"),
+                text("Opettaja", 11, FontWeight.NORMAL, "#A9B0BD")
+        );
+
+        user.getChildren().addAll(avatarBox, userInfo);
+
+        // Avaa profiilin muokkaus, kun käyttäjärivistä klikataan.
+        user.setOnMouseClicked((MouseEvent event) -> {
+            if (event.getButton().name().equals("PRIMARY")
+                    && user.getScene() != null) {
+
+                // Teacher ei ole User-tyyppiä, joten ProfileEditWindow
+                // vaatii User-olion. Jos Teacher perii Userin, tämä toimii
+                // suoraan. Muussa tapauksessa välitä soveltuva User-olio.
+                ProfileEditWindow.show(
+                        user.getScene().getWindow(),
+                        teacher,
+                        () -> {
+                            // Päivitä sivupalkin nimi uudelleen piirtämällä sivu.
+                            if (teacherController != null) {
+                                teacherController.showStartPage();
+                            }
+                        }
                 );
-
-        logout.setMaxWidth(
-                Double.MAX_VALUE
-        );
-
-        logout.setStyle(
-                "-fx-background-color: transparent; "
-                        + "-fx-text-fill: #A9B0BD; "
-                        + "-fx-font-size: 9px; "
-                        + "-fx-alignment: CENTER-LEFT; "
-                        + "-fx-cursor: hand;"
-        );
-
-        logout.setOnAction(event -> {
-
-            if (onLogout != null) {
-                onLogout.run();
+                event.consume();
             }
         });
 
-        // =========================================================
-        // TEACHER INFORMATION
-        // =========================================================
-
-        String teacherName =
-                getTeacherName(teacher);
-
-        String initials =
-                getTeacherInitials(teacher);
-
-        VBox userInfo =
-                new VBox(
-                        0,
-                        text(
-                                teacherName,
-                                8,
-                                FontWeight.BOLD,
-                                "#FFFFFF"
-                        ),
-                        text(
-                                "Opettaja",
-                                6,
-                                FontWeight.NORMAL,
-                                "#A9B0BD"
-                        )
-                );
-
-        Circle avatarCircle =
-                new Circle(
-                        10,
-                        Color.web("#536FA4")
-                );
-
-        Label initialsLabel =
-                text(
-                        initials,
-                        8,
-                        FontWeight.BOLD,
-                        "#FFFFFF"
-                );
-
-        StackPane avatar =
-                new StackPane(
-                        avatarCircle,
-                        initialsLabel
-                );
-
-        avatar.setPrefSize(20, 20);
-        avatar.setMinSize(20, 20);
-        avatar.setMaxSize(20, 20);
-
-        HBox user =
-                new HBox(7);
-
-        user.setAlignment(
-                Pos.CENTER_LEFT
+        sidebar.getChildren().addAll(
+                brand,
+                sideSpacer,
+                user
         );
-
-        user.getChildren()
-                .addAll(
-                        avatar,
-                        userInfo
-                );
-
-        // ---------------------------------------------------------
-        // SIDEBAR CONTENT
-        // ---------------------------------------------------------
-
-        sidebar.getChildren()
-                .addAll(
-                        logoContainer,
-                        coursesButton,
-                        spacer,
-                        logout,
-                        user
-                );
 
         // =========================================================
         // MAIN CONTENT
         // =========================================================
 
-        VBox content =
-                new VBox();
+        VBox content = new VBox(0);
+        content.setPadding(new Insets(41, 30, 20, 31));
 
-        content.setSpacing(10);
-        content.setPadding(
-                new Insets(
-                        41,
-                        30,
-                        20,
-                        31
-                )
-        );
+        // ---------------------------------------------------------
+        // HEADER
+        // ---------------------------------------------------------
 
-        // =========================================================
-        // HEADER (headingBox)
-        // =========================================================
+        Label heading = text("Omat kurssit", 15, FontWeight.BOLD, "#171717");
 
-        Label heading =
-                text(
-                        "Omat kurssit",
-                        15,
-                        FontWeight.BOLD,
-                        "#171717"
-                );
+        Region headingSpacer = new Region();
+        HBox.setHgrow(headingSpacer, Priority.ALWAYS);
 
-        Region headingSpacer =
-                new Region();
-
-        HBox.setHgrow(
-                headingSpacer,
-                Priority.ALWAYS
-        );
-
-        Button createCourseButton =
-                new Button(
-                        "+ Uusi kurssi"
-                );
-
-        createCourseButton.setFocusTraversable(
-                false
-        );
-
+        Button createCourseButton = new Button("+ Uusi kurssi");
+        createCourseButton.setFocusTraversable(false);
+        createCourseButton.setCursor(Cursor.HAND);
         createCourseButton.setStyle(
                 "-fx-background-color: " + NAVY + "; "
                         + "-fx-text-fill: white; "
@@ -323,68 +169,91 @@ public class TeacherStartPage extends BorderPane {
                         + "-fx-padding: 5 12; "
                         + "-fx-cursor: hand;"
         );
+        createCourseButton.setOnAction(e -> showCreateCourseDialog());
 
-        createCourseButton.setOnAction(event ->
-                showCreateCourseDialog()
+        HBox headingBox = new HBox(10, heading, headingSpacer, createCourseButton);
+        headingBox.setAlignment(Pos.CENTER_LEFT);
+
+        // ---------------------------------------------------------
+        // INTRO
+        // ---------------------------------------------------------
+
+        int teacherId = teacher != null ? teacher.getId() : 1;
+        List<TeacherCourse> teacherCourses = loadTeacherCourses(teacherId);
+
+        Label intro = text(
+                "Sinulla on " + teacherCourses.size()
+                        + " kurssia tällä lukukaudella.",
+                10,
+                FontWeight.NORMAL,
+                "#555555"
         );
 
-        HBox headingBox =
-                new HBox(
-                        10,
-                        heading,
-                        headingSpacer,
-                        createCourseButton
-                );
+        VBox headingWrapper = new VBox(2, headingBox, intro);
+        headingWrapper.setPadding(new Insets(0, 0, 18, 0));
 
-        headingBox.setAlignment(
-                Pos.CENTER_LEFT
+        content.getChildren().add(headingWrapper);
+
+        // ---------------------------------------------------------
+        // COURSES – responsiivinen FlowPane + ScrollPane
+        // ---------------------------------------------------------
+
+        if (teacherCourses.isEmpty()) {
+
+            content.getChildren().add(
+                    text(
+                            "Sinulla ei ole vielä kursseja.",
+                            11,
+                            FontWeight.NORMAL,
+                            "#858585"
+                    )
+            );
+
+        } else {
+
+            FlowPane cards = new FlowPane(22, 22);
+            cards.setAlignment(Pos.TOP_LEFT);
+
+            fillCourseCards(cards, teacherCourses);
+
+            ScrollPane scroll = new ScrollPane(cards);
+            scroll.setFitToWidth(true);
+            scroll.setStyle(
+                    "-fx-background-color: transparent; "
+                            + "-fx-background: transparent;"
+            );
+
+            VBox.setVgrow(scroll, Priority.ALWAYS);
+
+            content.getChildren().add(scroll);
+        }
+
+        // ---------------------------------------------------------
+        // LOGOUT – oikeassa alakulmassa, kuten StudentStartPage:ssa
+        // ---------------------------------------------------------
+
+        Button logout = new Button("Kirjaudu ulos");
+        logout.setCursor(Cursor.HAND);
+        logout.setStyle(
+                "-fx-background-color: " + BLUE + "; "
+                        + "-fx-text-fill: white; "
+                        + "-fx-font-size: 11px; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-background-radius: 4; "
+                        + "-fx-padding: 6 14;"
         );
 
-        // =========================================================
-        // LOAD COURSES
-        // =========================================================
+        logout.setOnAction(e -> {
+            if (onLogout != null) {
+                onLogout.run();
+            }
+        });
 
-        int teacherId =
-                teacher != null
-                        ? teacher.getId()
-                        : 1;
+        VBox logoutBox = new VBox(logout);
+        logoutBox.setPadding(new Insets(14, 0, 0, 0));
+        logoutBox.setAlignment(Pos.CENTER_RIGHT);
 
-        List<TeacherCourse> teacherCourses =
-                loadTeacherCourses(teacherId);
-
-        Label introduction =
-                text(
-                        "Sinulla on "
-                                + teacherCourses.size()
-                                + " kurssia tällä lukukaudella.",
-                        8,
-                        FontWeight.BOLD,
-                        "#171717"
-                );
-
-        // =========================================================
-        // COURSE CARDS CONTAINER
-        // =========================================================
-
-        HBox cards =
-                new HBox(22);
-
-        cards.setAlignment(
-                Pos.TOP_LEFT
-        );
-
-        fillCourseCards(cards, teacherCourses);
-
-        // =========================================================
-        // CONTENT STRUCTURE
-        // =========================================================
-
-        content.getChildren()
-                .addAll(
-                        headingBox,
-                        introduction,
-                        cards
-                );
+        content.getChildren().add(logoutBox);
 
         // =========================================================
         // ROOT
@@ -404,140 +273,77 @@ public class TeacherStartPage extends BorderPane {
             return;
         }
 
-        Dialog<ButtonType> dialog =
-                new Dialog<>();
-
+        Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Luo uusi kurssi");
         dialog.setHeaderText("Syötä uuden kurssin tiedot.");
 
-        ButtonType createButtonType =
-                new ButtonType(
-                        "Luo kurssi",
-                        ButtonBar.ButtonData.OK_DONE
-                );
-
-        dialog.getDialogPane()
-                .getButtonTypes()
-                .addAll(
-                        createButtonType,
-                        ButtonType.CANCEL
-                );
-
-        TextField nameField =
-                new TextField();
-
-        nameField.setPromptText(
-                "Esim. Introduction to Computer Science"
+        ButtonType createButtonType = new ButtonType(
+                "Luo kurssi",
+                ButtonBar.ButtonData.OK_DONE
         );
 
-        TextField codeField =
-                new TextField();
-
-        codeField.setPromptText(
-                "Esim. CS2026 (valinnainen)"
+        dialog.getDialogPane().getButtonTypes().addAll(
+                createButtonType,
+                ButtonType.CANCEL
         );
 
-        GridPane grid =
-                new GridPane();
+        TextField nameField = new TextField();
+        nameField.setPromptText("Esim. Introduction to Computer Science");
+        nameField.setStyle("-fx-font-size: 11px;");
 
+        TextField codeField = new TextField();
+        codeField.setPromptText("Esim. CS2026 (valinnainen)");
+        codeField.setStyle("-fx-font-size: 11px;");
+
+        GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(
-                new Insets(20, 10, 10, 10)
-        );
+        grid.setPadding(new Insets(20, 10, 10, 10));
 
-        grid.add(
-                new Label("Kurssin nimi:"),
-                0,
-                0
-        );
+        grid.add(new Label("Kurssin nimi:"), 0, 0);
+        grid.add(nameField, 1, 0);
+        grid.add(new Label("Kurssikoodi:"), 0, 1);
+        grid.add(codeField, 1, 1);
 
-        grid.add(
-                nameField,
-                1,
-                0
-        );
+        dialog.getDialogPane().setContent(grid);
 
-        grid.add(
-                new Label("Kurssikoodi:"),
-                0,
-                1
-        );
-
-        grid.add(
-                codeField,
-                1,
-                1
-        );
-
-        dialog.getDialogPane()
-                .setContent(grid);
-
-        // Estä tyhjän nimen luonti.
         javafx.scene.Node createButton =
-                dialog.getDialogPane()
-                        .lookupButton(
-                                createButtonType
-                        );
-
+                dialog.getDialogPane().lookupButton(createButtonType);
         createButton.setDisable(true);
 
-        nameField.textProperty()
-                .addListener(
-                        (observable, oldValue, newValue) ->
-                                createButton.setDisable(
-                                        newValue == null
-                                                || newValue.trim().isEmpty()
-                                )
-                );
+        nameField.textProperty().addListener(
+                (obs, oldV, newV) ->
+                        createButton.setDisable(
+                                newV == null || newV.trim().isEmpty()
+                        )
+        );
 
-        Optional<ButtonType> result =
-                dialog.showAndWait();
+        Optional<ButtonType> result = dialog.showAndWait();
 
-        if (result.isEmpty()
-                || result.get() != createButtonType) {
-
+        if (result.isEmpty() || result.get() != createButtonType) {
             return;
         }
 
-        String courseName =
-                nameField.getText().trim();
-
+        String courseName = nameField.getText().trim();
         if (courseName.isEmpty()) {
             return;
         }
 
-        int teacherId =
-                teacher != null
-                        ? teacher.getId()
-                        : -1;
+        int teacherId = teacher != null ? teacher.getId() : -1;
 
-        boolean created =
-                teacherController.createCourses(
-                        courseName,
-                        codeField.getText().trim(),
-                        teacherId
-                );
+        boolean created = teacherController.createCourses(
+                courseName,
+                codeField.getText().trim(),
+                teacherId
+        );
 
         if (created) {
-
-            // Yksinkertaisin ja varmin tapa päivittää näkymä:
-            // ladataan koko sivu uudelleen controllerin kautta.
             teacherController.showStartPage();
-
         } else {
-
-            javafx.scene.control.Alert alert =
-                    new javafx.scene.control.Alert(
-                            javafx.scene.control.Alert.AlertType.ERROR
-                    );
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Virhe");
             alert.setHeaderText(null);
-            alert.setContentText(
-                    "Kurssin luominen epäonnistui."
-            );
-
+            alert.setContentText("Kurssin luominen epäonnistui.");
             alert.showAndWait();
         }
     }
@@ -548,24 +354,18 @@ public class TeacherStartPage extends BorderPane {
 
     private List<TeacherCourse> loadTeacherCourses(int teacherId) {
 
-        List<TeacherCourse> teacherCourses =
-                new ArrayList<>();
+        List<TeacherCourse> teacherCourses = new ArrayList<>();
 
         if (teacherController == null) {
             return teacherCourses;
         }
 
         try {
-
             List<TeacherCourse> result =
-                    teacherController.getTeacherCourses(
-                            teacherId
-                    );
-
+                    teacherController.getTeacherCourses(teacherId);
             if (result != null) {
                 teacherCourses.addAll(result);
             }
-
         } catch (Exception ignored) {
             // Ei kaadeta näkymää, jos kurssien lataus epäonnistuu.
         }
@@ -578,7 +378,7 @@ public class TeacherStartPage extends BorderPane {
     // =============================================================
 
     private void fillCourseCards(
-            HBox cards,
+            FlowPane cards,
             List<TeacherCourse> teacherCourses
     ) {
 
@@ -588,85 +388,56 @@ public class TeacherStartPage extends BorderPane {
                 continue;
             }
 
-            int courseId =
-                    course.getCourseid();
+            int courseId = course.getCourseid();
 
-            String courseName =
-                    course.getCoursename();
-
-            if (courseName == null
-                    || courseName.isBlank()) {
-
+            String courseName = course.getCoursename();
+            if (courseName == null || courseName.isBlank()) {
                 courseName = "Kurssi";
             }
 
             int lessonCount = 0;
-
             if (teacherController != null) {
-
                 try {
-
                     List<?> lessons =
-                            teacherController
-                                    .getLessonsForCourse(
-                                            courseId
-                                    );
-
+                            teacherController.getLessonsForCourse(courseId);
                     if (lessons != null) {
                         lessonCount = lessons.size();
                     }
-
                 } catch (Exception ignored) {
                     lessonCount = 0;
                 }
             }
 
-            String courseCode =
-                    course.getCode();
-
+            String courseCode = course.getCode();
             if (courseCode == null || courseCode.isBlank()) {
-                // Fallback: jos koodi puuttuu, näytetään ID
                 courseCode = String.format("%02d", courseId);
             }
 
-            String lessonText =
-                    lessonCount + " oppituntia";
-
+            String lessonText = lessonCount + " oppituntia";
             final int finalCourseId = courseId;
 
-            VBox card =
-                    createCourseCard(
-                            courseCode,
-                            courseName,
-                            lessonText,
-                            () -> {
-                                if (teacherController != null) {
-                                    teacherController.startLesson(
-                                            finalCourseId
-                                    );
-                                }
-                            },
-                            () -> {
-                                if (teacherController != null) {
-                                    teacherController.openCoursePage(
-                                            finalCourseId
-                                    );
-                                }
-                            }
-                    );
+            VBox card = createCourseCard(
+                    courseCode,
+                    courseName,
+                    lessonText,
+                    () -> {
+                        if (teacherController != null) {
+                            teacherController.startLesson(finalCourseId);
+                        }
+                    },
+                    () -> {
+                        if (teacherController != null) {
+                            teacherController.openCoursePage(finalCourseId);
+                        }
+                    }
+            );
 
-            cards.getChildren()
-                    .add(card);
-        }
-
-        if (cards.getChildren().isEmpty()) {
-            cards.getChildren()
-                    .add(createEmptyCourseCard());
+            cards.getChildren().add(card);
         }
     }
 
     // =============================================================
-    // COURSE CARD
+    // COURSE CARD (yhtenäinen StudentStartPage:n kanssa)
     // =============================================================
 
     private VBox createCourseCard(
@@ -677,177 +448,86 @@ public class TeacherStartPage extends BorderPane {
             Runnable onOpenCourse
     ) {
 
-        VBox card =
-                new VBox(2);
+        VBox card = new VBox(6);
 
-        card.setPrefWidth(190);
-        card.setPrefHeight(75);
+        card.setPrefSize(190, 112);
+        card.setMinSize(190, 112);
+        card.setMaxSize(190, 112);
 
-        card.setMinWidth(190);
-        card.setMinHeight(75);
-
-        card.setMaxWidth(190);
-        card.setMaxHeight(75);
-
-        card.setPadding(
-                new Insets(4, 8, 4, 8)
-        );
+        card.setPadding(new Insets(11, 13, 8, 13));
 
         card.setStyle(
                 "-fx-background-color: white; "
                         + "-fx-border-color: #D7D7D7; "
-                        + "-fx-border-width: 1; "
                         + "-fx-border-radius: 5; "
                         + "-fx-background-radius: 5;"
         );
 
-        Label codeLabel =
-                text(
-                        code,
-                        9,
-                        FontWeight.BOLD,
-                        "#4B83A0"
-                );
+        card.setCursor(Cursor.HAND);
 
+        // Kurssikoodi
+        Label codeLabel = text(code, 9, FontWeight.BOLD, "#4B83A0");
         codeLabel.setStyle(
-                "-fx-background-color: #D9F0FA; "
+                codeLabel.getStyle()
+                        + "-fx-background-color: #D9F0FA; "
                         + "-fx-background-radius: 3; "
-                        + "-fx-padding: 1 4;"
+                        + "-fx-padding: 3 6;"
         );
+        codeLabel.setMouseTransparent(true);
 
-        Label nameLabel =
-                text(
-                        name,
-                        9,
-                        FontWeight.BOLD,
-                        "#171717"
-                );
+        // Kurssin nimi
+        Label nameLabel = text(name, 11, FontWeight.BOLD, "#171717");
+        nameLabel.setMouseTransparent(true);
 
-        Label lessonsLabel =
-                text(
-                        lessons,
-                        7.5,
-                        FontWeight.NORMAL,
-                        "#858585"
-                );
+        // Oppituntien määrä
+        Label lessonsLabel = text(lessons, 9, FontWeight.NORMAL, "#6B6B6B");
+        lessonsLabel.setMouseTransparent(true);
 
-        Button startButton =
-                new Button(
-                        "Aloita oppitunti"
-                );
-
-        startButton.setPrefHeight(16);
-        startButton.setMinHeight(16);
-
-        startButton.setMaxWidth(
-                Double.MAX_VALUE
-        );
-
-        startButton.setFocusTraversable(
-                false
-        );
-
+        // Aloita oppitunti -nappi
+        Button startButton = new Button("Aloita oppitunti");
+        startButton.setPrefHeight(22);
+        startButton.setMinHeight(22);
+        startButton.setMaxWidth(Double.MAX_VALUE);
+        startButton.setFocusTraversable(false);
+        startButton.setCursor(Cursor.HAND);
         startButton.setStyle(
                 "-fx-background-color: " + NAVY + "; "
                         + "-fx-text-fill: white; "
-                        + "-fx-font-size: 7px; "
+                        + "-fx-font-size: 9px; "
                         + "-fx-font-weight: bold; "
                         + "-fx-background-radius: 3; "
                         + "-fx-cursor: hand;"
         );
 
         startButton.setOnAction(event -> {
-
             event.consume();
-
             if (onStartLesson != null) {
                 onStartLesson.run();
             }
         });
 
+        // Kortin klikkaus avaa kurssisivun
         card.setOnMouseClicked(event -> {
-
-            if (event.getTarget() instanceof Button) {
-                return;
-            }
-
-            if (onOpenCourse != null) {
-                onOpenCourse.run();
+            if (event.getButton().name().equals("PRIMARY")) {
+                if (onOpenCourse != null) {
+                    onOpenCourse.run();
+                }
+                event.consume();
             }
         });
 
-        card.getChildren()
-                .addAll(
-                        codeLabel,
-                        nameLabel,
-                        lessonsLabel,
-                        startButton
-                );
+        card.getChildren().addAll(
+                codeLabel,
+                nameLabel,
+                lessonsLabel,
+                startButton
+        );
 
         return card;
     }
 
     // =============================================================
-    // EMPTY COURSE CARD
-    // =============================================================
-
-    private VBox createEmptyCourseCard() {
-
-        VBox card =
-                new VBox(4);
-
-        card.setPrefWidth(190);
-        card.setPrefHeight(75);
-
-        card.setMinWidth(190);
-        card.setMinHeight(75);
-
-        card.setMaxWidth(190);
-        card.setMaxHeight(75);
-
-        card.setAlignment(
-                Pos.CENTER_LEFT
-        );
-
-        card.setPadding(
-                new Insets(10)
-        );
-
-        card.setStyle(
-                "-fx-background-color: white; "
-                        + "-fx-border-color: #D7D7D7; "
-                        + "-fx-border-width: 1; "
-                        + "-fx-border-radius: 5; "
-                        + "-fx-background-radius: 5;"
-        );
-
-        Label title =
-                text(
-                        "Ei aktiivisia kursseja",
-                        9,
-                        FontWeight.BOLD,
-                        "#171717"
-                );
-
-        Label description =
-                text(
-                        "Tällä hetkellä ei ole kursseja.",
-                        7,
-                        FontWeight.NORMAL,
-                        "#858585"
-                );
-
-        card.getChildren()
-                .addAll(
-                        title,
-                        description
-                );
-
-        return card;
-    }
-
-    // =============================================================
-    // TEACHER NAME
+    // TEACHER NAME / INITIALS
     // =============================================================
 
     private String getTeacherName(Teacher teacher) {
@@ -861,24 +541,16 @@ public class TeacherStartPage extends BorderPane {
 
         if (firstName != null && !firstName.isBlank()
                 && lastName != null && !lastName.isBlank()) {
-
             return firstName + " " + lastName;
         }
-
         if (firstName != null && !firstName.isBlank()) {
             return firstName;
         }
-
         if (lastName != null && !lastName.isBlank()) {
             return lastName;
         }
-
         return "Etunimi Sukunimi";
     }
-
-    // =============================================================
-    // TEACHER INITIALS
-    // =============================================================
 
     private String getTeacherInitials(Teacher teacher) {
 
@@ -889,13 +561,11 @@ public class TeacherStartPage extends BorderPane {
         String firstName = teacher.getFirstName();
         String lastName = teacher.getLastName();
 
-        StringBuilder initials =
-                new StringBuilder();
+        StringBuilder initials = new StringBuilder();
 
         if (firstName != null && !firstName.isBlank()) {
             initials.append(firstName.trim().charAt(0));
         }
-
         if (lastName != null && !lastName.isBlank()) {
             initials.append(lastName.trim().charAt(0));
         }
@@ -904,7 +574,7 @@ public class TeacherStartPage extends BorderPane {
     }
 
     // =============================================================
-    // LABEL HELPER
+    // LABEL HELPER – inline-tyyli voittaa CSS:n
     // =============================================================
 
     private static Label text(
@@ -913,21 +583,23 @@ public class TeacherStartPage extends BorderPane {
             FontWeight weight,
             String color
     ) {
-
         Label label = new Label(value);
-
-        label.setFont(
-                Font.font(
-                        "System",
-                        weight,
-                        size
-                )
+        label.setStyle(
+                "-fx-font-family: 'System'; "
+                        + "-fx-font-size: " + size + "px; "
+                        + "-fx-font-weight: " + weightToCss(weight) + "; "
+                        + "-fx-text-fill: " + color + ";"
         );
-
-        label.setTextFill(
-                Color.web(color)
-        );
-
         return label;
+    }
+
+    private static String weightToCss(FontWeight weight) {
+        switch (weight) {
+            case BOLD:
+                return "bold";
+            case NORMAL:
+            default:
+                return "normal";
+        }
     }
 }

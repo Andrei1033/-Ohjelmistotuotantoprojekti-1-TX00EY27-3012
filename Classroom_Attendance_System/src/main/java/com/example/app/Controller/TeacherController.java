@@ -2,24 +2,22 @@ package com.example.app.Controller;
 
 import com.example.app.DaoElements.LessonDao;
 import com.example.app.DaoElements.StudentDao.CourseDao;
+import com.example.app.DaoElements.StudentDao.AttendanceDao;
 
 import com.example.app.Model.TeacherCourse;
 import com.example.app.Model.Lesson;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.Teacher;
 import com.example.app.Model.StudentComponents.AttendanceRecord;
-import com.example.app.DaoElements.StudentDao.AttendanceDao;
 import com.example.app.View.TeacherAttendanceTracking;
 import com.example.app.View.TeacherCoursePage;
 import com.example.app.View.TeacherStartPage;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
-
 
 import java.util.Collections;
 import java.util.List;
-
-
 
 public class TeacherController {
 
@@ -35,23 +33,55 @@ public class TeacherController {
         if (user instanceof Teacher teacher) {
             this.currentTeacher = teacher;
         } else {
-            this.currentTeacher = new Teacher(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
+            this.currentTeacher = new Teacher(
+                    user.getId(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail()
+            );
         }
         this.onLogout = onLogout;
     }
-
 
     public Parent getView() {
         showStartPage();
         return root;
     }
 
+    // =============================================================
+    // NAVIGATION
+    // =============================================================
 
     public void showStartPage() {
-        TeacherStartPage startPage = new TeacherStartPage(currentTeacher, this, onLogout);
+        TeacherStartPage startPage =
+                new TeacherStartPage(currentTeacher, this, onLogout);
         root.setCenter(startPage);
     }
 
+    /**
+     * Avaa kurssisivun. Välittää currentTeacher-olion sekä User-parametrina
+     * (profiilin muokkausta varten) että Teacher-parametrina.
+     *
+     * onProfileUpdated päivittää koko kurssisivun, jotta sivupalkin nimi
+     * päivittyy heti profiilimuutoksen jälkeen.
+     */
+    public void openCoursePage(int courseId) {
+        TeacherCoursePage coursePage = new TeacherCoursePage(
+                currentTeacher,
+                courseId,
+                this,
+                this::showStartPage,           // onBack
+                () -> startLesson(courseId),   // onAddLesson (varalla)
+                currentTeacher,                // currentUser (Teacher on User)
+                onLogout,                      // onLogout
+                () -> openCoursePage(courseId) // onProfileUpdated → päivitä sivu
+        );
+        root.setCenter(coursePage);
+    }
+
+    // =============================================================
+    // COURSES
+    // =============================================================
 
     public boolean createCourses(String courseName, String courseCode, int teacherId) {
         if (courseName == null || courseName.trim().isEmpty() || teacherId <= 0) {
@@ -67,7 +97,6 @@ public class TeacherController {
         return courseDao.updateCourse(courseId, newName.trim(), newCode);
     }
 
-
     public List<TeacherCourse> getTeacherCourses(int teacherId) {
         if (teacherId <= 0) {
             return Collections.emptyList();
@@ -82,62 +111,30 @@ public class TeacherController {
         return lessonDao.getLessonsByCourseById(courseId);
     }
 
+    // =============================================================
+    // LESSONS
+    // =============================================================
+
     public void startLesson(int courseId) {
 
         int lessonId = lessonDao.startLesson(courseId);
 
         if (lessonId == -1) {
-
-            javafx.scene.control.Alert alert =
-                    new javafx.scene.control.Alert(
-                            javafx.scene.control.Alert.AlertType.ERROR
-                    );
-
-            alert.setTitle("Virhe");
-            alert.setHeaderText(null);
-            alert.setContentText(
-                    "Oppitunnin aloittaminen epäonnistui."
-            );
-
-            alert.showAndWait();
-
+            showError("Oppitunnin aloittaminen epäonnistui.");
             return;
         }
 
-        TeacherCourse course = null;
-
-        for (TeacherCourse c : getTeacherCourses(currentTeacher.getId())) {
-
-            if (c.getCourseid() == courseId) {
-                course = c;
-                break;
-            }
-        }
+        TeacherCourse course = findCourse(courseId);
 
         if (course == null) {
-
-            javafx.scene.control.Alert alert =
-                    new javafx.scene.control.Alert(
-                            javafx.scene.control.Alert.AlertType.ERROR
-                    );
-
-            alert.setTitle("Virhe");
-            alert.setHeaderText(null);
-            alert.setContentText(
-                    "Kurssia ei löytynyt."
-            );
-
-            alert.showAndWait();
-
+            showError("Kurssia ei löytynyt.");
             return;
         }
-
-        TeacherCourse finalCourse = course;
 
         TeacherAttendanceTracking tracking =
                 new TeacherAttendanceTracking(
                         currentTeacher,
-                        finalCourse,
+                        course,
                         lessonId,
                         () -> {
                             // Päivitetään kurssisivu tarvittaessa.
@@ -149,64 +146,32 @@ public class TeacherController {
 
     public void openExistingLesson(int courseId, int lessonId) {
 
-        TeacherCourse course = null;
-
-        for (TeacherCourse c :
-                getTeacherCourses(currentTeacher.getId())) {
-
-            if (c.getCourseid() == courseId) {
-                course = c;
-                break;
-            }
-        }
+        TeacherCourse course = findCourse(courseId);
 
         if (course == null) {
-
-            javafx.scene.control.Alert alert =
-                    new javafx.scene.control.Alert(
-                            javafx.scene.control.Alert.AlertType.ERROR
-                    );
-
-            alert.setTitle("Virhe");
-            alert.setHeaderText(null);
-            alert.setContentText(
-                    "Kurssia ei löytynyt."
-            );
-
-            alert.showAndWait();
-
+            showError("Kurssia ei löytynyt.");
             return;
         }
-
-        TeacherCourse finalCourse = course;
 
         TeacherAttendanceTracking tracking =
                 new TeacherAttendanceTracking(
                         currentTeacher,
-                        finalCourse,
+                        course,
                         lessonId,
                         this::showStartPage
                 );
 
         tracking.show();
     }
-    //////////////
 
-        public void openCoursePage ( int courseId){
-            TeacherCoursePage coursePage = new TeacherCoursePage(
-                    currentTeacher,
-                    courseId,
-                    this,
-                    this::showStartPage,
-                    () -> System.out.println("Lisää opiskelijoita")
-            );
-            root.setCenter(coursePage);
-
-        }
+    // =============================================================
+    // STUDENTS
+    // =============================================================
 
     public List<User> getAllStudents(int courseId) {
         return courseDao.getAllStudents();
     }
+
     public boolean addStudents(List<Integer> studentIds, int courseId) {
         if (studentIds == null || studentIds.isEmpty()) {
             return false;
@@ -224,10 +189,37 @@ public class TeacherController {
         return courseDao.getStudentsForCourse(courseId);
     }
 
-    public List<AttendanceRecord> getAttendanceForStudentAndCourse(int studentId, int courseId) {
+    public List<AttendanceRecord> getAttendanceForStudentAndCourse(
+            int studentId,
+            int courseId
+    ) {
         if (studentId <= 0 || courseId <= 0) {
             return Collections.emptyList();
         }
         return attendanceDao.getAttendanceForStudentAndCourse(studentId, courseId);
+    }
+
+    // =============================================================
+    // HELPERS
+    // =============================================================
+
+    private TeacherCourse findCourse(int courseId) {
+        List<TeacherCourse> courses =
+                getTeacherCourses(currentTeacher.getId());
+
+        for (TeacherCourse c : courses) {
+            if (c.getCourseid() == courseId) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Virhe");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

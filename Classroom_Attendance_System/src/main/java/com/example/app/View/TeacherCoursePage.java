@@ -7,11 +7,28 @@ import com.example.app.Model.TeacherCourse;
 import com.example.app.Model.StudentComponents.AttendanceRecord;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.HashMap;
@@ -22,6 +39,8 @@ import java.util.Optional;
 public class TeacherCoursePage extends BorderPane {
 
     private static final String NAVY = "#202F49";
+    private static final String BLUE = "#344A70";
+
     private final TeacherController teacherController;
     private final int courseId;
     private final VBox studentList;
@@ -35,7 +54,10 @@ public class TeacherCoursePage extends BorderPane {
                              int courseId,
                              TeacherController teacherController,
                              Runnable onBack,
-                             Runnable onAddLesson) {
+                             Runnable onAddLesson,
+                             User currentUser,
+                             Runnable onLogout,
+                             Runnable onProfileUpdated) {
         this.teacher = teacher;
         this.teacherController = teacherController;
         this.courseId = courseId;
@@ -48,54 +70,107 @@ public class TeacherCoursePage extends BorderPane {
         // =========================================================
 
         VBox sidebar = new VBox();
-        sidebar.setPrefWidth(160);
-        sidebar.setPadding(new Insets(15, 12, 12, 12));
+        sidebar.setPrefWidth(158);
+        sidebar.setMinWidth(158);
+        sidebar.setMaxWidth(158);
+        sidebar.setPadding(new Insets(12, 14, 10, 10));
         sidebar.setStyle("-fx-background-color: " + NAVY + ";");
 
-        HBox logoBox = new HBox(8);
-        logoBox.setAlignment(Pos.CENTER_LEFT);
-        Circle logoCircle = new Circle(9, Color.web("#4A6594"));
-        Label logoText = text("LO", 8, FontWeight.BOLD, "#FFFFFF");
-        StackPane logoStack = new StackPane(logoCircle, logoText);
-        Label brand = text("Läsnäolo", 11, FontWeight.BOLD, "#FFFFFF");
-        logoBox.getChildren().addAll(logoStack, brand);
+        // ---------------------------------------------------------
+        // LOGO
+        // ---------------------------------------------------------
 
-        Button coursesButton = new Button("•   Omat kurssit");
-        coursesButton.setPrefHeight(26);
-        coursesButton.setMaxWidth(Double.MAX_VALUE);
-        coursesButton.setAlignment(Pos.CENTER_LEFT);
-        coursesButton.setStyle("-fx-background-color: #31425F; -fx-text-fill: white; "
-                + "-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4; -fx-cursor: hand;");
-        coursesButton.setOnAction(e -> onBack.run());
+        HBox brand = new HBox(9);
+        brand.setAlignment(Pos.CENTER_LEFT);
+        brand.setPadding(new Insets(0, 0, 20, 0));
 
-        Region spacer = new Region();
-        VBox.setVgrow(spacer, Priority.ALWAYS);
+        Circle logo = new Circle(13, Color.web("#536FA4"));
+        Label lo = text("LO", 12, FontWeight.BOLD, "#FFFFFF");
+        StackPane logoBox = new StackPane(logo, lo);
+        logoBox.setPrefSize(20, 20);
 
-        String teacherName = (teacher != null)
-                ? teacher.getFirstName() + " " + teacher.getLastName()
-                : "Etunimi Sukunimi";
+        Label brandText = text("Läsnäolo", 13, FontWeight.BOLD, "#FFFFFF");
+        brand.getChildren().addAll(logoBox, brandText);
 
-        HBox userBox = new HBox(8);
-        userBox.setAlignment(Pos.CENTER_LEFT);
-        Circle avatarCircle = new Circle(9, Color.web("#4A6594"));
+        // ---------------------------------------------------------
+        // BACK BUTTON ("Omat kurssit")
+        // ---------------------------------------------------------
 
-        StackPane avatarStack = new StackPane(avatarCircle);
-        VBox userInfo = new VBox(0,
-                text(teacherName, 8, FontWeight.BOLD, "#FFFFFF"),
-                text("Opettaja", 6, FontWeight.NORMAL, "#A9B0BD")
+        Button back = new Button("•   Omat kurssit");
+        back.setPrefHeight(22);
+        back.setMaxWidth(Double.MAX_VALUE);
+        back.setAlignment(Pos.CENTER_LEFT);
+        back.setFocusTraversable(false);
+        back.setCursor(Cursor.HAND);
+        back.setStyle(
+                "-fx-background-color: " + BLUE + "; "
+                        + "-fx-text-fill: white; "
+                        + "-fx-font-size: 10px; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-background-radius: 4;"
         );
-        userBox.getChildren().addAll(avatarStack, userInfo);
+        back.setOnAction(e -> {
+            if (onBack != null) {
+                onBack.run();
+            }
+        });
 
-        sidebar.getChildren().addAll(logoBox, coursesButton, spacer, userBox);
+        // ---------------------------------------------------------
+        // SIDEBAR SPACER
+        // ---------------------------------------------------------
+
+        Region sideSpacer = new Region();
+        VBox.setVgrow(sideSpacer, Priority.ALWAYS);
+
+        // ---------------------------------------------------------
+        // USER ROW (avatar + name + role)
+        // Klikkaus avaa "Omat tiedot" -ikkunan.
+        // ---------------------------------------------------------
+
+        HBox user = new HBox(7);
+        user.setAlignment(Pos.CENTER_LEFT);
+        user.setCursor(Cursor.HAND);
+
+        Circle avatar = new Circle(15, Color.web("#536FA4"));
+        Label initials = text(initialsOf(currentUser), 12, FontWeight.BOLD, "#FFFFFF");
+        StackPane avatarBox = new StackPane(avatar, initials);
+        avatarBox.setPrefSize(20, 20);
+        avatarBox.setCursor(Cursor.HAND);
+
+        VBox userInfo = new VBox(0,
+                text(currentUser != null ? currentUser.getFullName() : "Opettaja",
+                        12, FontWeight.BOLD, "#FFFFFF"),
+                text("Opettaja", 11, FontWeight.NORMAL, "#A9B0BD")
+        );
+        user.getChildren().addAll(avatarBox, userInfo);
+
+        user.setOnMouseClicked((MouseEvent event) -> {
+            if (event.getButton().name().equals("PRIMARY")
+                    && user.getScene() != null
+                    && currentUser != null) {
+
+                ProfileEditWindow.show(
+                        user.getScene().getWindow(),
+                        currentUser,
+                        onProfileUpdated
+                );
+                event.consume();
+            }
+        });
+
+        sidebar.getChildren().addAll(brand, back, sideSpacer, user);
 
         // =========================================================
         // CONTENT
         // =========================================================
 
         VBox contentBox = new VBox(16);
-        contentBox.setPadding(new Insets(25, 30, 25, 30));
+        contentBox.setPadding(new Insets(41, 30, 20, 31));
 
-        // Haetaan kurssin tiedot oikein (nimi + koodi)
+        // ---------------------------------------------------------
+        // HEADER – kurssin nimi + koodi + napit
+        // ---------------------------------------------------------
+
         String courseNameText = "Kurssi " + courseId;
         String courseCodeText = "";
 
@@ -103,45 +178,76 @@ public class TeacherCoursePage extends BorderPane {
             List<TeacherCourse> courses =
                     teacherController.getTeacherCourses(teacher.getId());
 
-            for (TeacherCourse tc : courses) {
-                if (tc.getCourseid() == courseId) {
-                    courseNameText = tc.getCoursename();
+            if (courses != null) {
+                for (TeacherCourse tc : courses) {
+                    if (tc.getCourseid() == courseId) {
+                        courseNameText = tc.getCoursename();
 
-                    if (tc.getCode() != null && !tc.getCode().isBlank()) {
-                        courseCodeText = tc.getCode();
-                    } else {
-                        // Fallback: jos koodi on tyhjä, näytetään ID
-                        courseCodeText = String.format("%02d", courseId);
+                        if (tc.getCode() != null && !tc.getCode().isBlank()) {
+                            courseCodeText = tc.getCode();
+                        } else {
+                            courseCodeText = String.format("%02d", courseId);
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
 
-        courseTitle = text("Kurssi: " + courseNameText, 16, FontWeight.BOLD, "#202F49");
-        courseCode = text("Kurssikoodi: " + courseCodeText, 14, FontWeight.NORMAL, "#202F49");
+        courseTitle = text(courseNameText, 15, FontWeight.BOLD, "#171717");
+        courseCode = text(courseCodeText, 8, FontWeight.BOLD, "#555555");
         VBox titleBox = new VBox(2, courseTitle, courseCode);
-
-        // ---------------------------------------------------------
-        // NAPIT
-        // ---------------------------------------------------------
+        HBox.setHgrow(titleBox, Priority.ALWAYS);
 
         Button editCourse = new Button("Muokkaa kurssia");
-        editCourse.setStyle("-fx-background-color: transparent; -fx-border-color: #D1D5DB; "
-                + "-fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 8px; "
-                + "-fx-font-weight: bold; -fx-text-fill: #374151; -fx-cursor: hand;");
+        editCourse.setFocusTraversable(false);
+        editCourse.setCursor(Cursor.HAND);
+        editCourse.setStyle(
+                "-fx-background-color: transparent; "
+                        + "-fx-border-color: #D1D5DB; "
+                        + "-fx-border-radius: 4; "
+                        + "-fx-background-radius: 4; "
+                        + "-fx-font-size: 9px; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-text-fill: #374151; "
+                        + "-fx-padding: 5 10; "
+                        + "-fx-cursor: hand;"
+        );
         editCourse.setOnAction(e -> showEditCourseDialog());
 
         Button addStudent = new Button("Lisää opiskelija");
-        addStudent.setStyle("-fx-background-color: transparent; -fx-border-color: #D1D5DB; "
-                + "-fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 8px; "
-                + "-fx-font-weight: bold; -fx-text-fill: #374151; -fx-cursor: hand;");
+        addStudent.setFocusTraversable(false);
+        addStudent.setCursor(Cursor.HAND);
+        addStudent.setStyle(
+                "-fx-background-color: transparent; "
+                        + "-fx-border-color: #D1D5DB; "
+                        + "-fx-border-radius: 4; "
+                        + "-fx-background-radius: 4; "
+                        + "-fx-font-size: 9px; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-text-fill: #374151; "
+                        + "-fx-padding: 5 10; "
+                        + "-fx-cursor: hand;"
+        );
         addStudent.setOnAction(e -> ShowaddStudent());
 
         Button startLesson = new Button("Aloita oppitunti");
-        startLesson.setStyle("-fx-background-color: " + NAVY + "; -fx-text-fill: white; "
-                + "-fx-font-size: 8px; -fx-font-weight: bold; -fx-background-radius: 4; -fx-cursor: hand;");
-        startLesson.setOnAction(e -> teacherController.startLesson(courseId));
+        startLesson.setFocusTraversable(false);
+        startLesson.setCursor(Cursor.HAND);
+        startLesson.setStyle(
+                "-fx-background-color: " + NAVY + "; "
+                        + "-fx-text-fill: white; "
+                        + "-fx-font-size: 9px; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-background-radius: 4; "
+                        + "-fx-padding: 5 12; "
+                        + "-fx-cursor: hand;"
+        );
+        startLesson.setOnAction(e -> {
+            if (teacherController != null) {
+                teacherController.startLesson(courseId);
+            }
+        });
 
         HBox actionButtons = new HBox(10, editCourse, addStudent, startLesson);
         actionButtons.setAlignment(Pos.CENTER_RIGHT);
@@ -150,15 +256,55 @@ public class TeacherCoursePage extends BorderPane {
         HBox.setHgrow(headerSpacer, Priority.ALWAYS);
 
         HBox headerBar = new HBox(10, titleBox, headerSpacer, actionButtons);
+        headerBar.setAlignment(Pos.CENTER_LEFT);
 
         // ---------------------------------------------------------
-        // OPISKELIJAT
+        // OPISKELIJAT – ScrollPane + VBox
         // ---------------------------------------------------------
 
         Label studentsHeader = text("Opiskelijat", 12, FontWeight.BOLD, "#111827");
+
         refreshStudents();
 
-        contentBox.getChildren().addAll(headerBar, studentsHeader, studentList);
+        ScrollPane scroll = new ScrollPane(studentList);
+        scroll.setFitToWidth(true);
+        scroll.setStyle(
+                "-fx-background-color: transparent; "
+                        + "-fx-background: transparent;"
+        );
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+
+        contentBox.getChildren().addAll(
+                headerBar,
+                studentsHeader,
+                scroll
+        );
+
+        // ---------------------------------------------------------
+        // LOGOUT – oikeassa alakulmassa
+        // ---------------------------------------------------------
+
+        Button logout = new Button("Kirjaudu ulos");
+        logout.setCursor(Cursor.HAND);
+        logout.setStyle(
+                "-fx-background-color: " + BLUE + "; "
+                        + "-fx-text-fill: white; "
+                        + "-fx-font-size: 11px; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-background-radius: 4; "
+                        + "-fx-padding: 6 14;"
+        );
+        logout.setOnAction(e -> {
+            if (onLogout != null) {
+                onLogout.run();
+            }
+        });
+
+        VBox logoutBox = new VBox(logout);
+        logoutBox.setPadding(new Insets(14, 0, 0, 0));
+        logoutBox.setAlignment(Pos.CENTER_RIGHT);
+
+        contentBox.getChildren().add(logoutBox);
 
         setLeft(sidebar);
         setCenter(contentBox);
@@ -174,18 +320,19 @@ public class TeacherCoursePage extends BorderPane {
             return;
         }
 
-        // Haetaan nykyiset tiedot
         String currentName = "";
         String currentCode = "";
 
         List<TeacherCourse> courses =
                 teacherController.getTeacherCourses(teacher.getId());
 
-        for (TeacherCourse tc : courses) {
-            if (tc.getCourseid() == courseId) {
-                currentName = tc.getCoursename();
-                currentCode = tc.getCode() == null ? "" : tc.getCode();
-                break;
+        if (courses != null) {
+            for (TeacherCourse tc : courses) {
+                if (tc.getCourseid() == courseId) {
+                    currentName = tc.getCoursename();
+                    currentCode = tc.getCode() == null ? "" : tc.getCode();
+                    break;
+                }
             }
         }
 
@@ -202,9 +349,11 @@ public class TeacherCoursePage extends BorderPane {
 
         TextField nameField = new TextField(currentName);
         nameField.setPromptText("Kurssin nimi");
+        nameField.setStyle("-fx-font-size: 11px;");
 
         TextField codeField = new TextField(currentCode);
         codeField.setPromptText("Kurssikoodi (esim. CS2026)");
+        codeField.setStyle("-fx-font-size: 11px;");
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -218,7 +367,6 @@ public class TeacherCoursePage extends BorderPane {
 
         dialog.getDialogPane().setContent(grid);
 
-        // Estä tallennus tyhjällä nimellä
         javafx.scene.Node saveButton =
                 dialog.getDialogPane().lookupButton(saveButtonType);
         saveButton.setDisable(currentName == null || currentName.trim().isEmpty());
@@ -246,14 +394,13 @@ public class TeacherCoursePage extends BorderPane {
                 teacherController.updateCourse(courseId, newName, newCode);
 
         if (updated) {
-            // Päivitä header ilman koko sivun uudelleenlatausta
-            courseTitle.setText("Kurssi: " + newName);
+            courseTitle.setText(newName);
 
             String displayCode = newCode.isEmpty()
                     ? String.format("%02d", courseId)
                     : newCode;
 
-            courseCode.setText("Kurssikoodi: " + displayCode);
+            courseCode.setText(displayCode);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Virhe");
@@ -264,91 +411,71 @@ public class TeacherCoursePage extends BorderPane {
     }
 
     // =============================================================
-    // APUMETODIT (ennallaan)
+    // STUDENT LIST
     // =============================================================
-
-    private HBox createLessonCard(String date, String topic, String statusText, boolean isDone) {
-        HBox lessonCard = new HBox();
-        lessonCard.setAlignment(Pos.CENTER_LEFT);
-        lessonCard.setPadding(new Insets(12, 16, 12, 16));
-        lessonCard.setStyle("-fx-background-color: white; -fx-border-color: #E5E7EB; "
-                + "-fx-border-radius: 8; -fx-background-radius: 8;");
-
-        VBox dateBox = new VBox(1,
-                text(date, 9, FontWeight.BOLD, "#111827")
-        );
-        dateBox.setPrefWidth(90);
-
-        Label topicLabel = text(topic, 10, FontWeight.BOLD, "#111827");
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        HBox status = new HBox(5);
-        status.setAlignment(Pos.CENTER);
-        status.setPadding(new Insets(4, 12, 4, 12));
-
-        if (isDone) {
-            Circle dot = new Circle(2.5, Color.web("#16A34A"));
-            Label label = text(statusText, 8, FontWeight.BOLD, "#166534");
-            status.getChildren().addAll(dot, label);
-            status.setStyle("-fx-background-color: #DCFCE7; -fx-background-radius: 12; "
-                    + "-fx-border-color: #BBF7D0; -fx-border-radius: 12;");
-        } else {
-            Label label = text(statusText, 8, FontWeight.BOLD, "#374151");
-            status.getChildren().add(label);
-            status.setStyle("-fx-background-color: #F3F4F6; -fx-background-radius: 12; "
-                    + "-fx-border-color: #E5E7EB; -fx-border-radius: 12;");
-        }
-
-        lessonCard.getChildren().addAll(dateBox, topicLabel, spacer, status);
-        return lessonCard;
-    }
-
-    private static Label text(String content, int size, FontWeight weight, String color) {
-        Label label = new Label(content);
-        label.setFont(Font.font("System", weight, size));
-        label.setTextFill(Color.web(color));
-        return label;
-    }
 
     private void refreshStudents() {
 
         studentList.getChildren().clear();
-        List<User> students = teacherController.getStudentsForCourse(courseId);
 
-        if (students.isEmpty()) {
+        if (teacherController == null) {
+            return;
+        }
+
+        List<User> students =
+                teacherController.getStudentsForCourse(courseId);
+
+        if (students == null || students.isEmpty()) {
             studentList.getChildren().add(
                     text("Tälle kurssille ei ole vielä lisätty opiskelijoita.",
                             10, FontWeight.NORMAL, "#6B7280"));
             return;
         }
-        students.forEach(student -> {
+
+        for (User student : students) {
+
             List<AttendanceRecord> records =
                     teacherController.getAttendanceForStudentAndCourse(
                             student.getId(), courseId);
+
             VBox studentInfo = new VBox(2,
                     text(student.getFullName(), 10, FontWeight.BOLD, "#111827"),
                     text("ID: " + student.getId(), 8, FontWeight.NORMAL, "#6B7280"));
+
             HBox attendance = attendanceSummary(records);
+
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
-            HBox card = new HBox(
-                    studentInfo, spacer, attendance
-            );
+
+            HBox card = new HBox(10, studentInfo, spacer, attendance);
             card.setAlignment(Pos.CENTER_LEFT);
             card.setPadding(new Insets(10, 14, 10, 14));
-            card.setStyle("-fx-background-color: white; -fx-border-color: #E5E7EB; "
-                    + "-fx-border-radius: 6; -fx-background-radius: 6;");
+            card.setStyle(
+                    "-fx-background-color: white; "
+                            + "-fx-border-color: #E5E7EB; "
+                            + "-fx-border-radius: 6; "
+                            + "-fx-background-radius: 6;"
+            );
+
             studentList.getChildren().add(card);
-        });
+        }
     }
+
+    // =============================================================
+    // ATTENDANCE SUMMARY + BAR
+    // =============================================================
 
     private HBox attendanceSummary(List<AttendanceRecord> records) {
         HBox summary = new HBox(8);
         summary.setAlignment(Pos.CENTER_RIGHT);
 
-        Label percentage = text("Läsnäolo " + attendancePercentage(records) + " %", 8,
-                FontWeight.BOLD, "#374151");
+        Label percentage = text(
+                "Läsnäolo " + attendancePercentage(records) + " %",
+                8,
+                FontWeight.BOLD,
+                "#374151"
+        );
+
         HBox bar = attendanceBar(records, 100);
         summary.getChildren().addAll(bar, percentage);
         return summary;
@@ -365,6 +492,7 @@ public class TeacherCoursePage extends BorderPane {
         bar.setPrefHeight(7);
         bar.setMaxHeight(7);
         bar.setStyle("-fx-background-color: #EEEEEE; -fx-background-radius: 4;");
+
         addSegment(bar, present, records.size(), "#2E9560");
         addSegment(bar, late, records.size(), "#D99A20");
         addSegment(bar, absent, records.size(), "#C44D3A");
@@ -384,7 +512,7 @@ public class TeacherCoursePage extends BorderPane {
     }
 
     private static int attendancePercentage(List<AttendanceRecord> records) {
-        if (records.isEmpty()) {
+        if (records == null || records.isEmpty()) {
             return 0;
         }
         long attended = records.stream()
@@ -393,7 +521,12 @@ public class TeacherCoursePage extends BorderPane {
         return (int) Math.round(attended * 100.0 / records.size());
     }
 
+    // =============================================================
+    // ADD STUDENT DIALOG
+    // =============================================================
+
     private void ShowaddStudent() {
+
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Lisää opiskelijoita");
 
@@ -402,6 +535,7 @@ public class TeacherCoursePage extends BorderPane {
 
         TextField searchField = new TextField();
         searchField.setPromptText("Hae opiskelijaa");
+        searchField.setStyle("-fx-font-size: 11px;");
 
         ListView<User> listView = new ListView<>();
         listView.getItems().addAll(allStudents);
@@ -423,7 +557,7 @@ public class TeacherCoursePage extends BorderPane {
         });
 
         searchField.textProperty().addListener((obs, oldVal, newVal) -> {
-            String filter = newVal.toLowerCase().trim();
+            String filter = newVal == null ? "" : newVal.toLowerCase().trim();
             listView.getItems().setAll(allStudents.stream()
                     .filter(u -> u.getFullName().toLowerCase().contains(filter))
                     .toList());
@@ -452,5 +586,46 @@ public class TeacherCoursePage extends BorderPane {
                 }
             }
         });
+    }
+
+    // =============================================================
+    // HELPERS
+    // =============================================================
+
+    private static String initialsOf(User user) {
+        if (user == null) {
+            return "";
+        }
+        String first = (user.getFirstName() == null || user.getFirstName().isEmpty())
+                ? "" : user.getFirstName().substring(0, 1);
+        String last = (user.getLastName() == null || user.getLastName().isEmpty())
+                ? "" : user.getLastName().substring(0, 1);
+        return (first + last).toUpperCase();
+    }
+
+    /**
+     * Luo Labelin, jonka fontti ja väri asetetaan AINA inline-tyylillä
+     * (setStyle), ei setFont()/setTextFill()-kutsuilla. Inline-tyyli
+     * voittaa aina ulkoiset stylesheetit CSS-cascade-järjestyksessä.
+     */
+    private static Label text(String value, double size, FontWeight weight, String color) {
+        Label label = new Label(value);
+        label.setStyle(
+                "-fx-font-family: 'System'; "
+                        + "-fx-font-size: " + size + "px; "
+                        + "-fx-font-weight: " + weightToCss(weight) + "; "
+                        + "-fx-text-fill: " + color + ";"
+        );
+        return label;
+    }
+
+    private static String weightToCss(FontWeight weight) {
+        switch (weight) {
+            case BOLD:
+                return "bold";
+            case NORMAL:
+            default:
+                return "normal";
+        }
     }
 }
