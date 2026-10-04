@@ -7,9 +7,10 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="Classroom Attendance System Datamallinnus">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="database.properties">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/TeacherCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/TeacherCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +170,7 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.app.Main" />
       <module name="Classroom_Attendance_System" />
@@ -278,7 +279,7 @@
       <workItem from="1790511867820" duration="5537000" />
       <workItem from="1790535061751" duration="4281000" />
       <workItem from="1791091303989" duration="13000" />
-      <workItem from="1791109324789" duration="4647000" />
+      <workItem from="1791109324789" duration="8775000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -608,7 +609,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790577120393</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="database.properties">
+      <option name="closed" value="true" />
+      <created>1791114795213</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1791114795213</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,7 +661,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="d" />
     <MESSAGE value="nyt ohjelma taas toimi ja ei anna erroreita" />
     <MESSAGE value="todenäköisesti jenkins pitä toimia" />
     <MESSAGE value="fixing+updating start" />
@@ -677,7 +685,8 @@
     <MESSAGE value="maby some pom problem" />
     <MESSAGE value="aaaa vittu" />
     <MESSAGE value="korjaus" />
-    <option name="LAST_COMMIT_MESSAGE" value="korjaus" />
+    <MESSAGE value="database.properties" />
+    <option name="LAST_COMMIT_MESSAGE" value="database.properties" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
