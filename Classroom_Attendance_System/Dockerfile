@@ -34,4 +34,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=build /app/target/Classroom_Attendance_System.jar app.jar
 
 # Запуск через виртуальный дисплей (Xvfb)
-CMD ["xvfb-run", "-a", "java", "-jar", "app.jar"]
+CMD ["java", "-Dprism.order=sw", "-jar", "app.jar"]
