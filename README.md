@@ -3,6 +3,24 @@
 ```md
 # Classroom Attendance System
 
+## Run Instructions Method 1
+
+Clone repository and run Main.java file in src folder.
+
+Remember you must have a Metropolia VPN connection to access the database!!!
+
+
+## Run Instructions Method 2
+
+Clone docker image with the following command: repository docker pull andrei1033/classroom_attendance_system:latest
+
+Start Xming
+
+Run docker image with the following command: docker run --rm -e DISPLAY=host.docker.internal:0.0 andrei1033/classroom_attendance_system:latest
+
+Remember you must have a Metropolia VPN connection to access the database!!!
+
+
 ## Projektin kuvaus
 
 Classroom Attendance System on järjestelmä, jonka tarkoituksena on helpottaa oppituntien läsnäolojen kirjaamista ja seurantaa. Järjestelmän avulla opiskelijat voivat ilmoittaa läsnäolonsa oppitunneilla sekä tarkastella omaa läsnäolohistoriaansa ja läsnäoloprosenttiaan. Opettajat voivat luoda oppitunteja, tarkastella opiskelijoiden läsnäoloja sekä muokata läsnäolomerkintöjä.
