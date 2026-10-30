@@ -7,10 +7,11 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="tein puutuva TeacherControllerTest">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="MassageBundle_fi_Fi.properties">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_en_EN.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_en_EN.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_fi_FI.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_fi_FI.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ru_RU.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -661,7 +662,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791146654057</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="MassageBundle_fi_Fi.properties">
+      <option name="closed" value="true" />
+      <created>1793371779342</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1793371779342</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -705,7 +714,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="student pages ui compleately done" />
     <MESSAGE value="fixed tests" />
     <MESSAGE value="b" />
     <MESSAGE value="new docker ignore" />
@@ -730,7 +738,8 @@
     <MESSAGE value="ope voi muoka kursin nimi ja koodi" />
     <MESSAGE value="ope sivujen ui korjauksia" />
     <MESSAGE value="tein puutuva TeacherControllerTest" />
-    <option name="LAST_COMMIT_MESSAGE" value="tein puutuva TeacherControllerTest" />
+    <MESSAGE value="MassageBundle_fi_Fi.properties" />
+    <option name="LAST_COMMIT_MESSAGE" value="MassageBundle_fi_Fi.properties" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
