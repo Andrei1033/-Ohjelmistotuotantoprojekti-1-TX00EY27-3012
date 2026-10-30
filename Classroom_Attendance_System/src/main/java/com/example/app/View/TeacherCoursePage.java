@@ -1,11 +1,14 @@
 package com.example.app.View;
 
 import com.example.app.Controller.TeacherController;
+import com.example.app.Localisation.FontSupport;
+import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
 import com.example.app.Model.StudentComponents.AttendanceRecord;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
@@ -65,6 +68,11 @@ public class TeacherCoursePage extends BorderPane {
 
         setStyle("-fx-background-color: white;");
 
+        // RTL-tuki arabialle
+        if (FontSupport.isRtl()) {
+            setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        }
+
         // =========================================================
         // SIDEBAR
         // =========================================================
@@ -76,27 +84,21 @@ public class TeacherCoursePage extends BorderPane {
         sidebar.setPadding(new Insets(12, 14, 10, 10));
         sidebar.setStyle("-fx-background-color: " + NAVY + ";");
 
-        // ---------------------------------------------------------
         // LOGO
-        // ---------------------------------------------------------
-
         HBox brand = new HBox(9);
         brand.setAlignment(Pos.CENTER_LEFT);
         brand.setPadding(new Insets(0, 0, 20, 0));
 
         Circle logo = new Circle(13, Color.web("#536FA4"));
-        Label lo = text("LO", 12, FontWeight.BOLD, "#FFFFFF");
+        Label lo = text(i18n.t("app.logo"), 12, FontWeight.BOLD, "#FFFFFF");
         StackPane logoBox = new StackPane(logo, lo);
         logoBox.setPrefSize(20, 20);
 
-        Label brandText = text("Läsnäolo", 13, FontWeight.BOLD, "#FFFFFF");
+        Label brandText = text(i18n.t("app.attendance"), 13, FontWeight.BOLD, "#FFFFFF");
         brand.getChildren().addAll(logoBox, brandText);
 
-        // ---------------------------------------------------------
         // BACK BUTTON ("Omat kurssit")
-        // ---------------------------------------------------------
-
-        Button back = new Button("•   Omat kurssit");
+        Button back = new Button("•   " + i18n.t("teacher.myCourses"));
         back.setPrefHeight(22);
         back.setMaxWidth(Double.MAX_VALUE);
         back.setAlignment(Pos.CENTER_LEFT);
@@ -105,28 +107,18 @@ public class TeacherCoursePage extends BorderPane {
         back.setStyle(
                 "-fx-background-color: " + BLUE + "; "
                         + "-fx-text-fill: white; "
+                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
                         + "-fx-font-size: 10px; "
                         + "-fx-font-weight: bold; "
-                        + "-fx-background-radius: 4;"
-        );
+                        + "-fx-background-radius: 4;");
         back.setOnAction(e -> {
-            if (onBack != null) {
-                onBack.run();
-            }
+            if (onBack != null) onBack.run();
         });
-
-        // ---------------------------------------------------------
-        // SIDEBAR SPACER
-        // ---------------------------------------------------------
 
         Region sideSpacer = new Region();
         VBox.setVgrow(sideSpacer, Priority.ALWAYS);
 
-        // ---------------------------------------------------------
-        // USER ROW (avatar + name + role)
-        // Klikkaus avaa "Omat tiedot" -ikkunan.
-        // ---------------------------------------------------------
-
+        // USER ROW
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
         user.setCursor(Cursor.HAND);
@@ -138,9 +130,9 @@ public class TeacherCoursePage extends BorderPane {
         avatarBox.setCursor(Cursor.HAND);
 
         VBox userInfo = new VBox(0,
-                text(currentUser != null ? currentUser.getFullName() : "Opettaja",
+                text(currentUser != null ? currentUser.getFullName() : i18n.t("app.teacher"),
                         12, FontWeight.BOLD, "#FFFFFF"),
-                text("Opettaja", 11, FontWeight.NORMAL, "#A9B0BD")
+                text(i18n.t("app.teacher"), 11, FontWeight.NORMAL, "#A9B0BD")
         );
         user.getChildren().addAll(avatarBox, userInfo);
 
@@ -148,7 +140,6 @@ public class TeacherCoursePage extends BorderPane {
             if (event.getButton().name().equals("PRIMARY")
                     && user.getScene() != null
                     && currentUser != null) {
-
                 ProfileEditWindow.show(
                         user.getScene().getWindow(),
                         currentUser,
@@ -167,11 +158,8 @@ public class TeacherCoursePage extends BorderPane {
         VBox contentBox = new VBox(16);
         contentBox.setPadding(new Insets(41, 30, 20, 31));
 
-        // ---------------------------------------------------------
         // HEADER – kurssin nimi + koodi + napit
-        // ---------------------------------------------------------
-
-        String courseNameText = "Kurssi " + courseId;
+        String courseNameText = i18n.t("course.name") + " " + courseId;
         String courseCodeText = "";
 
         if (teacherController != null && teacher != null) {
@@ -199,7 +187,7 @@ public class TeacherCoursePage extends BorderPane {
         VBox titleBox = new VBox(2, courseTitle, courseCode);
         HBox.setHgrow(titleBox, Priority.ALWAYS);
 
-        Button editCourse = new Button("Muokkaa kurssia");
+        Button editCourse = new Button(i18n.t("teacher.editCourse"));
         editCourse.setFocusTraversable(false);
         editCourse.setCursor(Cursor.HAND);
         editCourse.setStyle(
@@ -207,15 +195,15 @@ public class TeacherCoursePage extends BorderPane {
                         + "-fx-border-color: #D1D5DB; "
                         + "-fx-border-radius: 4; "
                         + "-fx-background-radius: 4; "
+                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
                         + "-fx-font-size: 9px; "
                         + "-fx-font-weight: bold; "
                         + "-fx-text-fill: #374151; "
                         + "-fx-padding: 5 10; "
-                        + "-fx-cursor: hand;"
-        );
+                        + "-fx-cursor: hand;");
         editCourse.setOnAction(e -> showEditCourseDialog());
 
-        Button addStudent = new Button("Lisää opiskelija");
+        Button addStudent = new Button(i18n.t("teacher.addStudent"));
         addStudent.setFocusTraversable(false);
         addStudent.setCursor(Cursor.HAND);
         addStudent.setStyle(
@@ -223,26 +211,26 @@ public class TeacherCoursePage extends BorderPane {
                         + "-fx-border-color: #D1D5DB; "
                         + "-fx-border-radius: 4; "
                         + "-fx-background-radius: 4; "
+                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
                         + "-fx-font-size: 9px; "
                         + "-fx-font-weight: bold; "
                         + "-fx-text-fill: #374151; "
                         + "-fx-padding: 5 10; "
-                        + "-fx-cursor: hand;"
-        );
+                        + "-fx-cursor: hand;");
         addStudent.setOnAction(e -> ShowaddStudent());
 
-        Button startLesson = new Button("Aloita oppitunti");
+        Button startLesson = new Button(i18n.t("teacher.startLesson"));
         startLesson.setFocusTraversable(false);
         startLesson.setCursor(Cursor.HAND);
         startLesson.setStyle(
                 "-fx-background-color: " + NAVY + "; "
                         + "-fx-text-fill: white; "
+                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
                         + "-fx-font-size: 9px; "
                         + "-fx-font-weight: bold; "
                         + "-fx-background-radius: 4; "
                         + "-fx-padding: 5 12; "
-                        + "-fx-cursor: hand;"
-        );
+                        + "-fx-cursor: hand;");
         startLesson.setOnAction(e -> {
             if (teacherController != null) {
                 teacherController.startLesson(courseId);
@@ -258,11 +246,8 @@ public class TeacherCoursePage extends BorderPane {
         HBox headerBar = new HBox(10, titleBox, headerSpacer, actionButtons);
         headerBar.setAlignment(Pos.CENTER_LEFT);
 
-        // ---------------------------------------------------------
-        // OPISKELIJAT – ScrollPane + VBox
-        // ---------------------------------------------------------
-
-        Label studentsHeader = text("Opiskelijat", 12, FontWeight.BOLD, "#111827");
+        // OPISKELIJAT
+        Label studentsHeader = text(i18n.t("teacher.students"), 12, FontWeight.BOLD, "#111827");
 
         refreshStudents();
 
@@ -270,8 +255,7 @@ public class TeacherCoursePage extends BorderPane {
         scroll.setFitToWidth(true);
         scroll.setStyle(
                 "-fx-background-color: transparent; "
-                        + "-fx-background: transparent;"
-        );
+                        + "-fx-background: transparent;");
         VBox.setVgrow(scroll, Priority.ALWAYS);
 
         contentBox.getChildren().addAll(
@@ -280,24 +264,19 @@ public class TeacherCoursePage extends BorderPane {
                 scroll
         );
 
-        // ---------------------------------------------------------
-        // LOGOUT – oikeassa alakulmassa
-        // ---------------------------------------------------------
-
-        Button logout = new Button("Kirjaudu ulos");
+        // LOGOUT
+        Button logout = new Button(i18n.t("app.logout"));
         logout.setCursor(Cursor.HAND);
         logout.setStyle(
                 "-fx-background-color: " + BLUE + "; "
                         + "-fx-text-fill: white; "
+                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
                         + "-fx-font-size: 11px; "
                         + "-fx-font-weight: bold; "
                         + "-fx-background-radius: 4; "
-                        + "-fx-padding: 6 14;"
-        );
+                        + "-fx-padding: 6 14;");
         logout.setOnAction(e -> {
-            if (onLogout != null) {
-                onLogout.run();
-            }
+            if (onLogout != null) onLogout.run();
         });
 
         VBox logoutBox = new VBox(logout);
@@ -337,22 +316,25 @@ public class TeacherCoursePage extends BorderPane {
         }
 
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Muokkaa kurssia");
-        dialog.setHeaderText("Muokkaa kurssin tietoja.");
+        dialog.setTitle(i18n.t("course.editDialogTitle"));
+        dialog.setHeaderText(i18n.t("course.editDialogHeader"));
 
         ButtonType saveButtonType =
-                new ButtonType("Tallenna", ButtonBar.ButtonData.OK_DONE);
+                new ButtonType(i18n.t("course.save"), ButtonBar.ButtonData.OK_DONE);
+
+        ButtonType cancelButtonType =
+                new ButtonType(i18n.t("app.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
         dialog.getDialogPane()
                 .getButtonTypes()
-                .addAll(saveButtonType, ButtonType.CANCEL);
+                .addAll(saveButtonType, cancelButtonType);
 
         TextField nameField = new TextField(currentName);
-        nameField.setPromptText("Kurssin nimi");
+        nameField.setPromptText(i18n.t("course.name"));
         nameField.setStyle("-fx-font-size: 11px;");
 
         TextField codeField = new TextField(currentCode);
-        codeField.setPromptText("Kurssikoodi (esim. CS2026)");
+        codeField.setPromptText(i18n.t("teacher.courseCodeHint"));
         codeField.setStyle("-fx-font-size: 11px;");
 
         GridPane grid = new GridPane();
@@ -360,9 +342,9 @@ public class TeacherCoursePage extends BorderPane {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 10, 10, 10));
 
-        grid.add(new Label("Kurssin nimi:"), 0, 0);
+        grid.add(new Label(i18n.t("teacher.courseNameLabel")), 0, 0);
         grid.add(nameField, 1, 0);
-        grid.add(new Label("Kurssikoodi:"), 0, 1);
+        grid.add(new Label(i18n.t("teacher.courseCodeLabel")), 0, 1);
         grid.add(codeField, 1, 1);
 
         dialog.getDialogPane().setContent(grid);
@@ -403,9 +385,9 @@ public class TeacherCoursePage extends BorderPane {
             courseCode.setText(displayCode);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Virhe");
+            alert.setTitle(i18n.t("app.error"));
             alert.setHeaderText(null);
-            alert.setContentText("Kurssin päivittäminen epäonnistui.");
+            alert.setContentText(i18n.t("system.error"));
             alert.showAndWait();
         }
     }
@@ -427,7 +409,7 @@ public class TeacherCoursePage extends BorderPane {
 
         if (students == null || students.isEmpty()) {
             studentList.getChildren().add(
-                    text("Tälle kurssille ei ole vielä lisätty opiskelijoita.",
+                    text(i18n.t("teacher.noStudents"),
                             10, FontWeight.NORMAL, "#6B7280"));
             return;
         }
@@ -454,8 +436,7 @@ public class TeacherCoursePage extends BorderPane {
                     "-fx-background-color: white; "
                             + "-fx-border-color: #E5E7EB; "
                             + "-fx-border-radius: 6; "
-                            + "-fx-background-radius: 6;"
-            );
+                            + "-fx-background-radius: 6;");
 
             studentList.getChildren().add(card);
         }
@@ -470,7 +451,7 @@ public class TeacherCoursePage extends BorderPane {
         summary.setAlignment(Pos.CENTER_RIGHT);
 
         Label percentage = text(
-                "Läsnäolo " + attendancePercentage(records) + " %",
+                i18n.t("teacher.attendance", attendancePercentage(records)),
                 8,
                 FontWeight.BOLD,
                 "#374151"
@@ -528,13 +509,13 @@ public class TeacherCoursePage extends BorderPane {
     private void ShowaddStudent() {
 
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Lisää opiskelijoita");
+        dialog.setTitle(i18n.t("course.addStudentsDialogTitle"));
 
         List<User> allStudents = teacherController.getAllStudents(courseId);
         Map<User, CheckBox> selectedMap = new HashMap<>();
 
         TextField searchField = new TextField();
-        searchField.setPromptText("Hae opiskelijaa");
+        searchField.setPromptText(i18n.t("course.addStudentSearch"));
         searchField.setStyle("-fx-font-size: 11px;");
 
         ListView<User> listView = new ListView<>();
@@ -564,15 +545,17 @@ public class TeacherCoursePage extends BorderPane {
         });
 
         VBox layout = new VBox(10,
-                text("Lisää opiskelijoita", 14, FontWeight.BOLD, "#111827"),
+                text(i18n.t("course.addStudentHeader"), 14, FontWeight.BOLD, "#111827"),
                 searchField,
                 listView);
         layout.setPadding(new Insets(15));
         layout.setPrefWidth(350);
 
-        ButtonType saveBtn = new ButtonType("Tallenna", ButtonBar.ButtonData.OK_DONE);
+        ButtonType saveBtn = new ButtonType(i18n.t("course.save"), ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelBtn = new ButtonType(i18n.t("app.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+
         dialog.getDialogPane().setContent(layout);
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, saveBtn);
+        dialog.getDialogPane().getButtonTypes().addAll(cancelBtn, saveBtn);
 
         dialog.showAndWait().ifPresent(btn -> {
             if (btn == saveBtn) {
@@ -603,19 +586,13 @@ public class TeacherCoursePage extends BorderPane {
         return (first + last).toUpperCase();
     }
 
-    /**
-     * Luo Labelin, jonka fontti ja väri asetetaan AINA inline-tyylillä
-     * (setStyle), ei setFont()/setTextFill()-kutsuilla. Inline-tyyli
-     * voittaa aina ulkoiset stylesheetit CSS-cascade-järjestyksessä.
-     */
     private static Label text(String value, double size, FontWeight weight, String color) {
         Label label = new Label(value);
         label.setStyle(
-                "-fx-font-family: 'System'; "
+                "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
                         + "-fx-font-size: " + size + "px; "
                         + "-fx-font-weight: " + weightToCss(weight) + "; "
-                        + "-fx-text-fill: " + color + ";"
-        );
+                        + "-fx-text-fill: " + color + ";");
         return label;
     }
 

@@ -7,9 +7,17 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="first step to localize">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="login page localized">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/i18n.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/i18n.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ar_AR.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ar_AR.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_en_EN.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_en_EN.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_fi_FI.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_fi_FI.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ja_JP.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ru_RU.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,14 +292,6 @@
       <workItem from="1791130844101" duration="8496000" />
       <workItem from="1791180067547" duration="3138000" />
       <workItem from="1791193503127" duration="3723000" />
-    </task>
-    <task id="LOCAL-00002" summary="...">
-      <option name="closed" value="true" />
-      <created>1787222960357</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1787222960357</updated>
     </task>
     <task id="LOCAL-00003" summary="Documents">
       <option name="closed" value="true" />
@@ -677,7 +677,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793376983981</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="login page localized">
+      <option name="closed" value="true" />
+      <created>1793380697479</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1793380697479</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -721,7 +729,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="new docker ignore" />
     <MESSAGE value="maby it work" />
     <MESSAGE value="aaaaaaaa" />
     <MESSAGE value="bbbbb" />
@@ -746,7 +753,8 @@
     <MESSAGE value="MassageBundle_fi_Fi.properties" />
     <MESSAGE value="russian + eanglish added" />
     <MESSAGE value="first step to localize" />
-    <option name="LAST_COMMIT_MESSAGE" value="first step to localize" />
+    <MESSAGE value="login page localized" />
+    <option name="LAST_COMMIT_MESSAGE" value="login page localized" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
