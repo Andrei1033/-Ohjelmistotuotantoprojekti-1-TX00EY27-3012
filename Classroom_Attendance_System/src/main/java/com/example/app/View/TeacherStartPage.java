@@ -8,14 +8,7 @@ import com.example.app.Model.TeacherCourse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -28,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontWeight;
+import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +76,47 @@ public class TeacherStartPage extends BorderPane {
         Region sideSpacer = new Region();
         VBox.setVgrow(sideSpacer, Priority.ALWAYS);
 
+        // ========== LANGUAGE SWITCHER ==========
+        ComboBox<i18n.Lang> langCombo = new ComboBox<>();
+        langCombo.getItems().addAll(i18n.SUPPORTED);
+        langCombo.setValue(i18n.getCurrentLang());
+        langCombo.setMaxWidth(Double.MAX_VALUE);
+        langCombo.setFocusTraversable(false);
+        langCombo.setCursor(Cursor.HAND);
+        langCombo.setStyle(
+                "-fx-background-color: " + BLUE + "; "
+                        + "-fx-background-radius: 4; "
+                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
+                        + "-fx-font-size: 11px; "
+                        + "-fx-text-fill: white;"
+        );
+
+        // Show only the label text in the button area, not "Lang[code=..., label=...]"
+        langCombo.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(i18n.Lang lang) {
+                return lang == null ? "" : lang.label();
+            }
+
+            @Override
+            public i18n.Lang fromString(String string) {
+                return null;
+            }
+        });
+
+        langCombo.setOnAction(e -> {
+            i18n.Lang selected = langCombo.getValue();
+            if (selected == null || selected.equals(i18n.getCurrentLang())) return;
+            i18n.setLanguage(selected);
+            // Reload the page so all labels pick up the new translations
+            if (teacherController != null) {
+                teacherController.showStartPage();
+            }
+        });
+
+        VBox langBox = new VBox(4, langCombo);
+        langBox.setPadding(new Insets(0, 0, 12, 0));
+
         // USER ROW
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
@@ -119,7 +154,7 @@ public class TeacherStartPage extends BorderPane {
             }
         });
 
-        sidebar.getChildren().addAll(brand, sideSpacer, user);
+        sidebar.getChildren().addAll(brand, sideSpacer, langBox, user);
 
         // =========================================================
         // MAIN CONTENT
