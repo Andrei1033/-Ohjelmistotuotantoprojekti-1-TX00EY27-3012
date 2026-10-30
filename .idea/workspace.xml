@@ -9,7 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="tein puutuva TeacherControllerTest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/PageShow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_fi_FI.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_fi_FI.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
