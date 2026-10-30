@@ -1,15 +1,13 @@
+
 package com.example.app.Localisation;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 public final class i18n {
 
@@ -21,11 +19,13 @@ public final class i18n {
     public static final Lang JA = new Lang("ja", "日本語");
     public static final Lang AR = new Lang("ar", "العربية");
 
-    public static final List<Lang> SUPPORTED = List.of(FI, EN, RU, JA, AR);
+    public static final List<Lang> SUPPORTED =
+            List.of(FI, EN, RU, JA, AR);
 
+    // Files are located directly inside src/main/resources
     private static final String BASE = "MessagesBundle";
-    private static final String PATH = "com/example/app/Localisation/";
 
+    // Finnish is always the initial language
     private static final ObjectProperty<Lang> current =
             new SimpleObjectProperty<>(FI);
 
@@ -42,16 +42,28 @@ public final class i18n {
     }
 
     public static void setLanguage(Lang lang) {
-        if (lang == null || lang.equals(current.get())) return;
-        bundle = load(lang);
+
+        if (lang == null) return;
+
+        if (lang.equals(current.get())) return;
+
+        ResourceBundle newBundle = load(lang);
+
+        bundle = newBundle;
         current.set(lang);
+
+        System.out.println(
+                "[i18n] Language changed to: " + lang.code()
+        );
     }
 
-    /** Get localized string, or a fallback marker if missing. */
     public static String t(String key) {
         try {
             return bundle.getString(key);
         } catch (MissingResourceException e) {
+            System.err.println(
+                    "[i18n] Missing translation: " + key
+            );
             return "!" + key + "!";
         }
     }
@@ -61,32 +73,43 @@ public final class i18n {
     }
 
     private static ResourceBundle load(Lang lang) {
-        Locale locale = Locale.forLanguageTag(lang.code());
-        // Prefer no fallback-to-default noise; but do use default bundle as safety net.
-        return ResourceBundle.getBundle(
-                BASE, locale,
-                Thread.currentThread().getContextClassLoader(),
-                new Utf8Control());
-    }
 
-    /** Custom control so .properties files are read as UTF-8 (Java 8 compat). */
-    private static final class Utf8Control extends ResourceBundle.Control {
-        @Override
-        public ResourceBundle newBundle(String baseName, Locale locale,
-                                        String format, ClassLoader loader,
-                                        boolean reload) throws IOException {
-            String bundleName = toBundleName(baseName, locale);
-            String resourceName = toResourceName(bundleName, "properties");
-            URL url = loader.getResource(resourceName);
-            if (url == null) return null;
+        String localeTag = switch (lang.code()) {
+            case "fi" -> "fi-FI";
+            case "en" -> "en-EN";
+            case "ru" -> "ru-RU";
+            case "ja" -> "ja-JP";
+            case "ar" -> "ar-AR";
+            default -> throw new IllegalArgumentException(
+                    "Unsupported language: " + lang.code()
+            );
+        };
 
-            URLConnection conn = url.openConnection();
-            if (reload) conn.setUseCaches(false);
+        Locale locale = Locale.forLanguageTag(localeTag);
 
-            try (InputStream in = conn.getInputStream();
-                 InputStreamReader reader = new InputStreamReader(in, StandardCharsets.UTF_8)) {
-                return new PropertyResourceBundle(reader);
-            }
+        try {
+            ResourceBundle result = ResourceBundle.getBundle(
+                    BASE,
+                    locale,
+                    Thread.currentThread().getContextClassLoader(),
+                    ResourceBundle.Control.getNoFallbackControl(
+                            ResourceBundle.Control.FORMAT_PROPERTIES
+                    )
+            );
+
+            System.out.println(
+                    "[i18n] Loaded bundle: " + result.getLocale()
+            );
+
+            return result;
+
+        } catch (MissingResourceException e) {
+
+            throw new IllegalStateException(
+                    "Cannot load translation for: " + localeTag
+                            + ". Check src/main/resources/",
+                    e
+            );
         }
     }
 }

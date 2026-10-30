@@ -7,15 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="russian + eanglish added">
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/FontSupport.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/i18n.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="first step to localize">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ar_AR.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ar_AR.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ja_JP.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ja_JP.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ru_RU.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/resources/MessagesBundle_ru_RU.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/i18n.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/i18n.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +125,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "copilot.chat.legacySessionMetadata.migrated": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "localisation",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot",
@@ -290,14 +284,6 @@
       <workItem from="1791130844101" duration="8496000" />
       <workItem from="1791180067547" duration="3138000" />
       <workItem from="1791193503127" duration="3723000" />
-    </task>
-    <task id="LOCAL-00001" summary="Java fx now work.">
-      <option name="closed" value="true" />
-      <created>1787221881772</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1787221881772</updated>
     </task>
     <task id="LOCAL-00002" summary="...">
       <option name="closed" value="true" />
@@ -683,7 +669,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793373913489</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="first step to localize">
+      <option name="closed" value="true" />
+      <created>1793376983981</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1793376983981</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -727,7 +721,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="b" />
     <MESSAGE value="new docker ignore" />
     <MESSAGE value="maby it work" />
     <MESSAGE value="aaaaaaaa" />
@@ -752,7 +745,8 @@
     <MESSAGE value="tein puutuva TeacherControllerTest" />
     <MESSAGE value="MassageBundle_fi_Fi.properties" />
     <MESSAGE value="russian + eanglish added" />
-    <option name="LAST_COMMIT_MESSAGE" value="russian + eanglish added" />
+    <MESSAGE value="first step to localize" />
+    <option name="LAST_COMMIT_MESSAGE" value="first step to localize" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
