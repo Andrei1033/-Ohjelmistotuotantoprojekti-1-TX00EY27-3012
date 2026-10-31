@@ -65,6 +65,67 @@ java -jar target/Classroom_Attendance_System.jar
 The application opens a JavaFX login window. A working database connection is
 required for login and database-backed operations.
 
+## Localization
+
+The application currently supports five languages:
+
+| Language | Locale resource |
+| --- | --- |
+| Finnish | `fi-FI` |
+| English | `en-EN` |
+| Russian | `ru-RU` |
+| Japanese | `ja-JP` |
+| Arabic | `ar-AR` |
+
+Language selection is available in the login window and in the navigation
+sidebar of the teacher and administrator views. Select a language from the
+language dropdown before logging in, or change it while using a supported
+role-specific view. The selected language is applied immediately to the
+current view. Arabic also changes the user interface layout to
+right-to-left (RTL), including the administrator's add and edit user
+dialogs.
+
+To run a localized version:
+
+1. Start the application with `mvn javafx:run` or with the packaged JAR as
+   described above.
+2. Select the required language from the dropdown in the login window.
+3. Log in to open the localized student, teacher or administrator view.
+
+Localization is implemented with Java `ResourceBundle` property files. The
+translation resources are stored in
+`Classroom_Attendance_System/src/main/resources/`:
+
+- `MessagesBundle_fi_FI.properties`
+- `MessagesBundle_en_EN.properties`
+- `MessagesBundle_ru_RU.properties`
+- `MessagesBundle_ja_JP.properties`
+- `MessagesBundle_ar_AR.properties`
+
+The shared localization service is
+`src/main/java/com/example/app/Localisation/i18n.java`. It defines the
+supported languages, loads the matching resource bundle and provides
+translated strings to the JavaFX views. `FontSupport.java` selects
+script-compatible fonts and enables RTL layout for Arabic. When adding or
+changing UI text, add the same translation key to every
+`MessagesBundle_*.properties` file and use `i18n.t("key")` in the view.
+
+### Localization resources and responsibilities
+
+- **Translators:** Finnish, English, Russian, Japanese and Arabic language
+  reviewers maintain the corresponding message-bundle values and verify
+  wording in the running application.
+- **Localization tools:** Java `ResourceBundle`, UTF-8 `.properties` files,
+  the shared `i18n` service and `FontSupport` are the localization tools used
+  by the project. No external translation platform is required.
+- **CMS:** No CMS is applicable. This is a desktop application, so
+  translations are version-controlled with the source code rather than
+  managed through a web content management system.
+
+Keep message keys consistent across all bundles. Test language changes with
+`mvn clean test`, and manually check Arabic screens and dialogs for RTL
+alignment after changing layout or translated text.
+
 ### Run with Docker
 
 The included multi-stage [`Dockerfile`](Classroom_Attendance_System/Dockerfile)
@@ -106,7 +167,7 @@ docker run --rm andrei1033/classroom_attendance_system:latest
 | Unit and integration testing | JUnit Jupiter 5.11.4, Mockito 5.23.0 |
 | JavaFX UI testing | TestFX 4.0.18 |
 | Coverage | JaCoCo 0.8.12 |
-| Configuration | Java properties files and dotenv-java 3.0.0 |
+| Configuration and localization | Java properties files, Java `ResourceBundle` and dotenv-java 3.0.0 |
 | Packaging | Maven Shade Plugin 3.5.1 creates an executable fat JAR |
 | Containerisation | Docker with Eclipse Temurin 21 JRE and Xvfb |
 | Continuous integration | Jenkins (`Jenkinsfile`) |
@@ -121,9 +182,10 @@ in-memory H2 database, so the automated tests do not require the shared
 MariaDB server. Database credentials must be supplied through the local
 configuration and must not be committed to the repository.
 
-There are no separate translation or resource-bundle files. The user
-interface text is currently defined in the JavaFX view classes, with shared
-styling in [`style.css`](Classroom_Attendance_System/src/main/resources/style.css).
+Localized UI text is stored in the `MessagesBundle_*.properties` files in
+`Classroom_Attendance_System/src/main/resources`. The JavaFX views retrieve
+translations through `Localisation.i18n`, while shared styling is defined in
+[`style.css`](Classroom_Attendance_System/src/main/resources/style.css).
 
 ## Design and development methodology
 
