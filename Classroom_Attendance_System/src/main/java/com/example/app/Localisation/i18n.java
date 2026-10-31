@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 public final class i18n {
 
+
     public record Lang(String code, String label) {}
 
     public static final Lang FI = new Lang("fi", "Suomi");
@@ -111,5 +112,8 @@ public final class i18n {
                     e
             );
         }
+    }
+    public static Locale getLocale() {
+        return bundle != null ? bundle.getLocale() : Locale.forLanguageTag("fi-FI");
     }
 }

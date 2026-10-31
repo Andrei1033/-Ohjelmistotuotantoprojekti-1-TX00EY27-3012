@@ -49,7 +49,7 @@ public class StudentController {
     }
 
     /** Näyttää opiskelijan kurssilistan (StudentStartPage). */
-    private void showStartPage() {
+    public void showStartPage() {
         currentCourse = null;
 
         List<Course> courses = courseDao.getCoursesForStudent(currentUser.getId());
