@@ -14,13 +14,15 @@ public final class FontSupport {
     }
 
     public static String pickFamily() {
-        return switch (i18n.getCurrentLang().code()) {
+        String lang = i18n.getCurrentLang().code();
+
+        return switch (lang) {
             case "ja" -> firstAvailable(
                     "Noto Sans CJK JP",
                     "Noto Sans JP",
+                    "Noto Sans CJK",
                     "Yu Gothic UI",
                     "Meiryo",
-                    "Hiragino Sans",
                     "System"
             );
 
@@ -28,7 +30,6 @@ public final class FontSupport {
                     "Noto Naskh Arabic",
                     "Segoe UI",
                     "Tahoma",
-                    "Geeza Pro",
                     "System"
             );
 
@@ -48,10 +49,12 @@ public final class FontSupport {
 
         for (String family : families) {
             if (installed.contains(family)) {
+                System.out.println("Selected font: " + family);
                 return family;
             }
         }
 
+        System.out.println("WARNING: No matching font found!");
         return "System";
     }
 
