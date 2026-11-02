@@ -4,10 +4,10 @@ pipeline {
         maven 'Maven3'
     }
     environment {
-        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
-        DOCKERHUB_CREDENTIALS_ID = 'Andrei_Docker_Id'
-        DOCKERHUB_REPO = 'andrei1033/classroom_attendance_system'
-        DOCKER_IMAGE_TAG = 'latest'
+       // PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        //DOCKERHUB_CREDENTIALS_ID = 'Andrei_Docker_Id'
+       // DOCKERHUB_REPO = 'andrei1033/classroom_attendance_system'
+        // DOCKER_IMAGE_TAG = 'latest'
     }
 
     stages {
