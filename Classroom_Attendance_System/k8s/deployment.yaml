@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: classroom-attendance
+  namespace: classroom
+  labels:
+    app: classroom-attendance
+
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+
+  selector:
+    matchLabels:
+      app: classroom-attendance
+
+  template:
+    metadata:
+      labels:
+        app: classroom-attendance
+
+    spec:
+      automountServiceAccountToken: false
+
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+
+      containers:
+        - name: classroom-attendance
+          image: __IMAGE__
+          imagePullPolicy: IfNotPresent
+
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+
+          volumeMounts:
+            - name: database-config
+              mountPath: /config
+              readOnly: true
+
+      volumes:
+        - name: database-config
+          secret:
+            secretName: classroom-db
+            items:
+              - key: database.properties
+                path: database.properties
