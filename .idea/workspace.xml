@@ -7,10 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="all teacher pages localized">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="tein puutuva TeacherControllerTest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +22,7 @@
     </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="71" />
+    <option name="cachedIndexableFilesCount" value="65" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -126,7 +125,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;localisation&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/andre/Documents/metropolia_tehtavat/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012/Documents/SQLKaaviot&quot;,
@@ -139,7 +138,6 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -285,7 +283,30 @@
       <workItem from="1791130844101" duration="8496000" />
       <workItem from="1791180067547" duration="3138000" />
       <workItem from="1791193503127" duration="3723000" />
-      <workItem from="1793395919660" duration="3062000" />
+    </task>
+    <task id="LOCAL-00001" summary="Java fx now work.">
+      <option name="closed" value="true" />
+      <created>1787221881772</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1787221881772</updated>
+    </task>
+    <task id="LOCAL-00002" summary="...">
+      <option name="closed" value="true" />
+      <created>1787222960357</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1787222960357</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Documents">
+      <option name="closed" value="true" />
+      <created>1788173169922</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1788173169922</updated>
     </task>
     <task id="LOCAL-00004" summary="Kaaviot">
       <option name="closed" value="true" />
@@ -639,47 +660,7 @@
       <option name="project" value="LOCAL" />
       <updated>1791146654057</updated>
     </task>
-    <task id="LOCAL-00048" summary="MassageBundle_fi_Fi.properties">
-      <option name="closed" value="true" />
-      <created>1793371779342</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1793371779342</updated>
-    </task>
-    <task id="LOCAL-00049" summary="russian + eanglish added">
-      <option name="closed" value="true" />
-      <created>1793373913489</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1793373913489</updated>
-    </task>
-    <task id="LOCAL-00050" summary="first step to localize">
-      <option name="closed" value="true" />
-      <created>1793376983981</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1793376983981</updated>
-    </task>
-    <task id="LOCAL-00051" summary="login page localized">
-      <option name="closed" value="true" />
-      <created>1793380697479</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1793380697479</updated>
-    </task>
-    <task id="LOCAL-00052" summary="all teacher pages localized">
-      <option name="closed" value="true" />
-      <created>1793385728106</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1793385728106</updated>
-    </task>
-    <option name="localTasksCounter" value="53" />
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -723,6 +704,11 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="student pages ui compleately done" />
+    <MESSAGE value="fixed tests" />
+    <MESSAGE value="b" />
+    <MESSAGE value="new docker ignore" />
+    <MESSAGE value="maby it work" />
     <MESSAGE value="aaaaaaaa" />
     <MESSAGE value="bbbbb" />
     <MESSAGE value="ccc" />
@@ -743,12 +729,7 @@
     <MESSAGE value="ope voi muoka kursin nimi ja koodi" />
     <MESSAGE value="ope sivujen ui korjauksia" />
     <MESSAGE value="tein puutuva TeacherControllerTest" />
-    <MESSAGE value="MassageBundle_fi_Fi.properties" />
-    <MESSAGE value="russian + eanglish added" />
-    <MESSAGE value="first step to localize" />
-    <MESSAGE value="login page localized" />
-    <MESSAGE value="all teacher pages localized" />
-    <option name="LAST_COMMIT_MESSAGE" value="all teacher pages localized" />
+    <option name="LAST_COMMIT_MESSAGE" value="tein puutuva TeacherControllerTest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
