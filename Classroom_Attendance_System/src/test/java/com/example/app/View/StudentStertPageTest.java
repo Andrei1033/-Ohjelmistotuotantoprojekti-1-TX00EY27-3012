@@ -94,9 +94,7 @@ class StudentStartPageTest extends ApplicationTest {
         });
     }
 
-// =========================================================
 // Helpers
-// =========================================================
 
     private List<Node> allNodes(Parent root) {
         return new ArrayList<>(root.lookupAll("*"));
@@ -176,9 +174,7 @@ class StudentStartPageTest extends ApplicationTest {
         });
     }
 
-// =========================================================
 // Structure
-// =========================================================
 
     @Test
     @DisplayName("View is a BorderPane with sidebar on left and content in center")
@@ -194,9 +190,7 @@ class StudentStartPageTest extends ApplicationTest {
         assertEquals(158, sidebar().getPrefWidth(), 0.01);
     }
 
-// =========================================================
 // Sidebar
-// =========================================================
 
     @Test
     @DisplayName("Sidebar contains brand label 'Läsnäolo'")
@@ -246,14 +240,12 @@ class StudentStartPageTest extends ApplicationTest {
     // NOTE: Back-button tests were removed — the new StudentStartPage
     // does not create a "<   Takaisin" button.
 
-// =========================================================
 // Content
-// =========================================================
 
     @Test
-    @DisplayName("Content heading 'Omat kurssit' is present")
+    @DisplayName("Content heading 'Omat kurssini' is present")
     void testHeading() {
-        assertNotNull(labelWithText("Omat kurssit"));
+        assertNotNull(labelWithText("Omat kurssini"));
     }
 
     @Test
@@ -342,9 +334,7 @@ class StudentStartPageTest extends ApplicationTest {
         assertTrue(style.contains("-fx-background-radius"), "Badge rounding missing");
     }
 
-// =========================================================
 // Interaction
-// =========================================================
 
     @Test
     @DisplayName("Clicking a course card triggers onCourseSelected with that course")
@@ -369,9 +359,7 @@ class StudentStartPageTest extends ApplicationTest {
         assertEquals(testCourses.get(1), selectedCourse.get());
     }
 
-// =========================================================
 // Logout
-// =========================================================
 
     @Test
     @DisplayName("Logout button exists and triggers callback when fired")
@@ -393,9 +381,7 @@ class StudentStartPageTest extends ApplicationTest {
                 "onLogout should not be invoked during construction");
     }
 
-// =========================================================
 // Invariants
-// =========================================================
 
     @Test
     @DisplayName("Only one 'Kirjaudu ulos' button exists")
