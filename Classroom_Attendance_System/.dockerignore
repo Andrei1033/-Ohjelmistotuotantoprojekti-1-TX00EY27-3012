@@ -1,0 +1,13 @@
+target/
+.git/
+.idea/
+*.iml
+
+.env
+.env.*
+*.log
+
+ci-output/
+ci-container-id
+
+src/main/resources/database.properties
