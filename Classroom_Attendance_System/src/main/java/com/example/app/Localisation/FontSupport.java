@@ -9,10 +9,7 @@ public final class FontSupport {
 
     private FontSupport() {}
 
-    /**
-     * Pick a font that can render the current language.
-     * Falls back through a chain of common system fonts.
-     */
+
     public static Font font(double size, FontWeight weight) {
         return Font.font(pickFamily(), weight, size);
     }
@@ -37,7 +34,7 @@ public final class FontSupport {
         return "System";
     }
 
-    /** Right-to-left scripts need this flag; Layout mirrors itself. */
+
     public static boolean isRtl() {
         return "ar".equals(i18n.getCurrentLang().code());
     }
