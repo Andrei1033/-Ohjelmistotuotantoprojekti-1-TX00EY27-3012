@@ -1,227 +1,142 @@
 package com.example.app.View;
 
 import com.example.app.Controller.TeacherController;
+import com.example.app.Localisation.i18n;
 import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import com.example.app.Model.Lesson;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.testfx.framework.junit5.ApplicationExtension;
-
-import java.util.Collections;
 import java.util.List;
-
+import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(ApplicationExtension.class)
-class TeacherStartPageTest {
-
-    private TeacherStartPage teacherStartPage;
-    private Teacher teacher;
+class TeacherStartPageTest extends ViewTestSupport {
     private TeacherController controller;
-
-    @BeforeEach
-    void setUp() {
-        teacher = new Teacher(1, "Matti", "Meikäläinen", "matti@testi.fi");
-
+    private TeacherStartPage view;
+    private AtomicInteger logouts;
+    @BeforeEach void setUp() {
         controller = mock(TeacherController.class);
-
-        // Palautetaan YKSI kurssi, jotta kortit syntyvät
-        TeacherCourse course = new TeacherCourse(1, "Ohjelmoinnin perusteet", "CS101", 1);
-        when(controller.getTeacherCourses(anyInt()))
-                .thenReturn(List.of(course));
-        when(controller.getLessonsForCourse(anyInt()))
-                .thenReturn(Collections.emptyList());
-
-        teacherStartPage = new TeacherStartPage(teacher, controller, () -> {});
-        new Scene(teacherStartPage, 1024, 399);
+        logouts = new AtomicInteger();
+        when(controller.getTeacherCourses(1)).thenReturn(List.of(new TeacherCourse(12, "Java", "JAVA12", 1)));
+        when(controller.getLessonsForCourse(12)).thenReturn(List.of(mock(Lesson.class), mock(Lesson.class)));
     }
-
-    @Test
-    void testRootIsBorderPane() {
-        assertInstanceOf(BorderPane.class, teacherStartPage);
+    private void show() {
+        view = new TeacherStartPage(new Teacher(1, "Matti", "Opettaja", "matti@example.com"), controller, logouts::incrementAndGet);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(view, 1000, 650));
+        stage.show();
     }
-
-    @Test
-    void testLeftSidebarExists() {
-        Node left = teacherStartPage.getLeft();
-        assertNotNull(left);
-        assertInstanceOf(VBox.class, left);
+    @Test void displaysTeacherCourseDetailsAndLessonCount() {
+        interact(() -> {
+            show();
+            hasLabel(view, "Matti Opettaja");
+            hasLabel(view, "MO");
+            hasLabel(view, i18n.t("app.teacher"));
+            hasLabel(view, i18n.t("teacher.myCourses"));
+            hasLabel(view, i18n.t("teacher.courseCount", 1));
+            hasLabel(view, "Java");
+            hasLabel(view, "JAVA12");
+            hasLabel(view, i18n.t("course.lessonCount", 2));
+            assertEquals(1, nodes(view, FlowPane.class).getFirst().getChildren().size());
+        });
     }
-
-    @Test
-    void testSidebarWidth() {
-        VBox sidebar = (VBox) teacherStartPage.getLeft();
-        assertEquals(158.0, sidebar.getPrefWidth(), 0.1);
+    @Test void emptyCourseListShowsPlaceholderWithoutCards() {
+        when(controller.getTeacherCourses(1)).thenReturn(List.of());
+        interact(() -> {
+            show();
+            hasLabel(view, i18n.t("teacher.noCourses"));
+            hasLabel(view, i18n.t("teacher.courseCount", 0));
+            assertTrue(nodes(view, FlowPane.class).isEmpty());
+        });
     }
-
-    @Test
-    void testCenterExists() {
-        assertNotNull(teacherStartPage.getCenter());
+    @Test void failedCourseLoadShowsEmptyState() {
+        when(controller.getTeacherCourses(1)).thenThrow(new IllegalStateException("Unavailable"));
+        interact(() -> { show(); hasLabel(view, i18n.t("teacher.noCourses")); });
     }
-
-    @Test
-    void testCenterIsVBox() {
-        assertInstanceOf(VBox.class, teacherStartPage.getCenter());
+    @Test void failedLessonLoadDisplaysZeroLessons() {
+        when(controller.getLessonsForCourse(12)).thenThrow(new IllegalStateException("Unavailable"));
+        interact(() -> { show(); hasLabel(view, i18n.t("course.lessonCount", 0)); });
     }
-
-    @Test
-    void testCourseHeadingExists() {
-        assertNotNull(findLabel(teacherStartPage, "Omat kurssit"));
+    @Test void startLessonUsesCorrectCourseWithoutOpeningCoursePage() {
+        interact(() -> {
+            show();
+            button(view, i18n.t("teacher.startLesson")).fire();
+            verify(controller).startLesson(12);
+            verify(controller, never()).openCoursePage(anyInt());
+        });
     }
-
-    @Test
-    void testCourseIntroductionExists() {
-        Label introduction = findLabelContaining(teacherStartPage, "Sinulla on ");
-        assertNotNull(introduction);
-        assertTrue(introduction.getText().matches(
-                "Sinulla on \\d+ kurssia tällä lukukaudella\\."));
+    private void clickCard(MouseButton mouseButton) {
+        var card = nodes(view, FlowPane.class).getFirst().getChildren().getFirst();
+        card.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, mouseButton, 1,
+                false, false, false, false, mouseButton == MouseButton.PRIMARY,
+                false, mouseButton == MouseButton.SECONDARY, false, false, false, null));
     }
-
-    @Test
-    void testCourseCardsExist() {
-        FlowPane cards = getCourseCards();
-        assertNotNull(cards);
-        assertFalse(cards.getChildren().isEmpty());
+    @Test void primaryClickOpensCorrectCourse() {
+        interact(() -> { show(); clickCard(MouseButton.PRIMARY); verify(controller).openCoursePage(12); });
     }
-
-    @Test
-    void testCourseCardsAreVBoxes() {
-        FlowPane cards = getCourseCards();
-        assertNotNull(cards);
-        assertFalse(cards.getChildren().isEmpty());
-        for (Node child : cards.getChildren()) {
-            assertInstanceOf(VBox.class, child);
-        }
+    @Test void secondaryClickDoesNotOpenCourse() {
+        interact(() -> { show(); clickCard(MouseButton.SECONDARY); verify(controller, never()).openCoursePage(anyInt()); });
     }
-
-    @Test
-    void testCourseCardsHaveCorrectWidth() {
-        FlowPane cards = getCourseCards();
-        for (Node child : cards.getChildren()) {
-            VBox card = (VBox) child;
-            assertEquals(190.0, card.getPrefWidth(), 0.1);
-        }
+    @Test void logoutInvokesCallbackOnce() {
+        interact(() -> {
+            show();
+            assertEquals(0, logouts.get());
+            button(view, i18n.t("app.logout")).fire();
+            assertEquals(1, logouts.get());
+        });
     }
-
-    @Test
-    void testCourseCardsHaveCorrectHeight() {
-        FlowPane cards = getCourseCards();
-        for (Node child : cards.getChildren()) {
-            VBox card = (VBox) child;
-            // HUOM: koodissa on setPrefSize(190, 112), ei 75
-            assertEquals(112.0, card.getPrefHeight(), 0.1);
-        }
+    @Test void changingLanguageReloadsStartPage() {
+        interact(() -> {
+            show();
+            assertEquals(i18n.SUPPORTED, languageBox(view).getItems());
+            languageBox(view).setValue(i18n.EN);
+            assertEquals(i18n.EN, i18n.getCurrentLang());
+            verify(controller).showStartPage();
+        });
     }
-
-    @Test
-    void testCourseCardsContainLabels() {
-        FlowPane cards = getCourseCards();
-        for (Node child : cards.getChildren()) {
-            assertNotNull(findLabelInNode(child));
-        }
+    @Test void arabicUsesRightToLeftLayoutAndTranslatedHeading() {
+        interact(() -> {
+            i18n.setLanguage(i18n.AR);
+            show();
+            assertEquals(NodeOrientation.RIGHT_TO_LEFT, view.getNodeOrientation());
+            hasLabel(view, i18n.t("teacher.myCourses"));
+        });
     }
-
-    @Test
-    void testCourseCodeExistsWhenCourseExists() {
-        FlowPane cards = getCourseCards();
-        boolean found = false;
-        for (Node child : cards.getChildren()) {
-            for (Node cardChild : ((VBox) child).getChildren()) {
-                if (cardChild instanceof Label label) {
-                    String text = label.getText();
-                    if (text != null && text.matches("\\d{2}|[A-Z]+\\d+")) {
-                        found = true;
-                    }
-                }
-            }
-        }
-        assertTrue(found);
+    @Test void createCourseRequiresNameAndSavesTrimmedValues() {
+        when(controller.createCourses("New Java", "NEW12", 1)).thenReturn(true);
+        interact(() -> {
+            show();
+            inModal(() -> button(view, i18n.t("teacher.newCourse")).fire(), stage -> {
+                var root = stage.getScene().getRoot();
+                Button save = button(root, i18n.t("app.save"));
+                assertTrue(save.isDisabled());
+                var fields = nodes(root, TextField.class);
+                fields.get(0).setText("   ");
+                assertTrue(save.isDisabled());
+                fields.get(0).setText(" New Java ");
+                fields.get(1).setText(" NEW12 ");
+                assertFalse(save.isDisabled());
+                save.fire();
+            });
+            verify(controller).createCourses("New Java", "NEW12", 1);
+            verify(controller).showStartPage();
+        });
     }
-
-    @Test
-    void testTeacherNameExists() {
-        assertNotNull(findLabel(teacherStartPage, "Matti Meikäläinen"));
-    }
-
-    @Test
-    void testTeacherRoleExists() {
-        assertNotNull(findLabel(teacherStartPage, "Opettaja"));
-    }
-
-    @Test
-    void testUserInitials() {
-        assertNotNull(findLabel(teacherStartPage, "MM"));
-    }
-
-    @Test
-    void testLogoExists() {
-        assertNotNull(findLabel(teacherStartPage, "LO"));
-    }
-
-    // --- Apumetodit ---
-
-    /**
-     * Hakee FlowPane-kurssikorttikontin ScrollPanen sisältä.
-     * TeacherStartPage laittaa kortit ScrollPane -> FlowPane -rakenteeseen.
-     */
-    private FlowPane getCourseCards() {
-        VBox center = (VBox) teacherStartPage.getCenter();
-        for (Node child : center.getChildren()) {
-            if (child instanceof ScrollPane scroll
-                    && scroll.getContent() instanceof FlowPane flow) {
-                return flow;
-            }
-        }
-        return null;
-    }
-
-    private Label findLabel(Node root, String expectedText) {
-        if (root instanceof Label label && expectedText.equals(label.getText())) {
-            return label;
-        }
-        if (root instanceof Parent parent) {
-            for (Node child : parent.getChildrenUnmodifiable()) {
-                Label result = findLabel(child, expectedText);
-                if (result != null) return result;
-            }
-        }
-        return null;
-    }
-
-    private Label findLabelContaining(Node root, String expectedText) {
-        if (root instanceof Label label) {
-            String text = label.getText();
-            if (text != null && text.contains(expectedText)) return label;
-        }
-        if (root instanceof Parent parent) {
-            for (Node child : parent.getChildrenUnmodifiable()) {
-                Label result = findLabelContaining(child, expectedText);
-                if (result != null) return result;
-            }
-        }
-        return null;
-    }
-
-    private Label findLabelInNode(Node root) {
-        if (root instanceof Label label) return label;
-        if (root instanceof Parent parent) {
-            for (Node child : parent.getChildrenUnmodifiable()) {
-                Label result = findLabelInNode(child);
-                if (result != null) return result;
-            }
-        }
-        return null;
+    @Test void cancellingCreationDoesNotSaveOrReload() {
+        interact(() -> {
+            show();
+            inModal(() -> button(view, i18n.t("teacher.newCourse")).fire(), stage -> stage.close());
+            verify(controller, never()).createCourses(anyString(), anyString(), anyInt());
+            verify(controller, never()).showStartPage();
+        });
     }
 }
