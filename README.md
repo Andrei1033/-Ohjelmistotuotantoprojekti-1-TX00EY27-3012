@@ -160,7 +160,7 @@ docker run --rm andrei1033/classroom_attendance_system:latest
 | --- | --- |
 | Language and runtime | Java 21 |
 | Build tool | Apache Maven; the CI/Docker build uses Maven 3.9.6 |
-| User interface | JavaFX 21.0.4 (`javafx-controls`, `javafx-fxml`) |
+| User interface | JavaFX 21.0.4 (`javafx-controls`) |
 | Production database | MariaDB, accessed through MariaDB Java Client 3.5.6 |
 | Additional JDBC driver | MySQL Connector/J 8.4.0 |
 | Test database | H2 2.2.224 in MySQL compatibility mode |
