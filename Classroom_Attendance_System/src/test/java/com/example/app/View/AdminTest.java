@@ -1,6 +1,6 @@
 package com.example.app.View;
 
-
+import com.example.app.Localisation.i18n;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -67,7 +67,7 @@ class AdminTest extends ApplicationTest {
             if (node instanceof Button) {
                 Button button = (Button) node;
 
-                if (button.getText().contains("Kurssini")) {
+                if (button.getText().contains(i18n.t("teacher.myCourses"))) {
                     found = true;
                     break;
                 }

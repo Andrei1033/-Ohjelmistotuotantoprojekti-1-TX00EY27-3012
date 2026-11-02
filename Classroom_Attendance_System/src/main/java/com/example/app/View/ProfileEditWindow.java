@@ -1,20 +1,12 @@
-/**
- * Modaali-ikkuna, jossa käyttäjä voi muokata omaa nimeään, sähköpostiaan ja
- * vaihtaa salasanansa. Avataan sivupalkin avatar-ympyrän klikkauksesta.
- *
- * Käyttö:
- *   ProfileEditWindow.show(someNode.getScene().getWindow(), currentUser, () -> refresh());
- *
- * onProfileUpdated-callback kutsutaan vain onnistuneen tallennuksen jälkeen,
- * jotta kutsuja voi päivittää näytöllä olevan sivun (esim. sivupalkin nimen).
- */
-
 package com.example.app.View;
 
 import com.example.app.DaoElements.LoginDao.UserDao;
+import com.example.app.Localisation.FontSupport;
+import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
 
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -25,6 +17,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -46,21 +39,24 @@ public final class ProfileEditWindow {
                             Runnable onProfileUpdated,
                             UserDao userDao) {
 
-        // NOTE: no `new UserDao()` here anymore — use the parameter.
-
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         if (owner != null) {
             stage.initOwner(owner);
         }
-        stage.setTitle("Omat tiedot");
+        stage.setTitle(i18n.t("profile.title"));
         stage.setResizable(false);
 
         VBox root = new VBox(10);
         root.setPadding(new Insets(24));
         root.setStyle("-fx-background-color: white;");
 
-        Label heading = label("Omat tiedot", 15, true, "#171717");
+        // RTL support (Arabic)
+        if (FontSupport.isRtl()) {
+            root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        }
+
+        Label heading = label(i18n.t("profile.title"), 15, true, "#171717");
 
         TextField firstNameField = textField(currentUser.getFirstName());
         TextField lastNameField  = textField(currentUser.getLastName());
@@ -74,11 +70,11 @@ public final class ProfileEditWindow {
         errorLabel.setWrapText(true);
         errorLabel.setMaxWidth(290);
 
-        Button back = new Button("Takaisin");
+        Button back = new Button(i18n.t("app.back"));
         styleButton(back, "#EFEFEF", "#171717");
         back.setOnAction(e -> stage.close());
 
-        Button save = new Button("Tallenna");
+        Button save = new Button(i18n.t("app.save"));
         styleButton(save, BLUE, "white");
 
         // ----- TEST HOOKS: stable IDs -----
@@ -102,18 +98,18 @@ public final class ProfileEditWindow {
             String email     = safeTrim(emailField.getText());
 
             if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
-                errorLabel.setText("Etunimi, sukunimi ja sähköposti ovat pakollisia.");
+                errorLabel.setText(i18n.t("profile.requiredFields"));
                 return;
             }
 
             if (!email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
-                errorLabel.setText("Sähköpostiosoite ei ole kelvollinen.");
+                errorLabel.setText(i18n.t("profile.invalidEmail"));
                 return;
             }
 
             if (!email.equalsIgnoreCase(currentUser.getEmail())
                     && userDao.isEmailTaken(email, currentUser.getId())) {
-                errorLabel.setText("Sähköpostiosoite on jo käytössä.");
+                errorLabel.setText(i18n.t("profile.emailTaken"));
                 return;
             }
 
@@ -126,19 +122,19 @@ public final class ProfileEditWindow {
 
             if (wantsPasswordChange) {
                 if (isBlank(currentPassword)) {
-                    errorLabel.setText("Anna nykyinen salasana vaihtaaksesi salasanan.");
+                    errorLabel.setText(i18n.t("profile.enterCurrentPassword"));
                     return;
                 }
                 if (!userDao.verifyPassword(currentUser.getId(), currentPassword)) {
-                    errorLabel.setText("Nykyinen salasana on väärin.");
+                    errorLabel.setText(i18n.t("profile.currentPasswordWrong"));
                     return;
                 }
                 if (newPassword == null || newPassword.length() < 6) {
-                    errorLabel.setText("Uuden salasanan on oltava vähintään 6 merkkiä.");
+                    errorLabel.setText(i18n.t("profile.passwordTooShort"));
                     return;
                 }
                 if (!newPassword.equals(confirmPassword)) {
-                    errorLabel.setText("Uudet salasanat eivät täsmää.");
+                    errorLabel.setText(i18n.t("profile.passwordMismatch"));
                     return;
                 }
             }
@@ -147,14 +143,14 @@ public final class ProfileEditWindow {
                     currentUser.getId(), firstName, lastName, email);
 
             if (!profileOk) {
-                errorLabel.setText("Tietojen tallennus epäonnistui. Yritä uudelleen.");
+                errorLabel.setText(i18n.t("profile.saveFailed"));
                 return;
             }
 
             if (wantsPasswordChange) {
                 boolean passwordOk = userDao.updatePassword(currentUser.getId(), newPassword);
                 if (!passwordOk) {
-                    errorLabel.setText("Salasanan vaihto epäonnistui. Tiedot tallennettiin, mutta salasana ei vaihtunut.");
+                    errorLabel.setText(i18n.t("profile.passwordChangeFailed"));
                     return;
                 }
             }
@@ -176,14 +172,14 @@ public final class ProfileEditWindow {
 
         root.getChildren().addAll(
                 heading,
-                label("Etunimi", 10, true, "#555555"), firstNameField,
-                label("Sukunimi", 10, true, "#555555"), lastNameField,
-                label("Sähköposti", 10, true, "#555555"), emailField,
+                label(i18n.t("profile.firstName"), 10, true, "#555555"), firstNameField,
+                label(i18n.t("profile.lastName"), 10, true, "#555555"), lastNameField,
+                label(i18n.t("profile.email"), 10, true, "#555555"), emailField,
                 new Separator(),
-                label("Vaihda salasana (valinnainen)", 10, true, "#555555"),
-                label("Nykyinen salasana", 9, false, "#858585"), currentPasswordField,
-                label("Uusi salasana", 9, false, "#858585"), newPasswordField,
-                label("Vahvista uusi salasana", 9, false, "#858585"), confirmPasswordField,
+                label(i18n.t("profile.changePassword"), 10, true, "#555555"),
+                label(i18n.t("profile.currentPassword"), 9, false, "#858585"), currentPasswordField,
+                label(i18n.t("profile.newPassword"), 9, false, "#858585"), newPasswordField,
+                label(i18n.t("profile.confirmNewPassword"), 9, false, "#858585"), confirmPasswordField,
                 errorLabel,
                 buttons
         );
@@ -207,33 +203,28 @@ public final class ProfileEditWindow {
 
     private static TextField textField(String value) {
         TextField field = new TextField(value == null ? "" : value);
-        field.setStyle("-fx-font-size: 11px;");
+        field.setFont(FontSupport.font(11, FontWeight.NORMAL));
         return field;
     }
 
     private static PasswordField passwordField() {
         PasswordField field = new PasswordField();
-        field.setStyle("-fx-font-size: 11px;");
+        field.setFont(FontSupport.font(11, FontWeight.NORMAL));
         return field;
     }
 
     private static Label label(String value, double size, boolean bold, String color) {
         Label label = new Label(value);
-        label.setStyle(
-                "-fx-font-family: 'System'; " +
-                        "-fx-font-size: " + size + "px; " +
-                        "-fx-font-weight: " + (bold ? "bold" : "normal") + "; " +
-                        "-fx-text-fill: " + color + ";"
-        );
+        label.setFont(FontSupport.font(size, bold ? FontWeight.BOLD : FontWeight.NORMAL));
+        label.setStyle("-fx-text-fill: " + color + ";");
         return label;
     }
 
     private static void styleButton(Button button, String backgroundColor, String textColor) {
+        button.setFont(FontSupport.font(11, FontWeight.BOLD));
         button.setStyle(
                 "-fx-background-color: " + backgroundColor + "; " +
                         "-fx-text-fill: " + textColor + "; " +
-                        "-fx-font-size: 11px; " +
-                        "-fx-font-weight: bold; " +
                         "-fx-background-radius: 4; " +
                         "-fx-padding: 6 14;"
         );

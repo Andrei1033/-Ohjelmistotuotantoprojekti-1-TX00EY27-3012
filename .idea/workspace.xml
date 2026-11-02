@@ -7,8 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="korjaus">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="tein puutuva TeacherControllerTest">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="qqq" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,7 +50,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git&quot;,
-    &quot;accountId&quot;: &quot;ee5422e0-63d5-4c5f-b534-955d3450e6d0&quot;
+    &quot;accountId&quot;: &quot;68a16e64-85de-4e15-9374-0ceab4e705f0&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -106,6 +107,7 @@
     &quot;JUnit.StudentControllerTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.StudentStartPageTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TeacherAttendanceTrackingTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherControllerTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TeacherCoursePageTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TeacherStartPageTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.UserDaoTest.executor&quot;: &quot;Run&quot;,
@@ -276,7 +278,11 @@
       <workItem from="1790496966973" duration="5000" />
       <workItem from="1790511867820" duration="5537000" />
       <workItem from="1790535061751" duration="4281000" />
-      <workItem from="1793088738277" duration="10000" />
+      <workItem from="1791091303989" duration="13000" />
+      <workItem from="1791109324789" duration="9394000" />
+      <workItem from="1791130844101" duration="8496000" />
+      <workItem from="1791180067547" duration="3138000" />
+      <workItem from="1791193503127" duration="3723000" />
     </task>
     <task id="LOCAL-00001" summary="Java fx now work.">
       <option name="closed" value="true" />
@@ -606,7 +612,55 @@
       <option name="project" value="LOCAL" />
       <updated>1790577120393</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="database.properties">
+      <option name="closed" value="true" />
+      <created>1791114795213</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1791114795213</updated>
+    </task>
+    <task id="LOCAL-00043" summary="teacher can now add a new courses">
+      <option name="closed" value="true" />
+      <created>1791125177752</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1791125177752</updated>
+    </task>
+    <task id="LOCAL-00044" summary="kursi koodi indikaatori näytä kursikodi eikä sen id">
+      <option name="closed" value="true" />
+      <created>1791127304037</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1791127304037</updated>
+    </task>
+    <task id="LOCAL-00045" summary="ope voi muoka kursin nimi ja koodi">
+      <option name="closed" value="true" />
+      <created>1791131664936</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1791131664936</updated>
+    </task>
+    <task id="LOCAL-00046" summary="ope sivujen ui korjauksia">
+      <option name="closed" value="true" />
+      <created>1791136103745</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1791136103745</updated>
+    </task>
+    <task id="LOCAL-00047" summary="tein puutuva TeacherControllerTest">
+      <option name="closed" value="true" />
+      <created>1791146654057</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1791146654057</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -650,12 +704,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="d" />
-    <MESSAGE value="nyt ohjelma taas toimi ja ei anna erroreita" />
-    <MESSAGE value="todenäköisesti jenkins pitä toimia" />
-    <MESSAGE value="fixing+updating start" />
-    <MESSAGE value="these focking text now are visible" />
-    <MESSAGE value="added new. student user can change own gmail name and pswd" />
     <MESSAGE value="student pages ui compleately done" />
     <MESSAGE value="fixed tests" />
     <MESSAGE value="b" />
@@ -675,7 +723,13 @@
     <MESSAGE value="maby some pom problem" />
     <MESSAGE value="aaaa vittu" />
     <MESSAGE value="korjaus" />
-    <option name="LAST_COMMIT_MESSAGE" value="korjaus" />
+    <MESSAGE value="database.properties" />
+    <MESSAGE value="teacher can now add a new courses" />
+    <MESSAGE value="kursi koodi indikaatori näytä kursikodi eikä sen id" />
+    <MESSAGE value="ope voi muoka kursin nimi ja koodi" />
+    <MESSAGE value="ope sivujen ui korjauksia" />
+    <MESSAGE value="tein puutuva TeacherControllerTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="tein puutuva TeacherControllerTest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

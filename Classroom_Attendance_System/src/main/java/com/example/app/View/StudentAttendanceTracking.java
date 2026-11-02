@@ -1,5 +1,7 @@
 package com.example.app.View;
 
+import com.example.app.Localisation.FontSupport;
+import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.StudentComponents.AttendanceRecord;
 import com.example.app.Model.StudentComponents.Course;
@@ -8,7 +10,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -16,17 +20,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.util.StringConverter;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
 
 public class StudentAttendanceTracking extends BorderPane {
 
     private static final String NAVY = "#202F49";
     private static final String BLUE = "#344A70";
-    private static final Locale FI = new Locale("fi", "FI");
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("d.M.yyyy");
 
     /**
@@ -44,6 +47,10 @@ public class StudentAttendanceTracking extends BorderPane {
     public StudentAttendanceTracking(Course course, List<AttendanceRecord> records, Runnable onBack,
                                      User currentUser, Runnable onLogout, Runnable onProfileUpdated) {
 
+        if (FontSupport.isRtl()) {
+            setNodeOrientation(javafx.geometry.NodeOrientation.RIGHT_TO_LEFT);
+        }
+
         setStyle("-fx-background-color: white;");
 
         // =========================
@@ -60,26 +67,83 @@ public class StudentAttendanceTracking extends BorderPane {
         brand.setPadding(new Insets(0, 0, 20, 0));
 
         Circle logo = new Circle(13, Color.web("#536FA4"));
-        Label lo = new Label("LO");
+        Label lo = new Label(i18n.t("app.logo"));
         lo.setTextFill(Color.WHITE);
         lo.setFont(Font.font("System", FontWeight.BOLD, 12));
         StackPane logoBox = new StackPane(logo, lo);
         logoBox.setPrefSize(20, 20);
 
-        Label brandText = text("Läsnäolo", 13, FontWeight.BOLD, "#FFFFFF");
+        Label brandText = text(i18n.t("app.attendance"), 13, FontWeight.BOLD, "#FFFFFF");
         brand.getChildren().addAll(logoBox, brandText);
 
-        Button back = new Button("<   Takaisin");
+        Button back = new Button("<   " + i18n.t("app.back"));
         back.setPrefHeight(22);
         back.setMaxWidth(Double.MAX_VALUE);
         back.setAlignment(Pos.CENTER_LEFT);
         back.setStyle("-fx-background-color: #344A70; -fx-text-fill: white; "
+                + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
                 + "-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4;");
         back.setCursor(Cursor.HAND);
         back.setOnAction(e -> onBack.run());
 
         Region sideSpacer = new Region();
         VBox.setVgrow(sideSpacer, Priority.ALWAYS);
+
+        // ========== LANGUAGE SWITCHER ==========
+        ComboBox<i18n.Lang> langCombo = new ComboBox<>();
+        langCombo.getItems().addAll(i18n.SUPPORTED);
+        langCombo.setValue(i18n.getCurrentLang());
+        langCombo.setMaxWidth(Double.MAX_VALUE);
+        langCombo.setFocusTraversable(false);
+        langCombo.setCursor(Cursor.HAND);
+        langCombo.setStyle(
+                "-fx-background-color: " + BLUE + "; "
+                        + "-fx-background-radius: 4; "
+                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
+                        + "-fx-font-size: 11px; "
+                        + "-fx-text-fill: white;"
+        );
+
+        langCombo.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(i18n.Lang lang) {
+                return lang == null ? "" : lang.label();
+            }
+
+            @Override
+            public i18n.Lang fromString(String string) {
+                return null;
+            }
+        });
+
+        langCombo.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(i18n.Lang item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.label());
+            }
+        });
+
+        langCombo.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(i18n.Lang item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.label());
+            }
+        });
+
+        langCombo.setOnAction(e -> {
+            i18n.Lang selected = langCombo.getValue();
+            if (selected == null || selected.equals(i18n.getCurrentLang())) return;
+            i18n.setLanguage(selected);
+
+            if (onProfileUpdated != null) {
+                onProfileUpdated.run();
+            }
+        });
+
+        VBox langBox = new VBox(4, langCombo);
+        langBox.setPadding(new Insets(0, 0, 12, 0));
 
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
@@ -92,7 +156,7 @@ public class StudentAttendanceTracking extends BorderPane {
         avatarBox.setCursor(Cursor.HAND);
 
         VBox userInfo = new VBox(0,
-                text(currentUser.getFullName(), 12, FontWeight.BOLD, "#FFFFFF"),
+                text(currentUser != null ? currentUser.getFullName() : "", 12, FontWeight.BOLD, "#FFFFFF"),
                 text(roleLabel(currentUser), 11, FontWeight.NORMAL, "#A9B0BD")
         );
         user.getChildren().addAll(avatarBox, userInfo);
@@ -105,7 +169,7 @@ public class StudentAttendanceTracking extends BorderPane {
             }
         });
 
-        sidebar.getChildren().addAll(brand, new Region(), back, sideSpacer, user);
+        sidebar.getChildren().addAll(brand, back, sideSpacer, langBox, user);
 
         // =========================
         // MAIN CONTENT
@@ -116,7 +180,7 @@ public class StudentAttendanceTracking extends BorderPane {
 
         // Otsikko
         Label title = text(course.getName(), 15, FontWeight.BOLD, "#171717");
-        Label subtitle = text(course.getCode() + " - omat läsnäolomerkinnät", 8, FontWeight.BOLD, "#171717");
+        Label subtitle = text(course.getCode() + " - " + i18n.t("student.myAttendanceRecords"), 8, FontWeight.BOLD, "#171717");
         VBox titleBox = new VBox(2, title, subtitle);
         HBox.setHgrow(titleBox, Priority.ALWAYS);
 
@@ -130,9 +194,9 @@ public class StudentAttendanceTracking extends BorderPane {
         HBox summary = new HBox(20);
         summary.setAlignment(Pos.CENTER_RIGHT);
         summary.getChildren().addAll(
-                text(presentCount + " paikalla", 8, FontWeight.BOLD, "#171717"),
-                text(lateCount + " myöhässä", 8, FontWeight.BOLD, "#171717"),
-                text(absentCount + " poissa", 8, FontWeight.BOLD, "#171717")
+                text(presentCount + " " + i18n.t("attendance.present"), 8, FontWeight.BOLD, "#171717"),
+                text(lateCount + " " + i18n.t("attendance.late"), 8, FontWeight.BOLD, "#171717"),
+                text(absentCount + " " + i18n.t("attendance.absent"), 8, FontWeight.BOLD, "#171717")
         );
 
         HBox header = new HBox();
@@ -148,7 +212,7 @@ public class StudentAttendanceTracking extends BorderPane {
         attendanceOverview.setAlignment(Pos.CENTER_LEFT);
         attendanceOverview.setPadding(new Insets(14, 0, 0, 0));
         attendanceOverview.getChildren().addAll(
-                text("Läsnäolo " + attendancePercentage(records) + " %", 9, FontWeight.BOLD, "#555555"),
+                text(i18n.t("course.percentPresent", attendancePercentage(records)), 9, FontWeight.BOLD, "#555555"),
                 attendanceBar(records, 220)
         );
         content.getChildren().add(attendanceOverview);
@@ -166,7 +230,7 @@ public class StudentAttendanceTracking extends BorderPane {
 
         if (records.isEmpty()) {
             attendanceList.getChildren().add(
-                    text("Tällä kurssilla ei ole vielä oppitunteja.", 9, FontWeight.NORMAL, "#858585"));
+                    text(i18n.t("student.noLessonsYet"), 9, FontWeight.NORMAL, "#858585"));
         } else {
             for (AttendanceRecord record : records) {
                 attendanceList.getChildren().add(attendanceRow(record));
@@ -184,11 +248,12 @@ public class StudentAttendanceTracking extends BorderPane {
         // LOGOUT
         // =========================
 
-        Button logout = new Button("Kirjaudu ulos");
+        Button logout = new Button(i18n.t("app.logout"));
 
         logout.setStyle(
                 "-fx-background-color: " + BLUE + "; " +
                         "-fx-text-fill: white; " +
+                        "-fx-font-family: '" + FontSupport.pickFamily() + "'; " +
                         "-fx-font-size: 11px; " +
                         "-fx-font-weight: bold; " +
                         "-fx-background-radius: 4; " +
@@ -216,7 +281,7 @@ public class StudentAttendanceTracking extends BorderPane {
 
         String date = record.getStartTime() != null ? DATE_FMT.format(record.getStartTime()) : "-";
         String day = record.getStartTime() != null
-                ? capitalize(record.getStartTime().getDayOfWeek().getDisplayName(TextStyle.SHORT, FI))
+                ? capitalize(record.getStartTime().getDayOfWeek().getDisplayName(TextStyle.SHORT, i18n.getLocale()))
                 : "";
 
         String[] colors = statusColors(record.getStatus());
@@ -330,17 +395,18 @@ public class StudentAttendanceTracking extends BorderPane {
         }
         switch (status) {
             case "present":
-                return "paikalla";
+                return i18n.t("attendance.present");
             case "late":
-                return "myöhässä";
+                return i18n.t("attendance.late");
             case "excused":
-                return "poissa (hyväksytty)";
+                return i18n.t("attendance.excused");
             default:
-                return "poissa";
+                return i18n.t("attendance.absent");
         }
     }
 
     private static String initialsOf(User user) {
+        if (user == null) return "";
         String first = (user.getFirstName() == null || user.getFirstName().isEmpty())
                 ? "" : user.getFirstName().substring(0, 1);
         String last = (user.getLastName() == null || user.getLastName().isEmpty())
@@ -349,13 +415,14 @@ public class StudentAttendanceTracking extends BorderPane {
     }
 
     private static String roleLabel(User user) {
+        if (user == null || user.getRole() == null) return "";
         switch (user.getRole().name()) {
             case "TEACHER":
-                return "Opettaja";
+                return i18n.t("app.teacher");
             case "ADMIN":
-                return "Ylläpitäjä";
+                return i18n.t("app.admin");
             default:
-                return "Opiskelija";
+                return i18n.t("app.student");
         }
     }
 
@@ -363,21 +430,10 @@ public class StudentAttendanceTracking extends BorderPane {
         return (s == null || s.isEmpty()) ? s : Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 
-    // =====================================================
-    // TEXT HELPER
-    // =====================================================
-
-    /**
-     * Luo Labelin, jonka fontti ja väri asetetaan AINA inline-tyylillä
-     * (setStyle), ei setFont()/setTextFill()-kutsuilla. Inline-tyyli
-     * voittaa aina ulkoiset stylesheetit CSS-cascade-järjestyksessä,
-     * joten tämä komponentti näyttää oikein riippumatta siitä, mitä
-     * globaaleja .css-tiedostoja sovelluksen muualla on ladattu.
-     */
     private static Label text(String value, double size, FontWeight weight, String color) {
         Label label = new Label(value);
         label.setStyle(
-                "-fx-font-family: 'System'; " +
+                "-fx-font-family: '" + FontSupport.pickFamily() + "'; " +
                         "-fx-font-size: " + size + "px; " +
                         "-fx-font-weight: " + weightToCss(weight) + "; " +
                         "-fx-text-fill: " + color + ";"
