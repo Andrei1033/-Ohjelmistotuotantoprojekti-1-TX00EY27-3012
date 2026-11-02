@@ -102,8 +102,11 @@ public class Login extends BorderPane {
 
         login = new Button();
         login.setPrefSize(196, 29);
-        login.setStyle("-fx-background-color: " + BLUE + "; -fx-text-fill: white; "
-                + "-fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 4;");
+        login.setStyle(
+                "-fx-background-color: " + BLUE + ";" +
+                        "-fx-text-fill: white;" +
+                        "-fx-background-radius: 4;"
+        );
         login.setOnAction(e -> onLoginAttempt.accept(email.getText(), password.getText()));
 
         forgot = label("", 9, FontWeight.BOLD, MUTED);
@@ -131,23 +134,42 @@ public class Login extends BorderPane {
         subtitle.setText(i18n.t("login.subtitle"));
         emailLabel.setText(i18n.t("login.email"));
         passLabel.setText(i18n.t("login.password"));
+
         email.setPromptText(i18n.t("login.email.placeholder"));
         password.setPromptText(i18n.t("login.password.placeholder"));
+
         login.setText(i18n.t("login.button"));
         forgot.setText(i18n.t("login.forgot"));
 
-        // script-aware font
+        // Apply language-specific fonts
+        String family = FontSupport.pickFamily();
+
         applyFont(title, 15, FontWeight.BOLD);
         applyFont(subtitle, 9, FontWeight.BOLD);
         applyFont(emailLabel, 9, FontWeight.BOLD);
         applyFont(passLabel, 9, FontWeight.BOLD);
         applyFont(forgot, 9, FontWeight.BOLD);
 
-        // RTL support (optional, but nice)
-        Node root = this;
-        root.setNodeOrientation(FontSupport.isRtl()
-                ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
-                : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
+        // Login button
+        login.setFont(FontSupport.font(14, FontWeight.BOLD));
+
+        // Input fields
+        email.setFont(FontSupport.font(12, FontWeight.NORMAL));
+        password.setFont(FontSupport.font(12, FontWeight.NORMAL));
+
+        // Language dropdown
+        langBox.setStyle(
+                "-fx-font-family: '" + family + "';" +
+                        "-fx-font-size: 11px;" +
+                        "-fx-background-radius: 6;"
+        );
+
+        // RTL support
+        setNodeOrientation(
+                FontSupport.isRtl()
+                        ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
+                        : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT
+        );
     }
 
     private static void applyFont(Label l, double size, FontWeight weight) {
