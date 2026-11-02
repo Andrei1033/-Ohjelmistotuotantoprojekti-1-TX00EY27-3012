@@ -28,6 +28,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libxrender1 \
         libxext6 \
         fonts-dejavu-core \
+        fonts-noto-cjk \
+        fontconfig \
+    && fc-cache -f \
     && rm -rf /var/lib/apt/lists/*
 
 # Копируем fat JAR и переименовываем в app.jar
