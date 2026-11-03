@@ -110,7 +110,9 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
         interact(() -> {
             show(List.of(student));
             when(dao.saveAttendance(34, 7, "absent")).thenReturn(false);
-            try (var alerts = mockConstruction(Alert.class)) {
+            try (var alerts = mockConstruction(Alert.class, (mock, context) -> {
+                when(mock.getDialogPane()).thenReturn(new javafx.scene.control.DialogPane());
+            })) {
                 save();
                 assertEquals(1, alerts.constructed().size());
                 verify(alerts.constructed().getFirst()).setContentText(i18n.t("attendance.errorSave"));
@@ -125,7 +127,9 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
         interact(() -> {
             show(List.of(student));
             when(dao.endLesson(34)).thenReturn(false);
-            try (var alerts = mockConstruction(Alert.class)) {
+            try (var alerts = mockConstruction(Alert.class, (mock, context) -> {
+                when(mock.getDialogPane()).thenReturn(new javafx.scene.control.DialogPane());
+            })) {
                 save();
                 assertEquals(1, alerts.constructed().size());
                 verify(alerts.constructed().getFirst()).setContentText(i18n.t("attendance.errorEndLesson"));
