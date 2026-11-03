@@ -115,24 +115,13 @@ public class StudentStartPage extends BorderPane {
         });
 
         // Solukuvaukset alasvetolistan riveille
-        langCombo.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(i18n.Lang item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.label());
-            }
-        });
+
 
         // Solukuvaus valitulle painikkeelle
-        langCombo.setButtonCell(new ListCell<>() {
-            @Override
-            protected void updateItem(i18n.Lang item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.label());
-            }
-        });
+
 
         // Päivitetty kuuntelija: vaihtaa kielen ja suorittaa sivun uudelleenpiirron
+        FontSupport.configureLanguageSelector(langCombo);
         langCombo.setOnAction(e -> {
             i18n.Lang selected = langCombo.getValue();
             if (selected == null || selected.equals(i18n.getCurrentLang())) return;

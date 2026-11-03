@@ -107,6 +107,7 @@ public class Admin {
                 return null;
             }
         });
+        FontSupport.configureLanguageSelector(languageCombo);
         languageCombo.setOnAction(event -> {
             i18n.Lang selected = languageCombo.getValue();
             if (selected != null && !selected.equals(i18n.getCurrentLang())) {

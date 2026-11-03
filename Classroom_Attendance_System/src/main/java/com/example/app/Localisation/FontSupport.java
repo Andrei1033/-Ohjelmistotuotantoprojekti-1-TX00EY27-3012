@@ -19,7 +19,29 @@ public final class FontSupport {
     }
 
     public static String pickFamily() {
-        String lang = i18n.getCurrentLang().code();
+        return pickFamily(i18n.getCurrentLang());
+    }
+
+    public static void configureLanguageSelector(javafx.scene.control.ComboBox<i18n.Lang> selector) {
+        selector.setCellFactory(list -> languageCell());
+        selector.setButtonCell(languageCell());
+    }
+
+    private static javafx.scene.control.ListCell<i18n.Lang> languageCell() {
+        return new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(i18n.Lang language, boolean empty) {
+                super.updateItem(language, empty);
+                setText(empty || language == null ? "" : language.label());
+                setGraphic(null);
+                setStyle(empty || language == null ? ""
+                        : "-fx-font-family: '" + pickFamily(language) + "';");
+            }
+        };
+    }
+
+    private static String pickFamily(i18n.Lang language) {
+        String lang = language.code();
 
         return switch (lang) {
             case "ja" -> firstAvailable(

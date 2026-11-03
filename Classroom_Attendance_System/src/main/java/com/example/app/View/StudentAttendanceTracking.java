@@ -117,22 +117,11 @@ public class StudentAttendanceTracking extends BorderPane {
             }
         });
 
-        langCombo.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(i18n.Lang item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.label());
-            }
-        });
 
-        langCombo.setButtonCell(new ListCell<>() {
-            @Override
-            protected void updateItem(i18n.Lang item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.label());
-            }
-        });
 
+
+
+        FontSupport.configureLanguageSelector(langCombo);
         langCombo.setOnAction(e -> {
             i18n.Lang selected = langCombo.getValue();
             if (selected == null || selected.equals(i18n.getCurrentLang())) return;

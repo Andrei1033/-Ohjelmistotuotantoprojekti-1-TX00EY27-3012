@@ -46,6 +46,7 @@ public class Login extends BorderPane {
             @Override public String toString(i18n.Lang l) { return l == null ? "" : l.label(); }
             @Override public i18n.Lang fromString(String s) { return null; }
         });
+        FontSupport.configureLanguageSelector(langBox);
         langBox.setOnAction(e -> i18n.setLanguage(langBox.getValue()));
         langBox.setStyle("-fx-font-size: 11px; -fx-background-radius: 6;");
 

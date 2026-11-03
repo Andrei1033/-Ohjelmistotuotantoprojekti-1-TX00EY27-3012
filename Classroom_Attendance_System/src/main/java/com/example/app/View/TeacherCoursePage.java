@@ -138,6 +138,7 @@ public class TeacherCoursePage extends BorderPane {
             }
         });
 
+        FontSupport.configureLanguageSelector(langCombo);
         langCombo.setOnAction(e -> {
             i18n.Lang selected = langCombo.getValue();
             if (selected == null || selected.equals(i18n.getCurrentLang())) return;
