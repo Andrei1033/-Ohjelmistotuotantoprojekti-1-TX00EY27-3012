@@ -1,6 +1,7 @@
 package com.example.app.Controller;
 
 import com.example.app.DaoElements.AdminDao;
+import com.example.app.Localisation.i18n;
 import com.example.app.Model.Admin;
 import com.example.app.Model.LoginComponents.Role;
 import javafx.collections.FXCollections;
@@ -36,7 +37,7 @@ public class AdminController {
 
     public ObservableList<Admin> filterUsers(Role role, String search, String course) {
         String query = search == null ? "" : search.trim().toLowerCase(Locale.ROOT);
-        String selectedCourse = course == null || course.equals("Kaikki") ? "" : course.trim();
+        String selectedCourse = isAllCoursesOption(course) ? "" : course.trim();
 
         return users.filtered(user ->
                 (role == null || user.getRole() == role)
@@ -45,6 +46,12 @@ public class AdminController {
                         || user.getEmail().toLowerCase(Locale.ROOT).contains(query))
                         && (selectedCourse.isEmpty()
                         || user.getCourses().contains(selectedCourse)));
+    }
+
+    private boolean isAllCoursesOption(String course) {
+        return course == null
+                || course.trim().equalsIgnoreCase(i18n.t("app.all"))
+                || course.trim().equalsIgnoreCase("Kaikki");
     }
 
     public Set<String> getCourses() {
