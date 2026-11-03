@@ -448,6 +448,7 @@ public class Admin {
                 : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
 
         root.getStyleClass().add("root");
+        root.setStyle("-fx-font-family: '" + FontSupport.pickFamily() + "';");
 
         root.getStylesheets().add(
                 getClass()
@@ -731,7 +732,7 @@ public class Admin {
 
     private static Label sidebarText(String value, double size, FontWeight weight, String color) {
         Label label = new Label(value);
-        label.setFont(Font.font("System", weight, size));
+        label.setFont(FontSupport.font(size, weight));
         label.setTextFill(Color.web(color));
         return label;
     }
