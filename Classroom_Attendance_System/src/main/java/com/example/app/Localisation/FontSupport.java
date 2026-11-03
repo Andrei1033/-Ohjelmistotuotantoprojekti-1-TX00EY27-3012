@@ -9,6 +9,11 @@ public final class FontSupport {
 
     private FontSupport() {}
 
+    /** Let controls, table cells and dialog buttons inherit the locale font. */
+    public static void applyTo(javafx.scene.Parent root) {
+        root.setStyle(root.getStyle() + "; -fx-font-family: '" + pickFamily() + "';");
+    }
+
     public static Font font(double size, FontWeight weight) {
         return Font.font(pickFamily(), weight, size);
     }

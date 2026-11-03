@@ -184,6 +184,7 @@ public final class ProfileEditWindow {
                 buttons
         );
 
+        FontSupport.applyTo(root);
         Scene scene = new Scene(root, 340, 580);
         stage.setScene(scene);
         stage.showAndWait();

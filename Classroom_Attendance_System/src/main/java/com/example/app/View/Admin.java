@@ -651,6 +651,7 @@ public class Admin {
                         : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
                 confirmation.setHeaderText(i18n.t("admin.userDeleteTitle"));
                 ButtonType confirmButton = confirmation.getDialogPane().getButtonTypes().get(0);
+                com.example.app.Localisation.FontSupport.applyTo(confirmation.getDialogPane());
                 if (confirmation.showAndWait().orElse(null) == confirmButton) {
                     try {
                         controller.deleteUser(user);
@@ -665,6 +666,7 @@ public class Admin {
                                 ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
                                 : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
                         alert.setHeaderText(i18n.t("admin.deleteUserFailed"));
+                        com.example.app.Localisation.FontSupport.applyTo(alert.getDialogPane());
                         alert.showAndWait();
                     }
                 }
@@ -705,10 +707,12 @@ public class Admin {
                         ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
                         : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
                 alert.setHeaderText(i18n.t("admin.invalidUserData"));
+                com.example.app.Localisation.FontSupport.applyTo(alert.getDialogPane());
                 alert.showAndWait();
             }
             return null;
         });
+        com.example.app.Localisation.FontSupport.applyTo(dialog.getDialogPane());
         dialog.showAndWait();
     }
 

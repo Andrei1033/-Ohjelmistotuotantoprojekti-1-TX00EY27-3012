@@ -58,6 +58,7 @@ public class TeacherCoursePage extends BorderPane {
         this.studentList = new VBox(10);
 
         setStyle("-fx-background-color: white;");
+        FontSupport.applyTo(this);
 
         // RTL-tuki arabialle
         if (FontSupport.isRtl()) {
@@ -389,6 +390,7 @@ public class TeacherCoursePage extends BorderPane {
                 saveButton.setDisable(newVal == null || newVal.trim().isEmpty())
         );
 
+        com.example.app.Localisation.FontSupport.applyTo(dialog.getDialogPane());
         Optional<ButtonType> result = dialog.showAndWait();
 
         if (result.isEmpty() || result.get() != saveButtonType) {
@@ -420,6 +422,7 @@ public class TeacherCoursePage extends BorderPane {
             alert.setTitle(i18n.t("app.error"));
             alert.setHeaderText(null);
             alert.setContentText(i18n.t("system.error"));
+            com.example.app.Localisation.FontSupport.applyTo(alert.getDialogPane());
             alert.showAndWait();
         }
     }
@@ -589,6 +592,7 @@ public class TeacherCoursePage extends BorderPane {
         dialog.getDialogPane().setContent(layout);
         dialog.getDialogPane().getButtonTypes().addAll(cancelBtn, saveBtn);
 
+        com.example.app.Localisation.FontSupport.applyTo(dialog.getDialogPane());
         dialog.showAndWait().ifPresent(btn -> {
             if (btn == saveBtn) {
                 List<Integer> ids = selectedMap.entrySet().stream()

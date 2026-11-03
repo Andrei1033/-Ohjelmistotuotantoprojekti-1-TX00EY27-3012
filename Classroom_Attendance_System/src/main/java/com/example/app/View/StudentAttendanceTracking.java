@@ -52,6 +52,7 @@ public class StudentAttendanceTracking extends BorderPane {
         }
 
         setStyle("-fx-background-color: white;");
+        FontSupport.applyTo(this);
 
         // =========================
         // SIDEBAR

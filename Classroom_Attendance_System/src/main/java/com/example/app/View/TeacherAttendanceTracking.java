@@ -104,6 +104,7 @@ public class TeacherAttendanceTracking {
 
         loadStudents();
 
+        FontSupport.applyTo(root);
         Scene scene = new Scene(root, 1000, 650);
         stage.setScene(scene);
         stage.show();
@@ -591,6 +592,7 @@ public class TeacherAttendanceTracking {
         alert.setTitle(i18n.t("system.error"));
         alert.setHeaderText(null);
         alert.setContentText(message);
+        com.example.app.Localisation.FontSupport.applyTo(alert.getDialogPane());
         alert.showAndWait();
     }
 

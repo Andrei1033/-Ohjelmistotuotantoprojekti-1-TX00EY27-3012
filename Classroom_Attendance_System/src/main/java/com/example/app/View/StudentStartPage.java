@@ -61,6 +61,7 @@ public class StudentStartPage extends BorderPane {
         }
 
         setStyle("-fx-background-color: white;");
+        FontSupport.applyTo(this);
 
         // =========================
         // SIDEBAR

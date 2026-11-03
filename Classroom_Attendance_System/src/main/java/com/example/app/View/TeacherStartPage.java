@@ -48,6 +48,7 @@ public class TeacherStartPage extends BorderPane {
         this.teacherController = teacherController;
 
         setStyle("-fx-background-color: white;");
+        FontSupport.applyTo(this);
 
         // =========================================================
         // SIDEBAR
@@ -289,6 +290,7 @@ public class TeacherStartPage extends BorderPane {
                         createButton.setDisable(
                                 newV == null || newV.trim().isEmpty()));
 
+        com.example.app.Localisation.FontSupport.applyTo(dialog.getDialogPane());
         Optional<ButtonType> result = dialog.showAndWait();
 
         if (result.isEmpty() || result.get() != createButtonType) return;
@@ -308,6 +310,7 @@ public class TeacherStartPage extends BorderPane {
             alert.setTitle(i18n.t("app.error"));
             alert.setHeaderText(null);
             alert.setContentText(i18n.t("system.error"));
+            com.example.app.Localisation.FontSupport.applyTo(alert.getDialogPane());
             alert.showAndWait();
         }
     }

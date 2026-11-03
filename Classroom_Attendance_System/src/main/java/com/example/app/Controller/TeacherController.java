@@ -220,6 +220,7 @@ public class TeacherController {
         alert.setTitle("Virhe");
         alert.setHeaderText(null);
         alert.setContentText(message);
+        com.example.app.Localisation.FontSupport.applyTo(alert.getDialogPane());
         alert.showAndWait();
     }
 }
