@@ -15,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javafx.version>21.0.4</javafx.version>
         <junit.version>5.11.4</junit.version>
+        <sonar.projectKey>Classroom-Attendance</sonar.projectKey>
     </properties>
 
     <dependencies>
@@ -109,6 +110,12 @@
                 <configuration>
                     <release>21</release>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>5.3.0.6276</version>
             </plugin>
 
             <!-- Surefire: тесты -->
