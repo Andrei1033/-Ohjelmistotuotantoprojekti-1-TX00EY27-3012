@@ -6,6 +6,7 @@ import com.example.app.Model.LoginComponents.User;
 import com.example.app.View.Admin;
 import javafx.scene.Parent;
 
+import java.util.Locale;
 import java.util.Optional;
 
 public class LoginController {
@@ -27,6 +28,17 @@ public class LoginController {
             return Optional.empty();
         }
         return userDao.findByEmailAndPassword(email.trim(), password);
+    }
+
+    public boolean savePreferredLanguage(User user, String languageCode) {
+        if (user == null || user.getId() <= 0) {
+            return false;
+        }
+        if (languageCode == null || languageCode.isBlank()) {
+            return false;
+        }
+
+        return userDao.updatePreferredLanguage(user.getId(), languageCode.trim().toLowerCase(Locale.ROOT));
     }
 
     public Parent getStartPageFor(User user, Runnable onLogout) {

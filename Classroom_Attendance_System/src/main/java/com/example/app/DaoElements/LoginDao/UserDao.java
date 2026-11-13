@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Optional;
 
 public class UserDao {
@@ -128,6 +129,26 @@ public class UserDao {
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Tietokantavirhe salasanan päivityksessä: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updatePreferredLanguage(int userId, String languageCode) {
+        if (languageCode == null || languageCode.isBlank()) {
+            return false;
+        }
+
+        String sql = "UPDATE users SET preferred_language = ? WHERE user_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, languageCode.trim().toLowerCase(Locale.ROOT));
+            stmt.setInt(2, userId);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Tietokantavirhe kielen tallennuksessa: " + e.getMessage());
             return false;
         }
     }

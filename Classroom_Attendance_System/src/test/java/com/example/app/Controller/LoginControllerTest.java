@@ -109,6 +109,17 @@ class LoginControllerTest {
         verify(userDao).findByEmailAndPassword("user@example.com", "wrongpass");
     }
 
+    @Test
+    void savePreferredLanguage_shouldPersistSelectedLanguage() {
+        when(mockUser.getId()).thenReturn(42);
+        when(userDao.updatePreferredLanguage(42, "ar")).thenReturn(true);
+
+        boolean result = loginController.savePreferredLanguage(mockUser, "AR");
+
+        assertTrue(result);
+        verify(userDao).updatePreferredLanguage(42, "ar");
+    }
+
     // ==================== getStartPageFor() tests ====================
 
     @Test

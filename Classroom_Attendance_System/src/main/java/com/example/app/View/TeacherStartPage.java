@@ -259,8 +259,11 @@ public class TeacherStartPage extends BorderPane {
         ButtonType createButtonType = new ButtonType(
                 i18n.t("app.save"), ButtonBar.ButtonData.OK_DONE);
 
+        ButtonType cancelButtonType = new ButtonType(
+                i18n.t("app.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+
         dialog.getDialogPane().getButtonTypes().addAll(
-                createButtonType, ButtonType.CANCEL);
+                createButtonType, cancelButtonType);
 
         TextField nameField = new TextField();
         nameField.setPromptText(i18n.t("course.name"));

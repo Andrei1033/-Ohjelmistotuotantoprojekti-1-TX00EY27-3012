@@ -1,6 +1,7 @@
 package com.example.app;
 
 import com.example.app.Controller.LoginController;
+import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.View.Login;
 import javafx.application.Application;
@@ -38,6 +39,7 @@ public class App extends Application {
             }
 
             User user = userOptional.get();
+            loginController.savePreferredLanguage(user, i18n.getCurrentLang().code());
             Parent page = loginController.getStartPageFor(user, this::showLogin);
 
             if (primaryStage.getScene() != null) {
