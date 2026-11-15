@@ -10,17 +10,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.util.StringConverter;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -63,19 +58,7 @@ public class StudentAttendanceTracking extends BorderPane {
         sidebar.setPadding(new Insets(12, 14, 10, 10));
         sidebar.setStyle("-fx-background-color: " + NAVY + ";");
 
-        HBox brand = new HBox(9);
-        brand.setAlignment(Pos.CENTER_LEFT);
-        brand.setPadding(new Insets(0, 0, 20, 0));
-
-        Circle logo = new Circle(13, Color.web("#536FA4"));
-        Label lo = new Label(i18n.t("app.logo"));
-        lo.setTextFill(Color.WHITE);
-        lo.setFont(Font.font("System", FontWeight.BOLD, 12));
-        StackPane logoBox = new StackPane(logo, lo);
-        logoBox.setPrefSize(20, 20);
-
-        Label brandText = text(i18n.t("app.attendance"), 13, FontWeight.BOLD, "#FFFFFF");
-        brand.getChildren().addAll(logoBox, brandText);
+        HBox brand = ViewSupport.createBrandBox();
 
         Button back = new Button("<   " + i18n.t("app.back"));
         back.setPrefHeight(22);
@@ -90,72 +73,18 @@ public class StudentAttendanceTracking extends BorderPane {
         Region sideSpacer = new Region();
         VBox.setVgrow(sideSpacer, Priority.ALWAYS);
 
-        // ========== LANGUAGE SWITCHER ==========
-        ComboBox<i18n.Lang> langCombo = new ComboBox<>();
-        langCombo.getItems().addAll(i18n.SUPPORTED);
-        langCombo.setValue(i18n.getCurrentLang());
-        langCombo.setMaxWidth(Double.MAX_VALUE);
-        langCombo.setFocusTraversable(false);
-        langCombo.setCursor(Cursor.HAND);
-        langCombo.setStyle(
-                "-fx-background-color: " + BLUE + "; "
-                        + "-fx-background-radius: 4; "
-                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
-                        + "-fx-font-size: 11px; "
-                        + "-fx-text-fill: white;"
-        );
-
-        langCombo.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(i18n.Lang lang) {
-                return lang == null ? "" : lang.label();
-            }
-
-            @Override
-            public i18n.Lang fromString(String string) {
-                return null;
-            }
-        });
-
-
-
-
-
-        FontSupport.configureLanguageSelector(langCombo);
-        langCombo.setOnAction(e -> {
-            i18n.Lang selected = langCombo.getValue();
-            if (selected == null || selected.equals(i18n.getCurrentLang())) return;
-            i18n.setLanguage(selected);
-
+        javafx.scene.control.ComboBox<i18n.Lang> langCombo = ViewSupport.createLanguageSelector(() -> {
             if (onProfileUpdated != null) {
                 onProfileUpdated.run();
             }
         });
-
         VBox langBox = new VBox(4, langCombo);
         langBox.setPadding(new Insets(0, 0, 12, 0));
 
-        HBox user = new HBox(7);
-        user.setAlignment(Pos.CENTER_LEFT);
-        user.setCursor(Cursor.HAND);
-
-        Circle avatar = new Circle(15, Color.web("#536FA4"));
-        Label initials = text(initialsOf(currentUser), 12, FontWeight.BOLD, "#FFFFFF");
-        StackPane avatarBox = new StackPane(avatar, initials);
-        avatarBox.setPrefSize(20, 20);
-        avatarBox.setCursor(Cursor.HAND);
-
-        VBox userInfo = new VBox(0,
-                text(currentUser != null ? currentUser.getFullName() : "", 12, FontWeight.BOLD, "#FFFFFF"),
-                text(roleLabel(currentUser), 11, FontWeight.NORMAL, "#A9B0BD")
-        );
-        user.getChildren().addAll(avatarBox, userInfo);
-
-        // Avaa "Omat tiedot" -ikkunan kun sivupalkin käyttäjärivistä klikataan.
-        user.setOnMouseClicked((MouseEvent event) -> {
-            if (event.getButton().name().equals("PRIMARY")) {
-                ProfileEditWindow.show(user.getScene().getWindow(), currentUser, onProfileUpdated);
-                event.consume();
+        HBox user = ViewSupport.createUserRow(currentUser, roleLabel(currentUser), event -> {
+            javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+            if (source.getScene() != null) {
+                ProfileEditWindow.show(source.getScene().getWindow(), currentUser, onProfileUpdated);
             }
         });
 
@@ -238,20 +167,7 @@ public class StudentAttendanceTracking extends BorderPane {
         // LOGOUT
         // =========================
 
-        Button logout = new Button(i18n.t("app.logout"));
-
-        logout.setStyle(
-                "-fx-background-color: " + BLUE + "; " +
-                        "-fx-text-fill: white; " +
-                        "-fx-font-family: '" + FontSupport.pickFamily() + "'; " +
-                        "-fx-font-size: 11px; " +
-                        "-fx-font-weight: bold; " +
-                        "-fx-background-radius: 4; " +
-                        "-fx-padding: 6 14;"
-        );
-
-        logout.setCursor(Cursor.HAND);
-        logout.setOnAction(e -> onLogout.run());
+        Button logout = ViewSupport.createLogoutButton(onLogout);
 
         VBox logoutBox = new VBox(logout);
         logoutBox.setPadding(new Insets(14, 0, 0, 0));
@@ -396,24 +312,11 @@ public class StudentAttendanceTracking extends BorderPane {
     }
 
     private static String initialsOf(User user) {
-        if (user == null) return "";
-        String first = (user.getFirstName() == null || user.getFirstName().isEmpty())
-                ? "" : user.getFirstName().substring(0, 1);
-        String last = (user.getLastName() == null || user.getLastName().isEmpty())
-                ? "" : user.getLastName().substring(0, 1);
-        return (first + last).toUpperCase();
+        return ViewSupport.initialsOf(user);
     }
 
     private static String roleLabel(User user) {
-        if (user == null || user.getRole() == null) return "";
-        switch (user.getRole().name()) {
-            case "TEACHER":
-                return i18n.t("app.teacher");
-            case "ADMIN":
-                return i18n.t("app.admin");
-            default:
-                return i18n.t("app.student");
-        }
+        return ViewSupport.roleLabel(user);
     }
 
     private static String capitalize(String s) {
@@ -421,23 +324,10 @@ public class StudentAttendanceTracking extends BorderPane {
     }
 
     private static Label text(String value, double size, FontWeight weight, String color) {
-        Label label = new Label(value);
-        label.setStyle(
-                "-fx-font-family: '" + FontSupport.pickFamily() + "'; " +
-                        "-fx-font-size: " + size + "px; " +
-                        "-fx-font-weight: " + weightToCss(weight) + "; " +
-                        "-fx-text-fill: " + color + ";"
-        );
-        return label;
+        return ViewSupport.text(value, size, weight, color);
     }
 
     private static String weightToCss(FontWeight weight) {
-        switch (weight) {
-            case BOLD:
-                return "bold";
-            case NORMAL:
-            default:
-                return "normal";
-        }
+        return ViewSupport.weightToCss(weight);
     }
 }

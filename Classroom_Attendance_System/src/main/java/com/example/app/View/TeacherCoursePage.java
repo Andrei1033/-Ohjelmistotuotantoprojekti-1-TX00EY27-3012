@@ -12,18 +12,13 @@ import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.FontWeight;
-import javafx.util.StringConverter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,20 +71,8 @@ public class TeacherCoursePage extends BorderPane {
         sidebar.setPadding(new Insets(12, 14, 10, 10));
         sidebar.setStyle("-fx-background-color: " + NAVY + ";");
 
-        // LOGO
-        HBox brand = new HBox(9);
-        brand.setAlignment(Pos.CENTER_LEFT);
-        brand.setPadding(new Insets(0, 0, 20, 0));
+        HBox brand = ViewSupport.createBrandBox();
 
-        Circle logo = new Circle(13, Color.web("#536FA4"));
-        Label lo = text(i18n.t("app.logo"), 12, FontWeight.BOLD, "#FFFFFF");
-        StackPane logoBox = new StackPane(logo, lo);
-        logoBox.setPrefSize(20, 20);
-
-        Label brandText = text(i18n.t("app.attendance"), 13, FontWeight.BOLD, "#FFFFFF");
-        brand.getChildren().addAll(logoBox, brandText);
-
-        // BACK BUTTON ("Omat kurssit")
         Button back = new Button("•   " + i18n.t("teacher.myCourses"));
         back.setPrefHeight(22);
         back.setMaxWidth(Double.MAX_VALUE);
@@ -110,76 +93,18 @@ public class TeacherCoursePage extends BorderPane {
         Region sideSpacer = new Region();
         VBox.setVgrow(sideSpacer, Priority.ALWAYS);
 
-        // ========== LANGUAGE SWITCHER ==========
-        ComboBox<i18n.Lang> langCombo = new ComboBox<>();
-        langCombo.getItems().addAll(i18n.SUPPORTED);
-        langCombo.setValue(i18n.getCurrentLang());
-        langCombo.setMaxWidth(Double.MAX_VALUE);
-        langCombo.setFocusTraversable(false);
-        langCombo.setCursor(Cursor.HAND);
-        langCombo.setStyle(
-                "-fx-background-color: " + BLUE + "; "
-                        + "-fx-background-radius: 4; "
-                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
-                        + "-fx-font-size: 11px; "
-                        + "-fx-text-fill: white;"
-        );
-
-        // Show only the label text in the button area, not "Lang[code=..., label=...]"
-        langCombo.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(i18n.Lang lang) {
-                return lang == null ? "" : lang.label();
-            }
-
-            @Override
-            public i18n.Lang fromString(String string) {
-                return null;
-            }
-        });
-
-        FontSupport.configureLanguageSelector(langCombo);
-        langCombo.setOnAction(e -> {
-            i18n.Lang selected = langCombo.getValue();
-            if (selected == null || selected.equals(i18n.getCurrentLang())) return;
-            i18n.setLanguage(selected);
-            // Reload the page so all labels pick up the new translations
+        javafx.scene.control.ComboBox<i18n.Lang> langCombo = ViewSupport.createLanguageSelector(() -> {
             if (teacherController != null) {
                 teacherController.openCoursePage(courseId);
             }
         });
-
         VBox langBox = new VBox(4, langCombo);
         langBox.setPadding(new Insets(0, 0, 12, 0));
 
-        // USER ROW
-        HBox user = new HBox(7);
-        user.setAlignment(Pos.CENTER_LEFT);
-        user.setCursor(Cursor.HAND);
-
-        Circle avatar = new Circle(15, Color.web("#536FA4"));
-        Label initials = text(initialsOf(currentUser), 12, FontWeight.BOLD, "#FFFFFF");
-        StackPane avatarBox = new StackPane(avatar, initials);
-        avatarBox.setPrefSize(20, 20);
-        avatarBox.setCursor(Cursor.HAND);
-
-        VBox userInfo = new VBox(0,
-                text(currentUser != null ? currentUser.getFullName() : i18n.t("app.teacher"),
-                        12, FontWeight.BOLD, "#FFFFFF"),
-                text(i18n.t("app.teacher"), 11, FontWeight.NORMAL, "#A9B0BD")
-        );
-        user.getChildren().addAll(avatarBox, userInfo);
-
-        user.setOnMouseClicked((MouseEvent event) -> {
-            if (event.getButton().name().equals("PRIMARY")
-                    && user.getScene() != null
-                    && currentUser != null) {
-                ProfileEditWindow.show(
-                        user.getScene().getWindow(),
-                        currentUser,
-                        onProfileUpdated
-                );
-                event.consume();
+        HBox user = ViewSupport.createUserRow(currentUser, i18n.t("app.teacher"), event -> {
+            javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+            if (source.getScene() != null && currentUser != null) {
+                ProfileEditWindow.show(source.getScene().getWindow(), currentUser, onProfileUpdated);
             }
         });
 
@@ -299,19 +224,7 @@ public class TeacherCoursePage extends BorderPane {
         );
 
         // LOGOUT
-        Button logout = new Button(i18n.t("app.logout"));
-        logout.setCursor(Cursor.HAND);
-        logout.setStyle(
-                "-fx-background-color: " + BLUE + "; "
-                        + "-fx-text-fill: white; "
-                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
-                        + "-fx-font-size: 11px; "
-                        + "-fx-font-weight: bold; "
-                        + "-fx-background-radius: 4; "
-                        + "-fx-padding: 6 14;");
-        logout.setOnAction(e -> {
-            if (onLogout != null) onLogout.run();
-        });
+        Button logout = ViewSupport.createLogoutButton(onLogout);
 
         VBox logoutBox = new VBox(logout);
         logoutBox.setPadding(new Insets(14, 0, 0, 0));
@@ -613,33 +526,14 @@ public class TeacherCoursePage extends BorderPane {
     // =============================================================
 
     private static String initialsOf(User user) {
-        if (user == null) {
-            return "";
-        }
-        String first = (user.getFirstName() == null || user.getFirstName().isEmpty())
-                ? "" : user.getFirstName().substring(0, 1);
-        String last = (user.getLastName() == null || user.getLastName().isEmpty())
-                ? "" : user.getLastName().substring(0, 1);
-        return (first + last).toUpperCase();
+        return ViewSupport.initialsOf(user);
     }
 
     private static Label text(String value, double size, FontWeight weight, String color) {
-        Label label = new Label(value);
-        label.setStyle(
-                "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
-                        + "-fx-font-size: " + size + "px; "
-                        + "-fx-font-weight: " + weightToCss(weight) + "; "
-                        + "-fx-text-fill: " + color + ";");
-        return label;
+        return ViewSupport.text(value, size, weight, color);
     }
 
     private static String weightToCss(FontWeight weight) {
-        switch (weight) {
-            case BOLD:
-                return "bold";
-            case NORMAL:
-            default:
-                return "normal";
-        }
+        return ViewSupport.weightToCss(weight);
     }
 }

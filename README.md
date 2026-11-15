@@ -327,6 +327,8 @@ SQL verification results.
 
 - SonarQube detected a potentially unsafe regular expression in EMAIL_PATTERN that could cause excessive backtracking and potentially lead to a stack overflow with large or malicious inputs. To resolve this issue, possessive quantifiers (++) were introduced to prevent unnecessary backtracking during email validation. This improves the regex performance and protects against potential Regular Expression Denial of Service (ReDoS) attacks. The existing email validation functionality remains unchanged.
 
+- Code duplication was reduced from 8.8% to 2.4% (below the 3.0% quality gate)
+
 
 
 ## Team
