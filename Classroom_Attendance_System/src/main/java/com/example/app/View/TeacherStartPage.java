@@ -9,19 +9,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.FontWeight;
-import javafx.util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,100 +56,35 @@ public class TeacherStartPage extends BorderPane {
         sidebar.setPadding(new Insets(12, 14, 10, 10));
         sidebar.setStyle("-fx-background-color: " + NAVY + ";");
 
-        // LOGO
-        HBox brand = new HBox(9);
-        brand.setAlignment(Pos.CENTER_LEFT);
-        brand.setPadding(new Insets(0, 0, 20, 0));
-
-        Circle logo = new Circle(13, Color.web("#536FA4"));
-        Label lo = text(i18n.t("app.logo"), 12, FontWeight.BOLD, "#FFFFFF");
-        StackPane logoBox = new StackPane(logo, lo);
-        logoBox.setPrefSize(20, 20);
-
-        Label brandText = text(i18n.t("app.attendance"), 13, FontWeight.BOLD, "#FFFFFF");
-        brand.getChildren().addAll(logoBox, brandText);
+        HBox brand = ViewSupport.createBrandBox();
 
         Region sideSpacer = new Region();
         VBox.setVgrow(sideSpacer, Priority.ALWAYS);
 
-        // ========== LANGUAGE SWITCHER ==========
-        ComboBox<i18n.Lang> langCombo = new ComboBox<>();
-        langCombo.getItems().addAll(i18n.SUPPORTED);
-        langCombo.setValue(i18n.getCurrentLang());
-        langCombo.setMaxWidth(Double.MAX_VALUE);
-        langCombo.setFocusTraversable(false);
-        langCombo.setCursor(Cursor.HAND);
-        langCombo.setStyle(
-                "-fx-background-color: " + BLUE + "; "
-                        + "-fx-background-radius: 4; "
-                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
-                        + "-fx-font-size: 11px; "
-                        + "-fx-text-fill: white;"
-        );
-
-        // Show only the label text in the button area, not "Lang[code=..., label=...]"
-        langCombo.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(i18n.Lang lang) {
-                return lang == null ? "" : lang.label();
-            }
-
-            @Override
-            public i18n.Lang fromString(String string) {
-                return null;
-            }
-        });
-
-        FontSupport.configureLanguageSelector(langCombo);
-        langCombo.setOnAction(e -> {
-            i18n.Lang selected = langCombo.getValue();
-            if (selected == null || selected.equals(i18n.getCurrentLang())) return;
-            i18n.setLanguage(selected);
-            // Reload the page so all labels pick up the new translations
+        javafx.scene.control.ComboBox<i18n.Lang> langCombo = ViewSupport.createLanguageSelector(() -> {
             if (teacherController != null) {
                 teacherController.showStartPage();
             }
         });
-
         VBox langBox = new VBox(4, langCombo);
         langBox.setPadding(new Insets(0, 0, 12, 0));
 
-        // USER ROW
-        HBox user = new HBox(7);
-        user.setAlignment(Pos.CENTER_LEFT);
-        user.setCursor(Cursor.HAND);
-
-        Circle avatar = new Circle(15, Color.web("#536FA4"));
-        Label initials = text(
-                getTeacherInitials(teacher), 12, FontWeight.BOLD, "#FFFFFF");
-
-        StackPane avatarBox = new StackPane(avatar, initials);
-        avatarBox.setPrefSize(20, 20);
-        avatarBox.setCursor(Cursor.HAND);
-
-        VBox userInfo = new VBox(
-                0,
-                text(getTeacherName(teacher), 12, FontWeight.BOLD, "#FFFFFF"),
-                text(i18n.t("app.teacher"), 11, FontWeight.NORMAL, "#A9B0BD")
-        );
-
-        user.getChildren().addAll(avatarBox, userInfo);
-
-        user.setOnMouseClicked((MouseEvent event) -> {
-            if (event.getButton().name().equals("PRIMARY")
-                    && user.getScene() != null) {
-                ProfileEditWindow.show(
-                        user.getScene().getWindow(),
-                        teacher,
-                        () -> {
-                            if (teacherController != null) {
-                                teacherController.showStartPage();
-                            }
+        HBox user = ViewSupport.createUserRow(
+                teacher instanceof com.example.app.Model.LoginComponents.User ? (com.example.app.Model.LoginComponents.User) teacher : null,
+                i18n.t("app.teacher"),
+                event -> {
+                    if (teacherController != null) {
+                        javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+                        if (source.getScene() != null) {
+                            ProfileEditWindow.show(
+                                    source.getScene().getWindow(),
+                                    teacher,
+                                    () -> teacherController.showStartPage()
+                            );
                         }
-                );
-                event.consume();
-            }
-        });
+                    }
+                }
+        );
 
         sidebar.getChildren().addAll(brand, sideSpacer, langBox, user);
 
@@ -223,21 +153,7 @@ public class TeacherStartPage extends BorderPane {
         }
 
         // LOGOUT
-        Button logout = new Button(i18n.t("app.logout"));  // "Kirjaudu ulos" – lisää avain alla
-        // Parempi: käytä i18n.t("app.logout")
-        logout.setCursor(Cursor.HAND);
-        logout.setStyle(
-                "-fx-background-color: " + BLUE + "; "
-                        + "-fx-text-fill: white; "
-                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
-                        + "-fx-font-size: 11px; "
-                        + "-fx-font-weight: bold; "
-                        + "-fx-background-radius: 4; "
-                        + "-fx-padding: 6 14;"
-        );
-        logout.setOnAction(e -> {
-            if (onLogout != null) onLogout.run();
-        });
+        Button logout = ViewSupport.createLogoutButton(onLogout);
 
         VBox logoutBox = new VBox(logout);
         logoutBox.setPadding(new Insets(14, 0, 0, 0));
@@ -460,15 +376,7 @@ public class TeacherStartPage extends BorderPane {
     }
 
     private String getTeacherInitials(Teacher teacher) {
-        if (teacher == null) return "";
-        String firstName = teacher.getFirstName();
-        String lastName = teacher.getLastName();
-        StringBuilder initials = new StringBuilder();
-        if (firstName != null && !firstName.isBlank())
-            initials.append(firstName.trim().charAt(0));
-        if (lastName != null && !lastName.isBlank())
-            initials.append(lastName.trim().charAt(0));
-        return initials.toString().toUpperCase();
+        return ViewSupport.initialsOf(teacher);
     }
 
     private static Label text(
@@ -477,20 +385,10 @@ public class TeacherStartPage extends BorderPane {
             FontWeight weight,
             String color
     ) {
-        Label label = new Label(value);
-        label.setStyle(
-                "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
-                        + "-fx-font-size: " + size + "px; "
-                        + "-fx-font-weight: " + weightToCss(weight) + "; "
-                        + "-fx-text-fill: " + color + ";");
-        return label;
+        return ViewSupport.text(value, size, weight, color);
     }
 
     private static String weightToCss(FontWeight weight) {
-        switch (weight) {
-            case BOLD: return "bold";
-            case NORMAL:
-            default: return "normal";
-        }
+        return ViewSupport.weightToCss(weight);
     }
 }

@@ -9,13 +9,15 @@ import com.example.app.Model.StudentComponents.AttendanceRecord;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AttendanceDao {
 
-    /**
-     * Opiskelija:
-     * Hakee kaikki kurssin oppitunnit ja opiskelijan läsnäolot.
-     */
+    private static final Logger logger = Logger.getLogger(AttendanceDao.class.getName());
+
+    // Student:
+    // Retrieves all lessons of a course and the student's attendance records.
     public List<AttendanceRecord> getAttendanceForStudentAndCourse(
             int studentId,
             int courseId
@@ -55,16 +57,14 @@ public class AttendanceDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error retrieving attendance records for student and course", e);
         }
 
         return records;
     }
 
-    /**
-     * Opettaja:
-     * Hakee kaikki tietyn kurssin opiskelijat.
-     */
+    // Teacher:
+    // Retrieves all students of a given course.
     public List<User> getStudentsForCourse(int courseId) {
 
         List<User> students = new ArrayList<>();
@@ -96,25 +96,20 @@ public class AttendanceDao {
             }
 
         } catch (SQLException e) {
-            System.err.println(
-                    "Virhe haettaessa kurssin opiskelijoita: "
-                            + e.getMessage()
-            );
+            logger.log(Level.SEVERE, "Error retrieving students for course", e);
         }
 
         return students;
     }
 
 
-    /**
-     * Opettaja:
-     * Tallentaa opiskelijan läsnäolon.
-     *
-     * Jos opiskelijalle on jo olemassa merkintä kyseiselle oppitunnille,
-     * päivitetään vanha merkintä.
-     *
-     * Jos merkintää ei ole, luodaan uusi.
-     */
+    // Teacher:
+    // Saves a student's attendance.
+    //
+    // If a record already exists for the student for the given lesson,
+    // the existing record is updated.
+    //
+    // If no record exists, a new one is created.
     public boolean saveAttendance(
             int lessonId,
             int studentId,
@@ -137,7 +132,7 @@ public class AttendanceDao {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
 
-            // Tarkistetaan löytyykö merkintä jo.
+            // Check whether a record already exists.
             try (PreparedStatement check = conn.prepareStatement(checkSql)) {
 
                 check.setInt(1, lessonId);
@@ -178,20 +173,15 @@ public class AttendanceDao {
 
         } catch (SQLException e) {
 
-            System.err.println(
-                    "Virhe tallennettaessa läsnäoloa: "
-                            + e.getMessage()
-            );
+            logger.log(Level.SEVERE, "Error saving attendance", e);
 
             return false;
         }
     }
 
 
-    /**
-     * Lopettaa oppitunnin.
-     * Asettaa lessons.end_time-arvon nykyiseen aikaan.
-     */
+    // Ends a lesson.
+    // Sets lessons.end_time to the current time.
     public boolean endLesson(int lessonId) {
 
         String sql =
@@ -213,13 +203,9 @@ public class AttendanceDao {
 
         } catch (SQLException e) {
 
-            System.err.println(
-                    "Virhe lopetettaessa oppituntia: "
-                            + e.getMessage()
-            );
+            logger.log(Level.SEVERE, "Error ending lesson", e);
 
             return false;
         }
     }
 }
-

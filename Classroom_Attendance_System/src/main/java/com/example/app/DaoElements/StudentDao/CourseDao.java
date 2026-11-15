@@ -13,14 +13,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CourseDao {
 
-    /**
-     * Retrieves all courses to which the given student is linked
-     * via the course_students join table, as well as the number of
-     * lessons for each course.
-     */
+    private static final Logger logger = Logger.getLogger(CourseDao.class.getName());
+
+
+     //Retrieves all courses to which the given student is linked
+     //via the course_students join table, as well as the number of
+     //lessons for each course.
+
     public List<Course> getCoursesForStudent(int studentId) {
         List<Course> courses = new ArrayList<>();
 
@@ -53,7 +57,7 @@ public class CourseDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error retrieving courses for student", e);
         }
 
         return courses;
@@ -75,7 +79,7 @@ public class CourseDao {
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error adding course", e);
             return false;
         }
     }
@@ -99,7 +103,7 @@ public class CourseDao {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.err.println("Virhe kurssin päivittämisessä: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error updating course", e);
             return false;
         }
     }
@@ -128,7 +132,7 @@ public class CourseDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error retrieving courses for teacher", e);
         }
 
         return courses;
@@ -154,7 +158,7 @@ public class CourseDao {
             }
 
         } catch (SQLException e) {
-            System.err.println("Virhe opiskelijoiden hakemisessa: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error retrieving students", e);
         }
 
         return students;
@@ -174,12 +178,12 @@ public class CourseDao {
             return affectedRows > 0;
 
         } catch (SQLException e) {
-            System.err.println("Virhe opiskelijan lisäämisessä kurssille: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error adding student to course", e);
             return false;
         }
     }
 
-    public List<User>getStudentsForCourse(int courseId) {
+    public List<User> getStudentsForCourse(int courseId) {
         List<User> students = new ArrayList<>();
         String sql = "SELECT u.user_id, u.first_name, u.last_name, u.email, u.role " +
                 "FROM users u " +
@@ -205,8 +209,7 @@ public class CourseDao {
             }
 
         } catch (SQLException e) {
-            System.err.println("Virhe haettaessa kurssin opiskelijoita: " + e.getMessage());
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error retrieving students for course", e);
         }
 
         return students;
@@ -214,8 +217,3 @@ public class CourseDao {
 
 
 }
-
-
-
-
-

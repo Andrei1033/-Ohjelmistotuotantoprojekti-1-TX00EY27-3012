@@ -7,12 +7,14 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class LessonDao {
+
+    private static final Logger logger = Logger.getLogger(LessonDao.class.getName());
+
     public List<Lesson> getLessonsByCourseById(int courseId) {
         List<Lesson> lessons = new ArrayList<>();
         String sql = "SELECT lesson_id, course_id, start_time, end_time " +
@@ -30,14 +32,14 @@ public class LessonDao {
                             rs.getInt("course_id"),
                             rs.getString("start_time"),
                             rs.getString("end_time"),
-                            "Oppitunti",
+                            "Lesson",
                             "upcoming"
                     );
                     lessons.add(lesson);
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Virhe haettaessa kurssia: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error retrieving lessons for course", e);
         }
         return lessons;
     }
@@ -59,12 +61,12 @@ public class LessonDao {
                         )
         ) {
 
-            java.time.LocalDateTime startTime =
+            LocalDateTime startTime =
                     LocalDateTime.now().withNano(0);
 
-            // Väliaikainen end_time.
-            // Todellinen lopetusaika asetetaan endLesson()-metodissa.
-            java.time.LocalDateTime endTime =
+            // Temporary end_time.
+            // The actual end time is set in the endLesson() method.
+            LocalDateTime endTime =
                     startTime.plusMinutes(1);
 
             stmt.setInt(1, courseId);
@@ -75,7 +77,7 @@ public class LessonDao {
 
             if (affected == 0) {
                 throw new SQLException(
-                        "Oppitunnin luonti epäonnistui."
+                        "Failed to create lesson."
                 );
             }
 
@@ -88,22 +90,8 @@ public class LessonDao {
 
         } catch (SQLException e) {
 
-            System.err.println(
-                    "Virhe aloitettaessa oppituntia:"
-            );
-
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error starting lesson", e);
         }
         return -1;
     }
 }
-
-
-
-
-
-
-
-
-
-
