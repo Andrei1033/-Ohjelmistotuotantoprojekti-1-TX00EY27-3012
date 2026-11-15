@@ -31,8 +31,20 @@ spec:
 
       containers:
         - name: classroom-attendance
-          image: __IMAGE__
+          image: khaledmarai/classroom_system:latest
           imagePullPolicy: IfNotPresent
+          env:
+            - name: DATABASE_CONFIG_FILE
+              value: /config/database.properties
+          startupProbe:
+            exec:
+              command: ["pgrep", "-f", "^java .*app.jar$"]
+            periodSeconds: 5
+            failureThreshold: 24
+          readinessProbe:
+            exec:
+              command: ["pgrep", "-f", "^java .*app.jar$"]
+            periodSeconds: 10
 
           resources:
             requests:

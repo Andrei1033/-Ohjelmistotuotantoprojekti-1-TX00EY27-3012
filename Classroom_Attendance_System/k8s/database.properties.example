@@ -1,0 +1,3 @@
+db.url=jdbc:mariadb://mysql.metropolia.fi:3306/andreits
+db.user=andreits
+db.password=1234

@@ -134,7 +134,7 @@ JavaFX and starts it with Xvfb. From `Classroom_Attendance_System`:
 
 ```bash
 docker build -t classroom-attendance-system .
-docker run --rm classroom-attendance-system
+docker run --rm --mount type=bind,source="${PWD}/src/main/resources/database.properties",target=/config/database.properties,readonly -e DATABASE_CONFIG_FILE=/config/database.properties classroom-attendance-system
 ```
 
 For the published image:
@@ -143,6 +143,72 @@ For the published image:
 docker pull andrei1033/classroom_attendance_system:latest
 docker run --rm andrei1033/classroom_attendance_system:latest
 ```
+
+Published images may predate the fixes here; build locally for the Kubernetes
+workflow below. The local image excludes database credentials, so supply the
+configuration mount shown above. Docker runs the window on an invisible display.
+
+### Run with Kubernetes (local Minikube)
+
+Install Docker Desktop, Minikube and kubectl, and start Docker Desktop with
+Linux containers. Run these commands from `Classroom_Attendance_System`.
+The dedicated `classroom-local` cluster keeps this deployment separate from
+other Kubernetes environments.
+
+```bash
+minikube start -p classroom-local --driver=docker
+docker build -t classroom-attendance-system:k8s-v1 .
+minikube -p classroom-local image load classroom-attendance-system:k8s-v1
+kubectl --context=classroom-local apply -f k8s/namespace.yaml
+```
+
+Copy `k8s/database.properties.example` to `k8s/database.properties.local`
+and enter the MariaDB URL, username and password. This local file is ignored
+by Git. The database must be reachable from inside the cluster (including
+VPN routing if needed); `localhost` refers to the pod, not your computer.
+Initialize the database with the SQL schema linked above if necessary.
+
+```bash
+kubectl --context=classroom-local -n classroom create secret generic classroom-db --from-file=database.properties=k8s/database.properties.local
+kubectl kustomize k8s
+kubectl --context=classroom-local apply -k k8s
+kubectl --context=classroom-local -n classroom set image deployment/classroom-attendance classroom-attendance=classroom-attendance-system:k8s-v1
+kubectl --context=classroom-local -n classroom rollout status deployment/classroom-attendance --timeout=180s
+kubectl --context=classroom-local -n classroom get pods
+kubectl --context=classroom-local -n classroom logs deployment/classroom-attendance
+```
+
+The manifest retains the published `khaledmarai/classroom_system:latest`
+image; the `set image` command selects the freshly built local version with
+the container and external configuration fixes. Reapply that command after
+`apply -k`. For a shared cluster, publish the corrected image with a versioned
+tag and update the deployment's image before applying it. For subsequent local
+builds, use a new tag (for example `k8s-v2`) in the build, image-load and set-image
+commands to avoid reusing a cached image.
+
+The Secret is mounted at `/config/database.properties`, and
+`DATABASE_CONFIG_FILE` tells the application to read it instead of the bundled
+configuration. Never commit credentials. After changing the Secret, restart
+the application:
+
+```bash
+kubectl --context=classroom-local -n classroom rollout restart deployment/classroom-attendance
+kubectl --context=classroom-local -n classroom rollout status deployment/classroom-attendance --timeout=180s
+```
+
+This is a **JavaFX desktop application**. Xvfb provides an invisible display
+inside the container; Kubernetes does not expose an interactive window or web
+page. There is no HTTP server, so no Service or Ingress is needed. Use the local
+desktop launch instructions for interactive use. Startup and readiness probes
+check that the Java process exists; they do not verify database connectivity or
+successful login. Tini starts the virtual-display launcher as a child process so
+Xvfb can signal that its display is ready.
+
+For startup errors, use `kubectl --context=classroom-local -n classroom describe
+pods` and the logs command above. To remove the application, run
+`kubectl --context=classroom-local delete namespace classroom` (this also deletes
+its Secret). To remove the entire dedicated local cluster, run
+`minikube delete -p classroom-local`.
 
 ## Features
 

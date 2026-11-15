@@ -13,8 +13,10 @@ public class DatabaseConnection {
     private static final Properties properties = new Properties();
 
     static {
-        try (InputStream input = DatabaseConnection.class.getClassLoader()
-                .getResourceAsStream("database.properties")) {
+        String configFile = System.getenv("DATABASE_CONFIG_FILE");
+        try (InputStream input = configFile == null || configFile.isBlank()
+                ? DatabaseConnection.class.getClassLoader().getResourceAsStream("database.properties")
+                : new FileInputStream(configFile)) {
 
             if (input == null) {
                 throw new RuntimeException("Tiedostoa 'database.properties' ei löytynyt resources-kansiosta!");

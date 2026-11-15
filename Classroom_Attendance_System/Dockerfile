@@ -21,6 +21,8 @@ WORKDIR /app
 # JavaFX в headless-контейнере требует виртуальный дисплей и GTK
 RUN apt-get update && apt-get install -y --no-install-recommends \
         xvfb \
+        xauth \
+        tini \
         libgl1 \
         libgtk-3-0 \
         libxtst6 \
@@ -37,4 +39,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=build /app/target/Classroom_Attendance_System.jar app.jar
 
 # Запуск через виртуальный дисплей (Xvfb)
-CMD ["java", "-Dprism.order=sw", "-jar", "app.jar"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["xvfb-run", "-a", "java", "-Dprism.order=sw", "-jar", "app.jar"]
