@@ -7,12 +7,10 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="language changer in all pages">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="added a thing that colecting a language sttatistics">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LoginDao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LoginDao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/LoginControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/LoginControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/AdminDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/AdminDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +23,7 @@
     </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="76" />
+    <option name="cachedIndexableFilesCount" value="77" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -292,15 +290,11 @@
       <workItem from="1793688282914" duration="5204000" />
       <workItem from="1793698709973" duration="2970000" />
       <workItem from="1793720480000" duration="10000" />
-      <workItem from="1794591562316" duration="3318000" />
-    </task>
-    <task id="LOCAL-00004" summary="Kaaviot">
-      <option name="closed" value="true" />
-      <created>1788173410503</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1788173410503</updated>
+      <workItem from="1794591562316" duration="3883000" />
+      <workItem from="1794657109173" duration="3281000" />
+      <workItem from="1794679894905" duration="7000" />
+      <workItem from="1794683492768" duration="751000" />
+      <workItem from="1794745991083" duration="1333000" />
     </task>
     <task id="LOCAL-00005" summary="refactor">
       <option name="closed" value="true" />
@@ -686,7 +680,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793385728106</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="added a thing that colecting a language sttatistics">
+      <option name="closed" value="true" />
+      <created>1794595113460</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1794595113460</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -730,7 +732,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="aaaaaaaa" />
     <MESSAGE value="bbbbb" />
     <MESSAGE value="ccc" />
     <MESSAGE value="xui" />
@@ -755,7 +756,8 @@
     <MESSAGE value="first step to localize" />
     <MESSAGE value="login page localized" />
     <MESSAGE value="all teacher pages localized" />
-    <option name="LAST_COMMIT_MESSAGE" value="all teacher pages localized" />
+    <MESSAGE value="added a thing that colecting a language sttatistics" />
+    <option name="LAST_COMMIT_MESSAGE" value="added a thing that colecting a language sttatistics" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -12,8 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDao {
-    private static final String DEFAULT_PASSWORD_HASH =
-            "$2a$10$GKAKW1uUj7MTPQAIGeeqJelwEoG1bf77W.oA36IYLw1ZWeu/gGV.S";
+    private static String getDefaultPasswordHash() {
+        String hash = System.getenv("DEFAULT_PASSWORD_HASH");
+        if (hash == null || hash.isBlank()) {
+            throw new IllegalStateException(
+                    "Environment variable DEFAULT_PASSWORD_HASH is not set");
+        }
+        return hash;
+    }
 
     private static final String FIND_ALL_USERS = """
             SELECT u.user_id, u.first_name, u.last_name, u.email, u.role,
@@ -61,7 +67,7 @@ public class AdminDao {
     }
 
     public Admin insert(String name, String email, Role role, String courses) {
-        return insert(name, email, role, courses, DEFAULT_PASSWORD_HASH);
+        return insert(name, email, role, courses, getDefaultPasswordHash());
     }
 
     public Admin insert(String name, String email, Role role, String courses, String password) {

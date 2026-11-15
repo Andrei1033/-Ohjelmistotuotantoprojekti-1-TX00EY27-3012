@@ -317,6 +317,11 @@ Additional project material is available in [`Documents`](Documents),
 including the project plan, UI and data-model designs, use-case diagram and
 SQL verification results.
 
+## Fixing and reporting issues
+
+"Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved."
+
+
 ## Team
 
 **SEP1 Team 3**
