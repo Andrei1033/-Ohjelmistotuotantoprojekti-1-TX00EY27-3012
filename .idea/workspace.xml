@@ -7,9 +7,12 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="added a thing that colecting a language sttatistics">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="&quot;Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved.&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/AdminDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/AdminDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LessonDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LessonDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/AttendanceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/AttendanceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/CourseDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -294,15 +297,7 @@
       <workItem from="1794657109173" duration="3281000" />
       <workItem from="1794679894905" duration="7000" />
       <workItem from="1794683492768" duration="751000" />
-      <workItem from="1794745991083" duration="1333000" />
-    </task>
-    <task id="LOCAL-00005" summary="refactor">
-      <option name="closed" value="true" />
-      <created>1788174444629</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1788174444629</updated>
+      <workItem from="1794745991083" duration="7151000" />
     </task>
     <task id="LOCAL-00006" summary="view, controller, model kansio lisäty">
       <option name="closed" value="true" />
@@ -688,7 +683,15 @@
       <option name="project" value="LOCAL" />
       <updated>1794595113460</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="&quot;Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved.&quot;">
+      <option name="closed" value="true" />
+      <created>1794747350842</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1794747350842</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -732,7 +735,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="bbbbb" />
     <MESSAGE value="ccc" />
     <MESSAGE value="xui" />
     <MESSAGE value="c" />
@@ -757,7 +759,8 @@
     <MESSAGE value="login page localized" />
     <MESSAGE value="all teacher pages localized" />
     <MESSAGE value="added a thing that colecting a language sttatistics" />
-    <option name="LAST_COMMIT_MESSAGE" value="added a thing that colecting a language sttatistics" />
+    <MESSAGE value="&quot;Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved.&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved.&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

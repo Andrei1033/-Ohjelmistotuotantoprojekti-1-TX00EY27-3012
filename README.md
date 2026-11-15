@@ -319,7 +319,14 @@ SQL verification results.
 
 ## Fixing and reporting issues
 
-"Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved."
+- Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved.
+
+- Issue: SonarQube flagged `e.printStackTrace()` and `System.err.println(...)` in the DAO layer (rule S4507). These write raw exception details to the console, may leak internal information in production, and cannot be centrally controlled.
+
+- Fix Applied: Replaced all `printStackTrace()` and `System.err.println(...)` calls with `java.util.logging.Logger` in `LessonDao`, `AttendanceDao`, and `CourseDao`. Each class now has a `private static final Logger` field, and exceptions are logged at `Level.SEVERE` with the full exception object.
+
+- SonarQube detected a potentially unsafe regular expression in EMAIL_PATTERN that could cause excessive backtracking and potentially lead to a stack overflow with large or malicious inputs. To resolve this issue, possessive quantifiers (++) were introduced to prevent unnecessary backtracking during email validation. This improves the regex performance and protects against potential Regular Expression Denial of Service (ReDoS) attacks. The existing email validation functionality remains unchanged.
+
 
 
 ## Team

@@ -22,10 +22,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.util.regex.Pattern;
+
 
 public final class ProfileEditWindow {
 
     private static final String BLUE = "#344A70";
+
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[^@\\s]++@[^@\\s.]++(?:\\.[^@\\s.]++)++$");
+
 
     private ProfileEditWindow() {
     }
@@ -102,7 +108,7 @@ public final class ProfileEditWindow {
                 return;
             }
 
-            if (!email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+            if (email.length() > 254 || !EMAIL_PATTERN.matcher(email).matches()) {
                 errorLabel.setText(i18n.t("profile.invalidEmail"));
                 return;
             }
