@@ -1,19 +1,18 @@
 package com.example.app.DaoElements.StudentDao;
 
-import com.example.app.Database.DatabaseConnection;
-import com.example.app.Model.StudentComponents.Course;
-import com.example.app.Model.TeacherCourse;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-
-import java.sql.*;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.*;
+
+import com.example.app.Database.DatabaseConnection;
+import com.example.app.Model.StudentComponents.Course;
+import com.example.app.Model.TeacherCourse;
+import java.sql.*;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 class CourseDaoTest {
 
@@ -37,8 +36,7 @@ class CourseDaoTest {
     // ---------------------------------------------------------------
 
     @Test
-    void getCoursesForStudent_returnsCoursesWithLessonCount()
-            throws Exception {
+    void getCoursesForStudent_returnsCoursesWithLessonCount() throws Exception {
 
         when(conn.prepareStatement(anyString())).thenReturn(ps);
         when(ps.executeQuery()).thenReturn(rs);
@@ -51,8 +49,7 @@ class CourseDaoTest {
         when(rs.getInt("teacher_id")).thenReturn(50, 51);
         when(rs.getInt("lesson_count")).thenReturn(3, 0);
 
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
@@ -84,8 +81,7 @@ class CourseDaoTest {
         when(ps.executeQuery()).thenReturn(rs);
         when(rs.next()).thenReturn(false);
 
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
@@ -95,11 +91,9 @@ class CourseDaoTest {
 
     @Test
     void getCoursesForStudent_returnsEmptyOnSqlException() throws Exception {
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
-            mocked.when(DatabaseConnection::getConnection)
-                    .thenThrow(new SQLException("DB down"));
+            mocked.when(DatabaseConnection::getConnection).thenThrow(new SQLException("DB down"));
 
             assertTrue(dao.getCoursesForStudent(42).isEmpty());
         }
@@ -111,12 +105,10 @@ class CourseDaoTest {
 
     @Test
     void addCourse_insertsAndReturnsTrue() throws Exception {
-        when(conn.prepareStatement(contains("INSERT INTO courses")))
-                .thenReturn(ps);
+        when(conn.prepareStatement(contains("INSERT INTO courses"))).thenReturn(ps);
         when(ps.executeUpdate()).thenReturn(1);
 
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
@@ -125,7 +117,7 @@ class CourseDaoTest {
             assertTrue(result);
 
             verify(ps).setString(1, "Java Basics"); // trimmed
-            verify(ps).setString(2, "CS101");       // code
+            verify(ps).setString(2, "CS101"); // code
             verify(ps).setInt(3, 50);
             verify(ps).executeUpdate();
         }
@@ -133,12 +125,10 @@ class CourseDaoTest {
 
     @Test
     void addCourse_trimsWhitespaceInName() throws Exception {
-        when(conn.prepareStatement(contains("INSERT INTO courses")))
-                .thenReturn(ps);
+        when(conn.prepareStatement(contains("INSERT INTO courses"))).thenReturn(ps);
         when(ps.executeUpdate()).thenReturn(1);
 
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
@@ -150,8 +140,7 @@ class CourseDaoTest {
 
     @Test
     void addCourse_returnsFalseForNullName() {
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             assertFalse(dao.addCourse(null, "CS101", 50));
 
@@ -180,8 +169,7 @@ class CourseDaoTest {
         when(conn.prepareStatement(anyString())).thenReturn(ps);
         when(ps.executeUpdate()).thenReturn(0);
 
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
@@ -191,11 +179,9 @@ class CourseDaoTest {
 
     @Test
     void addCourse_returnsFalseOnSqlException() throws Exception {
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
-            mocked.when(DatabaseConnection::getConnection)
-                    .thenThrow(new SQLException("fail"));
+            mocked.when(DatabaseConnection::getConnection).thenThrow(new SQLException("fail"));
 
             assertFalse(dao.addCourse("Java", "CS101", 50));
         }
@@ -215,8 +201,7 @@ class CourseDaoTest {
         when(rs.getString("name")).thenReturn("Java", "Databases");
         when(rs.getInt("teacher_id")).thenReturn(50, 50);
 
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
@@ -226,7 +211,7 @@ class CourseDaoTest {
 
             TeacherCourse first = courses.get(0);
             assertEquals(10, first.getCourseid());
-            assertEquals("Java", first.getCoursename());  // adjust if getter differs
+            assertEquals("Java", first.getCoursename()); // adjust if getter differs
             assertEquals(50, first.getTeacherid());
 
             TeacherCourse second = courses.get(1);
@@ -240,8 +225,7 @@ class CourseDaoTest {
 
     @Test
     void getCoursesByTeacherId_returnsEmptyForInvalidTeacherId() {
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             assertTrue(dao.getCoursesByTeacherId(0).isEmpty());
             assertTrue(dao.getCoursesByTeacherId(-5).isEmpty());
@@ -255,8 +239,7 @@ class CourseDaoTest {
         when(ps.executeQuery()).thenReturn(rs);
         when(rs.next()).thenReturn(false);
 
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
             mocked.when(DatabaseConnection::getConnection).thenReturn(conn);
 
@@ -266,11 +249,9 @@ class CourseDaoTest {
 
     @Test
     void getCoursesByTeacherId_returnsEmptyOnSqlException() throws Exception {
-        try (MockedStatic<DatabaseConnection> mocked =
-                     mockStatic(DatabaseConnection.class)) {
+        try (MockedStatic<DatabaseConnection> mocked = mockStatic(DatabaseConnection.class)) {
 
-            mocked.when(DatabaseConnection::getConnection)
-                    .thenThrow(new SQLException("boom"));
+            mocked.when(DatabaseConnection::getConnection).thenThrow(new SQLException("boom"));
 
             assertTrue(dao.getCoursesByTeacherId(50).isEmpty());
         }

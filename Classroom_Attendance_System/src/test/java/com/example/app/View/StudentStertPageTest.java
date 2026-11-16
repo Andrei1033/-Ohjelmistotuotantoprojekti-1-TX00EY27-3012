@@ -1,9 +1,14 @@
 package com.example.app.View;
 
-import com.example.app.Model.LoginComponents.User;
-import com.example.app.Model.LoginComponents.Role;
-import com.example.app.Model.StudentComponents.Course;
+import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.app.Model.LoginComponents.Role;
+import com.example.app.Model.LoginComponents.User;
+import com.example.app.Model.StudentComponents.Course;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,19 +22,11 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class StudentStartPageTest extends ApplicationTest {
 
@@ -47,13 +44,7 @@ class StudentStartPageTest extends ApplicationTest {
 
     @BeforeEach
     void setUp() {
-        testUser = new User(
-                1,
-                "Etunimi",
-                "Sukunimi",
-                "etunimi.sukunimi@example.com",
-                Role.STUDENT
-        );
+        testUser = new User(1, "Etunimi", "Sukunimi", "etunimi.sukunimi@example.com", Role.STUDENT);
 
         Course c1 = new Course(1, "TX00CV45", "Ohjelmoinnin perusteet", 10);
         c1.setLessonCount(5);
@@ -70,13 +61,8 @@ class StudentStartPageTest extends ApplicationTest {
         loggedOut = new AtomicBoolean(false);
 
         interact(() -> {
-            view = new StudentStartPage(
-                    testUser,
-                    testCourses,
-                    selectedCourse::set,
-                    () -> loggedOut.set(true),
-                    () -> { /* no-op profile update */ }
-            );
+            view = new StudentStartPage(testUser, testCourses, selectedCourse::set, () -> loggedOut.set(true), () -> {
+                /* no-op profile update */ });
 
             stage = new Stage();
             stage.setScene(new Scene(view, 800, 600));
@@ -94,7 +80,7 @@ class StudentStartPageTest extends ApplicationTest {
         });
     }
 
-// Helpers
+    // Helpers
 
     private List<Node> allNodes(Parent root) {
         return new ArrayList<>(root.lookupAll("*"));
@@ -116,16 +102,12 @@ class StudentStartPageTest extends ApplicationTest {
     }
 
     private Label labelWithText(String text) {
-        return findAllByType(view, Label.class).stream()
-                .filter(label -> text.equals(label.getText()))
-                .findFirst()
+        return findAllByType(view, Label.class).stream().filter(label -> text.equals(label.getText())).findFirst()
                 .orElseThrow(() -> new AssertionError("Label not found: " + text));
     }
 
     private Button buttonWithText(String text) {
-        return findAllByType(view, Button.class).stream()
-                .filter(button -> text.equals(button.getText()))
-                .findFirst()
+        return findAllByType(view, Button.class).stream().filter(button -> text.equals(button.getText())).findFirst()
                 .orElseThrow(() -> new AssertionError("Button not found: " + text));
     }
 
@@ -149,9 +131,7 @@ class StudentStartPageTest extends ApplicationTest {
     private List<VBox> findCourseCards() {
         List<VBox> cards = new ArrayList<>();
         for (VBox v : findAllByType(view, VBox.class)) {
-            long labelCount = v.getChildren().stream()
-                    .filter(c -> c instanceof Label)
-                    .count();
+            long labelCount = v.getChildren().stream().filter(c -> c instanceof Label).count();
             if (labelCount == 3 && v.getChildren().size() == 3) {
                 cards.add(v);
             }
@@ -161,20 +141,13 @@ class StudentStartPageTest extends ApplicationTest {
 
     private void clickCard(VBox card) {
         interact(() -> {
-            MouseEvent event = new MouseEvent(
-                    MouseEvent.MOUSE_CLICKED,
-                    0, 0, 0, 0,
-                    MouseButton.PRIMARY,
-                    1,
-                    false, false, false, false,
-                    true, false, false, false, false, false,
-                    null
-            );
+            MouseEvent event = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1, false,
+                    false, false, false, true, false, false, false, false, false, null);
             card.fireEvent(event);
         });
     }
 
-// Structure
+    // Structure
 
     @Test
     @DisplayName("View is a BorderPane with sidebar on left and content in center")
@@ -190,7 +163,7 @@ class StudentStartPageTest extends ApplicationTest {
         assertEquals(158, sidebar().getPrefWidth(), 0.01);
     }
 
-// Sidebar
+    // Sidebar
 
     @Test
     @DisplayName("Sidebar contains brand label 'Läsnäolo'")
@@ -204,15 +177,11 @@ class StudentStartPageTest extends ApplicationTest {
         List<Circle> circles = findAllByType(view, Circle.class);
 
         // Logo circle + avatar circle
-        assertEquals(2, circles.size(),
-                "Expected exactly two circles (logo + avatar)");
+        assertEquals(2, circles.size(), "Expected exactly two circles (logo + avatar)");
 
         // Current implementation uses r=13 for the logo and r=15 for the avatar.
         // Sorted ascending so this assertion is deterministic.
-        List<Double> radii = circles.stream()
-                .map(Circle::getRadius)
-                .sorted()
-                .toList();
+        List<Double> radii = circles.stream().map(Circle::getRadius).sorted().toList();
 
         assertEquals(13.0, radii.get(0), 0.01);
         assertEquals(15.0, radii.get(1), 0.01);
@@ -238,9 +207,9 @@ class StudentStartPageTest extends ApplicationTest {
     }
 
     // NOTE: Back-button tests were removed — the new StudentStartPage
-    // does not create a "<   Takaisin" button.
+    // does not create a "< Takaisin" button.
 
-// Content
+    // Content
 
     @Test
     @DisplayName("Content heading 'Omat kurssini' is present")
@@ -257,19 +226,13 @@ class StudentStartPageTest extends ApplicationTest {
     @Test
     @DisplayName("Empty course list shows placeholder text and no FlowPane")
     void testEmptyCourseList() {
-        interact(() -> view = new StudentStartPage(
-                testUser,
-                List.of(),
-                selectedCourse::set,
-                () -> { },
-                () -> { }
-        ));
+        interact(() -> view = new StudentStartPage(testUser, List.of(), selectedCourse::set, () -> {
+        }, () -> {
+        }));
 
         assertNotNull(labelWithText("Sinulla ei ole vielä kursseja."));
-        assertTrue(findAllByType(view, FlowPane.class).isEmpty(),
-                "No FlowPane should exist for empty course list");
-        assertTrue(findAllByType(view, ScrollPane.class).isEmpty(),
-                "No ScrollPane should exist for empty course list");
+        assertTrue(findAllByType(view, FlowPane.class).isEmpty(), "No FlowPane should exist for empty course list");
+        assertTrue(findAllByType(view, ScrollPane.class).isEmpty(), "No ScrollPane should exist for empty course list");
     }
 
     @Test
@@ -301,16 +264,13 @@ class StudentStartPageTest extends ApplicationTest {
 
         for (int i = 0; i < cards.size(); i++) {
             Course expected = testCourses.get(i);
-            List<Label> labels = cards.get(i).getChildren().stream()
-                    .filter(n -> n instanceof Label)
-                    .map(n -> (Label) n)
+            List<Label> labels = cards.get(i).getChildren().stream().filter(n -> n instanceof Label).map(n -> (Label) n)
                     .toList();
 
             assertEquals(3, labels.size());
             assertEquals(expected.getCode(), labels.get(0).getText(), "Course code");
             assertEquals(expected.getName(), labels.get(1).getText(), "Course name");
-            assertEquals(expected.getLessonCount() + " oppituntia",
-                    labels.get(2).getText(), "Hours");
+            assertEquals(expected.getLessonCount() + " oppituntia", labels.get(2).getText(), "Hours");
         }
     }
 
@@ -334,7 +294,7 @@ class StudentStartPageTest extends ApplicationTest {
         assertTrue(style.contains("-fx-background-radius"), "Badge rounding missing");
     }
 
-// Interaction
+    // Interaction
 
     @Test
     @DisplayName("Clicking a course card triggers onCourseSelected with that course")
@@ -342,13 +302,11 @@ class StudentStartPageTest extends ApplicationTest {
         List<VBox> cards = findCourseCards();
         VBox firstCard = cards.get(0);
 
-        assertNull(selectedCourse.get(),
-                "No course should be selected before clicking");
+        assertNull(selectedCourse.get(), "No course should be selected before clicking");
 
         clickCard(firstCard);
 
-        assertEquals(testCourses.get(0), selectedCourse.get(),
-                "Clicking first card should select the first course");
+        assertEquals(testCourses.get(0), selectedCourse.get(), "Clicking first card should select the first course");
     }
 
     @Test
@@ -359,7 +317,7 @@ class StudentStartPageTest extends ApplicationTest {
         assertEquals(testCourses.get(1), selectedCourse.get());
     }
 
-// Logout
+    // Logout
 
     @Test
     @DisplayName("Logout button exists and triggers callback when fired")
@@ -370,25 +328,22 @@ class StudentStartPageTest extends ApplicationTest {
 
         interact(logout::fire);
 
-        assertTrue(loggedOut.get(),
-                "onLogout callback should have been invoked");
+        assertTrue(loggedOut.get(), "onLogout callback should have been invoked");
     }
 
     @Test
     @DisplayName("Logout callback does not fire on construction")
     void testNoPrematureLogout() {
-        assertFalse(loggedOut.get(),
-                "onLogout should not be invoked during construction");
+        assertFalse(loggedOut.get(), "onLogout should not be invoked during construction");
     }
 
-// Invariants
+    // Invariants
 
     @Test
     @DisplayName("Only one 'Kirjaudu ulos' button exists")
     void testSingleLogoutButton() {
         long count = findAllByType(view, Button.class).stream()
-                .filter(button -> "Kirjaudu ulos".equals(button.getText()))
-                .count();
+                .filter(button -> "Kirjaudu ulos".equals(button.getText())).count();
         assertEquals(1, count);
     }
 

@@ -4,10 +4,9 @@ import com.example.app.DaoElements.LoginDao.UserDao;
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.View.Admin;
-import javafx.scene.Parent;
-
 import java.util.Locale;
 import java.util.Optional;
+import javafx.scene.Parent;
 
 public class LoginController {
     private final UserDao userDao;

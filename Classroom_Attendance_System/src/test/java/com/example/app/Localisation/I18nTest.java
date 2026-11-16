@@ -1,17 +1,16 @@
 package com.example.app.Localisation;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import javafx.beans.value.ChangeListener;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.Locale;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class I18nTest {
     private i18n.Lang originalLanguage;
@@ -28,16 +27,10 @@ class I18nTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "fi, fi-FI, Kirjaudu ulos",
-            "en, en-EN, Log out",
-            "ru, ru-RU, Выйти",
-            "ja, ja-JP, ログアウト",
-            "ar, ar-AR, تسجيل الخروج"
-    })
+    @CsvSource({"fi, fi-FI, Kirjaudu ulos", "en, en-EN, Log out", "ru, ru-RU, Выйти", "ja, ja-JP, ログアウト",
+            "ar, ar-AR, تسجيل الخروج"})
     void supportedLanguageLoadsItsTranslationAndLocale(String code, String tag, String logout) {
-        i18n.Lang language = i18n.SUPPORTED.stream()
-                .filter(lang -> lang.code().equals(code)).findFirst().orElseThrow();
+        i18n.Lang language = i18n.SUPPORTED.stream().filter(lang -> lang.code().equals(code)).findFirst().orElseThrow();
 
         i18n.setLanguage(language);
 
@@ -76,7 +69,8 @@ class I18nTest {
             i18n.setLanguage(new i18n.Lang("fi", "Suomi"));
             assertEquals(0, changes.get());
             assertEquals("Kirjaudu ulos", i18n.t("app.logout"));
-        } finally {
+        }
+        finally {
             i18n.currentLangProperty().removeListener(listener);
         }
     }
@@ -84,21 +78,21 @@ class I18nTest {
     @Test
     void listenerSeesNewTranslationWhenLanguageChanges() {
         AtomicReference<String> observedTranslation = new AtomicReference<>();
-        ChangeListener<i18n.Lang> listener = (property, oldValue, newValue) ->
-                observedTranslation.set(i18n.t("app.logout"));
+        ChangeListener<i18n.Lang> listener = (property, oldValue, newValue) -> observedTranslation
+                .set(i18n.t("app.logout"));
         i18n.currentLangProperty().addListener(listener);
         try {
             i18n.setLanguage(i18n.EN);
             assertEquals("Log out", observedTranslation.get());
-        } finally {
+        }
+        finally {
             i18n.currentLangProperty().removeListener(listener);
         }
     }
 
     @Test
     void unsupportedLanguageThrowsWithoutChangingState() {
-        assertThrows(IllegalArgumentException.class,
-                () -> i18n.setLanguage(new i18n.Lang("de", "Deutsch")));
+        assertThrows(IllegalArgumentException.class, () -> i18n.setLanguage(new i18n.Lang("de", "Deutsch")));
         assertEquals(i18n.FI, i18n.getCurrentLang());
         assertEquals(Locale.forLanguageTag("fi-FI"), i18n.getLocale());
         assertEquals("Kirjaudu ulos", i18n.t("app.logout"));

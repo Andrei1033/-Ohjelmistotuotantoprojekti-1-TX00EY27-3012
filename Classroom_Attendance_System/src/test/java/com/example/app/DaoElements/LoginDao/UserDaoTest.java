@@ -1,8 +1,17 @@
 package com.example.app.DaoElements.LoginDao;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
 import com.example.app.Database.DatabaseConnection;
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,22 +19,15 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class UserDaoTest {
 
-    @Mock private Connection conn;
-    @Mock private PreparedStatement stmt;
-    @Mock private ResultSet rs;
+    @Mock
+    private Connection conn;
+    @Mock
+    private PreparedStatement stmt;
+    @Mock
+    private ResultSet rs;
 
     private UserDao userDao;
 
@@ -52,8 +54,7 @@ class UserDaoTest {
             when(rs.getString("email")).thenReturn("matti@example.com");
             when(rs.getString("role")).thenReturn("ADMIN");
 
-            Optional<User> result = userDao.findByEmailAndPassword(
-                    "matti@example.com", "salasana");
+            Optional<User> result = userDao.findByEmailAndPassword("matti@example.com", "salasana");
 
             assertTrue(result.isPresent());
             User u = result.get();

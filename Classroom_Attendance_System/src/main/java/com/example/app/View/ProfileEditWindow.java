@@ -4,7 +4,7 @@ import com.example.app.DaoElements.LoginDao.UserDao;
 import com.example.app.Localisation.FontSupport;
 import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
-
+import java.util.regex.Pattern;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
@@ -22,16 +22,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.util.regex.Pattern;
-
-
 public final class ProfileEditWindow {
 
     private static final String BLUE = "#344A70";
 
-    private static final Pattern EMAIL_PATTERN =
-            Pattern.compile("^[^@\\s]++@[^@\\s.]++(?:\\.[^@\\s.]++)++$");
-
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[^@\\s]++@[^@\\s.]++(?:\\.[^@\\s.]++)++$");
 
     private ProfileEditWindow() {
     }
@@ -40,10 +35,7 @@ public final class ProfileEditWindow {
         show(owner, currentUser, onProfileUpdated, new UserDao());
     }
 
-    public static void show(Window owner,
-                            User currentUser,
-                            Runnable onProfileUpdated,
-                            UserDao userDao) {
+    public static void show(Window owner, User currentUser, Runnable onProfileUpdated, UserDao userDao) {
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -65,11 +57,11 @@ public final class ProfileEditWindow {
         Label heading = label(i18n.t("profile.title"), 15, true, "#171717");
 
         TextField firstNameField = textField(currentUser.getFirstName());
-        TextField lastNameField  = textField(currentUser.getLastName());
-        TextField emailField     = textField(currentUser.getEmail());
+        TextField lastNameField = textField(currentUser.getLastName());
+        TextField emailField = textField(currentUser.getEmail());
 
         PasswordField currentPasswordField = passwordField();
-        PasswordField newPasswordField     = passwordField();
+        PasswordField newPasswordField = passwordField();
         PasswordField confirmPasswordField = passwordField();
 
         Label errorLabel = label("", 10, false, "#C44D3A");
@@ -100,8 +92,8 @@ public final class ProfileEditWindow {
             errorLabel.setText("");
 
             String firstName = safeTrim(firstNameField.getText());
-            String lastName  = safeTrim(lastNameField.getText());
-            String email     = safeTrim(emailField.getText());
+            String lastName = safeTrim(lastNameField.getText());
+            String email = safeTrim(emailField.getText());
 
             if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
                 errorLabel.setText(i18n.t("profile.requiredFields"));
@@ -113,18 +105,17 @@ public final class ProfileEditWindow {
                 return;
             }
 
-            if (!email.equalsIgnoreCase(currentUser.getEmail())
-                    && userDao.isEmailTaken(email, currentUser.getId())) {
+            if (!email.equalsIgnoreCase(currentUser.getEmail()) && userDao.isEmailTaken(email, currentUser.getId())) {
                 errorLabel.setText(i18n.t("profile.emailTaken"));
                 return;
             }
 
             String currentPassword = currentPasswordField.getText();
-            String newPassword     = newPasswordField.getText();
+            String newPassword = newPasswordField.getText();
             String confirmPassword = confirmPasswordField.getText();
 
-            boolean wantsPasswordChange =
-                    !isBlank(currentPassword) || !isBlank(newPassword) || !isBlank(confirmPassword);
+            boolean wantsPasswordChange = !isBlank(currentPassword) || !isBlank(newPassword)
+                    || !isBlank(confirmPassword);
 
             if (wantsPasswordChange) {
                 if (isBlank(currentPassword)) {
@@ -145,8 +136,7 @@ public final class ProfileEditWindow {
                 }
             }
 
-            boolean profileOk = userDao.updateProfile(
-                    currentUser.getId(), firstName, lastName, email);
+            boolean profileOk = userDao.updateProfile(currentUser.getId(), firstName, lastName, email);
 
             if (!profileOk) {
                 errorLabel.setText(i18n.t("profile.saveFailed"));
@@ -176,19 +166,14 @@ public final class ProfileEditWindow {
         buttons.setAlignment(Pos.CENTER_RIGHT);
         buttons.setPadding(new Insets(10, 0, 0, 0));
 
-        root.getChildren().addAll(
-                heading,
-                label(i18n.t("profile.firstName"), 10, true, "#555555"), firstNameField,
+        root.getChildren().addAll(heading, label(i18n.t("profile.firstName"), 10, true, "#555555"), firstNameField,
                 label(i18n.t("profile.lastName"), 10, true, "#555555"), lastNameField,
-                label(i18n.t("profile.email"), 10, true, "#555555"), emailField,
-                new Separator(),
+                label(i18n.t("profile.email"), 10, true, "#555555"), emailField, new Separator(),
                 label(i18n.t("profile.changePassword"), 10, true, "#555555"),
                 label(i18n.t("profile.currentPassword"), 9, false, "#858585"), currentPasswordField,
                 label(i18n.t("profile.newPassword"), 9, false, "#858585"), newPasswordField,
-                label(i18n.t("profile.confirmNewPassword"), 9, false, "#858585"), confirmPasswordField,
-                errorLabel,
-                buttons
-        );
+                label(i18n.t("profile.confirmNewPassword"), 9, false, "#858585"), confirmPasswordField, errorLabel,
+                buttons);
 
         FontSupport.applyTo(root);
         Scene scene = new Scene(root, 340, 580);
@@ -229,12 +214,8 @@ public final class ProfileEditWindow {
 
     private static void styleButton(Button button, String backgroundColor, String textColor) {
         button.setFont(FontSupport.font(11, FontWeight.BOLD));
-        button.setStyle(
-                "-fx-background-color: " + backgroundColor + "; " +
-                        "-fx-text-fill: " + textColor + "; " +
-                        "-fx-background-radius: 4; " +
-                        "-fx-padding: 6 14;"
-        );
+        button.setStyle("-fx-background-color: " + backgroundColor + "; " + "-fx-text-fill: " + textColor + "; "
+                + "-fx-background-radius: 4; " + "-fx-padding: 6 14;");
         button.setCursor(Cursor.HAND);
     }
 }

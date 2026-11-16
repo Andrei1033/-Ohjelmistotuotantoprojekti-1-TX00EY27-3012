@@ -1,13 +1,13 @@
 package com.example.app.Localisation;
 
+import java.util.List;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.util.List;
-
 public final class FontSupport {
 
-    private FontSupport() {}
+    private FontSupport() {
+    }
 
     /** Let controls, table cells and dialog buttons inherit the locale font. */
     public static void applyTo(javafx.scene.Parent root) {
@@ -34,8 +34,7 @@ public final class FontSupport {
                 super.updateItem(language, empty);
                 setText(empty || language == null ? "" : language.label());
                 setGraphic(null);
-                setStyle(empty || language == null ? ""
-                        : "-fx-font-family: '" + pickFamily(language) + "';");
+                setStyle(empty || language == null ? "" : "-fx-font-family: '" + pickFamily(language) + "';");
             }
         };
     }
@@ -44,28 +43,12 @@ public final class FontSupport {
         String lang = language.code();
 
         return switch (lang) {
-            case "ja" -> firstAvailable(
-                    "Noto Sans CJK JP",
-                    "Noto Sans JP",
-                    "Noto Sans CJK",
-                    "Yu Gothic UI",
-                    "Meiryo",
-                    "System"
-            );
+            case "ja" ->
+                firstAvailable("Noto Sans CJK JP", "Noto Sans JP", "Noto Sans CJK", "Yu Gothic UI", "Meiryo", "System");
 
-            case "ar" -> firstAvailable(
-                    "Noto Naskh Arabic",
-                    "Segoe UI",
-                    "Tahoma",
-                    "System"
-            );
+            case "ar" -> firstAvailable("Noto Naskh Arabic", "Segoe UI", "Tahoma", "System");
 
-            case "ru" -> firstAvailable(
-                    "Noto Sans",
-                    "Segoe UI",
-                    "Arial",
-                    "System"
-            );
+            case "ru" -> firstAvailable("Noto Sans", "Segoe UI", "Arial", "System");
 
             default -> "System";
         };

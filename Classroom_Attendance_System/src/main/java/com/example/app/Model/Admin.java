@@ -17,11 +17,21 @@ public class Admin {
         this.courses = requireText(courses, "courses");
     }
 
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public Role getRole() { return role; }
-    public String getCourses() { return courses; }
+    public int getId() {
+        return id;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public Role getRole() {
+        return role;
+    }
+    public String getCourses() {
+        return courses;
+    }
 
     public void update(String name, String email, Role role, String courses) {
         this.name = requireText(name, "name");

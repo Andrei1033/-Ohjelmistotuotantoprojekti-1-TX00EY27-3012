@@ -1,17 +1,17 @@
 package com.example.app.Model.LoginComponents;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class UserTest {
 
-    private static final int    ID        = 42;
-    private static final String FIRST     = "Matti";
-    private static final String LAST      = "Meikäläinen";
-    private static final String EMAIL     = "matti@example.com";
-    private static final Role   ROLE      = Role.ADMIN;
+    private static final int ID = 42;
+    private static final String FIRST = "Matti";
+    private static final String LAST = "Meikäläinen";
+    private static final String EMAIL = "matti@example.com";
+    private static final Role ROLE = Role.ADMIN;
 
     private User user;
 
@@ -26,11 +26,11 @@ class UserTest {
 
     @Test
     void constructor_storesAllFields() {
-        assertEquals(ID,    user.getId());
+        assertEquals(ID, user.getId());
         assertEquals(FIRST, user.getFirstName());
-        assertEquals(LAST,  user.getLastName());
+        assertEquals(LAST, user.getLastName());
         assertEquals(EMAIL, user.getEmail());
-        assertEquals(ROLE,  user.getRole());
+        assertEquals(ROLE, user.getRole());
     }
 
     @Test
@@ -89,7 +89,7 @@ class UserTest {
         user.setLastName("Virtanen");
         user.setEmail("maija@example.com");
 
-        assertEquals(ID,   user.getId());
+        assertEquals(ID, user.getId());
         assertEquals(ROLE, user.getRole());
     }
 
@@ -101,15 +101,15 @@ class UserTest {
     void toString_containsIdEmailAndRole() {
         String s = user.toString();
 
-        assertTrue(s.contains("id=42"),                 s);
+        assertTrue(s.contains("id=42"), s);
         assertTrue(s.contains("email='matti@example.com'"), s);
-        assertTrue(s.contains("role=ADMIN"),            s);
+        assertTrue(s.contains("role=ADMIN"), s);
     }
 
     @Test
     void toString_doesNotContainFirstNameOrLastName() {
         String s = user.toString();
-        assertFalse(s.contains("Matti"),       s);
+        assertFalse(s.contains("Matti"), s);
         assertFalse(s.contains("Meikäläinen"), s);
     }
 
@@ -124,7 +124,7 @@ class UserTest {
     void equals_isReferenceBased_byDefault() {
         User same = new User(ID, FIRST, LAST, EMAIL, ROLE);
 
-        assertEquals(user, user);            // same instance
-        assertNotEquals(user, same);         // different instance, same data
+        assertEquals(user, user); // same instance
+        assertNotEquals(user, same); // different instance, same data
     }
 }

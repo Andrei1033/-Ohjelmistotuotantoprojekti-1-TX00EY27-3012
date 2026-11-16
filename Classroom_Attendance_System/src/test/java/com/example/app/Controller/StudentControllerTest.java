@@ -1,16 +1,15 @@
 package com.example.app.Controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
-import javafx.application.Platform;
-import javafx.scene.Parent;
-import org.junit.jupiter.api.*;
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static org.junit.jupiter.api.Assertions.*;
+import javafx.application.Platform;
+import javafx.scene.Parent;
+import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StudentControllerTest {
@@ -20,7 +19,8 @@ class StudentControllerTest {
         CountDownLatch latch = new CountDownLatch(1);
         try {
             Platform.startup(latch::countDown);
-        } catch (IllegalStateException alreadyStarted) {
+        }
+        catch (IllegalStateException alreadyStarted) {
             latch.countDown(); // toolkit already up
         }
         assertTrue(latch.await(10, TimeUnit.SECONDS), "JavaFX failed to start");
@@ -36,16 +36,20 @@ class StudentControllerTest {
         CountDownLatch done = new CountDownLatch(1);
         Platform.runLater(() -> {
             try {
-                ref.set(new StudentController(user, () -> {}).getView());
-            } catch (Throwable t) {
+                ref.set(new StudentController(user, () -> {
+                }).getView());
+            }
+            catch (Throwable t) {
                 error.set(t);
-            } finally {
+            }
+            finally {
                 done.countDown();
             }
         });
 
         assertTrue(done.await(10, TimeUnit.SECONDS), "getView() timed out");
-        if (error.get() != null) fail("getView threw: " + error.get(), error.get());
+        if (error.get() != null)
+            fail("getView threw: " + error.get(), error.get());
         assertNotNull(ref.get());
     }
 }

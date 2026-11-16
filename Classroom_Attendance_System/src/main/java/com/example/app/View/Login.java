@@ -2,9 +2,9 @@ package com.example.app.View;
 
 import com.example.app.Localisation.FontSupport;
 import com.example.app.Localisation.i18n;
+import java.util.function.BiConsumer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -16,8 +16,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.StringConverter;
-
-import java.util.function.BiConsumer;
 
 public class Login extends BorderPane {
 
@@ -43,8 +41,14 @@ public class Login extends BorderPane {
         langBox.getItems().setAll(i18n.SUPPORTED);
         langBox.setValue(i18n.getCurrentLang());
         langBox.setConverter(new StringConverter<>() {
-            @Override public String toString(i18n.Lang l) { return l == null ? "" : l.label(); }
-            @Override public i18n.Lang fromString(String s) { return null; }
+            @Override
+            public String toString(i18n.Lang l) {
+                return l == null ? "" : l.label();
+            }
+            @Override
+            public i18n.Lang fromString(String s) {
+                return null;
+            }
         });
         FontSupport.configureLanguageSelector(langBox);
         langBox.setOnAction(e -> i18n.setLanguage(langBox.getValue()));
@@ -93,21 +97,14 @@ public class Login extends BorderPane {
         emailLabel = label("", 9, FontWeight.BOLD, MUTED);
         passLabel = label("", 9, FontWeight.BOLD, MUTED);
 
-        VBox form = new VBox(5,
-                emailLabel, email,
-                passLabel, password
-        );
+        VBox form = new VBox(5, emailLabel, email, passLabel, password);
 
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
         login = new Button();
         login.setPrefSize(196, 29);
-        login.setStyle(
-                "-fx-background-color: " + BLUE + ";" +
-                        "-fx-text-fill: white;" +
-                        "-fx-background-radius: 4;"
-        );
+        login.setStyle("-fx-background-color: " + BLUE + ";" + "-fx-text-fill: white;" + "-fx-background-radius: 4;");
         login.setOnAction(e -> onLoginAttempt.accept(email.getText(), password.getText()));
 
         forgot = label("", 9, FontWeight.BOLD, MUTED);
@@ -159,18 +156,12 @@ public class Login extends BorderPane {
         password.setFont(FontSupport.font(12, FontWeight.NORMAL));
 
         // Language dropdown
-        langBox.setStyle(
-                "-fx-font-family: '" + family + "';" +
-                        "-fx-font-size: 11px;" +
-                        "-fx-background-radius: 6;"
-        );
+        langBox.setStyle("-fx-font-family: '" + family + "';" + "-fx-font-size: 11px;" + "-fx-background-radius: 6;");
 
         // RTL support
-        setNodeOrientation(
-                FontSupport.isRtl()
-                        ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
-                        : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT
-        );
+        setNodeOrientation(FontSupport.isRtl()
+                ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
+                : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
     }
 
     private static void applyFont(Label l, double size, FontWeight weight) {
@@ -179,8 +170,7 @@ public class Login extends BorderPane {
 
     private static String fieldStyle() {
         return "-fx-background-color: white; -fx-border-color: #D7D7D7; "
-                + "-fx-border-radius: 12; -fx-background-radius: 12; "
-                + "-fx-font-size: 10px; -fx-font-weight: bold; "
+                + "-fx-border-radius: 12; -fx-background-radius: 12; " + "-fx-font-size: 10px; -fx-font-weight: bold; "
                 + "-fx-padding: 0 13px;";
     }
 

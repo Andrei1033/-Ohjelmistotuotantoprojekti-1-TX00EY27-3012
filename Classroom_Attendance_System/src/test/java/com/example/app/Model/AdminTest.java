@@ -1,17 +1,16 @@
 package com.example.app.Model;
 
-import com.example.app.Model.LoginComponents.Role;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import com.example.app.Model.LoginComponents.Role;
+import org.junit.jupiter.api.Test;
 
 public class AdminTest {
 
     @Test
     void createsAdminAndUpdatesItsDetails() {
-        Admin admin = new Admin(1, " Ada Lovelace ", " ada@example.com ",
-                Role.ADMIN, "Mathematics");
+        Admin admin = new Admin(1, " Ada Lovelace ", " ada@example.com ", Role.ADMIN, "Mathematics");
 
         assertEquals(1, admin.getId());
         assertEquals("Ada Lovelace", admin.getName());
@@ -29,11 +28,8 @@ public class AdminTest {
 
     @Test
     void rejectsEmptyRequiredFields() {
-        assertThrows(IllegalArgumentException.class,
-                () -> new Admin(1, "", "user@example.com", Role.STUDENT, "—"));
-        assertThrows(IllegalArgumentException.class,
-                () -> new Admin(1, "User", "", Role.STUDENT, "—"));
-        assertThrows(IllegalArgumentException.class,
-                () -> new Admin(1, "User", "user@example.com", Role.STUDENT, ""));
+        assertThrows(IllegalArgumentException.class, () -> new Admin(1, "", "user@example.com", Role.STUDENT, "—"));
+        assertThrows(IllegalArgumentException.class, () -> new Admin(1, "User", "", Role.STUDENT, "—"));
+        assertThrows(IllegalArgumentException.class, () -> new Admin(1, "User", "user@example.com", Role.STUDENT, ""));
     }
 }

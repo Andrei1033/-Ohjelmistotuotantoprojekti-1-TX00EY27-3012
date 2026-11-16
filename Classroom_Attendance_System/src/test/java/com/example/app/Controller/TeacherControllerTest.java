@@ -1,26 +1,25 @@
 package com.example.app.Controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
 import com.example.app.DaoElements.LessonDao;
 import com.example.app.DaoElements.StudentDao.AttendanceDao;
 import com.example.app.DaoElements.StudentDao.CourseDao;
 import com.example.app.Model.Lesson;
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
+import com.example.app.Model.StudentComponents.AttendanceRecord;
 import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
-import com.example.app.Model.StudentComponents.AttendanceRecord;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
-
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 class TeacherControllerTest {
 
@@ -40,7 +39,8 @@ class TeacherControllerTest {
     void setUp() {
         teacher = new Teacher(1, "Matti", "Meikäläinen", "matti@testi.fi");
         plainUser = new User(2, "Testi", "User", "testi@testi.fi", Role.TEACHER);
-        onLogout = () -> {};
+        onLogout = () -> {
+        };
 
         courseDaoMock = mockConstruction(CourseDao.class);
         attendanceDaoMock = mockConstruction(AttendanceDao.class);
@@ -160,9 +160,7 @@ class TeacherControllerTest {
     @Test
     void getTeacherCourses_delegatesToDao() {
         TeacherController controller = createController(teacher);
-        List<TeacherCourse> expected = List.of(
-                new TeacherCourse(1, "Java", "CS101", 1)
-        );
+        List<TeacherCourse> expected = List.of(new TeacherCourse(1, "Java", "CS101", 1));
         when(courseDao.getCoursesByTeacherId(1)).thenReturn(expected);
 
         List<TeacherCourse> result = controller.getTeacherCourses(1);
@@ -265,8 +263,7 @@ class TeacherControllerTest {
         assertTrue(controller.getAttendanceForStudentAndCourse(0, 1).isEmpty());
         assertTrue(controller.getAttendanceForStudentAndCourse(1, 0).isEmpty());
         assertTrue(controller.getAttendanceForStudentAndCourse(-1, -1).isEmpty());
-        verify(attendanceDao, never())
-                .getAttendanceForStudentAndCourse(anyInt(), anyInt());
+        verify(attendanceDao, never()).getAttendanceForStudentAndCourse(anyInt(), anyInt());
     }
 
     @Test
@@ -275,8 +272,7 @@ class TeacherControllerTest {
         List<AttendanceRecord> expected = Collections.emptyList();
         when(attendanceDao.getAttendanceForStudentAndCourse(1, 2)).thenReturn(expected);
 
-        List<AttendanceRecord> result =
-                controller.getAttendanceForStudentAndCourse(1, 2);
+        List<AttendanceRecord> result = controller.getAttendanceForStudentAndCourse(1, 2);
 
         assertEquals(expected, result);
     }

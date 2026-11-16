@@ -4,12 +4,11 @@ import com.example.app.Controller.LoginController;
 import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.View.Login;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.Optional;
 
 public class App extends Application {
     private Stage primaryStage;
@@ -50,7 +49,6 @@ public class App extends Application {
             }
             primaryStage.setMaximized(true);
         });
-
 
         if (primaryStage.getScene() == null) {
             primaryStage.setScene(new Scene(loginView));

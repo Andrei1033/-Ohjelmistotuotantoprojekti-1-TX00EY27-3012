@@ -1,11 +1,11 @@
 package com.example.app.Database;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 public class DatabaseConnection {
@@ -23,16 +23,14 @@ public class DatabaseConnection {
             }
             properties.load(input);
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException("Database configuration could not be loaded.", e);
         }
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                properties.getProperty("db.url"),
-                properties.getProperty("db.user"),
-                properties.getProperty("db.password")
-        );
+        return DriverManager.getConnection(properties.getProperty("db.url"), properties.getProperty("db.user"),
+                properties.getProperty("db.password"));
     }
 }

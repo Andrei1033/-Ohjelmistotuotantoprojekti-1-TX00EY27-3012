@@ -14,11 +14,11 @@ import java.util.Optional;
 public class UserDao {
 
     public Optional<User> findByEmailAndPassword(String email, String password) {
-        String sql = "SELECT user_id, email, first_name, last_name, role " +
-                "FROM users WHERE email = ? AND `password` = ?";
+        String sql = "SELECT user_id, email, first_name, last_name, role "
+                + "FROM users WHERE email = ? AND `password` = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, email);
             stmt.setString(2, password);
@@ -33,13 +33,8 @@ public class UserDao {
                     // (userId, firstName, lastName, email, role). Aiemmin email ja
                     // first_name/last_name olivat väärässä järjestyksessä, jolloin
                     // esim. currentUser.getFirstName() palautti sähköpostin.
-                    User user = new User(
-                            rs.getInt("user_id"),
-                            rs.getString("first_name"),
-                            rs.getString("last_name"),
-                            rs.getString("email"),
-                            role
-                    );
+                    User user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
+                            rs.getString("email"), role);
                     return Optional.of(user);
                 }
             }
@@ -50,12 +45,12 @@ public class UserDao {
         return Optional.empty();
     }
 
-    //@return true jos annettu sähköposti on jo käytössä jollakin MUULLA käyttäjällä.
+    // @return true jos annettu sähköposti on jo käytössä jollakin MUULLA käyttäjällä.
     public boolean isEmailTaken(String email, int excludingUserId) {
         String sql = "SELECT COUNT(*) FROM users WHERE email = ? AND user_id <> ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, email);
             stmt.setInt(2, excludingUserId);
@@ -65,18 +60,19 @@ public class UserDao {
                     return rs.getInt(1) > 0;
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println("Tietokantavirhe sähköpostin tarkistuksessa: " + e.getMessage());
         }
         return false;
     }
 
-    //Päivittää käyttäjän nimen ja sähköpostin. Ei koske salasanaan.
+    // Päivittää käyttäjän nimen ja sähköpostin. Ei koske salasanaan.
     public boolean updateProfile(int userId, String firstName, String lastName, String email) {
         String sql = "UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE user_id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, firstName);
             stmt.setString(2, lastName);
@@ -84,23 +80,23 @@ public class UserDao {
             stmt.setInt(4, userId);
 
             return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println("Tietokantavirhe tietojen päivityksessä: " + e.getMessage());
             return false;
         }
     }
 
-
-     //Tarkistaa täsmääkö annettu salasana käyttäjän nykyiseen salasanaan.
-     //HUOM: salasana verrataan tällä hetkellä plain-tekstinä, samalla tavalla
-     //kuin findByEmailAndPassword tekee. Jos otatte hashauksen (esim. BCrypt)
-     //käyttöön, tämä metodi täytyy päivittää vastaavasti.
+    // Tarkistaa täsmääkö annettu salasana käyttäjän nykyiseen salasanaan.
+    // HUOM: salasana verrataan tällä hetkellä plain-tekstinä, samalla tavalla
+    // kuin findByEmailAndPassword tekee. Jos otatte hashauksen (esim. BCrypt)
+    // käyttöön, tämä metodi täytyy päivittää vastaavasti.
 
     public boolean verifyPassword(int userId, String password) {
         String sql = "SELECT COUNT(*) FROM users WHERE user_id = ? AND `password` = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, userId);
             stmt.setString(2, password);
@@ -110,7 +106,8 @@ public class UserDao {
                     return rs.getInt(1) > 0;
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println("Tietokantavirhe salasanan tarkistuksessa: " + e.getMessage());
         }
         return false;
@@ -121,13 +118,14 @@ public class UserDao {
         String sql = "UPDATE users SET `password` = ? WHERE user_id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newPassword);
             stmt.setInt(2, userId);
 
             return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println("Tietokantavirhe salasanan päivityksessä: " + e.getMessage());
             return false;
         }
@@ -141,27 +139,23 @@ public class UserDao {
         String sql = "UPDATE users SET preferred_language = ? WHERE user_id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, languageCode.trim().toLowerCase(Locale.ROOT));
             stmt.setInt(2, userId);
 
             return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             System.err.println("Tietokantavirhe kielen tallennuksessa: " + e.getMessage());
             return false;
         }
     }
 
-    /* test main method for testing the UserDao class
-    public static void main(String[] args) {
-        UserDao dao = new UserDao();
-        dao.findByEmailAndPassword("admin1@school.edu", "$2b$10$abcdefghijklmnopqrstuv")
-                .ifPresentOrElse(
-                        u -> System.out.println("Löytyi: " + u),
-                        () -> System.out.println("Ei löytynyt")
-                );
-    }
-    */
+    /*
+     * test main method for testing the UserDao class public static void main(String[] args) { UserDao dao = new
+     * UserDao(); dao.findByEmailAndPassword("admin1@school.edu", "$2b$10$abcdefghijklmnopqrstuv") .ifPresentOrElse( u
+     * -> System.out.println("Löytyi: " + u), () -> System.out.println("Ei löytynyt") ); }
+     */
 
 }

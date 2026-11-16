@@ -1,10 +1,14 @@
 package com.example.app.View;
 
-import com.example.app.Localisation.FontSupport;
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
-import javafx.application.Application;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -12,15 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 import org.junit.jupiter.api.*;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ViewSupportTest {
@@ -29,11 +25,13 @@ class ViewSupportTest {
 
     @BeforeAll
     void initJavaFX() throws Exception {
-        if (fxStarted) return;
+        if (fxStarted)
+            return;
         CountDownLatch latch = new CountDownLatch(1);
         try {
             Platform.startup(latch::countDown);
-        } catch (IllegalStateException alreadyStarted) {
+        }
+        catch (IllegalStateException alreadyStarted) {
             latch.countDown();
         }
         assertTrue(latch.await(10, TimeUnit.SECONDS), "JavaFX did not start");
@@ -49,15 +47,18 @@ class ViewSupportTest {
         Platform.runLater(() -> {
             try {
                 result.set(supplier.get());
-            } catch (Throwable t) {
+            }
+            catch (Throwable t) {
                 error.set(t);
-            } finally {
+            }
+            finally {
                 latch.countDown();
             }
         });
         try {
             assertTrue(latch.await(10, TimeUnit.SECONDS), "FX task timeout");
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             fail("Interrupted", e);
         }
@@ -68,7 +69,10 @@ class ViewSupportTest {
     }
 
     private void onFx(Runnable r) {
-        onFx(() -> { r.run(); return null; });
+        onFx(() -> {
+            r.run();
+            return null;
+        });
     }
 
     // ------------------------------------------------------------------

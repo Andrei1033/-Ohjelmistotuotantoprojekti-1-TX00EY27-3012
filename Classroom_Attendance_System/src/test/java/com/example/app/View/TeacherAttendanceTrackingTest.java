@@ -1,10 +1,16 @@
 package com.example.app.View;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import com.example.app.DaoElements.StudentDao.AttendanceDao;
 import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.*;
 import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -12,11 +18,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class TeacherAttendanceTrackingTest extends ViewTestSupport {
     private AttendanceDao dao;
@@ -25,7 +26,10 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
     private AtomicInteger finished;
     private final User student = new User(7, "Liisa", "Virtanen", "liisa@example.com", Role.STUDENT);
 
-    @BeforeEach void setUp() { finished = new AtomicInteger(); }
+    @BeforeEach
+    void setUp() {
+        finished = new AtomicInteger();
+    }
     private void show(List<User> students) {
         List<Window> existing = new ArrayList<>(Window.getWindows());
         try (var construction = mockConstruction(AttendanceDao.class, (mock, context) -> {
@@ -41,10 +45,15 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
         stage = (Stage) Window.getWindows().stream().filter(w -> !existing.contains(w)).findFirst().orElseThrow();
         root = stage.getScene().getRoot();
     }
-    private void save() { button(root, i18n.t("attendance.saveAndFinish")).fire(); }
-    private void count(String key, int count) { hasLabel(root, count + " " + i18n.t(key)); }
+    private void save() {
+        button(root, i18n.t("attendance.saveAndFinish")).fire();
+    }
+    private void count(String key, int count) {
+        hasLabel(root, count + " " + i18n.t(key));
+    }
 
-    @Test void showsStudentsAndDefaultsToAbsent() {
+    @Test
+    void showsStudentsAndDefaultsToAbsent() {
         interact(() -> {
             show(List.of(student));
             verify(dao).getStudentsForCourse(12);
@@ -56,7 +65,8 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
             assertEquals(0, finished.get());
         });
     }
-    @Test void statusButtonsUpdateCountersWithoutDoubleCounting() {
+    @Test
+    void statusButtonsUpdateCountersWithoutDoubleCounting() {
         interact(() -> {
             show(List.of(student));
             button(root, i18n.t("attendance.present")).fire();
@@ -71,7 +81,8 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
             count("attendance.absent", 1);
         });
     }
-    @Test void savesEveryStudentBeforeEndingLesson() {
+    @Test
+    void savesEveryStudentBeforeEndingLesson() {
         interact(() -> {
             show(List.of(student, new User(8, "Pekka", "Testi", "pekka@example.com", Role.STUDENT)));
             save();
@@ -84,7 +95,8 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
             assertEquals(1, finished.get());
         });
     }
-    @Test void localizedButtonSavesUntranslatedDatabaseStatus() {
+    @Test
+    void localizedButtonSavesUntranslatedDatabaseStatus() {
         interact(() -> {
             i18n.setLanguage(i18n.AR);
             show(List.of(student));
@@ -95,7 +107,8 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
             assertEquals(1, finished.get());
         });
     }
-    @Test void emptyCourseShowsPlaceholderAndCanEndLesson() {
+    @Test
+    void emptyCourseShowsPlaceholderAndCanEndLesson() {
         interact(() -> {
             show(List.of());
             hasLabel(root, i18n.t("teacher.noStudents"));
@@ -106,7 +119,8 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
             assertFalse(stage.isShowing());
         });
     }
-    @Test void failedAttendanceSaveKeepsLessonOpenAndShowsError() {
+    @Test
+    void failedAttendanceSaveKeepsLessonOpenAndShowsError() {
         interact(() -> {
             show(List.of(student));
             when(dao.saveAttendance(34, 7, "absent")).thenReturn(false);
@@ -123,7 +137,8 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
             assertEquals(0, finished.get());
         });
     }
-    @Test void failedEndLessonKeepsWindowOpenAndShowsError() {
+    @Test
+    void failedEndLessonKeepsWindowOpenAndShowsError() {
         interact(() -> {
             show(List.of(student));
             when(dao.endLesson(34)).thenReturn(false);

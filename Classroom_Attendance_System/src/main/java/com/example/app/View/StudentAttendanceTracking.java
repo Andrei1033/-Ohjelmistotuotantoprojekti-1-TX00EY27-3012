@@ -5,7 +5,9 @@ import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.StudentComponents.AttendanceRecord;
 import com.example.app.Model.StudentComponents.Course;
-
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -17,10 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontWeight;
 
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.List;
-
 public class StudentAttendanceTracking extends BorderPane {
 
     private static final String NAVY = "#202F49";
@@ -28,19 +26,24 @@ public class StudentAttendanceTracking extends BorderPane {
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("d.M.yyyy");
 
     /**
-     * @param course           valittu kurssi (määrää otsikon ja koodin)
-     * @param records          kurssin oppitunnit + opiskelijan läsnäolomerkinnät
-     *                          (esim. AttendanceDAO.getAttendanceForStudentAndCourse:n tulos)
-     * @param onBack           kutsutaan kun "Takaisin"-nappia painetaan - Controller
-     *                          vaihtaa tällöin näkymän takaisin StudentStartPageen
-     * @param currentUser      kirjautunut opiskelija (näytetään sivupalkissa)
-     * @param onLogout         uloskirjautumisen callback
-     * @param onProfileUpdated kutsutaan kun käyttäjä on tallentanut muutokset
-     *                          "Omat tiedot" -ikkunassa (avataan avatarista),
-     *                          jotta sivu voidaan piirtää uudelleen uusilla tiedoilla
+     * @param course
+     *            valittu kurssi (määrää otsikon ja koodin)
+     * @param records
+     *            kurssin oppitunnit + opiskelijan läsnäolomerkinnät (esim.
+     *            AttendanceDAO.getAttendanceForStudentAndCourse:n tulos)
+     * @param onBack
+     *            kutsutaan kun "Takaisin"-nappia painetaan - Controller vaihtaa tällöin näkymän takaisin
+     *            StudentStartPageen
+     * @param currentUser
+     *            kirjautunut opiskelija (näytetään sivupalkissa)
+     * @param onLogout
+     *            uloskirjautumisen callback
+     * @param onProfileUpdated
+     *            kutsutaan kun käyttäjä on tallentanut muutokset "Omat tiedot" -ikkunassa (avataan avatarista), jotta
+     *            sivu voidaan piirtää uudelleen uusilla tiedoilla
      */
-    public StudentAttendanceTracking(Course course, List<AttendanceRecord> records, Runnable onBack,
-                                     User currentUser, Runnable onLogout, Runnable onProfileUpdated) {
+    public StudentAttendanceTracking(Course course, List<AttendanceRecord> records, Runnable onBack, User currentUser,
+            Runnable onLogout, Runnable onProfileUpdated) {
 
         if (FontSupport.isRtl()) {
             setNodeOrientation(javafx.geometry.NodeOrientation.RIGHT_TO_LEFT);
@@ -64,8 +67,8 @@ public class StudentAttendanceTracking extends BorderPane {
         back.setPrefHeight(22);
         back.setMaxWidth(Double.MAX_VALUE);
         back.setAlignment(Pos.CENTER_LEFT);
-        back.setStyle("-fx-background-color: #344A70; -fx-text-fill: white; "
-                + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
+        back.setStyle("-fx-background-color: #344A70; -fx-text-fill: white; " + "-fx-font-family: '"
+                + FontSupport.pickFamily() + "'; "
                 + "-fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4;");
         back.setCursor(Cursor.HAND);
         back.setOnAction(e -> onBack.run());
@@ -99,7 +102,8 @@ public class StudentAttendanceTracking extends BorderPane {
 
         // Otsikko
         Label title = text(course.getName(), 15, FontWeight.BOLD, "#171717");
-        Label subtitle = text(course.getCode() + " - " + i18n.t("student.myAttendanceRecords"), 8, FontWeight.BOLD, "#171717");
+        Label subtitle = text(course.getCode() + " - " + i18n.t("student.myAttendanceRecords"), 8, FontWeight.BOLD,
+                "#171717");
         VBox titleBox = new VBox(2, title, subtitle);
         HBox.setHgrow(titleBox, Priority.ALWAYS);
 
@@ -107,16 +111,14 @@ public class StudentAttendanceTracking extends BorderPane {
         long presentCount = records.stream().filter(r -> "present".equals(r.getStatus())).count();
         long lateCount = records.stream().filter(r -> "late".equals(r.getStatus())).count();
         long absentCount = records.stream()
-                .filter(r -> "absent".equals(r.getStatus()) || "excused".equals(r.getStatus()))
-                .count();
+                .filter(r -> "absent".equals(r.getStatus()) || "excused".equals(r.getStatus())).count();
 
         HBox summary = new HBox(20);
         summary.setAlignment(Pos.CENTER_RIGHT);
         summary.getChildren().addAll(
                 text(presentCount + " " + i18n.t("attendance.present"), 8, FontWeight.BOLD, "#171717"),
                 text(lateCount + " " + i18n.t("attendance.late"), 8, FontWeight.BOLD, "#171717"),
-                text(absentCount + " " + i18n.t("attendance.absent"), 8, FontWeight.BOLD, "#171717")
-        );
+                text(absentCount + " " + i18n.t("attendance.absent"), 8, FontWeight.BOLD, "#171717"));
 
         HBox header = new HBox();
         header.setAlignment(Pos.BOTTOM_LEFT);
@@ -132,8 +134,7 @@ public class StudentAttendanceTracking extends BorderPane {
         attendanceOverview.setPadding(new Insets(14, 0, 0, 0));
         attendanceOverview.getChildren().addAll(
                 text(i18n.t("course.percentPresent", attendancePercentage(records)), 9, FontWeight.BOLD, "#555555"),
-                attendanceBar(records, 220)
-        );
+                attendanceBar(records, 220));
         content.getChildren().add(attendanceOverview);
 
         // =========================
@@ -148,9 +149,9 @@ public class StudentAttendanceTracking extends BorderPane {
         attendanceList.setPadding(new Insets(16, 0, 0, 0));
 
         if (records.isEmpty()) {
-            attendanceList.getChildren().add(
-                    text(i18n.t("student.noLessonsYet"), 9, FontWeight.NORMAL, "#858585"));
-        } else {
+            attendanceList.getChildren().add(text(i18n.t("student.noLessonsYet"), 9, FontWeight.NORMAL, "#858585"));
+        }
+        else {
             for (AttendanceRecord record : records) {
                 attendanceList.getChildren().add(attendanceRow(record));
             }
@@ -200,16 +201,12 @@ public class StudentAttendanceTracking extends BorderPane {
         row.setMaxWidth(Double.MAX_VALUE);
         row.setAlignment(Pos.CENTER_LEFT);
         row.setPadding(new Insets(8, 9, 8, 8));
-        row.setStyle("-fx-background-color: white;"
-                + "-fx-border-color: #D7D7D7;"
-                + "-fx-border-radius: 12;"
+        row.setStyle("-fx-background-color: white;" + "-fx-border-color: #D7D7D7;" + "-fx-border-radius: 12;"
                 + "-fx-background-radius: 12;");
 
         // DATE
-        VBox dateBox = new VBox(0,
-                text(date, 10, FontWeight.BOLD, "#171717"),
-                text(day, 7, FontWeight.BOLD, "#555555")
-        );
+        VBox dateBox = new VBox(0, text(date, 10, FontWeight.BOLD, "#171717"),
+                text(day, 7, FontWeight.BOLD, "#555555"));
         dateBox.setPrefWidth(95);
 
         // LESSON
@@ -224,10 +221,8 @@ public class StudentAttendanceTracking extends BorderPane {
         statusBox.setPrefHeight(28);
         statusBox.setAlignment(Pos.CENTER_LEFT);
         statusBox.setPadding(new Insets(0, 12, 0, 12));
-        statusBox.setStyle("-fx-background-color: " + statusBackground + ";"
-                + "-fx-border-color: " + statusColor + ";"
-                + "-fx-border-radius: 20;"
-                + "-fx-background-radius: 20;");
+        statusBox.setStyle("-fx-background-color: " + statusBackground + ";" + "-fx-border-color: " + statusColor + ";"
+                + "-fx-border-radius: 20;" + "-fx-background-radius: 20;");
 
         Circle statusCircle = new Circle(4, Color.web(statusColor));
         Label statusLabel = text(statusText, 10, FontWeight.BOLD, statusColor);
@@ -246,11 +241,11 @@ public class StudentAttendanceTracking extends BorderPane {
         }
 
         switch (status) {
-            case "present":
+            case "present" :
                 return new String[]{"#2E9560", "#E5F4EA"};
-            case "late":
+            case "late" :
                 return new String[]{"#C77A00", "#FFF2DF"};
-            default: // "absent" ja "excused"
+            default : // "absent" ja "excused"
                 return new String[]{"#C44D3A", "#FBE6E2"};
         }
     }
@@ -289,8 +284,7 @@ public class StudentAttendanceTracking extends BorderPane {
         if (records.isEmpty()) {
             return 0;
         }
-        long attended = records.stream()
-                .filter(r -> "present".equals(r.getStatus()) || "late".equals(r.getStatus()))
+        long attended = records.stream().filter(r -> "present".equals(r.getStatus()) || "late".equals(r.getStatus()))
                 .count();
         return (int) Math.round(attended * 100.0 / records.size());
     }
@@ -300,13 +294,13 @@ public class StudentAttendanceTracking extends BorderPane {
             status = "absent";
         }
         switch (status) {
-            case "present":
+            case "present" :
                 return i18n.t("attendance.present");
-            case "late":
+            case "late" :
                 return i18n.t("attendance.late");
-            case "excused":
+            case "excused" :
                 return i18n.t("attendance.excused");
-            default:
+            default :
                 return i18n.t("attendance.absent");
         }
     }

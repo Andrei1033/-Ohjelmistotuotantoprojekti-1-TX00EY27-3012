@@ -5,21 +5,19 @@ import com.example.app.Localisation.FontSupport;
 import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.scene.Cursor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.StringConverter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Admin {
     private final AdminController controller;
@@ -89,13 +87,8 @@ public class Admin {
         languageCombo.setMaxWidth(Double.MAX_VALUE);
         languageCombo.setFocusTraversable(false);
         languageCombo.setCursor(Cursor.HAND);
-        languageCombo.setStyle(
-                "-fx-background-color: #344A70; "
-                        + "-fx-background-radius: 4; "
-                        + "-fx-font-family: '" + FontSupport.pickFamily() + "'; "
-                        + "-fx-font-size: 11px; "
-                        + "-fx-text-fill: white;"
-        );
+        languageCombo.setStyle("-fx-background-color: #344A70; " + "-fx-background-radius: 4; " + "-fx-font-family: '"
+                + FontSupport.pickFamily() + "'; " + "-fx-font-size: 11px; " + "-fx-text-fill: white;");
         languageCombo.setConverter(new StringConverter<>() {
             @Override
             public String toString(i18n.Lang language) {
@@ -119,15 +112,11 @@ public class Admin {
         });
 
         com.example.app.Model.Admin currentAdmin = controller.getUsers().stream()
-                .filter(user -> user.getRole() == Role.ADMIN)
-                .findFirst()
-                .orElse(null);
+                .filter(user -> user.getRole() == Role.ADMIN).findFirst().orElse(null);
         String userName = currentUser == null
                 ? (currentAdmin == null ? i18n.t("admin.defaultName") : currentAdmin.getName())
                 : currentUser.getFullName();
-        String userRole = currentUser == null
-                ? i18n.t("app.admin.label")
-                : roleLabel(currentUser);
+        String userRole = currentUser == null ? i18n.t("app.admin.label") : roleLabel(currentUser);
 
         HBox user = new HBox(7);
         user.setAlignment(Pos.CENTER_LEFT);
@@ -155,21 +144,15 @@ public class Admin {
 
         user.setOnMouseClicked(event -> {
             if (currentUser != null && user.getScene() != null) {
-                ProfileEditWindow.show(
-                        user.getScene().getWindow(),
-                        currentUser,
-                        () -> {
-                            userNameLabel.setText(currentUser.getFullName());
-                            initials.setText(initialsOf(currentUser.getFullName()));
-                        }
-                );
+                ProfileEditWindow.show(user.getScene().getWindow(), currentUser, () -> {
+                    userNameLabel.setText(currentUser.getFullName());
+                    initials.setText(initialsOf(currentUser.getFullName()));
+                });
                 event.consume();
             }
         });
 
-        sidebar.getChildren().addAll(
-                header, new Region(), coursesButton, spacer, languageCombo, logout, user);
-
+        sidebar.getChildren().addAll(header, new Region(), coursesButton, spacer, languageCombo, logout, user);
 
         HBox filters = new HBox(10);
         filters.setAlignment(Pos.CENTER_LEFT);
@@ -199,54 +182,30 @@ public class Admin {
         Button addUserButton = new Button(i18n.t("admin.addUser"));
         addUserButton.getStyleClass().add("add-user-button");
 
-        filters.getChildren().addAll(
-                allButton,
-                adminButton,
-                teacherButton,
-                studentButton,
-                searchField,
-                courseFilter,
-                addUserButton
-        );
+        filters.getChildren().addAll(allButton, adminButton, teacherButton, studentButton, searchField, courseFilter,
+                addUserButton);
 
         TableView<com.example.app.Model.Admin> table = new TableView<>();
 
-        TableColumn<com.example.app.Model.Admin, String> nameColumn =
-                new TableColumn<>(i18n.t("admin.userName"));
+        TableColumn<com.example.app.Model.Admin, String> nameColumn = new TableColumn<>(i18n.t("admin.userName"));
 
-        TableColumn<com.example.app.Model.Admin, String> emailColumn =
-                new TableColumn<>(i18n.t("admin.userEmail"));
+        TableColumn<com.example.app.Model.Admin, String> emailColumn = new TableColumn<>(i18n.t("admin.userEmail"));
 
-        TableColumn<com.example.app.Model.Admin, String> roleColumn =
-                new TableColumn<>(i18n.t("admin.userRole"));
+        TableColumn<com.example.app.Model.Admin, String> roleColumn = new TableColumn<>(i18n.t("admin.userRole"));
 
-        TableColumn<com.example.app.Model.Admin, String> courseColumn =
-                new TableColumn<>(i18n.t("admin.userCourses"));
+        TableColumn<com.example.app.Model.Admin, String> courseColumn = new TableColumn<>(i18n.t("admin.userCourses"));
 
-        TableColumn<com.example.app.Model.Admin, String> editColumn =
-                new TableColumn<>("");
+        TableColumn<com.example.app.Model.Admin, String> editColumn = new TableColumn<>("");
 
+        nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 
-        nameColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getName())
-        );
+        emailColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmail()));
 
-        emailColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getEmail())
-        );
+        roleColumn.setCellValueFactory(data -> new SimpleStringProperty(roleText(data.getValue().getRole())));
 
-        roleColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(roleText(data.getValue().getRole()))
-        );
+        courseColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCourses()));
 
-        courseColumn.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getCourses())
-        );
-
-        editColumn.setCellValueFactory(data ->
-                new SimpleStringProperty("")
-        );
-
+        editColumn.setCellValueFactory(data -> new SimpleStringProperty(""));
 
         nameColumn.setCellFactory(column -> new TableCell<>() {
 
@@ -260,10 +219,7 @@ public class Admin {
                 avatar.getStyleClass().add("profile-avatar");
                 name.getStyleClass().add("user-name");
 
-                container.getChildren().addAll(
-                        avatar,
-                        name
-                );
+                container.getChildren().addAll(avatar, name);
             }
 
             @Override
@@ -272,31 +228,24 @@ public class Admin {
 
                 if (empty || item == null) {
                     setGraphic(null);
-                } else {
+                }
+                else {
 
                     name.setText(item);
 
                     String[] parts = item.split(" ");
 
                     if (parts.length >= 2) {
-                        avatar.setText(
-                                parts[0].substring(0, 1).toUpperCase()
-                                        +
-                                        parts[1].substring(0, 1).toUpperCase()
-                        );
-                    } else {
-                        avatar.setText(
-                                item.substring(0, Math.min(2, item.length()))
-                                        .toUpperCase()
-                        );
+                        avatar.setText(parts[0].substring(0, 1).toUpperCase() + parts[1].substring(0, 1).toUpperCase());
+                    }
+                    else {
+                        avatar.setText(item.substring(0, Math.min(2, item.length())).toUpperCase());
                     }
 
                     setGraphic(container);
                 }
             }
         });
-
-
 
         roleColumn.setCellFactory(column -> new TableCell<>() {
 
@@ -308,21 +257,20 @@ public class Admin {
 
                 if (empty || role == null) {
                     setGraphic(null);
-                } else {
+                }
+                else {
 
                     roleLabel.setText(role);
 
-                    roleLabel.getStyleClass().removeAll(
-                            "role-student",
-                            "role-teacher",
-                            "role-admin"
-                    );
+                    roleLabel.getStyleClass().removeAll("role-student", "role-teacher", "role-admin");
 
                     if (role.equals(i18n.t("admin.userRoleStudent"))) {
                         roleLabel.getStyleClass().add("role-student");
-                    } else if (role.equals(i18n.t("admin.userRoleTeacher"))) {
+                    }
+                    else if (role.equals(i18n.t("admin.userRoleTeacher"))) {
                         roleLabel.getStyleClass().add("role-teacher");
-                    } else if (role.equals(i18n.t("admin.userRoleAdmin"))) {
+                    }
+                    else if (role.equals(i18n.t("admin.userRoleAdmin"))) {
                         roleLabel.getStyleClass().add("role-admin");
                     }
 
@@ -330,8 +278,6 @@ public class Admin {
                 }
             }
         });
-
-
 
         editColumn.setCellFactory(column -> new TableCell<>() {
 
@@ -355,27 +301,17 @@ public class Admin {
                 if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                     setGraphic(null);
                     setContentDisplay(ContentDisplay.TEXT_ONLY);
-                } else {
+                }
+                else {
                     setGraphic(editButton);
                     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                 }
             }
         });
 
+        table.getColumns().addAll(nameColumn, emailColumn, roleColumn, courseColumn, editColumn);
 
-
-        table.getColumns().addAll(
-                nameColumn,
-                emailColumn,
-                roleColumn,
-                courseColumn,
-                editColumn
-        );
-
-
-        table.setColumnResizePolicy(
-                TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN
-        );
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         nameColumn.setMinWidth(180);
         emailColumn.setMinWidth(180);
@@ -389,17 +325,13 @@ public class Admin {
         courseColumn.setPrefWidth(250);
         editColumn.setPrefWidth(60);
 
-
         table.setItems(controller.getUsers());
 
-        table.setPlaceholder(
-                new Label(i18n.t("admin.emptyUserList"))
-        );
+        table.setPlaceholder(new Label(i18n.t("admin.emptyUserList")));
 
-        Runnable refresh = () -> table.setItems(controller.filterUsers(
-                selectedRole(allButton, adminButton, teacherButton, studentButton),
-                searchField.getText(),
-                courseFilter.getValue()));
+        Runnable refresh = () -> table
+                .setItems(controller.filterUsers(selectedRole(allButton, adminButton, teacherButton, studentButton),
+                        searchField.getText(), courseFilter.getValue()));
         allButton.setOnAction(event -> {
             setActiveFilter(allButton, adminButton, teacherButton, studentButton);
             refresh.run();
@@ -420,23 +352,18 @@ public class Admin {
         courseFilter.valueProperty().addListener((observable, oldValue, newValue) -> refresh.run());
         addUserButton.setOnAction(event -> showUserDialog(null, table));
 
-
         VBox content = new VBox(25);
         content.setPadding(new Insets(30));
         content.getStyleClass().add("content");
 
         if (controller.getDatabaseError() != null) {
-            Label error = new Label(
-                    i18n.t("admin.loadFailed", controller.getDatabaseError()));
+            Label error = new Label(i18n.t("admin.loadFailed", controller.getDatabaseError()));
             error.setWrapText(true);
             error.setStyle("-fx-text-fill: #b00020;");
             content.getChildren().add(error);
         }
 
-        content.getChildren().addAll(
-                filters,
-                table
-        );
+        content.getChildren().addAll(filters, table);
 
         VBox.setVgrow(table, Priority.ALWAYS);
 
@@ -451,19 +378,18 @@ public class Admin {
         root.getStyleClass().add("root");
         root.setStyle("-fx-font-family: '" + FontSupport.pickFamily() + "';");
 
-        root.getStylesheets().add(
-                getClass()
-                        .getResource("/style.css")
-                        .toExternalForm()
-        );
+        root.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
         return root;
     }
 
     private Role selectedRole(Button all, Button admin, Button teacher, Button student) {
-        if (admin.getStyleClass().contains("filter-button-active")) return Role.ADMIN;
-        if (teacher.getStyleClass().contains("filter-button-active")) return Role.TEACHER;
-        if (student.getStyleClass().contains("filter-button-active")) return Role.STUDENT;
+        if (admin.getStyleClass().contains("filter-button-active"))
+            return Role.ADMIN;
+        if (teacher.getStyleClass().contains("filter-button-active"))
+            return Role.TEACHER;
+        if (student.getStyleClass().contains("filter-button-active"))
+            return Role.STUDENT;
         return null;
     }
 
@@ -492,13 +418,9 @@ public class Admin {
         };
     }
 
-    private void addCourseSelector(VBox courseFields,
-                                   List<ComboBox<String>> courseSelectors,
-                                   List<String> availableCourses,
-                                   String selectedCourse) {
-        ComboBox<String> course = new ComboBox<>(
-                FXCollections.observableArrayList(i18n.t("app.emptyCourses"))
-        );
+    private void addCourseSelector(VBox courseFields, List<ComboBox<String>> courseSelectors,
+            List<String> availableCourses, String selectedCourse) {
+        ComboBox<String> course = new ComboBox<>(FXCollections.observableArrayList(i18n.t("app.emptyCourses")));
         course.getItems().addAll(availableCourses);
         course.setValue(selectedCourse);
         course.setPrefWidth(220);
@@ -507,9 +429,7 @@ public class Admin {
             if (refreshingCourseOptions) {
                 return;
             }
-            if (newValue != null
-                    && !newValue.equals(i18n.t("app.emptyCourses"))
-                    && courseSelectors.stream()
+            if (newValue != null && !newValue.equals(i18n.t("app.emptyCourses")) && courseSelectors.stream()
                     .anyMatch(other -> other != course && newValue.equals(other.getValue()))) {
                 refreshingCourseOptions = true;
                 course.setValue(oldValue == null ? i18n.t("app.emptyCourses") : oldValue);
@@ -520,22 +440,17 @@ public class Admin {
         });
 
         int addButtonIndex = courseFields.getChildren().size();
-        if (addButtonIndex > 0
-                && courseFields.getChildren().get(addButtonIndex - 1) instanceof Button) {
+        if (addButtonIndex > 0 && courseFields.getChildren().get(addButtonIndex - 1) instanceof Button) {
             addButtonIndex--;
         }
         courseFields.getChildren().add(addButtonIndex, course);
     }
 
-    private void refreshCourseOptions(List<ComboBox<String>> courseSelectors,
-                                      List<String> availableCourses) {
+    private void refreshCourseOptions(List<ComboBox<String>> courseSelectors, List<String> availableCourses) {
         refreshingCourseOptions = true;
         try {
-            List<String> selectedCourses = courseSelectors.stream()
-                    .map(ComboBox::getValue)
-                    .filter(course -> course != null
-                            && !course.equals(i18n.t("app.emptyCourses")))
-                    .toList();
+            List<String> selectedCourses = courseSelectors.stream().map(ComboBox::getValue)
+                    .filter(course -> course != null && !course.equals(i18n.t("app.emptyCourses"))).toList();
 
             for (ComboBox<String> selector : courseSelectors) {
                 String currentCourse = selector.getValue();
@@ -547,33 +462,27 @@ public class Admin {
                     }
                 }
                 selector.setItems(FXCollections.observableArrayList(options));
-                selector.setValue(options.contains(currentCourse)
-                        ? currentCourse : i18n.t("app.emptyCourses"));
+                selector.setValue(options.contains(currentCourse) ? currentCourse : i18n.t("app.emptyCourses"));
             }
-        } finally {
+        }
+        finally {
             refreshingCourseOptions = false;
         }
     }
 
-    private void showUserDialog(com.example.app.Model.Admin user,
-                                TableView<com.example.app.Model.Admin> table) {
+    private void showUserDialog(com.example.app.Model.Admin user, TableView<com.example.app.Model.Admin> table) {
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle(user == null
-                ? i18n.t("admin.addUserTitle") : i18n.t("admin.editUserTitle"));
-        dialog.setHeaderText(user == null
-                ? i18n.t("admin.createUserHeader")
-                : i18n.t("admin.editUserHeader"));
+        dialog.setTitle(user == null ? i18n.t("admin.addUserTitle") : i18n.t("admin.editUserTitle"));
+        dialog.setHeaderText(user == null ? i18n.t("admin.createUserHeader") : i18n.t("admin.editUserHeader"));
         dialog.getDialogPane().getStyleClass().add("admin-dialog");
-        dialog.getDialogPane().getStylesheets().add(
-                getClass().getResource("/style.css").toExternalForm()
-        );
-        dialog.getDialogPane().setNodeOrientation(FontSupport.isRtl()
-                ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
-                : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        dialog.getDialogPane()
+                .setNodeOrientation(FontSupport.isRtl()
+                        ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
+                        : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
         ButtonType save = new ButtonType(i18n.t("app.save"), ButtonBar.ButtonData.OK_DONE);
         ButtonType delete = new ButtonType(i18n.t("admin.delete"), ButtonBar.ButtonData.OTHER);
-        ButtonType cancel = new ButtonType(
-                i18n.t("app.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType cancel = new ButtonType(i18n.t("app.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(save, cancel);
         if (user != null) {
             dialog.getDialogPane().getButtonTypes().add(delete);
@@ -581,10 +490,8 @@ public class Admin {
 
         TextField name = new TextField(user == null ? "" : user.getName());
         TextField email = new TextField(user == null ? "" : user.getEmail());
-        ComboBox<String> role = new ComboBox<>(FXCollections.observableArrayList(
-                i18n.t("admin.userRoleStudent"),
-                i18n.t("admin.userRoleTeacher"),
-                i18n.t("admin.userRoleAdmin")));
+        ComboBox<String> role = new ComboBox<>(FXCollections.observableArrayList(i18n.t("admin.userRoleStudent"),
+                i18n.t("admin.userRoleTeacher"), i18n.t("admin.userRoleAdmin")));
         role.setValue(user == null ? i18n.t("admin.userRoleStudent") : roleText(user.getRole()));
         List<ComboBox<String>> courseSelectors = new ArrayList<>();
         VBox courseFields = new VBox(5);
@@ -593,9 +500,9 @@ public class Admin {
                 : List.of(user.getCourses().split(",\\s*"));
         List<String> availableCourses = new ArrayList<>(controller.getCourses());
         if (existingCourses.isEmpty()) {
-            addCourseSelector(courseFields, courseSelectors, availableCourses,
-                    i18n.t("app.emptyCourses"));
-        } else {
+            addCourseSelector(courseFields, courseSelectors, availableCourses, i18n.t("app.emptyCourses"));
+        }
+        else {
             for (String course : existingCourses) {
                 if (!availableCourses.contains(course)) {
                     availableCourses.add(course);
@@ -607,14 +514,12 @@ public class Admin {
         Button addCourse = new Button("+");
         addCourse.setFocusTraversable(false);
         addCourse.setOnAction(event -> {
-            addCourseSelector(courseFields, courseSelectors, availableCourses,
-                    i18n.t("app.emptyCourses"));
+            addCourseSelector(courseFields, courseSelectors, availableCourses, i18n.t("app.emptyCourses"));
             refreshCourseOptions(courseSelectors, availableCourses);
         });
         courseFields.getChildren().add(addCourse);
         PasswordField password = new PasswordField();
-        password.setPromptText(user == null
-                ? i18n.t("admin.passwordPrompt") : i18n.t("profile.optionalPassword"));
+        password.setPromptText(user == null ? i18n.t("admin.passwordPrompt") : i18n.t("profile.optionalPassword"));
         PasswordField confirmPassword = new PasswordField();
         confirmPassword.setPromptText(i18n.t("admin.passwordConfirmPrompt"));
         GridPane fields = new GridPane();
@@ -636,20 +541,18 @@ public class Admin {
                 : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
         dialog.getDialogPane().setContent(scrollPane);
         dialog.getDialogPane().lookupButton(save).getStyleClass().add("dialog-save-button");
-        dialog.getDialogPane().lookupButton(cancel)
-                .getStyleClass().add("dialog-cancel-button");
+        dialog.getDialogPane().lookupButton(cancel).getStyleClass().add("dialog-cancel-button");
 
         dialog.setResultConverter(button -> {
             if (button == delete) {
-                Alert confirmation = new Alert(
-                        Alert.AlertType.CONFIRMATION,
+                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
                         i18n.t("admin.userDeletePrompt", user.getName()),
                         new ButtonType(i18n.t("app.confirm"), ButtonBar.ButtonData.YES),
-                        new ButtonType(i18n.t("app.cancel"), ButtonBar.ButtonData.NO)
-                );
-                confirmation.getDialogPane().setNodeOrientation(FontSupport.isRtl()
-                        ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
-                        : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
+                        new ButtonType(i18n.t("app.cancel"), ButtonBar.ButtonData.NO));
+                confirmation.getDialogPane()
+                        .setNodeOrientation(FontSupport.isRtl()
+                                ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
+                                : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
                 confirmation.setHeaderText(i18n.t("admin.userDeleteTitle"));
                 ButtonType confirmButton = confirmation.getDialogPane().getButtonTypes().get(0);
                 com.example.app.Localisation.FontSupport.applyTo(confirmation.getDialogPane());
@@ -657,15 +560,14 @@ public class Admin {
                     try {
                         controller.deleteUser(user);
                         table.refresh();
-                    } catch (RuntimeException exception) {
-                        Alert alert = new Alert(
-                                Alert.AlertType.ERROR,
-                                exception.getMessage(),
-                                new ButtonType(i18n.t("app.confirm"), ButtonBar.ButtonData.OK_DONE)
-                        );
-                        alert.getDialogPane().setNodeOrientation(FontSupport.isRtl()
-                                ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
-                                : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
+                    }
+                    catch (RuntimeException exception) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(),
+                                new ButtonType(i18n.t("app.confirm"), ButtonBar.ButtonData.OK_DONE));
+                        alert.getDialogPane()
+                                .setNodeOrientation(FontSupport.isRtl()
+                                        ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
+                                        : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
                         alert.setHeaderText(i18n.t("admin.deleteUserFailed"));
                         com.example.app.Localisation.FontSupport.applyTo(alert.getDialogPane());
                         alert.showAndWait();
@@ -673,40 +575,37 @@ public class Admin {
                 }
                 return null;
             }
-            if (button != save) return null;
+            if (button != save)
+                return null;
             try {
                 Role selectedRole = roleFromText(role.getValue());
-                String selectedCourses = courseSelectors.stream()
-                        .map(ComboBox::getValue)
-                        .filter(course -> course != null
-                                && !course.equals(i18n.t("app.emptyCourses")))
-                        .distinct()
-                        .reduce((first, second) -> first + ", " + second)
-                        .orElse("—");
+                String selectedCourses = courseSelectors.stream().map(ComboBox::getValue)
+                        .filter(course -> course != null && !course.equals(i18n.t("app.emptyCourses"))).distinct()
+                        .reduce((first, second) -> first + ", " + second).orElse("—");
                 String selectedPassword = password.getText();
                 if (user == null && selectedPassword.isBlank()) {
                     throw new IllegalArgumentException(i18n.t("admin.passwordRequired"));
                 }
-                if (!selectedPassword.isBlank()
-                        && !selectedPassword.equals(confirmPassword.getText())) {
+                if (!selectedPassword.isBlank() && !selectedPassword.equals(confirmPassword.getText())) {
                     throw new IllegalArgumentException(i18n.t("admin.confirmPasswordMismatch"));
                 }
                 if (user == null) {
                     controller.addUser(name.getText(), email.getText(), selectedRole, selectedCourses,
                             selectedPassword);
-                } else {
-                    controller.updateUser(user, name.getText(), email.getText(), selectedRole,
-                            selectedCourses, selectedPassword.isBlank() ? null : selectedPassword);
+                }
+                else {
+                    controller.updateUser(user, name.getText(), email.getText(), selectedRole, selectedCourses,
+                            selectedPassword.isBlank() ? null : selectedPassword);
                 }
                 table.refresh();
-            } catch (RuntimeException exception) {
-                Alert alert = new Alert(
-                        Alert.AlertType.ERROR,
-                        exception.getMessage(),
+            }
+            catch (RuntimeException exception) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(),
                         new ButtonType(i18n.t("app.confirm"), ButtonBar.ButtonData.OK_DONE));
-                alert.getDialogPane().setNodeOrientation(FontSupport.isRtl()
-                        ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
-                        : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
+                alert.getDialogPane()
+                        .setNodeOrientation(FontSupport.isRtl()
+                                ? javafx.geometry.NodeOrientation.RIGHT_TO_LEFT
+                                : javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
                 alert.setHeaderText(i18n.t("admin.invalidUserData"));
                 com.example.app.Localisation.FontSupport.applyTo(alert.getDialogPane());
                 alert.showAndWait();
@@ -718,8 +617,10 @@ public class Admin {
     }
 
     private Role roleFromText(String value) {
-        if (i18n.t("admin.userRoleAdmin").equals(value)) return Role.ADMIN;
-        if (i18n.t("admin.userRoleTeacher").equals(value)) return Role.TEACHER;
+        if (i18n.t("admin.userRoleAdmin").equals(value))
+            return Role.ADMIN;
+        if (i18n.t("admin.userRoleTeacher").equals(value))
+            return Role.TEACHER;
         return Role.STUDENT;
     }
 

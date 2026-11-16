@@ -1,12 +1,11 @@
 package com.example.app.Model.StudentComponents;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class CourseTest {
 
@@ -54,8 +53,7 @@ class CourseTest {
     void lessonCount_defaultsToZero() {
         Course course = new Course(1, "CS101", "Java", 50);
 
-        assertEquals(0, course.getLessonCount(),
-                "lessonCount should default to 0");
+        assertEquals(0, course.getLessonCount(), "lessonCount should default to 0");
     }
 
     @Test
@@ -100,24 +98,19 @@ class CourseTest {
 
     @Test
     void id_code_name_teacherId_areFinal() throws Exception {
-        for (String fieldName :
-                Arrays.asList("id", "code", "name", "teacherId")) {
+        for (String fieldName : Arrays.asList("id", "code", "name", "teacherId")) {
 
             Field f = Course.class.getDeclaredField(fieldName);
-            assertTrue(Modifier.isFinal(f.getModifiers()),
-                    fieldName + " should be final");
-            assertTrue(Modifier.isPrivate(f.getModifiers()),
-                    fieldName + " should be private");
+            assertTrue(Modifier.isFinal(f.getModifiers()), fieldName + " should be final");
+            assertTrue(Modifier.isPrivate(f.getModifiers()), fieldName + " should be private");
         }
     }
 
     @Test
     void lessonCount_isNotFinal() throws Exception {
         Field f = Course.class.getDeclaredField("lessonCount");
-        assertFalse(Modifier.isFinal(f.getModifiers()),
-                "lessonCount must remain mutable");
-        assertTrue(Modifier.isPrivate(f.getModifiers()),
-                "lessonCount should be private");
+        assertFalse(Modifier.isFinal(f.getModifiers()), "lessonCount must remain mutable");
+        assertTrue(Modifier.isPrivate(f.getModifiers()), "lessonCount should be private");
     }
 
     @Test
@@ -145,20 +138,14 @@ class CourseTest {
     void toString_returnsExpectedFormat() {
         Course course = new Course(1, "CS101", "Java Basics", 50);
 
-        assertEquals(
-                "TeacherCourse{id=1, code='CS101', name='Java Basics'}",
-                course.toString()
-        );
+        assertEquals("TeacherCourse{id=1, code='CS101', name='Java Basics'}", course.toString());
     }
 
     @Test
     void toString_handlesNullCodeAndName() {
         Course course = new Course(2, null, null, 7);
 
-        assertEquals(
-                "TeacherCourse{id=2, code='null', name='null'}",
-                course.toString()
-        );
+        assertEquals("TeacherCourse{id=2, code='null', name='null'}", course.toString());
     }
 
     @Test
@@ -168,10 +155,8 @@ class CourseTest {
 
         String s = course.toString();
 
-        assertFalse(s.contains("teacherId"),
-                "toString should not expose teacherId: " + s);
-        assertFalse(s.contains("lessonCount"),
-                "toString should not expose lessonCount: " + s);
+        assertFalse(s.contains("teacherId"), "toString should not expose teacherId: " + s);
+        assertFalse(s.contains("lessonCount"), "toString should not expose lessonCount: " + s);
     }
 
     // ---------------------------------------------------------------

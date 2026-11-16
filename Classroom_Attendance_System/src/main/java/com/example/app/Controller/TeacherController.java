@@ -1,23 +1,21 @@
 package com.example.app.Controller;
 
 import com.example.app.DaoElements.LessonDao;
-import com.example.app.DaoElements.StudentDao.CourseDao;
 import com.example.app.DaoElements.StudentDao.AttendanceDao;
-
-import com.example.app.Model.TeacherCourse;
+import com.example.app.DaoElements.StudentDao.CourseDao;
 import com.example.app.Model.Lesson;
 import com.example.app.Model.LoginComponents.User;
-import com.example.app.Model.Teacher;
 import com.example.app.Model.StudentComponents.AttendanceRecord;
+import com.example.app.Model.Teacher;
+import com.example.app.Model.TeacherCourse;
 import com.example.app.View.TeacherAttendanceTracking;
 import com.example.app.View.TeacherCoursePage;
 import com.example.app.View.TeacherStartPage;
+import java.util.Collections;
+import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
-
-import java.util.Collections;
-import java.util.List;
 
 public class TeacherController {
 
@@ -32,13 +30,9 @@ public class TeacherController {
 
         if (user instanceof Teacher teacher) {
             this.currentTeacher = teacher;
-        } else {
-            this.currentTeacher = new Teacher(
-                    user.getId(),
-                    user.getFirstName(),
-                    user.getLastName(),
-                    user.getEmail()
-            );
+        }
+        else {
+            this.currentTeacher = new Teacher(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
         }
         this.onLogout = onLogout;
     }
@@ -53,27 +47,15 @@ public class TeacherController {
     // =============================================================
 
     public void showStartPage() {
-        TeacherStartPage startPage =
-                new TeacherStartPage(currentTeacher, this, onLogout);
+        TeacherStartPage startPage = new TeacherStartPage(currentTeacher, this, onLogout);
         root.setCenter(startPage);
     }
 
-    /**
-     * Avaa kurssisivun. Välittää currentTeacher-olion sekä User-parametrina
-     * (profiilin muokkausta varten) että Teacher-parametrina.
-     *
-     * onProfileUpdated päivittää koko kurssisivun, jotta sivupalkin nimi
-     * päivittyy heti profiilimuutoksen jälkeen.
-     */
     public void openCoursePage(int courseId) {
-        TeacherCoursePage coursePage = new TeacherCoursePage(
-                currentTeacher,
-                courseId,
-                this,
-                this::showStartPage,           // onBack
-                () -> startLesson(courseId),   // onAddLesson (varalla)
-                currentTeacher,                // currentUser (Teacher on User)
-                onLogout,                      // onLogout
+        TeacherCoursePage coursePage = new TeacherCoursePage(currentTeacher, courseId, this, this::showStartPage, // onBack
+                () -> startLesson(courseId), // onAddLesson (varalla)
+                currentTeacher, // currentUser (Teacher on User)
+                onLogout, // onLogout
                 () -> openCoursePage(courseId) // onProfileUpdated → päivitä sivu
         );
         root.setCenter(coursePage);
@@ -131,15 +113,9 @@ public class TeacherController {
             return;
         }
 
-        TeacherAttendanceTracking tracking =
-                new TeacherAttendanceTracking(
-                        currentTeacher,
-                        course,
-                        lessonId,
-                        () -> {
-                            // Päivitetään kurssisivu tarvittaessa.
-                        }
-                );
+        TeacherAttendanceTracking tracking = new TeacherAttendanceTracking(currentTeacher, course, lessonId, () -> {
+            // Päivitetään kurssisivu tarvittaessa.
+        });
 
         tracking.show();
     }
@@ -153,13 +129,8 @@ public class TeacherController {
             return;
         }
 
-        TeacherAttendanceTracking tracking =
-                new TeacherAttendanceTracking(
-                        currentTeacher,
-                        course,
-                        lessonId,
-                        this::showStartPage
-                );
+        TeacherAttendanceTracking tracking = new TeacherAttendanceTracking(currentTeacher, course, lessonId,
+                this::showStartPage);
 
         tracking.show();
     }
@@ -189,10 +160,7 @@ public class TeacherController {
         return courseDao.getStudentsForCourse(courseId);
     }
 
-    public List<AttendanceRecord> getAttendanceForStudentAndCourse(
-            int studentId,
-            int courseId
-    ) {
+    public List<AttendanceRecord> getAttendanceForStudentAndCourse(int studentId, int courseId) {
         if (studentId <= 0 || courseId <= 0) {
             return Collections.emptyList();
         }
@@ -204,8 +172,7 @@ public class TeacherController {
     // =============================================================
 
     private TeacherCourse findCourse(int courseId) {
-        List<TeacherCourse> courses =
-                getTeacherCourses(currentTeacher.getId());
+        List<TeacherCourse> courses = getTeacherCourses(currentTeacher.getId());
 
         for (TeacherCourse c : courses) {
             if (c.getCourseid() == courseId) {

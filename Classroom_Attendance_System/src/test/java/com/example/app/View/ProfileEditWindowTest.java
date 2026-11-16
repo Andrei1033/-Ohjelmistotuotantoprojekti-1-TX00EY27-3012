@@ -1,9 +1,14 @@
 package com.example.app.View;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import com.example.app.DaoElements.LoginDao.UserDao;
 import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -12,16 +17,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class ProfileEditWindowTest extends ViewTestSupport {
     private User user;
     private UserDao dao;
     private AtomicInteger updates;
-    @BeforeEach void setUp() {
+    @BeforeEach
+    void setUp() {
         user = new User(1, "Matti", "Meikäläinen", "matti@example.com", Role.STUDENT);
         dao = mock(UserDao.class);
         updates = new AtomicInteger();
@@ -32,8 +34,12 @@ class ProfileEditWindowTest extends ViewTestSupport {
     private void withWindow(Consumer<Stage> action) {
         interact(() -> inModal(() -> ProfileEditWindow.show(null, user, updates::incrementAndGet, dao), action));
     }
-    private TextField field(Parent root, String id) { return (TextField) root.lookup("#" + id); }
-    private void save(Parent root) { ((Button) root.lookup("#saveButton")).fire(); }
+    private TextField field(Parent root, String id) {
+        return (TextField) root.lookup("#" + id);
+    }
+    private void save(Parent root) {
+        ((Button) root.lookup("#saveButton")).fire();
+    }
     private void error(Parent root, String key) {
         assertEquals(i18n.t(key), ((Label) root.lookup("#errorLabel")).getText());
         assertEquals(0, updates.get());
@@ -43,7 +49,8 @@ class ProfileEditWindowTest extends ViewTestSupport {
         field(root, "newPasswordField").setText(password);
         field(root, "confirmPasswordField").setText(confirmation);
     }
-    @Test void showsProfileAndCancelDoesNotSave() {
+    @Test
+    void showsProfileAndCancelDoesNotSave() {
         withWindow(stage -> {
             Parent root = stage.getScene().getRoot();
             assertEquals("Matti", field(root, "firstNameField").getText());
@@ -69,7 +76,8 @@ class ProfileEditWindowTest extends ViewTestSupport {
         });
         verifyNoInteractions(dao);
     }
-    @Test void rejectsEmailAlreadyInUse() {
+    @Test
+    void rejectsEmailAlreadyInUse() {
         when(dao.isEmailTaken("other@example.com", 1)).thenReturn(true);
         withWindow(stage -> {
             Parent root = stage.getScene().getRoot();
@@ -79,7 +87,8 @@ class ProfileEditWindowTest extends ViewTestSupport {
         });
         verify(dao, never()).updateProfile(anyInt(), anyString(), anyString(), anyString());
     }
-    @Test void savesTrimmedProfileUpdatesUserAndClosesWindow() {
+    @Test
+    void savesTrimmedProfileUpdatesUserAndClosesWindow() {
         withWindow(stage -> {
             Parent root = stage.getScene().getRoot();
             field(root, "firstNameField").setText(" Liisa ");
@@ -111,7 +120,8 @@ class ProfileEditWindowTest extends ViewTestSupport {
         verify(dao, never()).updateProfile(anyInt(), anyString(), anyString(), anyString());
         verify(dao, never()).updatePassword(anyInt(), anyString());
     }
-    @Test void changesPasswordAndNotifiesOnce() {
+    @Test
+    void changesPasswordAndNotifiesOnce() {
         withWindow(stage -> {
             Parent root = stage.getScene().getRoot();
             passwords(root, "oldPassword", "newPassword", "newPassword");
@@ -125,7 +135,8 @@ class ProfileEditWindowTest extends ViewTestSupport {
         verify(dao, never()).isEmailTaken(anyString(), anyInt());
         assertEquals(1, updates.get());
     }
-    @Test void failedProfileSaveKeepsWindowOpenAndUserUnchanged() {
+    @Test
+    void failedProfileSaveKeepsWindowOpenAndUserUnchanged() {
         when(dao.updateProfile(anyInt(), anyString(), anyString(), anyString())).thenReturn(false);
         withWindow(stage -> {
             Parent root = stage.getScene().getRoot();
@@ -136,7 +147,8 @@ class ProfileEditWindowTest extends ViewTestSupport {
             assertEquals("Matti", user.getFirstName());
         });
     }
-    @Test void failedPasswordSaveDoesNotNotifySuccess() {
+    @Test
+    void failedPasswordSaveDoesNotNotifySuccess() {
         when(dao.updatePassword(1, "newPassword")).thenReturn(false);
         withWindow(stage -> {
             Parent root = stage.getScene().getRoot();
@@ -146,8 +158,10 @@ class ProfileEditWindowTest extends ViewTestSupport {
             assertTrue(stage.isShowing());
         });
     }
-    @Test void arabicProfileUsesRightToLeftLayout() {
+    @Test
+    void arabicProfileUsesRightToLeftLayout() {
         interact(() -> i18n.setLanguage(i18n.AR));
-        withWindow(stage -> assertEquals(NodeOrientation.RIGHT_TO_LEFT, stage.getScene().getRoot().getNodeOrientation()));
+        withWindow(
+                stage -> assertEquals(NodeOrientation.RIGHT_TO_LEFT, stage.getScene().getRoot().getNodeOrientation()));
     }
 }

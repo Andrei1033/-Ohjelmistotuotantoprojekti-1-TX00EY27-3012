@@ -1,13 +1,5 @@
 package com.example.app.Model;
 
-
-
-
-
-import com.example.app.DaoElements.LessonDao;
-
-
-
 import java.time.LocalDateTime;
 
 import java.time.format.DateTimeFormatter;
@@ -18,11 +10,7 @@ import java.time.format.TextStyle;
 
 import java.util.Locale;
 
-
-
 public class Lesson {
-
-
 
     private final int id;
 
@@ -36,19 +24,13 @@ public class Lesson {
 
     private final String endTime;
 
-
-
     private static final DateTimeFormatter formatter =
 
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss[.S]");
 
-
-
-
-
     public Lesson(int id, int courseId, String startTime, String endTime,
 
-                  String lessonTopic, String lessonStatus) {
+            String lessonTopic, String lessonStatus) {
 
         this.id = id;
 
@@ -64,15 +46,11 @@ public class Lesson {
 
     }
 
-
-
     public int getId() {
 
         return id;
 
     }
-
-
 
     public int getCourseId() {
 
@@ -80,27 +58,23 @@ public class Lesson {
 
     }
 
-
-
     public String getLessonTopic() {
 
         return lessonTopic;
 
     }
 
-
-
     public String getLessonStatus() {
 
-        if ("done".equals(lessonStatus)) return "Merkitty";
+        if ("done".equals(lessonStatus))
+            return "Merkitty";
 
-        if ("ongoing".equals(lessonStatus)) return "Käynnissä";
+        if ("ongoing".equals(lessonStatus))
+            return "Käynnissä";
 
         return "Odottaa";
 
     }
-
-
 
     public boolean isDone() {
 
@@ -108,25 +82,17 @@ public class Lesson {
 
     }
 
-
-
     public String getStartTime() {
 
         return startTime;
 
     }
 
-
-
     public String getEndTime() {
 
         return endTime;
 
     }
-
-
-
-
 
     private LocalDateTime getDateTime() {
 
@@ -142,7 +108,8 @@ public class Lesson {
 
             return LocalDateTime.parse(cleanTime, formatter);
 
-        } catch (DateTimeParseException e) {
+        }
+        catch (DateTimeParseException e) {
 
             System.err.println("Virheellinen aika ja päivä: " + startTime);
 
@@ -152,19 +119,16 @@ public class Lesson {
 
     }
 
-
     public String getDayofTheWeek() {
 
         LocalDateTime date = getDateTime();
 
-        if (date == null) return null;
+        if (date == null)
+            return null;
 
         return date.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.US);
 
     }
-
-
-
 
     public String getFormattedData() {
 

@@ -1,7 +1,5 @@
 package com.example.app.Model.StudentComponents;
 
-
-
 public class Course {
 
     private final int id;
@@ -12,11 +10,7 @@ public class Course {
 
     private final int teacherId;
 
-
-
     private int lessonCount;
-
-
 
     public Course(int id, String code, String name, int teacherId) {
 
@@ -30,15 +24,11 @@ public class Course {
 
     }
 
-
-
     public int getId() {
 
         return id;
 
     }
-
-
 
     public String getCode() {
 
@@ -46,15 +36,11 @@ public class Course {
 
     }
 
-
-
     public String getName() {
 
         return name;
 
     }
-
-
 
     public int getTeacherId() {
 
@@ -62,23 +48,17 @@ public class Course {
 
     }
 
-
-
     public int getLessonCount() {
 
         return lessonCount;
 
     }
 
-
-
     public void setLessonCount(int lessonCount) {
 
         this.lessonCount = lessonCount;
 
     }
-
-
 
     @Override
 
@@ -89,4 +69,3 @@ public class Course {
     }
 
 }
-

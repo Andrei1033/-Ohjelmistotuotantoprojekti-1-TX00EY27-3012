@@ -1,10 +1,15 @@
 package com.example.app.View;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.StudentComponents.AttendanceRecord;
 import com.example.app.Model.StudentComponents.Course;
-
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,17 +25,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class StudentAttendanceTrackingTest extends ApplicationTest {
 
     private static final LocalDateTime START = LocalDateTime.of(2026, 9, 2, 10, 0);
-    private static final LocalDateTime END   = LocalDateTime.of(2026, 9, 2, 11, 30);
+    private static final LocalDateTime END = LocalDateTime.of(2026, 9, 2, 11, 30);
 
     private Stage stage;
     private Course course;
@@ -43,7 +41,7 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
 
     @BeforeEach
     void setUp() {
-        course  = new Course(1, "TX00CV70", "Ohjelmoinnin perusteet", 99);
+        course = new Course(1, "TX00CV70", "Ohjelmoinnin perusteet", 99);
         student = new User(42, "Matti", "Meikäläinen", "matti@example.com", Role.STUDENT);
     }
 
@@ -55,19 +53,15 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     // ---------------- helpers ----------------
 
     /**
-     * Builds the view with the new 6-arg constructor and shows it so
-     * lookupAll works.
+     * Builds the view with the new 6-arg constructor and shows it so lookupAll works.
      */
     private StudentAttendanceTracking show(List<AttendanceRecord> records, Runnable onBack) {
         StudentAttendanceTracking[] ref = new StudentAttendanceTracking[1];
         interact(() -> {
-            StudentAttendanceTracking view = new StudentAttendanceTracking(
-                    course,
-                    records,
-                    onBack,
-                    student,
-                    () -> { },  // onLogout
-                    () -> { }   // onProfileUpdated
+            StudentAttendanceTracking view = new StudentAttendanceTracking(course, records, onBack, student, () -> {
+            }, // onLogout
+                    () -> {
+                    } // onProfileUpdated
             );
             Scene scene = new Scene(view, 900, 600);
             stage.setScene(scene);
@@ -84,23 +78,27 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     private <T extends Node> List<T> findAllByType(Parent root, Class<T> type) {
         List<T> out = new ArrayList<>();
         for (Node n : root.lookupAll("*")) {
-            if (type.isInstance(n)) out.add(type.cast(n));
+            if (type.isInstance(n))
+                out.add(type.cast(n));
         }
         return out;
     }
 
     private boolean hasLabel(Parent root, String text) {
-        return findAllByType(root, Label.class).stream()
-                .anyMatch(l -> text.equals(l.getText()));
+        return findAllByType(root, Label.class).stream().anyMatch(l -> text.equals(l.getText()));
     }
 
     private List<HBox> attendanceRows(Parent root) {
         List<HBox> rows = new ArrayList<>();
         for (HBox h : findAllByType(root, HBox.class)) {
-            if (h.getChildren().size() != 4) continue;
-            if (!(h.getChildren().get(3) instanceof HBox status)) continue;
-            if (status.getChildren().size() != 2) continue;
-            if (!(status.getChildren().get(1) instanceof Label)) continue;
+            if (h.getChildren().size() != 4)
+                continue;
+            if (!(h.getChildren().get(3) instanceof HBox status))
+                continue;
+            if (status.getChildren().size() != 2)
+                continue;
+            if (!(status.getChildren().get(1) instanceof Label))
+                continue;
             rows.add(h);
         }
         return rows;
@@ -116,7 +114,8 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     @Test
     @DisplayName("View is a BorderPane with sidebar left and content center")
     void layoutStructure() {
-        StudentAttendanceTracking view = show(List.of(), () -> {});
+        StudentAttendanceTracking view = show(List.of(), () -> {
+        });
         assertInstanceOf(BorderPane.class, view);
         assertInstanceOf(VBox.class, view.getLeft());
         assertInstanceOf(VBox.class, view.getCenter());
@@ -125,16 +124,18 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     @Test
     @DisplayName("Sidebar shows logged-in user's full name, role and initials")
     void sidebarShowsUser() {
-        StudentAttendanceTracking view = show(List.of(), () -> {});
+        StudentAttendanceTracking view = show(List.of(), () -> {
+        });
         assertTrue(hasLabel(view, "Matti Meikäläinen"), "full name");
-        assertTrue(hasLabel(view, "Opiskelija"),       "role");
-        assertTrue(hasLabel(view, "MM"),               "initials");
+        assertTrue(hasLabel(view, "Opiskelija"), "role");
+        assertTrue(hasLabel(view, "MM"), "initials");
     }
 
     @Test
     @DisplayName("Header shows course name and code from the TeacherCourse model")
     void headerShowsCourse() {
-        StudentAttendanceTracking view = show(List.of(), () -> {});
+        StudentAttendanceTracking view = show(List.of(), () -> {
+        });
         assertTrue(hasLabel(view, "Ohjelmoinnin perusteet"));
         assertTrue(hasLabel(view, "TX00CV70 - omat läsnäolomerkinnät"));
     }
@@ -142,56 +143,49 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     @Test
     @DisplayName("Summary counts present/late/absent from records (excused -> poissa)")
     void summaryCounts() {
-        StudentAttendanceTracking view = show(List.of(
-                rec("present", "A"),
-                rec("present", "B"),
-                rec("late",    "C"),
-                rec("absent",  "D"),
-                rec("excused", "E")
-        ), () -> {});
+        StudentAttendanceTracking view = show(List.of(rec("present", "A"), rec("present", "B"), rec("late", "C"),
+                rec("absent", "D"), rec("excused", "E")), () -> {
+                });
 
         assertTrue(hasLabel(view, "2 paikalla"), "present");
         assertTrue(hasLabel(view, "1 myöhässä"), "late");
-        assertTrue(hasLabel(view, "2 poissa"),   "absent+excused");
+        assertTrue(hasLabel(view, "2 poissa"), "absent+excused");
     }
 
     @Test
     @DisplayName("One row per record; empty list shows empty-state message")
     void rowCountAndEmptyState() {
-        StudentAttendanceTracking empty = show(List.of(), () -> {});
+        StudentAttendanceTracking empty = show(List.of(), () -> {
+        });
         assertEquals(0, attendanceRows(empty).size());
         assertTrue(hasLabel(empty, "Tällä kurssilla ei ole vielä oppitunteja."));
 
-        StudentAttendanceTracking three = show(List.of(
-                rec("present", "X"),
-                rec("late",    "X"),
-                rec("absent",  "X")
-        ), () -> {});
+        StudentAttendanceTracking three = show(List.of(rec("present", "X"), rec("late", "X"), rec("absent", "X")),
+                () -> {
+                });
         assertEquals(3, attendanceRows(three).size());
     }
 
     @Test
     @DisplayName("Status labels are localized in the given order")
     void statusLabels() {
-        StudentAttendanceTracking view = show(List.of(
-                rec("present", "X"),
-                rec("late",    "X"),
-                rec("absent",  "X"),
-                rec("excused", "X")
-        ), () -> {});
+        StudentAttendanceTracking view = show(
+                List.of(rec("present", "X"), rec("late", "X"), rec("absent", "X"), rec("excused", "X")), () -> {
+                });
 
         List<HBox> rows = attendanceRows(view);
         assertEquals(4, rows.size());
-        assertEquals("paikalla",            statusLabelOf(rows.get(0)).getText());
-        assertEquals("myöhässä",            statusLabelOf(rows.get(1)).getText());
-        assertEquals("poissa",              statusLabelOf(rows.get(2)).getText());
+        assertEquals("paikalla", statusLabelOf(rows.get(0)).getText());
+        assertEquals("myöhässä", statusLabelOf(rows.get(1)).getText());
+        assertEquals("poissa", statusLabelOf(rows.get(2)).getText());
         assertEquals("poissa (hyväksytty)", statusLabelOf(rows.get(3)).getText());
     }
 
     @Test
     @DisplayName("null status falls back to 'poissa'")
     void nullStatusFallback() {
-        StudentAttendanceTracking view = show(List.of(rec(null, "X")), () -> {});
+        StudentAttendanceTracking view = show(List.of(rec(null, "X")), () -> {
+        });
         List<HBox> rows = attendanceRows(view);
         assertEquals(1, rows.size());
         assertEquals("poissa", statusLabelOf(rows.get(0)).getText());
@@ -200,8 +194,8 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     @Test
     @DisplayName("Row shows the lesson topic from AttendanceRecord")
     void rowShowsTopic() {
-        StudentAttendanceTracking view = show(
-                List.of(rec("present", "Muuttujat ja tietotyypit")), () -> {});
+        StudentAttendanceTracking view = show(List.of(rec("present", "Muuttujat ja tietotyypit")), () -> {
+        });
 
         HBox row = attendanceRows(view).get(0);
         Label topic = (Label) row.getChildren().get(1);
@@ -211,15 +205,16 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
     @Test
     @DisplayName("Row date box shows formatted date and Finnish weekday")
     void rowShowsFormattedDate() {
-        StudentAttendanceTracking view = show(List.of(rec("present", "X")), () -> {});
+        StudentAttendanceTracking view = show(List.of(rec("present", "X")), () -> {
+        });
 
         HBox row = attendanceRows(view).get(0);
         VBox dateBox = (VBox) row.getChildren().get(0);
         Label date = (Label) dateBox.getChildren().get(0);
-        Label day  = (Label) dateBox.getChildren().get(1);
+        Label day = (Label) dateBox.getChildren().get(1);
 
         assertEquals("2.9.2026", date.getText());
-        assertEquals("Ke",       day.getText());
+        assertEquals("Ke", day.getText());
     }
 
     @Test
@@ -229,8 +224,7 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
         StudentAttendanceTracking view = show(List.of(), () -> called.set(true));
 
         Button back = findAllByType(view, Button.class).stream()
-                .filter(b -> b.getText() != null && b.getText().contains("Takaisin"))
-                .findFirst()
+                .filter(b -> b.getText() != null && b.getText().contains("Takaisin")).findFirst()
                 .orElseThrow(() -> new AssertionError("Back button not found"));
 
         interact(back::fire);
@@ -253,23 +247,16 @@ class StudentAttendanceTrackingTest extends ApplicationTest {
         AtomicBoolean loggedOut = new AtomicBoolean(false);
         StudentAttendanceTracking[] ref = new StudentAttendanceTracking[1];
         interact(() -> {
-            StudentAttendanceTracking view = new StudentAttendanceTracking(
-                    course,
-                    List.of(),
-                    () -> { },
-                    student,
-                    () -> loggedOut.set(true),
-                    () -> { }
-            );
+            StudentAttendanceTracking view = new StudentAttendanceTracking(course, List.of(), () -> {
+            }, student, () -> loggedOut.set(true), () -> {
+            });
             stage.setScene(new Scene(view, 900, 600));
             stage.show();
             ref[0] = view;
         });
 
-        Button logout = findAllByType(ref[0], Button.class).stream()
-                .filter(b -> "Kirjaudu ulos".equals(b.getText()))
-                .findFirst()
-                .orElseThrow(() -> new AssertionError("Logout button not found"));
+        Button logout = findAllByType(ref[0], Button.class).stream().filter(b -> "Kirjaudu ulos".equals(b.getText()))
+                .findFirst().orElseThrow(() -> new AssertionError("Logout button not found"));
 
         interact(logout::fire);
         assertTrue(loggedOut.get(), "onLogout must be invoked");

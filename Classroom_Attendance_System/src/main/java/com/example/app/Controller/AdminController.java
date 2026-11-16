@@ -4,12 +4,11 @@ import com.example.app.DaoElements.AdminDao;
 import com.example.app.Localisation.i18n;
 import com.example.app.Model.Admin;
 import com.example.app.Model.LoginComponents.Role;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class AdminController {
     private final ObservableList<Admin> users = FXCollections.observableArrayList();
@@ -25,7 +24,8 @@ public class AdminController {
         this.adminDao = adminDao;
         try {
             users.addAll(adminDao.findAll());
-        } catch (RuntimeException exception) {
+        }
+        catch (RuntimeException exception) {
             databaseError = exception.getMessage();
         }
         nextId = users.stream().mapToInt(Admin::getId).max().orElse(0) + 1;
@@ -39,18 +39,14 @@ public class AdminController {
         String query = search == null ? "" : search.trim().toLowerCase(Locale.ROOT);
         String selectedCourse = isAllCoursesOption(course) ? "" : course.trim();
 
-        return users.filtered(user ->
-                (role == null || user.getRole() == role)
-                        && (query.isEmpty()
-                        || user.getName().toLowerCase(Locale.ROOT).contains(query)
+        return users.filtered(user -> (role == null || user.getRole() == role)
+                && (query.isEmpty() || user.getName().toLowerCase(Locale.ROOT).contains(query)
                         || user.getEmail().toLowerCase(Locale.ROOT).contains(query))
-                        && (selectedCourse.isEmpty()
-                        || user.getCourses().contains(selectedCourse)));
+                && (selectedCourse.isEmpty() || user.getCourses().contains(selectedCourse)));
     }
 
     private boolean isAllCoursesOption(String course) {
-        return course == null
-                || course.trim().equalsIgnoreCase(i18n.t("app.all"))
+        return course == null || course.trim().equalsIgnoreCase(i18n.t("app.all"))
                 || course.trim().equalsIgnoreCase("Kaikki");
     }
 
@@ -87,14 +83,14 @@ public class AdminController {
         updateUser(user, name, email, role, courses, null);
     }
 
-    public void updateUser(Admin user, String name, String email, Role role, String courses,
-                           String password) {
+    public void updateUser(Admin user, String name, String email, Role role, String courses, String password) {
         if (user == null || !users.contains(user)) {
             throw new IllegalArgumentException("Unknown user");
         }
         if (password == null) {
             adminDao.update(user, name, email, role, courses);
-        } else {
+        }
+        else {
             adminDao.update(user, name, email, role, courses, password);
         }
         user.update(name, email, role, courses);

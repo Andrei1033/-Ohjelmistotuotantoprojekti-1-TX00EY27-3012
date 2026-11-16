@@ -1,12 +1,12 @@
 package com.example.app.Model;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Lesson Model Tests")
 class LessonTest {
@@ -22,11 +22,9 @@ class LessonTest {
             var ongoingLesson = new Lesson(2, 101, "2026-10-05 10:00:00", "2026-10-05 11:00:00", "Physics", "ongoing");
             var pendingLesson = new Lesson(3, 101, "2026-10-05 10:00:00", "2026-10-05 11:00:00", "History", "pending");
 
-            assertAll(
-                    () -> assertEquals("Merkitty", doneLesson.getLessonStatus()),
+            assertAll(() -> assertEquals("Merkitty", doneLesson.getLessonStatus()),
                     () -> assertEquals("Käynnissä", ongoingLesson.getLessonStatus()),
-                    () -> assertEquals("Odottaa", pendingLesson.getLessonStatus())
-            );
+                    () -> assertEquals("Odottaa", pendingLesson.getLessonStatus()));
         }
 
         @Test
@@ -45,11 +43,9 @@ class LessonTest {
     class DateFormattingTests {
 
         @ParameterizedTest(name = "Kello/päivä {0} muotoillaan muotoon {1}")
-        @CsvSource({
-                "2026-10-05 10:00:00, 5.10.2026",
-                "2026-01-01 08:30:00, 1.1.2026",
-                "2026-12-31T23:59:59, 31.12.2026",    // Testaa 'T'-erotinta
-                "2026-05-15 12:00:00.1, 15.5.2026"   // Testaa sekunnin murto-osia [.S]
+        @CsvSource({"2026-10-05 10:00:00, 5.10.2026", "2026-01-01 08:30:00, 1.1.2026",
+                "2026-12-31T23:59:59, 31.12.2026", // Testaa 'T'-erotinta
+                "2026-05-15 12:00:00.1, 15.5.2026" // Testaa sekunnin murto-osia [.S]
         })
         @DisplayName("getFormattedData muotoilee voimassa olevat aikaleimat oikein")
         void testGetFormattedDataValid(String inputTime, String expectedDate) {
@@ -95,13 +91,10 @@ class LessonTest {
         void testGetters() {
             var lesson = new Lesson(42, 7, "2026-10-05 10:00:00", "2026-10-05 11:00:00", "Java Basics", "done");
 
-            assertAll(
-                    () -> assertEquals(42, lesson.getId()),
-                    () -> assertEquals(7, lesson.getCourseId()),
+            assertAll(() -> assertEquals(42, lesson.getId()), () -> assertEquals(7, lesson.getCourseId()),
                     () -> assertEquals("2026-10-05 10:00:00", lesson.getStartTime()),
                     () -> assertEquals("2026-10-05 11:00:00", lesson.getEndTime()),
-                    () -> assertEquals("Java Basics", lesson.getLessonTopic())
-            );
+                    () -> assertEquals("Java Basics", lesson.getLessonTopic()));
         }
     }
 }

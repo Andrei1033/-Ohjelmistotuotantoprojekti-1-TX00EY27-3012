@@ -1,24 +1,17 @@
 package com.example.app.Controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import com.example.app.DaoElements.LoginDao.UserDao;
 import com.example.app.Model.LoginComponents.Role;
 import com.example.app.Model.LoginComponents.User;
-import javafx.application.Platform;
-import javafx.scene.Parent;
-import org.junit.jupiter.api.BeforeAll;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-
 
 @ExtendWith(MockitoExtension.class)
 class LoginControllerTest {
@@ -76,8 +69,7 @@ class LoginControllerTest {
     @Test
     void login_shouldReturnUser_whenCredentialsAreValid() {
         User expected = mock(User.class);
-        when(userDao.findByEmailAndPassword("user@example.com", "password123"))
-                .thenReturn(Optional.of(expected));
+        when(userDao.findByEmailAndPassword("user@example.com", "password123")).thenReturn(Optional.of(expected));
 
         Optional<User> result = loginController.login("user@example.com", "password123");
 
@@ -88,8 +80,7 @@ class LoginControllerTest {
 
     @Test
     void login_shouldTrimEmail_beforeCallingDao() {
-        when(userDao.findByEmailAndPassword("user@example.com", "password123"))
-                .thenReturn(Optional.of(mockUser));
+        when(userDao.findByEmailAndPassword("user@example.com", "password123")).thenReturn(Optional.of(mockUser));
 
         Optional<User> result = loginController.login("  user@example.com  ", "password123");
 
@@ -100,8 +91,7 @@ class LoginControllerTest {
 
     @Test
     void login_shouldReturnEmpty_whenDaoReturnsEmpty() {
-        when(userDao.findByEmailAndPassword("user@example.com", "wrongpass"))
-                .thenReturn(Optional.empty());
+        when(userDao.findByEmailAndPassword("user@example.com", "wrongpass")).thenReturn(Optional.empty());
 
         Optional<User> result = loginController.login("user@example.com", "wrongpass");
 
@@ -124,12 +114,11 @@ class LoginControllerTest {
 
     @Test
     void getStartPageFor_shouldThrow_whenUserIsNull() {
-        Runnable onLogout = () -> {};
+        Runnable onLogout = () -> {
+        };
 
-        IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
-                () -> loginController.getStartPageFor(null, onLogout)
-        );
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> loginController.getStartPageFor(null, onLogout));
         assertEquals("User cannot be null", ex.getMessage());
     }
 

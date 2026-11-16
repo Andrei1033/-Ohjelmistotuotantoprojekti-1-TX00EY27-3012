@@ -1,5 +1,10 @@
 package com.example.app.View;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,12 +18,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class LoginTest extends ApplicationTest {
 
     private Login loginView;
@@ -31,56 +30,53 @@ class LoginTest extends ApplicationTest {
     @BeforeEach
     void setUp() {
         // Must be on JavaFX thread
-        interact(() -> loginView = new Login(() -> {}));
+        interact(() -> loginView = new Login(() -> {
+        }));
     }
 
     // ---------- Helpers ----------
 
     private <T extends Node> T findByType(javafx.scene.Parent root, Class<T> type) {
         for (Node n : root.lookupAll("*")) {
-            if (type.isInstance(n)) return type.cast(n);
+            if (type.isInstance(n))
+                return type.cast(n);
         }
         return null;
     }
 
     private List<Node> allNodes(javafx.scene.Parent root) {
         List<Node> nodes = new ArrayList<>();
-        for (Node n : root.lookupAll("*")) nodes.add(n);
+        for (Node n : root.lookupAll("*"))
+            nodes.add(n);
         return nodes;
     }
 
     private <T extends Node> List<T> findAllByType(javafx.scene.Parent root, Class<T> type) {
         List<T> result = new ArrayList<>();
         for (Node n : allNodes(root)) {
-            if (type.isInstance(n)) result.add(type.cast(n));
+            if (type.isInstance(n))
+                result.add(type.cast(n));
         }
         return result;
     }
 
     private Button findLoginButton() {
-        return findAllByType(loginView, Button.class).stream()
-                .filter(b -> "Kirjaudu".equals(b.getText()))
-                .findFirst()
+        return findAllByType(loginView, Button.class).stream().filter(b -> "Kirjaudu".equals(b.getText())).findFirst()
                 .orElseThrow(() -> new AssertionError("Login button not found"));
     }
 
     private TextField findEmailField() {
-        return findAllByType(loginView, TextField.class).stream()
-                .filter(f -> !(f instanceof PasswordField))
-                .findFirst()
+        return findAllByType(loginView, TextField.class).stream().filter(f -> !(f instanceof PasswordField)).findFirst()
                 .orElseThrow(() -> new AssertionError("Email field not found"));
     }
 
     private PasswordField findPasswordField() {
-        return findAllByType(loginView, PasswordField.class).stream()
-                .findFirst()
+        return findAllByType(loginView, PasswordField.class).stream().findFirst()
                 .orElseThrow(() -> new AssertionError("Password field not found"));
     }
 
     private Label findLabelByText(String text) {
-        return findAllByType(loginView, Label.class).stream()
-                .filter(l -> text.equals(l.getText()))
-                .findFirst()
+        return findAllByType(loginView, Label.class).stream().filter(l -> text.equals(l.getText())).findFirst()
                 .orElseThrow(() -> new AssertionError("Label not found: " + text));
     }
 
@@ -105,8 +101,7 @@ class LoginTest extends ApplicationTest {
 
         VBox cardBox = (VBox) card;
         // logoBox, header, form, spacer, bottom
-        assertEquals(5, cardBox.getChildren().size(),
-                "Card should have 5 top-level sections");
+        assertEquals(5, cardBox.getChildren().size(), "Card should have 5 top-level sections");
     }
 
     @Test
@@ -179,8 +174,7 @@ class LoginTest extends ApplicationTest {
     @Test
     @DisplayName("There is exactly one login button")
     void testSingleLoginButton() {
-        long buttonCount = findAllByType(loginView, Button.class).stream()
-                .filter(b -> "Kirjaudu".equals(b.getText()))
+        long buttonCount = findAllByType(loginView, Button.class).stream().filter(b -> "Kirjaudu".equals(b.getText()))
                 .count();
         assertEquals(1, buttonCount);
     }
@@ -189,8 +183,7 @@ class LoginTest extends ApplicationTest {
     @DisplayName("There is exactly one email field and one password field")
     void testSingleFields() {
         List<TextField> plainTextFields = findAllByType(loginView, TextField.class).stream()
-                .filter(f -> !(f instanceof PasswordField))
-                .toList();
+                .filter(f -> !(f instanceof PasswordField)).toList();
         List<PasswordField> passwordFields = findAllByType(loginView, PasswordField.class);
 
         assertEquals(1, plainTextFields.size(), "Exactly one email TextField expected");

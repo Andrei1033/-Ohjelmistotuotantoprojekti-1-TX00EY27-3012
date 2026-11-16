@@ -1,8 +1,15 @@
 package com.example.app.DaoElements;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+
 import com.example.app.Database.DatabaseConnection;
 import com.example.app.Model.Lesson;
-
+import java.sql.*;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,15 +19,6 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.sql.*;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class LessonDaoTest {
@@ -51,8 +49,6 @@ class LessonDaoTest {
         mockedDbConnection.close();
     }
 
-
-
     @Test
     @DisplayName("getLessonsByCourseById palauttaa pyydetyt oppitunnit oikealla alustuksella")
     void testGetLessonsByCourseById_Success() throws SQLException {
@@ -62,20 +58,16 @@ class LessonDaoTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
 
-
         when(mockResultSet.next()).thenReturn(true, true, false);
         when(mockResultSet.getInt("lesson_id")).thenReturn(101, 102);
         when(mockResultSet.getInt("course_id")).thenReturn(courseId, courseId);
         when(mockResultSet.getString("start_time")).thenReturn("2026-10-04 10:00:00", "2026-10-04 12:00:00");
         when(mockResultSet.getString("end_time")).thenReturn("2026-10-04 11:30:00", "2026-10-04 13:30:00");
 
-
         List<Lesson> result = lessonDao.getLessonsByCourseById(courseId);
-
 
         assertNotNull(result);
         assertEquals(2, result.size());
-
 
         verify(mockPreparedStatement, times(1)).setInt(1, courseId);
         verify(mockPreparedStatement, times(1)).executeQuery();
@@ -92,9 +84,7 @@ class LessonDaoTest {
 
         when(mockResultSet.next()).thenReturn(false);
 
-
         List<Lesson> result = lessonDao.getLessonsByCourseById(courseId);
-
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
@@ -107,15 +97,11 @@ class LessonDaoTest {
         mockedDbConnection.when(DatabaseConnection::getConnection)
                 .thenThrow(new SQLException("Yhteysvirhe tietokantaan"));
 
-
         List<Lesson> result = lessonDao.getLessonsByCourseById(1);
-
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
-
-
 
     @Test
     @DisplayName("startLesson lisää oppitunnin ja palauttaa luodun tunnisteen (ID)")
@@ -133,12 +119,9 @@ class LessonDaoTest {
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getInt(1)).thenReturn(generatedLessonId);
 
-
         int resultId = lessonDao.startLesson(courseId);
 
-
         assertEquals(generatedLessonId, resultId);
-
 
         verify(mockPreparedStatement, times(1)).setInt(1, courseId);
         verify(mockPreparedStatement, times(1)).setObject(eq(2), any(Timestamp.class));
@@ -156,9 +139,7 @@ class LessonDaoTest {
                 .thenReturn(mockPreparedStatement);
         when(mockPreparedStatement.executeUpdate()).thenReturn(0);
 
-
         int resultId = lessonDao.startLesson(courseId);
-
 
         assertEquals(-1, resultId);
     }
@@ -170,9 +151,7 @@ class LessonDaoTest {
         mockedDbConnection.when(DatabaseConnection::getConnection)
                 .thenThrow(new SQLException("Virhe tietokantaan kirjoitettaessa"));
 
-
         int resultId = lessonDao.startLesson(1);
-
 
         assertEquals(-1, resultId);
     }

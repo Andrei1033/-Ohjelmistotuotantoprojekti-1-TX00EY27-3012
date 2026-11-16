@@ -1,10 +1,9 @@
 package com.example.app.Database;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 class DatabaseConnectionTest {
     @Test
     void connectionShouldWork() throws Exception {

@@ -10,23 +10,19 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class TeacherDao {
-    public Optional <Teacher> getTeacherbyId(int userId) {
-        String sql = "SELECT user_id, email, first_name, last_name " +
-                "FROM users WHERE user_id = ? AND `role` = 'teacher'";
+    public Optional<Teacher> getTeacherbyId(int userId) {
+        String sql = "SELECT user_id, email, first_name, last_name "
+                + "FROM users WHERE user_id = ? AND `role` = 'teacher'";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-          stmt.setInt(1, userId);
+            stmt.setInt(1, userId);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Teacher teacher = new Teacher(
-                            rs.getInt("user_id"),
-                            rs.getString("first_name"),
-                            rs.getString("last_name"),
-                            rs.getString("email")
-                    );
+                    Teacher teacher = new Teacher(rs.getInt("user_id"), rs.getString("first_name"),
+                            rs.getString("last_name"), rs.getString("email"));
                     return Optional.of(teacher);
                 }
             }
@@ -37,6 +33,4 @@ public class TeacherDao {
         return Optional.empty();
     }
 
-    }
-
-
+}

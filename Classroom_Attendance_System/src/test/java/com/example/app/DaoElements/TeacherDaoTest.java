@@ -1,8 +1,16 @@
 package com.example.app.DaoElements;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
 import com.example.app.Database.DatabaseConnection;
 import com.example.app.Model.Teacher;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,16 +20,6 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TeacherDaoTest {
@@ -61,19 +59,15 @@ class TeacherDaoTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
 
-
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getInt("user_id")).thenReturn(userId);
         when(mockResultSet.getString("first_name")).thenReturn("Matti");
         when(mockResultSet.getString("last_name")).thenReturn("Meikäläinen");
         when(mockResultSet.getString("email")).thenReturn("matti.meikalainen@example.com");
 
-
         Optional<Teacher> result = teacherDao.getTeacherbyId(userId);
 
-
         assertTrue(result.isPresent(), "Opettajan pitäisi löytyä");
-
 
         verify(mockPreparedStatement, times(1)).setInt(1, userId);
         verify(mockPreparedStatement, times(1)).executeQuery();
@@ -90,9 +84,7 @@ class TeacherDaoTest {
 
         when(mockResultSet.next()).thenReturn(false);
 
-
         Optional<Teacher> result = teacherDao.getTeacherbyId(userId);
-
 
         assertTrue(result.isEmpty(), "Pitäisi palauttaa tyhjä Optional kun käyttäjää ei löydy");
         verify(mockPreparedStatement, times(1)).setInt(1, userId);
@@ -106,9 +98,7 @@ class TeacherDaoTest {
         mockedDbConnection.when(DatabaseConnection::getConnection)
                 .thenThrow(new SQLException("Yhteys katkesi tietokantaan"));
 
-
         Optional<Teacher> result = teacherDao.getTeacherbyId(userId);
-
 
         assertTrue(result.isEmpty(), "Pitäisi palauttaa tyhjä Optional virhetilanteessa");
     }

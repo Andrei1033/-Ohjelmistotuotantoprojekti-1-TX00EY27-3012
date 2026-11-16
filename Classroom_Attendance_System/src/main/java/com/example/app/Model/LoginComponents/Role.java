@@ -1,12 +1,11 @@
 package com.example.app.Model.LoginComponents;
 
 public enum Role {
-    STUDENT,
-    TEACHER,
-    ADMIN;
+    STUDENT, TEACHER, ADMIN;
 
     public static Role fromString(String value) {
-        if (value == null) return null;
+        if (value == null)
+            return null;
         return switch (value.toLowerCase()) {
             case "student" -> STUDENT;
             case "teacher" -> TEACHER;

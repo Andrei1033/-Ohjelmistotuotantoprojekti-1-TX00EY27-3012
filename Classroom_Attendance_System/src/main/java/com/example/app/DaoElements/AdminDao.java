@@ -15,8 +15,7 @@ public class AdminDao {
     private static String getDefaultPasswordHash() {
         String hash = System.getenv("DEFAULT_PASSWORD_HASH");
         if (hash == null || hash.isBlank()) {
-            throw new IllegalStateException(
-                    "Environment variable DEFAULT_PASSWORD_HASH is not set");
+            throw new IllegalStateException("Environment variable DEFAULT_PASSWORD_HASH is not set");
         }
         return hash;
     }
@@ -41,25 +40,21 @@ public class AdminDao {
         List<Admin> users = new ArrayList<>();
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS);
-             ResultSet resultSet = statement.executeQuery()) {
+                PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS);
+                ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Role role = Role.fromString(resultSet.getString("role"));
                 if (role == null) {
-                    throw new IllegalStateException(
-                            "Unknown role for user " + resultSet.getInt("user_id"));
+                    throw new IllegalStateException("Unknown role for user " + resultSet.getInt("user_id"));
                 }
 
                 String courses = resultSet.getString("courses");
-                users.add(new Admin(
-                        resultSet.getInt("user_id"),
+                users.add(new Admin(resultSet.getInt("user_id"),
                         resultSet.getString("first_name") + " " + resultSet.getString("last_name"),
-                        resultSet.getString("email"),
-                        role,
-                        courses == null ? "—" : courses
-                ));
+                        resultSet.getString("email"), role, courses == null ? "—" : courses));
             }
-        } catch (SQLException exception) {
+        }
+        catch (SQLException exception) {
             throw new IllegalStateException("Käyttäjien haku tietokannasta epäonnistui", exception);
         }
 
@@ -79,8 +74,8 @@ public class AdminDao {
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             connection.setAutoCommit(false);
-            try (PreparedStatement statement = connection.prepareStatement(
-                    insertUser, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement statement = connection.prepareStatement(insertUser,
+                    java.sql.Statement.RETURN_GENERATED_KEYS)) {
                 statement.setString(1, nameParts[0]);
                 statement.setString(2, nameParts[1]);
                 statement.setString(3, email);
@@ -97,11 +92,13 @@ public class AdminDao {
                     connection.commit();
                     return new Admin(userId, name, email, role, courses);
                 }
-            } catch (SQLException exception) {
+            }
+            catch (SQLException exception) {
                 connection.rollback();
                 throw exception;
             }
-        } catch (SQLException exception) {
+        }
+        catch (SQLException exception) {
             throw new IllegalStateException("Käyttäjän tallennus tietokantaan epäonnistui", exception);
         }
     }
@@ -110,16 +107,13 @@ public class AdminDao {
         update(user, name, email, role, courses, null);
     }
 
-    public void update(Admin user, String name, String email, Role role, String courses,
-                       String password) {
+    public void update(Admin user, String name, String email, Role role, String courses, String password) {
         String[] nameParts = splitName(name);
-        String updateUser = password == null || password.isBlank()
-                ? """
+        String updateUser = password == null || password.isBlank() ? """
                 UPDATE users
                 SET first_name = ?, last_name = ?, email = ?, role = ?
                 WHERE user_id = ?
-                """
-                : """
+                """ : """
                 UPDATE users
                 SET first_name = ?, last_name = ?, email = ?, role = ?, `password` = ?
                 WHERE user_id = ?
@@ -134,7 +128,8 @@ public class AdminDao {
                 statement.setString(4, role.name().toLowerCase());
                 if (password == null || password.isBlank()) {
                     statement.setInt(5, user.getId());
-                } else {
+                }
+                else {
                     statement.setString(5, password);
                     statement.setInt(6, user.getId());
                 }
@@ -143,11 +138,13 @@ public class AdminDao {
                 }
                 syncCourses(connection, user.getId(), role, courses);
                 connection.commit();
-            } catch (SQLException exception) {
+            }
+            catch (SQLException exception) {
                 connection.rollback();
                 throw exception;
             }
-        } catch (SQLException exception) {
+        }
+        catch (SQLException exception) {
             throw new IllegalStateException("Käyttäjän päivitys tietokantaan epäonnistui", exception);
         }
     }
@@ -163,20 +160,21 @@ public class AdminDao {
                     throw new SQLException("Käyttäjää ei löytynyt tietokannasta");
                 }
                 connection.commit();
-            } catch (SQLException exception) {
+            }
+            catch (SQLException exception) {
                 connection.rollback();
                 throw exception;
             }
-        } catch (SQLException exception) {
+        }
+        catch (SQLException exception) {
             throw new IllegalStateException("Käyttäjän poisto tietokannasta epäonnistui", exception);
         }
     }
 
-    private void syncCourses(Connection connection, int userId, Role role, String courses)
-            throws SQLException {
+    private void syncCourses(Connection connection, int userId, Role role, String courses) throws SQLException {
         if (role == Role.STUDENT) {
-            try (PreparedStatement delete = connection.prepareStatement(
-                    "DELETE FROM course_students WHERE student_id = ?")) {
+            try (PreparedStatement delete = connection
+                    .prepareStatement("DELETE FROM course_students WHERE student_id = ?")) {
                 delete.setInt(1, userId);
                 delete.executeUpdate();
             }
@@ -203,7 +201,8 @@ public class AdminDao {
                         if (role == Role.STUDENT) {
                             statement.setInt(1, courseId);
                             statement.setInt(2, userId);
-                        } else {
+                        }
+                        else {
                             statement.setInt(1, userId);
                             statement.setInt(2, courseId);
                         }
@@ -219,7 +218,6 @@ public class AdminDao {
         int separator = trimmed.indexOf(' ');
         return separator < 0
                 ? new String[]{trimmed, ""}
-                : new String[]{trimmed.substring(0, separator),
-                trimmed.substring(separator + 1).trim()};
+                : new String[]{trimmed.substring(0, separator), trimmed.substring(separator + 1).trim()};
     }
 }

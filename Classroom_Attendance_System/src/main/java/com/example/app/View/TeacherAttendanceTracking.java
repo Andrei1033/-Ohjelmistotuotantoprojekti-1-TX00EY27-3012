@@ -6,7 +6,10 @@ import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.Teacher;
 import com.example.app.Model.TeacherCourse;
-
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
@@ -27,11 +30,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TeacherAttendanceTracking {
 
@@ -69,12 +67,7 @@ public class TeacherAttendanceTracking {
     private final Runnable onFinished;
 
     // CONSTRUCTOR
-    public TeacherAttendanceTracking(
-            Teacher teacher,
-            TeacherCourse course,
-            int lessonId,
-            Runnable onFinished
-    ) {
+    public TeacherAttendanceTracking(Teacher teacher, TeacherCourse course, int lessonId, Runnable onFinished) {
         this.teacher = teacher;
         this.course = course;
         this.lessonId = lessonId;
@@ -86,10 +79,7 @@ public class TeacherAttendanceTracking {
     public void show() {
         Stage stage = new Stage();
 
-        stage.setTitle(i18n.t(
-                "course.lessonTitle",
-                course.getCoursename()
-        ));
+        stage.setTitle(i18n.t("course.lessonTitle", course.getCoursename()));
 
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: white;");
@@ -132,11 +122,7 @@ public class TeacherAttendanceTracking {
         logoBox.setPrefSize(28, 28);
         logoBox.setMaxSize(28, 28);
 
-        HBox logoRow = new HBox(
-                10,
-                logoBox,
-                new Label(i18n.t("app.attendance"))
-        );
+        HBox logoRow = new HBox(10, logoBox, new Label(i18n.t("app.attendance")));
 
         Label applicationName = (Label) logoRow.getChildren().get(1);
         applicationName.setTextFill(Color.WHITE);
@@ -162,19 +148,12 @@ public class TeacherAttendanceTracking {
         courseButton.setMaxWidth(Double.MAX_VALUE);
         courseButton.setAlignment(Pos.CENTER_LEFT);
 
-        String courseButtonBase =
-                "-fx-background-color: " + BLUE + ";" +
-                        "-fx-background-radius: 5;" +
-                        "-fx-padding: 0 10;" +
-                        "-fx-cursor: hand;";
+        String courseButtonBase = "-fx-background-color: " + BLUE + ";" + "-fx-background-radius: 5;"
+                + "-fx-padding: 0 10;" + "-fx-cursor: hand;";
 
         courseButton.setStyle(courseButtonBase);
-        courseButton.setOnMouseEntered(e ->
-                courseButton.setStyle(courseButtonBase.replace(BLUE, "#3F567E"))
-        );
-        courseButton.setOnMouseExited(e ->
-                courseButton.setStyle(courseButtonBase)
-        );
+        courseButton.setOnMouseEntered(e -> courseButton.setStyle(courseButtonBase.replace(BLUE, "#3F567E")));
+        courseButton.setOnMouseExited(e -> courseButton.setStyle(courseButtonBase));
 
         VBox courseContainer = new VBox(courseButton);
         courseContainer.setPadding(new Insets(16, 16, 0, 16));
@@ -210,12 +189,7 @@ public class TeacherAttendanceTracking {
         VBox sidebarBottom = new VBox(userBox);
         sidebarBottom.setPadding(new Insets(0, 10, 12, 14));
 
-        sidebar.getChildren().addAll(
-                logoRow,
-                courseContainer,
-                sidebarSpacer,
-                sidebarBottom
-        );
+        sidebar.getChildren().addAll(logoRow, courseContainer, sidebarSpacer, sidebarBottom);
 
         return sidebar;
     }
@@ -242,18 +216,12 @@ public class TeacherAttendanceTracking {
         saveButton.setTextFill(Color.WHITE);
         saveButton.setFont(FontSupport.font(12, FontWeight.BOLD));
 
-        String saveButtonBase =
-                "-fx-background-color: " + NAVY + ";" +
-                        "-fx-background-radius: 4;" +
-                        "-fx-cursor: hand;";
+        String saveButtonBase = "-fx-background-color: " + NAVY + ";" + "-fx-background-radius: 4;"
+                + "-fx-cursor: hand;";
 
         saveButton.setStyle(saveButtonBase);
-        saveButton.setOnMouseEntered(e ->
-                saveButton.setStyle(saveButtonBase.replace(NAVY, "#2C4066"))
-        );
-        saveButton.setOnMouseExited(e ->
-                saveButton.setStyle(saveButtonBase)
-        );
+        saveButton.setOnMouseEntered(e -> saveButton.setStyle(saveButtonBase.replace(NAVY, "#2C4066")));
+        saveButton.setOnMouseExited(e -> saveButton.setStyle(saveButtonBase));
         saveButton.setOnAction(event -> saveAndFinish(stage));
 
         Region titleSpacer = new Region();
@@ -273,10 +241,7 @@ public class TeacherAttendanceTracking {
 
         ScrollPane scrollPane = new ScrollPane(attendanceCard);
         scrollPane.setFitToWidth(true);
-        scrollPane.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-background: transparent;"
-        );
+        scrollPane.setStyle("-fx-background-color: transparent;" + "-fx-background: transparent;");
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
         content.getChildren().addAll(titleRow, topSpace, scrollPane);
@@ -289,12 +254,8 @@ public class TeacherAttendanceTracking {
     private VBox createAttendanceCard() {
         VBox card = new VBox();
         card.setMaxWidth(Double.MAX_VALUE);
-        card.setStyle(
-                "-fx-background-color: white;" +
-                        "-fx-border-color: " + BORDER + ";" +
-                        "-fx-border-radius: 16;" +
-                        "-fx-background-radius: 16;"
-        );
+        card.setStyle("-fx-background-color: white;" + "-fx-border-color: " + BORDER + ";" + "-fx-border-radius: 16;"
+                + "-fx-background-radius: 16;");
 
         DropShadow shadow = new DropShadow();
         shadow.setRadius(14);
@@ -311,12 +272,7 @@ public class TeacherAttendanceTracking {
         lateCount = createCountLabel(ORANGE);
         absentCount = createCountLabel(RED);
 
-        HBox counts = new HBox(
-                28,
-                presentCount,
-                lateCount,
-                absentCount
-        );
+        HBox counts = new HBox(28, presentCount, lateCount, absentCount);
         counts.setAlignment(Pos.CENTER_RIGHT);
 
         Region headerSpacer = new Region();
@@ -343,8 +299,7 @@ public class TeacherAttendanceTracking {
         studentList.getChildren().clear();
         attendanceStatuses.clear();
 
-        List<User> students =
-                attendanceDao.getStudentsForCourse(course.getCourseid());
+        List<User> students = attendanceDao.getStudentsForCourse(course.getCourseid());
 
         if (students.isEmpty()) {
             Label emptyLabel = new Label(i18n.t("teacher.noStudents"));
@@ -383,10 +338,7 @@ public class TeacherAttendanceTracking {
 
         // NAME
         Label nameLabel = new Label(studentName);
-        nameLabel.setStyle(
-                "-fx-text-fill: #000000;" +
-                        "-fx-font-weight: bold;"
-        );
+        nameLabel.setStyle("-fx-text-fill: #000000;" + "-fx-font-weight: bold;");
         nameLabel.setFont(FontSupport.font(12, FontWeight.BOLD));
 
         Label roleLabel = new Label(i18n.t("app.student"));
@@ -401,8 +353,8 @@ public class TeacherAttendanceTracking {
 
         // BUTTONS
         Button presentButton = createStatusButton(i18n.t("attendance.present"));
-        Button lateButton    = createStatusButton(i18n.t("attendance.late"));
-        Button absentButton  = createStatusButton(i18n.t("attendance.absent"));
+        Button lateButton = createStatusButton(i18n.t("attendance.late"));
+        Button absentButton = createStatusButton(i18n.t("attendance.absent"));
 
         presentButton.setOnAction(event -> {
             attendanceStatuses.put(studentId, PRESENT);
@@ -437,27 +389,18 @@ public class TeacherAttendanceTracking {
         row.setMinHeight(58);
         row.setMaxHeight(58);
 
-        String normalStyle =
-                "-fx-background-color: white;" +
-                        "-fx-border-color: transparent transparent "
-                        + BORDER + " transparent;";
+        String normalStyle = "-fx-background-color: white;" + "-fx-border-color: transparent transparent " + BORDER
+                + " transparent;";
 
-        String hoverStyle =
-                "-fx-background-color: #FAFBFD;" +
-                        "-fx-border-color: transparent transparent "
-                        + BORDER + " transparent;";
+        String hoverStyle = "-fx-background-color: #FAFBFD;" + "-fx-border-color: transparent transparent " + BORDER
+                + " transparent;";
 
         row.setStyle(normalStyle);
         row.setOnMouseEntered(event -> row.setStyle(hoverStyle));
         row.setOnMouseExited(event -> row.setStyle(normalStyle));
 
         // Default: ABSENT
-        updateButtonStyles(
-                presentButton,
-                lateButton,
-                absentButton,
-                attendanceStatuses.get(studentId)
-        );
+        updateButtonStyles(presentButton, lateButton, absentButton, attendanceStatuses.get(studentId));
 
         studentList.getChildren().add(row);
     }
@@ -476,60 +419,27 @@ public class TeacherAttendanceTracking {
     }
 
     // BUTTON COLOURS
-    private void updateButtonStyles(
-            Button presentButton,
-            Button lateButton,
-            Button absentButton,
-            String selectedStatus
-    ) {
-        String inactiveStyle =
-                "-fx-background-color: white;" +
-                        "-fx-text-fill: #777777;" +
-                        "-fx-border-color: #D8D8D8;" +
-                        "-fx-border-width: 1;" +
-                        "-fx-background-radius: 16;" +
-                        "-fx-border-radius: 16;" +
-                        "-fx-cursor: hand;";
+    private void updateButtonStyles(Button presentButton, Button lateButton, Button absentButton,
+            String selectedStatus) {
+        String inactiveStyle = "-fx-background-color: white;" + "-fx-text-fill: #777777;" + "-fx-border-color: #D8D8D8;"
+                + "-fx-border-width: 1;" + "-fx-background-radius: 16;" + "-fx-border-radius: 16;"
+                + "-fx-cursor: hand;";
 
-        String presentStyle =
-                "-fx-background-color: " + GREEN + ";" +
-                        "-fx-text-fill: white;" +
-                        "-fx-border-color: " + GREEN + ";" +
-                        "-fx-border-width: 1;" +
-                        "-fx-background-radius: 16;" +
-                        "-fx-border-radius: 16;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-cursor: hand;";
+        String presentStyle = "-fx-background-color: " + GREEN + ";" + "-fx-text-fill: white;" + "-fx-border-color: "
+                + GREEN + ";" + "-fx-border-width: 1;" + "-fx-background-radius: 16;" + "-fx-border-radius: 16;"
+                + "-fx-font-weight: bold;" + "-fx-cursor: hand;";
 
-        String lateStyle =
-                "-fx-background-color: " + ORANGE + ";" +
-                        "-fx-text-fill: white;" +
-                        "-fx-border-color: " + ORANGE + ";" +
-                        "-fx-border-width: 1;" +
-                        "-fx-background-radius: 16;" +
-                        "-fx-border-radius: 16;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-cursor: hand;";
+        String lateStyle = "-fx-background-color: " + ORANGE + ";" + "-fx-text-fill: white;" + "-fx-border-color: "
+                + ORANGE + ";" + "-fx-border-width: 1;" + "-fx-background-radius: 16;" + "-fx-border-radius: 16;"
+                + "-fx-font-weight: bold;" + "-fx-cursor: hand;";
 
-        String absentStyle =
-                "-fx-background-color: " + RED + ";" +
-                        "-fx-text-fill: white;" +
-                        "-fx-border-color: " + RED + ";" +
-                        "-fx-border-width: 1;" +
-                        "-fx-background-radius: 16;" +
-                        "-fx-border-radius: 16;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-cursor: hand;";
+        String absentStyle = "-fx-background-color: " + RED + ";" + "-fx-text-fill: white;" + "-fx-border-color: " + RED
+                + ";" + "-fx-border-width: 1;" + "-fx-background-radius: 16;" + "-fx-border-radius: 16;"
+                + "-fx-font-weight: bold;" + "-fx-cursor: hand;";
 
-        presentButton.setStyle(
-                PRESENT.equals(selectedStatus) ? presentStyle : inactiveStyle
-        );
-        lateButton.setStyle(
-                LATE.equals(selectedStatus) ? lateStyle : inactiveStyle
-        );
-        absentButton.setStyle(
-                ABSENT.equals(selectedStatus) ? absentStyle : inactiveStyle
-        );
+        presentButton.setStyle(PRESENT.equals(selectedStatus) ? presentStyle : inactiveStyle);
+        lateButton.setStyle(LATE.equals(selectedStatus) ? lateStyle : inactiveStyle);
+        absentButton.setStyle(ABSENT.equals(selectedStatus) ? absentStyle : inactiveStyle);
     }
 
     // COUNTERS
@@ -541,9 +451,12 @@ public class TeacherAttendanceTracking {
         int present = 0, late = 0, absent = 0;
 
         for (String status : attendanceStatuses.values()) {
-            if (PRESENT.equals(status))      present++;
-            else if (LATE.equals(status))    late++;
-            else if (ABSENT.equals(status))  absent++;
+            if (PRESENT.equals(status))
+                present++;
+            else if (LATE.equals(status))
+                late++;
+            else if (ABSENT.equals(status))
+                absent++;
         }
 
         presentCount.setText(present + " " + i18n.t("attendance.present"));
@@ -564,12 +477,9 @@ public class TeacherAttendanceTracking {
         boolean success = true;
 
         for (Map.Entry<Integer, String> entry : attendanceStatuses.entrySet()) {
-            boolean saved = attendanceDao.saveAttendance(
-                    lessonId,
-                    entry.getKey(),
-                    entry.getValue()
-            );
-            if (!saved) success = false;
+            boolean saved = attendanceDao.saveAttendance(lessonId, entry.getKey(), entry.getValue());
+            if (!saved)
+                success = false;
         }
 
         if (success) {
@@ -577,11 +487,14 @@ public class TeacherAttendanceTracking {
 
             if (lessonEnded) {
                 stage.close();
-                if (onFinished != null) onFinished.run();
-            } else {
+                if (onFinished != null)
+                    onFinished.run();
+            }
+            else {
                 showError(i18n.t("attendance.errorEndLesson"));
             }
-        } else {
+        }
+        else {
             showError(i18n.t("attendance.errorSave"));
         }
     }
@@ -606,7 +519,9 @@ public class TeacherAttendanceTracking {
             if (name != null && !name.isBlank()) {
                 return name;
             }
-        } catch (Exception ignored) {}
+        }
+        catch (Exception ignored) {
+        }
         return i18n.t("admin.defaultName");
     }
 
@@ -617,19 +532,14 @@ public class TeacherAttendanceTracking {
         }
         String[] parts = name.trim().split("\\s+");
         if (parts.length == 1) {
-            return parts[0]
-                    .substring(0, Math.min(2, parts[0].length()))
-                    .toUpperCase();
+            return parts[0].substring(0, Math.min(2, parts[0].length())).toUpperCase();
         }
-        return (parts[0].substring(0, 1) +
-                parts[parts.length - 1].substring(0, 1)).toUpperCase();
+        return (parts[0].substring(0, 1) + parts[parts.length - 1].substring(0, 1)).toUpperCase();
     }
 
     // DATE
     private String getCurrentDate() {
         LocalDate date = LocalDate.now();
-        return date.getDayOfMonth()
-                + "." + date.getMonthValue()
-                + "." + date.getYear();
+        return date.getDayOfMonth() + "." + date.getMonthValue() + "." + date.getYear();
     }
 }

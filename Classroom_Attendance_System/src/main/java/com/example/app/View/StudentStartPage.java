@@ -1,25 +1,21 @@
 package com.example.app.View;
 
-import com.example.app.Controller.StudentController;
 import com.example.app.Localisation.FontSupport;
 import com.example.app.Localisation.i18n;
 import com.example.app.Model.LoginComponents.User;
 import com.example.app.Model.StudentComponents.AttendanceRecord;
 import com.example.app.Model.StudentComponents.Course;
-
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.FontWeight;
-
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public class StudentStartPage extends BorderPane {
 
@@ -27,28 +23,26 @@ public class StudentStartPage extends BorderPane {
     private static final String BLUE = "#344A70";
 
     /**
-     * @param currentUser       kirjautunut opiskelija (näytetään sivupalkissa)
-     * @param courses           opiskelijan kurssit
-     * @param onCourseSelected  kutsutaan kun kurssikorttia klikataan
-     * @param onLogout          uloskirjautumisen callback
-     * @param onProfileUpdated  kutsutaan kun käyttäjä on tallentanut muutokset
-     *                          "Omat tiedot" -ikkunassa tai vaihtaa kieltä,
-     *                          jotta sivu voidaan piirtää uudelleen
+     * @param currentUser
+     *            kirjautunut opiskelija (näytetään sivupalkissa)
+     * @param courses
+     *            opiskelijan kurssit
+     * @param onCourseSelected
+     *            kutsutaan kun kurssikorttia klikataan
+     * @param onLogout
+     *            uloskirjautumisen callback
+     * @param onProfileUpdated
+     *            kutsutaan kun käyttäjä on tallentanut muutokset "Omat tiedot" -ikkunassa tai vaihtaa kieltä, jotta
+     *            sivu voidaan piirtää uudelleen
      */
-    public StudentStartPage(User currentUser,
-                            List<Course> courses,
-                            Consumer<Course> onCourseSelected,
-                            Runnable onLogout,
-                            Runnable onProfileUpdated) {
+    public StudentStartPage(User currentUser, List<Course> courses, Consumer<Course> onCourseSelected,
+            Runnable onLogout, Runnable onProfileUpdated) {
         this(currentUser, courses, Map.of(), onCourseSelected, onLogout, onProfileUpdated);
     }
 
-    public StudentStartPage(User currentUser,
-                            List<Course> courses,
-                            Map<Integer, List<AttendanceRecord>> attendanceByCourse,
-                            Consumer<Course> onCourseSelected,
-                            Runnable onLogout,
-                            Runnable onProfileUpdated) {
+    public StudentStartPage(User currentUser, List<Course> courses,
+            Map<Integer, List<AttendanceRecord>> attendanceByCourse, Consumer<Course> onCourseSelected,
+            Runnable onLogout, Runnable onProfileUpdated) {
 
         if (FontSupport.isRtl()) {
             setNodeOrientation(javafx.geometry.NodeOrientation.RIGHT_TO_LEFT);
@@ -107,21 +101,14 @@ public class StudentStartPage extends BorderPane {
         // =========================
 
         if (courses.isEmpty()) {
-            content.getChildren().add(
-                    text(i18n.t("student.noCourses"), 11, FontWeight.NORMAL, "#858585")
-            );
-        } else {
+            content.getChildren().add(text(i18n.t("student.noCourses"), 11, FontWeight.NORMAL, "#858585"));
+        }
+        else {
             FlowPane cards = new FlowPane(22, 22);
 
             for (Course course : courses) {
-                cards.getChildren().add(
-                        courseCard(
-                                course,
-                                attendanceByCourse.getOrDefault(course.getId(), List.of()),
-                                !attendanceByCourse.isEmpty(),
-                                onCourseSelected
-                        )
-                );
+                cards.getChildren().add(courseCard(course, attendanceByCourse.getOrDefault(course.getId(), List.of()),
+                        !attendanceByCourse.isEmpty(), onCourseSelected));
             }
 
             ScrollPane scroll = new ScrollPane(cards);
@@ -152,10 +139,7 @@ public class StudentStartPage extends BorderPane {
         setCenter(content);
     }
 
-    private VBox courseCard(
-            Course course,
-            List<AttendanceRecord> records,
-            boolean showAttendance,
+    private VBox courseCard(Course course, List<AttendanceRecord> records, boolean showAttendance,
             Consumer<Course> onCourseSelected) {
 
         VBox card = new VBox(6);
@@ -164,32 +148,19 @@ public class StudentStartPage extends BorderPane {
         card.setMinSize(190, cardHeight);
         card.setMaxSize(190, cardHeight);
         card.setPadding(new Insets(11, 13, 8, 13));
-        card.setStyle(
-                "-fx-background-color: white; " +
-                        "-fx-border-color: #D7D7D7; " +
-                        "-fx-border-radius: 5; " +
-                        "-fx-background-radius: 5;"
-        );
+        card.setStyle("-fx-background-color: white; " + "-fx-border-color: #D7D7D7; " + "-fx-border-radius: 5; "
+                + "-fx-background-radius: 5;");
         card.setCursor(Cursor.HAND);
 
         Label codeLabel = text(course.getCode(), 9, FontWeight.BOLD, "#4B83A0");
-        codeLabel.setStyle(
-                codeLabel.getStyle() +
-                        "-fx-background-color: #D9F0FA; " +
-                        "-fx-background-radius: 3; " +
-                        "-fx-padding: 3 6;"
-        );
+        codeLabel.setStyle(codeLabel.getStyle() + "-fx-background-color: #D9F0FA; " + "-fx-background-radius: 3; "
+                + "-fx-padding: 3 6;");
         codeLabel.setMouseTransparent(true);
 
         Label nameLabel = text(course.getName(), 11, FontWeight.BOLD, "#171717");
         nameLabel.setMouseTransparent(true);
 
-        Label hoursLabel = text(
-                i18n.t("course.lessonCount", course.getLessonCount()),
-                9,
-                FontWeight.NORMAL,
-                "#6B6B6B"
-        );
+        Label hoursLabel = text(i18n.t("course.lessonCount", course.getLessonCount()), 9, FontWeight.NORMAL, "#6B6B6B");
         hoursLabel.setMouseTransparent(true);
 
         card.getChildren().addAll(codeLabel, nameLabel, hoursLabel);
@@ -212,12 +183,8 @@ public class StudentStartPage extends BorderPane {
         HBox summary = new HBox(6);
         summary.setAlignment(Pos.CENTER_LEFT);
 
-        Label percentage = text(
-                i18n.t("course.percentPresent", attendancePercentage(records)),
-                8,
-                FontWeight.BOLD,
-                "#555555"
-        );
+        Label percentage = text(i18n.t("course.percentPresent", attendancePercentage(records)), 8, FontWeight.BOLD,
+                "#555555");
         HBox bar = attendanceBar(records, 105);
         HBox.setHgrow(bar, Priority.ALWAYS);
         summary.getChildren().addAll(bar, percentage);
@@ -243,7 +210,8 @@ public class StudentStartPage extends BorderPane {
     }
 
     private static void addSegment(HBox bar, long count, int total, String color) {
-        if (count == 0 || total == 0) return;
+        if (count == 0 || total == 0)
+            return;
         Region segment = new Region();
         segment.setPrefWidth(bar.getPrefWidth() * count / total);
         segment.setMinWidth(0);
@@ -253,9 +221,9 @@ public class StudentStartPage extends BorderPane {
     }
 
     private static int attendancePercentage(List<AttendanceRecord> records) {
-        if (records.isEmpty()) return 0;
-        long attended = records.stream()
-                .filter(r -> "present".equals(r.getStatus()) || "late".equals(r.getStatus()))
+        if (records.isEmpty())
+            return 0;
+        long attended = records.stream().filter(r -> "present".equals(r.getStatus()) || "late".equals(r.getStatus()))
                 .count();
         return (int) Math.round(attended * 100.0 / records.size());
     }

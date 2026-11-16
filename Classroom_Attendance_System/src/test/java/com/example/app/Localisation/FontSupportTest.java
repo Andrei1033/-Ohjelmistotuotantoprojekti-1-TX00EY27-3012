@@ -1,5 +1,10 @@
 package com.example.app.Localisation;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mockStatic;
+
+import java.util.List;
+import java.util.stream.Stream;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import org.junit.jupiter.api.AfterEach;
@@ -8,12 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.MockedStatic;
-
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mockStatic;
 
 class FontSupportTest {
     private i18n.Lang originalLanguage;
@@ -37,11 +36,8 @@ class FontSupportTest {
     }
 
     static Stream<Arguments> fontPreferences() {
-        return Stream.of(
-                Arguments.of(i18n.JA, "Noto Sans JP", "Yu Gothic UI"),
-                Arguments.of(i18n.AR, "Noto Naskh Arabic", "Segoe UI"),
-                Arguments.of(i18n.RU, "Noto Sans", "Segoe UI")
-        );
+        return Stream.of(Arguments.of(i18n.JA, "Noto Sans JP", "Yu Gothic UI"),
+                Arguments.of(i18n.AR, "Noto Naskh Arabic", "Segoe UI"), Arguments.of(i18n.RU, "Noto Sans", "Segoe UI"));
     }
 
     @ParameterizedTest
