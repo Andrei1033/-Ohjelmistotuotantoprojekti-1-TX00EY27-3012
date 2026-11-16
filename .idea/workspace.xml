@@ -7,68 +7,9 @@
     <option name="selectedModelId" value="auto" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="&quot;Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved.&quot;">
+    <list default="true" id="f31bb096-3bbe-40b0-8ac5-86f65a3fc9f4" name="Changes" comment="added and runed custom spotless formater.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/StudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/TeacherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Controller/TeacherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/AdminDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/AdminDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LessonDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LessonDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LoginDao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/LoginDao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/AttendanceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/AttendanceDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/StudentDao/CourseDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/TeacherDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/DaoElements/TeacherDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Database/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Database/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/FontSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/FontSupport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/i18n.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Localisation/i18n.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Lesson.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Lesson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/LoginComponents/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/LoginComponents/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/LoginComponents/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/LoginComponents/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/StudentComponents/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/StudentComponents/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/Teacher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/TeacherCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/Model/TeacherCourse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ProfileEditWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentAttendanceTracking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/StudentStartPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherAttendanceTracking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherCoursePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/TeacherStartPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ViewSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/main/java/com/example/app/View/ViewSupport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/AdminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/AdminControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/LoginControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/LoginControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/StudentControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/StudentControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/TeacherControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Controller/TeacherControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/AdminDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/AdminDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/LessonDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/LessonDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/LoginDao/UserDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/LoginDao/UserDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/AttendanceDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/AttendanceDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/StudentDao/CoureDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/TeacherDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/DaoElements/TeacherDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Database/DatabaseConnectionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Database/DatabaseConnectionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Localisation/FontSupportTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Localisation/FontSupportTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Localisation/I18nTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Localisation/I18nTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/MainTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/AdminTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/AdminTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/LessonTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/LessonTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/LoginComponents/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/LoginComponents/UserTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/AttendanceRecordTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/AttendanceRecordTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/Model/StudentComponents/CourseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/AdminTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/AdminTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/LoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/LoginTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ProfileEditWindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ProfileEditWindowTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentAttendanceTrackingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentAttendanceTrackingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentStertPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/StudentStertPageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherAttendanceTrackingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherAttendanceTrackingTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherCoursePageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherCoursePageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherStartPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/TeacherStartPageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ViewSupportTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ViewSupportTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ViewTestSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classroom_Attendance_System/src/test/java/com/example/app/View/ViewTestSupport.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -354,14 +295,6 @@
       <workItem from="1794679894905" duration="7000" />
       <workItem from="1794683492768" duration="751000" />
       <workItem from="1794745991083" duration="7151000" />
-    </task>
-    <task id="LOCAL-00006" summary="view, controller, model kansio lisäty">
-      <option name="closed" value="true" />
-      <created>1788607567674</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1788607567674</updated>
     </task>
     <task id="LOCAL-00007" summary="view, controller, model kansio lisäty 2">
       <option name="closed" value="true" />
@@ -747,7 +680,15 @@
       <option name="project" value="LOCAL" />
       <updated>1794747350842</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="added and runed custom spotless formater.">
+      <option name="closed" value="true" />
+      <created>1794852668948</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1794852668948</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -791,7 +732,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ccc" />
     <MESSAGE value="xui" />
     <MESSAGE value="c" />
     <MESSAGE value="&quot;empty&quot; test files" />
@@ -816,7 +756,8 @@
     <MESSAGE value="all teacher pages localized" />
     <MESSAGE value="added a thing that colecting a language sttatistics" />
     <MESSAGE value="&quot;Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved.&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;Hard-coded default password hash removed. Value is now injected via DEFAULT_PASSWORD_HASH environment variable. SonarQube issue S2068 resolved.&quot;" />
+    <MESSAGE value="added and runed custom spotless formater." />
+    <option name="LAST_COMMIT_MESSAGE" value="added and runed custom spotless formater." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

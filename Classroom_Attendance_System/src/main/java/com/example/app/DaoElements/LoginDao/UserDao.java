@@ -29,10 +29,6 @@ public class UserDao {
                     if (role == null) {
                         return Optional.empty();
                     }
-                    // KORJATTU: parametrijärjestys vastaa nyt User-konstruktoria
-                    // (userId, firstName, lastName, email, role). Aiemmin email ja
-                    // first_name/last_name olivat väärässä järjestyksessä, jolloin
-                    // esim. currentUser.getFirstName() palautti sähköpostin.
                     User user = new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
                             rs.getString("email"), role);
                     return Optional.of(user);
@@ -45,7 +41,6 @@ public class UserDao {
         return Optional.empty();
     }
 
-    // @return true jos annettu sähköposti on jo käytössä jollakin MUULLA käyttäjällä.
     public boolean isEmailTaken(String email, int excludingUserId) {
         String sql = "SELECT COUNT(*) FROM users WHERE email = ? AND user_id <> ?";
 
@@ -86,11 +81,6 @@ public class UserDao {
             return false;
         }
     }
-
-    // Tarkistaa täsmääkö annettu salasana käyttäjän nykyiseen salasanaan.
-    // HUOM: salasana verrataan tällä hetkellä plain-tekstinä, samalla tavalla
-    // kuin findByEmailAndPassword tekee. Jos otatte hashauksen (esim. BCrypt)
-    // käyttöön, tämä metodi täytyy päivittää vastaavasti.
 
     public boolean verifyPassword(int userId, String password) {
         String sql = "SELECT COUNT(*) FROM users WHERE user_id = ? AND `password` = ?";
@@ -151,11 +141,5 @@ public class UserDao {
             return false;
         }
     }
-
-    /*
-     * test main method for testing the UserDao class public static void main(String[] args) { UserDao dao = new
-     * UserDao(); dao.findByEmailAndPassword("admin1@school.edu", "$2b$10$abcdefghijklmnopqrstuv") .ifPresentOrElse( u
-     * -> System.out.println("Löytyi: " + u), () -> System.out.println("Ei löytynyt") ); }
-     */
 
 }
