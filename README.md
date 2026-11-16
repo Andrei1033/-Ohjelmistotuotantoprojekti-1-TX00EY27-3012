@@ -126,6 +126,23 @@ Keep message keys consistent across all bundles. Test language changes with
 `mvn clean test`, and manually check Arabic screens and dialogs for RTL
 alignment after changing layout or translated text.
 
+### Database Localization Strategy
+
+The application supports multiple languages, including English, Finnish, Russian, Arabic and Japanese.
+
+The database already supports UTF-8 (utf8mb4) encoding, allowing it to store and retrieve characters from all supported languages correctly.
+
+As an additional localization improvement, we introduced a `preferred_language` column in the `users` table.
+
+This allows the application to:
+
+- Store each user's preferred interface language.
+- Provide statistics showing the distribution of language preferences among users.
+
+Language preferences are stored using standard language codes (e.g. `en`, `fi`, `ru`, `ar`, `ja`).
+
+Existing user information and application data are preserved during the database schema update.
+
 ### Run with Docker
 
 The included multi-stage [`Dockerfile`](Classroom_Attendance_System/Dockerfile)
