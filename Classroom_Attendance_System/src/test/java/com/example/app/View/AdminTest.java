@@ -119,6 +119,7 @@ class AdminTest extends ViewTestSupport {
         when(controller.getDatabaseError()).thenReturn("Database unavailable");
         interact(() -> {
             show();
+            assertNotNull(view.getCenter());
             hasLabel(view, i18n.t("admin.loadFailed", "Database unavailable"));
         });
     }
@@ -180,6 +181,7 @@ class AdminTest extends ViewTestSupport {
         currentUser = null;
         interact(() -> {
             show();
+            assertNotNull(view.getLeft());
             hasLabel(view.getLeft(), "Anna Admin");
         });
     }
@@ -189,6 +191,7 @@ class AdminTest extends ViewTestSupport {
         users.removeIf(user -> user.getRole() == Role.ADMIN);
         interact(() -> {
             show();
+            assertNotNull(view.getLeft());
             hasLabel(view.getLeft(), i18n.t("admin.defaultName"));
         });
     }

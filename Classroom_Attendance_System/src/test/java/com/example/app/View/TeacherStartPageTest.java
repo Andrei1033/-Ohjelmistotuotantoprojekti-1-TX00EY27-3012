@@ -68,6 +68,7 @@ class TeacherStartPageTest extends ViewTestSupport {
         when(controller.getTeacherCourses(1)).thenThrow(new IllegalStateException("Unavailable"));
         interact(() -> {
             show();
+            assertNotNull(view.getCenter());
             hasLabel(view, i18n.t("teacher.noCourses"));
         });
     }
@@ -76,6 +77,7 @@ class TeacherStartPageTest extends ViewTestSupport {
         when(controller.getLessonsForCourse(12)).thenThrow(new IllegalStateException("Unavailable"));
         interact(() -> {
             show();
+            assertNotNull(view.getCenter());
             hasLabel(view, i18n.t("course.lessonCount", 0));
         });
     }

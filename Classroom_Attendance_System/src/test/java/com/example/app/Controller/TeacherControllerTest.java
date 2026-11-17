@@ -122,6 +122,15 @@ class TeacherControllerTest {
         verify(courseDao).addCourse("Java", "CS101", 1);
     }
 
+    @Test
+    void createCourses_returnsDaoResultWhenCourseCannotBeCreated() {
+        TeacherController controller = createController(teacher);
+        when(courseDao.addCourse("Java", "CS101", 1)).thenReturn(false);
+
+        assertFalse(controller.createCourses("Java", "CS101", 1));
+        verify(courseDao).addCourse("Java", "CS101", 1);
+    }
+
     // =============================================================
     // updateCourse
     // =============================================================
@@ -142,6 +151,15 @@ class TeacherControllerTest {
         boolean result = controller.updateCourse(5, "New Name", "NEW1");
 
         assertTrue(result);
+        verify(courseDao).updateCourse(5, "New Name", "NEW1");
+    }
+
+    @Test
+    void updateCourse_trimsNameAndReturnsDaoResult() {
+        TeacherController controller = createController(teacher);
+        when(courseDao.updateCourse(5, "New Name", "NEW1")).thenReturn(false);
+
+        assertFalse(controller.updateCourse(5, "  New Name  ", "NEW1"));
         verify(courseDao).updateCourse(5, "New Name", "NEW1");
     }
 
@@ -207,6 +225,16 @@ class TeacherControllerTest {
         verify(courseDao).getAllStudents();
     }
 
+    @Test
+    void getAllStudentsUsesDaoResultForAnyCourseId() {
+        TeacherController controller = createController(teacher);
+        List<User> expected = List.of(new User(4, "A", "Student", "a@test.fi", Role.STUDENT));
+        when(courseDao.getAllStudents()).thenReturn(expected);
+
+        assertSame(expected, controller.getAllStudents(-1));
+        verify(courseDao).getAllStudents();
+    }
+
     // =============================================================
     // addStudents
     // =============================================================
@@ -228,6 +256,46 @@ class TeacherControllerTest {
         verify(courseDao).addStudents(10, 5);
         verify(courseDao).addStudents(20, 5);
         verify(courseDao).addStudents(30, 5);
+    }
+
+    @Test
+    void addStudentsReturnsTrueEvenWhenDaoReportsFailure() {
+        TeacherController controller = createController(teacher);
+        when(courseDao.addStudents(10, 5)).thenReturn(false);
+
+        assertTrue(controller.addStudents(List.of(10), 5));
+        verify(courseDao).addStudents(10, 5);
+    }
+
+    @Test
+    void startLessonShowsAttendanceTrackingForExistingCourse() {
+        TeacherController controller = createController(teacher);
+        TeacherCourse course = new TeacherCourse(12, "Java", "CS101", 1);
+        when(lessonDao.startLesson(12)).thenReturn(34);
+        when(courseDao.getCoursesByTeacherId(1)).thenReturn(List.of(course));
+
+        try (MockedConstruction<com.example.app.View.TeacherAttendanceTracking> tracking =
+                     mockConstruction(com.example.app.View.TeacherAttendanceTracking.class)) {
+            controller.startLesson(12);
+
+            assertEquals(1, tracking.constructed().size());
+            verify(tracking.constructed().get(0)).show();
+        }
+    }
+
+    @Test
+    void openExistingLessonShowsAttendanceTrackingForExistingCourse() {
+        TeacherController controller = createController(teacher);
+        TeacherCourse course = new TeacherCourse(12, "Java", "CS101", 1);
+        when(courseDao.getCoursesByTeacherId(1)).thenReturn(List.of(course));
+
+        try (MockedConstruction<com.example.app.View.TeacherAttendanceTracking> tracking =
+                     mockConstruction(com.example.app.View.TeacherAttendanceTracking.class)) {
+            controller.openExistingLesson(12, 34);
+
+            assertEquals(1, tracking.constructed().size());
+            verify(tracking.constructed().get(0)).show();
+        }
     }
 
     // =============================================================

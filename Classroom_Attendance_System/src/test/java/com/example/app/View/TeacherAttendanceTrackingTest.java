@@ -73,6 +73,7 @@ class TeacherAttendanceTrackingTest extends ViewTestSupport {
             button(root, i18n.t("attendance.present")).fire();
             count("attendance.present", 1);
             count("attendance.absent", 0);
+            assertNotNull(button(root, i18n.t("attendance.late")));
             button(root, i18n.t("attendance.late")).fire();
             count("attendance.present", 0);
             count("attendance.late", 1);

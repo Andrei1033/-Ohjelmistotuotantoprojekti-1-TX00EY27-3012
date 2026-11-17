@@ -42,6 +42,7 @@ class TeacherCoursePageTest extends ViewTestSupport {
     void showsCourseAndEmptyStudentList() {
         interact(() -> {
             show();
+            assertNotNull(view.getCenter());
             hasLabel(view, "Java");
             hasLabel(view, "JAVA12");
             hasLabel(view, i18n.t("teacher.noStudents"));
@@ -53,6 +54,7 @@ class TeacherCoursePageTest extends ViewTestSupport {
         when(controller.getTeacherCourses(1)).thenReturn(List.of());
         interact(() -> {
             show();
+            assertNotNull(view.getCenter());
             hasLabel(view, i18n.t("course.name") + " 12");
         });
     }
@@ -61,6 +63,7 @@ class TeacherCoursePageTest extends ViewTestSupport {
         when(controller.getTeacherCourses(1)).thenReturn(List.of(new TeacherCourse(12, "Java", " ", 1)));
         interact(() -> {
             show();
+            assertNotNull(view.getCenter());
             hasLabel(view, "12");
         });
     }
@@ -73,6 +76,7 @@ class TeacherCoursePageTest extends ViewTestSupport {
                 new AttendanceRecord(3, null, null, "", "absent")));
         interact(() -> {
             show();
+            assertNotNull(view.getCenter());
             hasLabel(view, "Liisa Virtanen");
             hasLabel(view, "ID: 7");
             hasLabel(view, i18n.t("teacher.attendance", 67));
