@@ -147,6 +147,18 @@ class UserDaoTest {
         }
     }
 
+    @Test
+    void isEmailTaken_returnsFalse_whenResultSetHasNoRow() throws SQLException {
+        try (MockedStatic<DatabaseConnection> db = mockStatic(DatabaseConnection.class)) {
+            db.when(DatabaseConnection::getConnection).thenReturn(conn);
+            when(conn.prepareStatement(anyString())).thenReturn(stmt);
+            when(stmt.executeQuery()).thenReturn(rs);
+            when(rs.next()).thenReturn(false);
+
+            assertFalse(userDao.isEmailTaken("missing@example.com", 1));
+        }
+    }
+
     // ------------------------------------------------------------------
     // updateProfile
     // ------------------------------------------------------------------
@@ -263,6 +275,54 @@ class UserDaoTest {
             db.when(DatabaseConnection::getConnection).thenThrow(new SQLException("boom"));
 
             assertFalse(userDao.updatePassword(9, "newSecret"));
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // updatePreferredLanguage
+    // ------------------------------------------------------------------
+
+    @Test
+    void updatePreferredLanguage_normalizesLanguageAndReturnsTrue_whenRowUpdated() throws SQLException {
+        try (MockedStatic<DatabaseConnection> db = mockStatic(DatabaseConnection.class)) {
+            db.when(DatabaseConnection::getConnection).thenReturn(conn);
+            when(conn.prepareStatement(anyString())).thenReturn(stmt);
+            when(stmt.executeUpdate()).thenReturn(1);
+
+            assertTrue(userDao.updatePreferredLanguage(12, "  FI "));
+
+            verify(stmt).setString(1, "fi");
+            verify(stmt).setInt(2, 12);
+        }
+    }
+
+    @Test
+    void updatePreferredLanguage_returnsFalse_whenNoRowsUpdated() throws SQLException {
+        try (MockedStatic<DatabaseConnection> db = mockStatic(DatabaseConnection.class)) {
+            db.when(DatabaseConnection::getConnection).thenReturn(conn);
+            when(conn.prepareStatement(anyString())).thenReturn(stmt);
+            when(stmt.executeUpdate()).thenReturn(0);
+
+            assertFalse(userDao.updatePreferredLanguage(12, "en"));
+        }
+    }
+
+    @Test
+    void updatePreferredLanguage_returnsFalse_forNullOrBlankLanguage() throws SQLException {
+        try (MockedStatic<DatabaseConnection> db = mockStatic(DatabaseConnection.class)) {
+            assertFalse(userDao.updatePreferredLanguage(12, null));
+            assertFalse(userDao.updatePreferredLanguage(12, "   "));
+
+            db.verifyNoInteractions();
+        }
+    }
+
+    @Test
+    void updatePreferredLanguage_returnsFalse_onSqlException() throws SQLException {
+        try (MockedStatic<DatabaseConnection> db = mockStatic(DatabaseConnection.class)) {
+            db.when(DatabaseConnection::getConnection).thenThrow(new SQLException("boom"));
+
+            assertFalse(userDao.updatePreferredLanguage(12, "fi"));
         }
     }
 }
