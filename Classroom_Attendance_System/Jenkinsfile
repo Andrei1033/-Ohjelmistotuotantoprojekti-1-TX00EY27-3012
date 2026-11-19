@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('check') {
             steps {
-                git branch: 'aaro-jenkins',
+                git branch: 'aaro-jenkins-test',
                         url: 'https://github.com/Andrei1033/-Ohjelmistotuotantoprojekti-1-TX00EY27-3012.git'
             }
         }
