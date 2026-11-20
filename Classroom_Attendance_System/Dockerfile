@@ -40,4 +40,4 @@ COPY --from=build /app/target/Classroom_Attendance_System.jar app.jar
 
 # Запуск через виртуальный дисплей (Xvfb)
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["xvfb-run", "-a", "java", "-Dprism.order=sw", "-jar", "app.jar"]
+CMD ["java", "-Dprism.order=sw", "-jar", "app.jar"]
