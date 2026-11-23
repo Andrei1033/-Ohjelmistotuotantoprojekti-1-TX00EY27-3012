@@ -54,6 +54,23 @@ pipeline {
              }
          }
 
+         stage('SonarQube Analysis') {
+             steps {
+                 dir('Classroom_Attendance_System') {
+                     withSonarQubeEnv('SonarQubeServer') {
+                         bat '''
+                             mvn sonar:sonar ^
+                             -Dsonar.projectKey=Classroom-Attendance ^
+                             -Dsonar.projectName=Classroom_Attendance_System ^
+                             -Dsonar.sources=src/main/java ^
+                             -Dsonar.java.binaries=target/classes ^
+                             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                         '''
+                     }
+                 }
+             }
+         }
+
         stage('Build Docker Image') {
             steps {
                 dir('Classroom_Attendance_System') {
