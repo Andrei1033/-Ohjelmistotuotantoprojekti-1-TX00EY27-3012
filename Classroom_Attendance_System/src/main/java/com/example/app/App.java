@@ -21,13 +21,19 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         System.out.println("[BOOT] JavaFX start() called. Stage: " + stage);
+
         this.primaryStage = stage;
         stage.setTitle("Classroom Attendance System");
 
         showLogin();
 
-        stage.setMaximized(true);
+        stage.setWidth(1200);
+        stage.setHeight(800);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(700);
+
         stage.show();
+        stage.setMaximized(true);
     }
 
     private void showLogin() {
