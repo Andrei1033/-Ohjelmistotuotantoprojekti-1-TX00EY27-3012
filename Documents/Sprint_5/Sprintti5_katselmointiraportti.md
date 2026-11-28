@@ -38,7 +38,3 @@ Sprint 5:n tavoitteena oli sovelluksen kansainvälistäminen ja käyttöliittym�
 
 Sprintissä luotiin lokalisoinnin perusta kielivalinnalla, kielikohtaisilla resurssitiedostoilla ja arabian RTL-tuella. Seuraavaksi tulee täydentää käyttöliittymän kattavuuden testausta sekä varmistaa, että kaikki sprintin hyväksymiskriteerit, myös numeroiden, päivämäärien ja taulukoiden lokalisointi, täyttyvät.
 
-
-
-
-

@@ -48,3 +48,4 @@ Jos käännöstä ei löydy, käytetään sovittua varakieltä.
 - Tietokantakerroksen tarkistukset sekä kurssi-, oppitunti- ja läsnäolotoimintojen regressiotestit on tehty.
 - ER-kaavio ja tietokantadokumentaatio on päivitetty GitHubiin.
 - Sprint atselmointiraportti -esittelyn näyttöaineisto, valmis työ ja avoimet ongelmat on dokumentoitu.
+- 
